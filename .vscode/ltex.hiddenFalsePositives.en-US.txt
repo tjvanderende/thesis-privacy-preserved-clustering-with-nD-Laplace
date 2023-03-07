@@ -1,0 +1,1 @@
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QFor this research, we will use a synthetic dataset for all three research questions.\\E$"}
