@@ -1,9 +1,13 @@
 \documentclass{ou-report}
 \newcommand{\mycomment}[1]{}
-\usepackage[acronym]{glossaries}
+\usepackage[acronym, section=sub subsection]{glossaries}
 \usepackage{booktabs}
 \usepackage{todonotes}
 \usepackage{float}
+\usepackage{leading}
+
+\newglossary*{genericmath}{Math symbols}
+\newglossary*{2dlaplace}{2D-Laplace symbols}
 \makeglossaries
 \citestyle{agu}
 
@@ -68,6 +72,7 @@
 \input{Chapter1/chapter1}
 
 \input{TheorethicalFramework/theory.tex}
+\input{TheorethicalFramework/ND-Laplace/nd-laplace.tex}
 \input{Method/methodology.tex}
 %\input{Chapter2/chapter-2}
 
@@ -94,5 +99,5 @@
 %  \input{Appendices/appendix-b}
 %  \input{Appendices/appendix-c}
 
-
+\printglossaries
 \end{document}
