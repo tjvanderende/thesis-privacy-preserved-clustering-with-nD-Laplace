@@ -25,7 +25,7 @@ The method works for Cartesian coordinates but was modified to support polar coo
 So each point is reflected as $(r, \theta)$ and can be modified by using a slight modification to work for polar Laplace.
 \newpage
 A point $z \in Z$ where $z = (r, \theta)$ is randomly generated using two separate methods.
-\begin{figure}[h]
+\begin{figure}[h] \label{figure:parea}
   \includegraphics[scale=0.6]{TheorethicalFramework/ND-Laplace/Images/polar-laplace.png}
   \centering
   \caption{Representation of the generated $z = {r \theta}$ and original point $x0$.}
@@ -51,5 +51,11 @@ This is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals
 \end{figure}
 
 %% If we want to know if a point is within the radius, 
+We highlight the CDF function \todo{Can be moved to appendix} for assessing if the probability of a random point falls between 0 and $r$:
+\begin{equation}
+  C{\epsilon}(r) = D_\epsilon,R(p)dp = \int_{0}^{r} 1 - (1 + \epsilon r ) e^{-\epsilon r}
+\end{equation}
+
 \subsection{Truncation}
 \subsection{Optimizing for clustering}
+A drawn area as shown in \ref{figure:parea} can be expressed as a perturbation area $P_{area}$.
