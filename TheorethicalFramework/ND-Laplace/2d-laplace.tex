@@ -56,6 +56,24 @@ We highlight the CDF function \todo{Can be moved to appendix} for assessing if t
   C{\epsilon}(r) = D_\epsilon,R(p)dp = \int_{0}^{r} 1 - (1 + \epsilon r ) e^{-\epsilon r}
 \end{equation}
 
+\newpage
 \subsection{Truncation}
 \subsection{Optimizing for clustering}
-A drawn area as shown in \ref{figure:parea} can be expressed as a perturbation area $P_{area}$.
+The decision of the parameters for the algorithm is straightforward as it depends on the $\epsilon$.
+This constant is calculated by defining the radius $r$ and the desired level of privacy $l$ and $\epsilon$ is calculated using $l/r$.
+The $l$ is a predefined constant $l \in R^+$ but usually will be below 10.
+For geographical data, the $r$ is straightforward and can be configured by using meters as a unit of measure.
+Therefore, $r = 200$ corresponds to a radius of 200m around point $x_0$.
+So, regarding clustering, it is a challenge to define a reasonable radius. \newline
+The $\epsilon$ can be considered the inverse unit of $r$ \cite{DBLP:journals/corr/abs-1212-1984}.
+A radius can be defined per-use case based on how crowded a place is \citep{chatzikokolakis_constructing_2015}.
+This will not be relevant for clustering and should depend mostly on the complete domain. \newline
+
+A drawn area as shown in \ref{figure:parea} can be expressed as a perturbation area $P_{area}$ \citep{yan_perturb_2022-2}.
+This metric was formulated as:
+\begin{equation}
+  P_{area}=\left\{ center = x_{0},radius = \frac{1}{N}\times \sum _{i=1}^{N}r_{i}\right\}
+\end{equation}
+The method loops through each perturbed point $r$ on center $x_0$ (recall \ref{figure:parea}) and calculates the Euclidean distance for an $n$ amount of perturbation points.
+Although the method does not contribute to the Laplace algorithm, it is useful for visualization purposes.
+
