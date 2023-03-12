@@ -28,8 +28,17 @@ For this research, we will use a synthetic dataset for all three research questi
 Research question 3 uses a "real-world" dataset to properly assess the different dataset properties that are the subject of this research question.
 \todo[inline]{Describe datasets (RQ3)}
 \section{Environmental setup}
-\todo[inline]{Describe operation system / specs}
-\todo[inline]{Describe (python libraries)}
+For running the experiments we make use of 16GB ram memory and i7-10750H 2.6Ghz processor.
+The experiments are run using a Docker container which runs a pre-configured distribution of Linux Alpine.
+It includes a pre-installed Anaconda environment for python \footnote{https://github.com/devcontainers/images/tree/main/src/anaconda}\footnote{tag: mcr.microsoft.com/devcontainers/anaconda:0-3}.
+We run the container using the dev-container feature for visual-studio code \footnote{https://code.visualstudio.com/docs/devcontainers/containers}.
+This allows us to create a reproducible experiment environment.
+
+\subsection{Libraries \& code versions}
+We use python version 3.9.13 with Jupyter notebook for creating a reproducible experimental environment.
+The packages for python are:
+
+\newpage
 \section{Methods}
 This section explains what methods/ algorithms we used and
 \subsection{Evaluation}
@@ -71,9 +80,9 @@ An example of this is visualized:
   \centering
   \caption{Representation of the remapping algorithm for clustering for points $z_3$ and $z_4$ }
 \end{figure}
-
+\newpage
 \subsubsection{Algorithm}
-The full algorithm is displayed here.
+The full algorithm for the perturbation:
 \input{Method/algorithms/rq1.tex}
 %% We apply the theory for planar laplace proposed by \citep{DBLP:journals/corr/abs-1212-1984}
 

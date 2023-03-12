@@ -7,7 +7,17 @@
 \usepackage{leading}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{hyperref}
 
+\let\oldFootnote\footnote
+\newcommand\nextToken\relax
+
+\renewcommand\footnote[1]{%
+    \oldFootnote{#1}\futurelet\nextToken\isFootnote}
+
+\newcommand\isFootnote{%
+    \ifx\footnote\nextToken\textsuperscript{,}\fi}
+    
 \newglossary*{genericmath}{Math symbols}
 \newglossary*{2dlaplace}{2D-Laplace symbols}
 \makeglossaries

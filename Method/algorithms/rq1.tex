@@ -1,4 +1,4 @@
-\begin{algorithm}[h]
+\begin{algorithm}[H]
   \caption{Full algorithm for perturbing cluster data based on planar/2D-Laplace \citep{DBLP:journals/corr/abs-1212-1984}}\label{alg:rq1}
   \begin{algorithmic}
     \Require $x \in X$  \Comment 2D array of points
@@ -18,5 +18,6 @@
     \State $y_{perturbed} \gets point_{i_y} + (z_{i_y} * \sin(\theta)) $ \Comment add noise to y-coordinate
     \State append $x_{perturbed}, y_{perturbed}$ to Z
     \EndFor
+    \State \Return Z
   \end{algorithmic}
 \end{algorithm}
