@@ -1,0 +1,16 @@
+\begin{algorithm}
+  \caption{Truncation algorithm ($T(\min, \max, x_0, z)$) for clustering with planar Laplace}\label{alg:truncaction-rq1}
+  \begin{algorithmic}
+    \Ensure $z$
+    \State $x_1, y_1 \gets x_{min}$
+    \State $x_2, y_2 \gets x_{max}$
+    \State $z_x, z_y \gets z$
+    \If{$x_1 < z_x < x_2$ and $y_1 < z_y < y_2$}
+    \State \Return $z$
+    \Else
+    \State $x, y \gets x_0$
+    \State $z_2 \gets LP(\epsilon, x, y)$ \Comment See formula 3.3.
+    \State \Return $T(x_{min}, x_{max}, x_0, z_2)$ \Comment Rerun recursively
+    \EndIf
+  \end{algorithmic}
+\end{algorithm}

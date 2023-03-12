@@ -20,26 +20,63 @@ For this research, we will use a synthetic dataset for all three research questi
     \toprule
     Records & Centers & Dimensions & Standard deviation & Research \\ \midrule
     200     & 4       & 2          & 0.60               & RQ 1     \\ \bottomrule
+    200     & 4       & 3          & 0.60               & RQ 2     \\ \bottomrule
+    200     & 4       & 5          & 0.60               & RQ 2     \\ \bottomrule
   \end{tabular}
 \end{table}
 
 Research question 3 uses a "real-world" dataset to properly assess the different dataset properties that are the subject of this research question.
-\todo[inline]{Describe datasets}
-
+\todo[inline]{Describe datasets (RQ3)}
 \section{Environmental setup}
-\todo[inline]{Describe the exact environment details}
-\section{Experiment setup}
+\todo[inline]{Describe operation system / specs}
+\todo[inline]{Describe (python libraries)}
+\section{Methods}
+This section explains what methods/ algorithms we used and
+\subsection{Evaluation}
+\todo[inline]{Describe evaluation methodology}
 \subsection{Research question 1}
+
 We propose several solutions for open issues based on the theoretical framework. \newline
-\textbf{Choosing r: } Based, on the idea of chatzikokolakis et al. to lower the size of the radius if the place is crowded, we can do the same with clustering.
+\subsubsection{Choosing r: } Based, on the idea of chatzikokolakis et al. to lower the size of the radius if the place is crowded, we can do the same with clustering.
 For this, we could use a metric like the standard division.
+This metric does exactly this, by providing the deviation from the mean:
+
 This metric increases based on clutteredness of the data, which allows us to generate a radius $r$ automatically regardless of domain.
 Therefore, we depend on the configurability of epsilon entirely on privacy level $l$.
-We define this metric as:
-\todo[inline]{Standard deviation * 2}
-\todo[inline]{Image example}
+The generic standard deviation can be defined as:
+\begin{equation}
+  \sigma = \sqrt{\frac{\sum{(x_i - \mu)^2}}{n}}
+\end{equation}
+The $\sigma$ being our diameter $d$, the radius $r$ is then calculated as $\frac{d}{2}$. \newline
+\subsubsection{Truncation: }
+We explained the theory for truncation earlier in paragraph \ref{theory:truncation}.
+The methods proposed work correctly for a geographic map where other (historic) locations for remapping are available.
 
-\textbf{Truncation: }
+However, it is difficult to apply this to data clustering.
+The number of data points is not known beforehand, so we may remap to a location that is too far away.
+This way we lose important clusters, which hurts the clustering.
+Also, the truncation threshold is so clear (the points are outside the known 2D domain), that we do not have to rely on historical data for remapping.
+Our algorithm can be much simpler by re-calculating the noise until it will be within the domain:
+\mycomment{
+  \begin{equation}
+    T(x_{max}, x_{min}, z, x_0) \begin{cases} z &\text{if } 0 < 1 \\ T(x_{max}, x_{min}, planarLaplace(epsilon, x_0), x_0)  &\text{else} \end{cases}
+  \end{equation}
+}
+\input{Method/algorithms/truncation-rq1.tex}
+This algorithm uses $x_{min}$ and $x_{max}$ to re-calculate the points within the domain using respectively the minimum X/Y and maximum X/Y.
+An example of this is visualized:
+\begin{figure}[h]
+  \includegraphics[width=0.8\textwidth]{Method/images/truncation-rq1.png}
+  \label{fig:truncation}
+  \centering
+  \caption{Representation of the remapping algorithm for clustering for points $z_3$ and $z_4$ }
+\end{figure}
+
+\subsubsection{Algorithm}
+The full algorithm is displayed here.
+\input{Method/algorithms/rq1.tex}
+%% We apply the theory for planar laplace proposed by \citep{DBLP:journals/corr/abs-1212-1984}
+
 \subsection{Research question 2}
 \subsection{Research question 3}
 \section{Results}

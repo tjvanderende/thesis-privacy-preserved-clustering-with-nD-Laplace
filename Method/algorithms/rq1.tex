@@ -1,0 +1,22 @@
+\begin{algorithm}[h]
+  \caption{Full algorithm for perturbing cluster data based on planar/2D-Laplace \citep{DBLP:journals/corr/abs-1212-1984}}\label{alg:rq1}
+  \begin{algorithmic}
+    \Require $x \in X$  \Comment 2D array of points
+    \Require $l \in R^ +$
+    \Ensure $z \in Z$ \Comment 2D array of perturbed points
+    \State $r = \frac{\sigma}{2}$ \Comment formula 4.1
+    \State $\epsilon = \frac{l}{r}$ \Comment Calculating privacy budget \citep{DBLP:journals/corr/abs-1212-1984}
+    \State $x_{min} \gets min(X)$
+    \State $x_{max} \gets max(X)$
+    \State $Z \gets []$
+    \For{$point_i \in X$}
+    \State $\theta \gets [0, \pi2]$       \Comment Random noise for $\theta$
+    \State $p \gets [0, 1]$
+    \State $z_i \gets C{_\epsilon}{^{-1}}(p)$       \Comment formula 3.2
+    \State $z_i \gets T(x_{min}, x_{max}, point_i, z_i)$ \Comment algorithm 1.
+    \State $x_{perturbed} \gets point_{i_x} + (z_{i_x} * \cos(\theta)) $ \Comment add noise to x-coordinate
+    \State $y_{perturbed} \gets point_{i_y} + (z_{i_y} * \sin(\theta)) $ \Comment add noise to y-coordinate
+    \State append $x_{perturbed}, y_{perturbed}$ to Z
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}

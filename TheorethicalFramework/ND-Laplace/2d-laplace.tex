@@ -57,17 +57,26 @@ We highlight the CDF function \todo{Can be moved to appendix} for assessing if t
 \end{equation}
 
 \newpage
-\subsection{Truncation}
+\subsection{Truncation} \label{theory:truncation}
+Because we have a finite space, it can be possible the perturbed points are off-graph (outside the given domain).
+The solution was described in step 5 of the Laplacian mechanism for 2D space. This explains the idea of remapping to the closest admissible location in set A.
+For which $A \subset \mathbb{R^2}$, where A is the set of admissible locations \citep{DBLP:journals/corr/abs-1212-1984}.
+This is also described by chatzikokolakis et al, who also describes a method to do it.
+When a perturbed point $z$ is located at the sea or in water, it is easily distinguishable as a fake location.
+They introduce a method to check this and efficiently remap to a nearby location.
+\todo[inline]{Describe the method}
+\todo[inline]{Analyze other methods}
+
 \subsection{Optimizing for clustering}
-The decision of the parameters for the algorithm is straightforward as it depends on the $\epsilon$.
+The decision of the parameters for the algorithm is straightforward as it depends on the $\epsilon$. \label{paragraph:choosing-r}
 This constant is calculated by defining the radius $r$ and the desired level of privacy $l$ and $\epsilon$ is calculated using $l/r$.
 The $l$ is a predefined constant $l \in R^+$ but usually will be below 10.
 For geographical data, the $r$ is straightforward and can be configured by using meters as a unit of measure.
 Therefore, $r = 200$ corresponds to a radius of 200m around point $x_0$.
 So, regarding clustering, it is a challenge to define a reasonable radius. \newline
-The $\epsilon$ can be considered the inverse unit of $r$ \cite{DBLP:journals/corr/abs-1212-1984}.
+The $\epsilon$ can be considered the inverse unit of $r$ \citep{DBLP:journals/corr/abs-1212-1984}.
 A radius can be defined per-use case based on how crowded a place is \citep{chatzikokolakis_constructing_2015}.
-This will not be relevant for clustering and should depend mostly on the complete domain. \newline
+\todo[inline]{Give the algorithm}
 
 A drawn area as shown in \ref{figure:parea} can be expressed as a perturbation area $P_{area}$ \citep{yan_perturb_2022-2}.
 This metric was formulated as:
