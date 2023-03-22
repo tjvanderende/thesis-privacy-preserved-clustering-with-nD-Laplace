@@ -1,20 +1,32 @@
 \input{TheorethicalFramework/ND-Laplace/general-math-symbols.tex}
 \section{2D-Laplace}
 The theory for this subject is heavily inspired by the paper that was written by Andrés et al. \citep{DBLP:journals/corr/abs-1212-1984}.
-This notion of geo-indistinguishability was introduced to solve the issue of privacy and location data.
+This notion of \gls{gi} was introduced to solve the issue of privacy and location data.
 It offers an alternative approach for differential privacy by adding noise to the location locally before sending it to a location-based system (LBS) like Google maps.
 This section starts with an introduction to mathematics for the planar and polar Laplace algorithm.
 For each of the different subsections, we visualize and explain open challenges and theoretic for applying them for clustering.
 \glsaddall
 \leading{10pt}
 \printglossary[type=genericmath, nonumberlist]
+\subsection*{Geo-indistinguishability}
+As mentioned in the previous section, the \gls{gi} method can be applied to preserve the privacy using a differential privacy method specific to spatial data.
+The formula to measure if an algorithm preserves $\epsilon$-geo-indistinguishability can be expressed as \citep{DBLP:journals/corr/abs-1212-1984}:
+\begin{equation}
+  K(x)(y) \le e^{\epsilon * d(x,x`)} * K(x`)(y)
+  \label{algo:2d-geo-indistinguishability}
+\end{equation}
+Where $K$ is a probability method reporting $x, x` \in X$ as $z \in Z$.
+The idea of this algorithm looks a lot like that of differential privacy using the La Place method; but includes distance.
+The intuition for this is that it displays the distinguishability level between two secret locations/points $x$ and $x`$ \citep{chatzikokolakis_constructing_2015}.
+An extension of this is called $d_x$-privacy and is a more general notation of distance-aware differential privacy.
+Their definition for \gls{gi} is, therefore, $d_2$-privacy, but is essentially the same as the proof provided for \gls{gi}.
 
 \subsection{Planar and polar Laplace}
 \printglossary[type=2dlaplace]
 
 The idea of planar Laplace is to generate an area around $x0 \in X$ according to the multivariate Laplace distribution \todo{Link}.
 The mechanism of planar Laplace is a modification of the Laplace algorithm to support distance \citep{DBLP:journals/corr/abs-1212-1984}.
-This distance method $dist(x, x_`')$ is defined as the Euclidean distance \todo{Link} between two points or sets.
+This distance method $dist(x, x_`)$ is defined as the Euclidean distance \todo{Link} between two points or sets.
 Recalling the definition of Laplace, this method $|x-x_`|$ is replaced by the distance metric.
 Hence, the definition of the Probability Density Function (pdf) by Andrés et al. is:
 \begin{equation}
@@ -23,8 +35,7 @@ Hence, the definition of the Probability Density Function (pdf) by Andrés et al
 Which is the likelihood a generated point $z \in Z$ is close to $x0$.
 The method works for Cartesian coordinates but was modified to support polar coordinates by including $\theta$.
 So each point is reflected as $(r, \theta)$ and can be modified by using a slight modification to work for polar Laplace.
-\newpage
-A point $z \in Z$ where $z = (r, \theta)$ is randomly generated using two separate methods.
+A point $z \in Z$ where $z = (r, \theta)$ is randomly generated using two separate methods for calculating $r$ and $\theta$.
 \begin{figure}[h] \label{figure:parea}
   \includegraphics[scale=0.6]{TheorethicalFramework/ND-Laplace/Images/polar-laplace.png}
   \centering

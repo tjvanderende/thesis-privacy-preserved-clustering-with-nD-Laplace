@@ -33,30 +33,61 @@ The experiments are run using a Docker container which runs a pre-configured dis
 It includes a pre-installed Anaconda environment for python \footnote{https://github.com/devcontainers/images/tree/main/src/anaconda}\footnote{tag: mcr.microsoft.com/devcontainers/anaconda:0-3}.
 We run the container using the dev-container feature for visual-studio code \footnote{https://code.visualstudio.com/docs/devcontainers/containers}.
 This allows us to create a reproducible experiment environment.
-
+\newpage
 \subsection{Libraries \& code versions}
 We use python version 3.9.13 with Jupyter notebook for creating a reproducible experimental environment.
 The packages for python are:
+\begin{enumerate}
+  \item Scikit-learn: 1.0.*
+  \item Yellow-brick: 1.5
+  \item Numpy: 1.24.*
+  \item Pandas: 1.4.*
+  \item Seaborn: 0.11.*
+  \item Mathplotlib: 3.5.*
+\end{enumerate}
 
-\newpage
 \section{Methods}
-This section explains what methods/ algorithms we used and
+This section explains what methods/ algorithms we used and how we evaluate them.
+\subsection{Clustering methods}
+\todo[inline]{Exact parameters we used for the algorithms}
+\todo[inline]{Which algorithms we used}
 \subsection{Evaluation}
-\todo[inline]{Describe evaluation methodology}
+With differential privacy, it is a trade-off of utility versus privacy.
+Therefore, for the evaluation of the 2D/3D-Laplace algorithms, we compare both criteria to achieve a consensus between utility and privacy.
+\subsubsection{Utility}
+The utility of the cluster algorithm is decided by calculating the \gls{ami} between the baseline cluster algorithms.
+The clustering algorithm is trained using the plain data and functions as the ground truth \citep{9646464,sun_distributed_2019}.
+Because of this, we are being able to calculate the \gls{ami} and compare the centroids between the non-private and privately trained clusters.
+To reduce the possible bias of results we executed them 10 times for multiple privacy budgets and report the average for each \citep{9679364}.
+\todo[inline]{Explain why AMI and not another}
+
+The second way to measure utility is to calculate the error between the non-private and perturbed data \citep{9679364,sun_distributed_2019,xia_distributed_2020-1}.
+There are several methods to do this (See \ref{theory:evaluate}), but we use the \gls{aee}.
+As with \gls{ami} we run the calculations for multiple privacy budgets 10 times and report the average for each budget.
+\todo[inline]{Explain why AEE and not RE}
+
+\subsubsection{Privacy}
+The most important one here is the preserving of \gls{gi}.
+This validates that we applied the algorithms in the right way and automatically inherit the strong privacy guarantees provided by \gls{gi} (\ref{algo:2d-geo-indistinguishability}).
+A disadvantage of this method is that it cannot be used to achieve a clear representation of privacy (it is either "yes" or "no").
+Therefore, we also calculate the average Euclidean distance between the non-private and perturbed data.
+
 \subsection{Research question 1}
 
-We propose several solutions for open issues based on the theoretical framework. \newline
-\subsubsection{Choosing r: } Based, on the idea of chatzikokolakis et al. to lower the size of the radius if the place is crowded, we can do the same with clustering.
-For this, we could use a metric like the standard division.
-This metric does exactly this, by providing the deviation from the mean:
+\mycomment{
+  We propose several solutions for open issues based on the theoretical framework. \newline
+  \subsubsection{Choosing r: } Based, on the idea of chatzikokolakis et al. to lower the size of the radius if the place is crowded, we can do the same with clustering.
+  For this, we could use a metric like the standard division.
+  This metric does exactly this, by providing the deviation from the mean:
 
-This metric increases based on clutteredness of the data, which allows us to generate a radius $r$ automatically regardless of domain.
-Therefore, we depend on the configurability of epsilon entirely on privacy level $l$.
-The generic standard deviation can be defined as:
-\begin{equation}
-  \sigma = \sqrt{\frac{\sum{(x_i - \mu)^2}}{n}}
-\end{equation}
-The $\sigma$ being our diameter $d$, the radius $r$ is then calculated as $\frac{d}{2}$. \newline
+  This metric increases based on clutteredness of the data, which allows us to generate a radius $r$ automatically regardless of domain.
+  Therefore, we depend on the configurability of epsilon entirely on privacy level $l$.
+  The generic standard deviation can be defined as:
+  \begin{equation}
+    \sigma = \sqrt{\frac{\sum{(x_i - \mu)^2}}{n}}
+  \end{equation}
+  The $\sigma$ being our diameter $d$, the radius $r$ is then calculated as $\frac{d}{2}$. \newline
+}
 \subsubsection{Truncation: }
 We explained the theory for truncation earlier in paragraph \ref{theory:truncation}.
 The methods proposed work correctly for a geographic map where other (historic) locations for remapping are available.
@@ -80,6 +111,10 @@ An example of this is visualized:
   \centering
   \caption{Representation of the remapping algorithm for clustering for points $z_3$ and $z_4$ }
 \end{figure}
+
+\subsubsection{Probability metric $K(x)(Z)$}
+\todo[inline]{Explain the probability metric $K$ we used}
+
 \newpage
 \subsubsection{Algorithm}
 The full algorithm for the perturbation:
@@ -87,8 +122,14 @@ The full algorithm for the perturbation:
 %% We apply the theory for planar laplace proposed by \citep{DBLP:journals/corr/abs-1212-1984}
 
 \subsection{Research question 2}
+\todo[inline]{Starts after RQ1}
 \subsection{Research question 3}
+\todo[inline]{Starts after RQ2}
 \section{Results}
 \subsection{Research question 1}
+For research question 1 the results are 2-dimensional plotted using a line diagram.
+\subsubsection{Utility}
+\subsubsection{Privacy}
+
 \subsection{Research question 2}
 \subsection{Research question 3}
