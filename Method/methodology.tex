@@ -94,7 +94,7 @@ The methods proposed work correctly for a geographic map where other (historic) 
 
 However, it is difficult to apply this to data clustering.
 The number of data points is not known beforehand, so we may remap to a location that is too far away.
-This way we lose important clusters, which hurts the clustering.
+This way we lose important distance information, which hurts the clustering.
 Also, the truncation threshold is so clear (the points are outside the known 2D domain), that we do not have to rely on historical data for remapping.
 Our algorithm can be much simpler by re-calculating the noise until it will be within the domain:
 \mycomment{

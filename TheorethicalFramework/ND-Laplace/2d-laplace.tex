@@ -61,11 +61,14 @@ This is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals
   \caption{Representation of converting the perturbed point $z = (r, \theta)$ to a point ${z_x, z_y}$}
 \end{figure}
 
-%% If we want to know if a point is within the radius, 
-We highlight the CDF function \todo{Can be moved to appendix} for assessing if the probability of a random point falls between 0 and $r$:
-\begin{equation}
-  C{\epsilon}(r) = D_\epsilon,R(p)dp = \int_{0}^{r} 1 - (1 + \epsilon r ) e^{-\epsilon r}
-\end{equation}
+\mycomment{
+  %% If we want to know if a point is within the radius, 
+  We highlight the CDF function \todo{Can be moved to appendix} for assessing if the probability of a random point falls between 0 and $r$:
+  \begin{equation}
+    C{\epsilon}(r) = D_\epsilon,R(p)dp = \int_{0}^{r} 1 - (1 + \epsilon r ) e^{-\epsilon r}
+  \end{equation}
+}
+
 
 \newpage
 \subsection{Truncation} \label{theory:truncation}
@@ -96,4 +99,4 @@ This metric was formulated as:
 \end{equation}
 The method loops through each perturbed point $r$ on center $x_0$ (recall \ref{figure:parea}) and calculates the Euclidean distance for an $n$ amount of perturbation points.
 Although the method does not contribute to the Laplace algorithm, it is useful for visualization purposes.
-
+\newpage
