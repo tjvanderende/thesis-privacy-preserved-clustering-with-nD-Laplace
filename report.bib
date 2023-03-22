@@ -25,16 +25,72 @@
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\QPJZTQGX\\Min e.a. - 2022 - 3D geo-indistinguishability for indoor location-ba.pdf}
 }
 
+@inproceedings{9679364,
+  title = {Private Distributed {{K-means}} Clustering on Interval Data},
+  booktitle = {2021 {{IEEE}} International Performance, Computing, and Communications Conference ({{IPCCC}})},
+  author = {Huang, D. and Yao, X. and An, S. and Ren, S.},
+  year = {2021},
+  month = oct,
+  pages = {1--9},
+  publisher = {{IEEE Computer Society}},
+  address = {{Los Alamitos, CA, USA}},
+  doi = {10.1109/IPCCC51483.2021.9679364},
+  abstract = {K-means clustering has been heavily employed to mine valuable insights from interval data. Nevertheless, serious privacy leakage concerns are stumbling blocks impeding its widespread application. To quantify the privacy of small and large-scale interval data, we introduce two notions of \&amp;\#x03B1;-Condensed Local Differential Privacy and \&amp;\#x03F5;-Local Differential Privacy, and propose two distance-aware perturbation mechanisms of \&amp;\#x03B1;-exponential and square wave mechanisms. Rigorous theoretical analysis proves that our proposed mechanisms satisfy these two privacy notions. The experimental results built on multiple synthesized and real datasets show that our proposed mechanisms can provide more accurate clustering results than prior work, such as Randomized Response, Generalized Randomized Response, and Optimized Local Hash.},
+  keywords = {conferences,correlation,differential privacy,distributed databases,perturbation methods,privacy},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\6F8LBU8D\\Huang e.a. - 2021 - Private distributed K-means clustering on interval.pdf}
+}
+
 @misc{ahuja_utility-preserving_2019,
   title = {A {{Utility-Preserving}} and {{Scalable Technique}} for {{Protecting Location Data}} with {{Geo-Indistinguishability}}},
   author = {Ahuja, Ritesh and Ghinita, Gabriel and Shahabi, Cyrus},
   year = {2019},
   publisher = {{OpenProceedings.org}},
   doi = {10.5441/002/EDBT.2019.20},
+  urldate = {2023-02-26},
   abstract = {Location-based apps provide users with personalized services tailored to their geographical position. This is highly-beneficial for mobile users, who are able to find points of interest close to their location, or connect with nearby friends. However, sharing location data with service providers also introduces privacy concerns. An adversary with access to fine-grained user locations can infer private details about individuals. Geo-indistinguishability (GeoInd) adapts the popular differential privacy (DP) model to make it suitable for protecting users' location information. However, existing techniques that implement GeoInd have major drawbacks. Some solutions, such as the planar Laplace mechanism, significantly lower data utility by adding excessive noise. Other approaches, such as the optimal mechanism, achieve good utility, but only work for small sets of candidate locations due to the use of computationally-expensive linear programming. In most cases, locations are used to answer online queries, so a quick response time is essential. In this paper, we propose a technique that achieves GeoInd and scales to large datasets while preserving data utility. Our central idea is to use the composability property of GeoInd to create a multiple-step algorithm that can be used in conjunction with a spatial index. We preserve utility by applying accurate GeoInd mechanisms and we achieve scalability by pruning the solution search space with the help of the index when seeking high-utility outcomes. Our extensive performance evaluation on top of real location datasets from social media apps shows that the proposed technique outperforms significantly the benchmark in terms of utility and/or computational overhead.},
   langid = {english},
   keywords = {Database Technology},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\VN38ZL5N\\Ahuja et al. - 2019 - A Utility-Preserving and Scalable Technique for Pr.pdf}
+}
+
+@article{alvim_local_nodate,
+  title = {Local {{Differential Privacy}} on {{Metric Spaces}}: Optimizing the Trade-off with Utility},
+  author = {Alvim, Mario S and Chatzikokolakis, Konstantinos and Palamidessi, Catuscia and Pazii, Anna},
+  abstract = {Local differential privacy (LPD) is a distributed variant of differential privacy (DP) in which the obfuscation of the sensitive information is done at the level of the individual records, and in general it is used to sanitize data that are collected for statistical purposes. LPD has the advantage it does not need to assume a trusted third party. On the other hand LDP in general requires more noise than DP to achieve the same level of protection, with negative consequences on the utility. In practice, utility becomes acceptable only on very large collections of data, and this is the reason why LDP is especially successful among big companies such as Apple and Google, which can count on a huge number of users. In this paper, we propose a variant of LDP suitable for metric spaces, such as location data or energy consumption data, and we show that it provides a much better utility for the same level of privacy.},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\VXCWK8LH\\Alvim et al. - Local Differential Privacy on Metric Spaces optim.pdf}
+}
+
+@incollection{bailey_privacy_2016,
+  title = {Privacy {{Aware K-Means Clustering}} with {{High Utility}}},
+  booktitle = {Advances in {{Knowledge Discovery}} and {{Data Mining}}},
+  author = {Nguyen, Thanh Dai and Gupta, Sunil and Rana, Santu and Venkatesh, Svetha},
+  editor = {Bailey, James and Khan, Latifur and Washio, Takashi and Dobbie, Gill and Huang, Joshua Zhexue and Wang, Ruili},
+  year = {2016},
+  volume = {9652},
+  pages = {388--400},
+  publisher = {{Springer International Publishing}},
+  address = {{Cham}},
+  doi = {10.1007/978-3-319-31750-2_31},
+  urldate = {2023-03-15},
+  isbn = {978-3-319-31749-6 978-3-319-31750-2},
+  langid = {english}
+}
+
+@inproceedings{cai_dp-ap_2020,
+  title = {{{DP-AP}}: {{Differential Privacy-Preserving Affinity Propagation Clustering}}},
+  shorttitle = {{{DP-AP}}},
+  booktitle = {2020 {{IEEE}} 14th {{International Conference}} on {{Big Data Science}} and {{Engineering}} ({{BigDataSE}})},
+  author = {Cai, Hanbo and Wang, Jinyan and Liu, Xiaohong and Li, Xianxian},
+  year = {2020},
+  month = dec,
+  pages = {73--79},
+  publisher = {{IEEE}},
+  address = {{Guangzhou, China}},
+  doi = {10.1109/BigDataSE50710.2020.00018},
+  urldate = {2022-12-22},
+  isbn = {978-1-66540-396-2},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\LH7Y4ZSA\\Cai e.a. - 2020 - DP-AP Differential Privacy-Preserving Affinity Pr.pdf}
 }
 
 @article{chatzikokolakis_constructing_2015,
@@ -50,6 +106,7 @@
   pages = {156--170},
   issn = {2299-0984},
   doi = {10.1515/popets-2015-0023},
+  urldate = {2023-03-10},
   abstract = {With the increasing popularity of hand-held devices, location-based applications and services have access to accurate and real-time location information, raising serious privacy concerns for their users. The recently introduced notion of geo-indistinguishability tries to address this problem by adapting the well-known concept of differential privacy to the area of location-based systems. Although geo-indistinguishability presents various appealing aspects, it has the problem of treating space in a uniform way, imposing the addition of the same amount of noise everywhere on the map. In this paper we propose a novel elastic distinguishability metric that warps the geometrical distance, capturing the different degrees of density of each area. As a consequence, the obtained mechanism adapts the level of noise while achieving the same degree of privacy everywhere. We also show how such an elastic metric can easily incorporate the concept of a "geographic fence" that is commonly employed to protect the highly recurrent locations of a user, such as his home or work. We perform an extensive evaluation of our technique by building an elastic metric for Paris' wide metropolitan area, using semantic information from the OpenStreetMap database. We compare the resulting mechanism against the Planar Laplace mechanism satisfying standard geo-indistinguishability, using two real-world datasets from the Gowalla and Brightkite location-based social networks. The results show that the elastic mechanism adapts well to the semantics of each area, adjusting the noise as we move outside the city center, hence offering better overall privacy.},
   archiveprefix = {arxiv},
   keywords = {Computer Science - Cryptography and Security},
@@ -66,6 +123,13 @@
   pages = {308--328}
 }
 
+@article{chatzikokolakis_practical_nodate,
+  title = {Practical {{Mechanisms}} for {{Location Privacy}}},
+  author = {Chatzikokolakis, Konstantinos and ElSalamouny, Ehab and Palamidessi, Catuscia},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\355U7PAM\\Chatzikokolakis et al. - Practical Mechanisms for Location Privacy.pdf}
+}
+
 @article{DBLP:journals/corr/abs-1212-1984,
   title = {Geo-Indistinguishability: {{Differential}} Privacy for Location-Based Systems},
   author = {Andr{\'e}s, Miguel E. and Bordenabe, Nicol{\'a}s Emilio and Chatzikokolakis, Konstantinos and Palamidessi, Catuscia},
@@ -80,6 +144,22 @@
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\HVVT4GUR\\Andrés e.a. - 2012 - Geo-indistinguishability Differential privacy for.pdf}
 }
 
+@article{dong_limitations_2018,
+  title = {On the Limitations of Existing Notions of Location Privacy},
+  author = {Dong, Kai and Guo, Taolin and Ye, Haibo and Li, Xuansong and Ling, Zhen},
+  year = {2018},
+  month = sep,
+  journal = {Future Generation Computer Systems},
+  volume = {86},
+  pages = {1513--1522},
+  issn = {0167739X},
+  doi = {10.1016/j.future.2017.05.045},
+  urldate = {2023-03-16},
+  abstract = {In the context of a single report of location information, existing researches define location privacy by adversary's uncertainty, inaccuracy, or incorrectness of the estimation, or by geo-indistinguishability which is a generalization of differential privacy. Each of these existing notions has problems in some specific scenarios. In this paper we illustrate the limitations of existing notions by constructing such scenarios, and introduce a formal definition on location privacy by quantifying the distance between the prior and posterior distribution over the possible locations. Further more, we show how to construct a near-optimal obfuscation mechanism by solving an optimization problem. We compare our proposed mechanism with the Laplace noise based geo-indistinguishable mechanism, and Shokri's optimal obfuscation mechanism, using both our proposed privacy metric and the traditional metric based on the estimated distance errors. The results show that our proposed metric better describes location privacy and our proposed mechanism makes a better tradeoff between privacy and utility.},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\C45AELKE\\Dong et al. - 2018 - On the limitations of existing notions of location.pdf}
+}
+
 @inproceedings{he_laplacian_2005,
   title = {Laplacian {{Score}} for {{Feature Selection}}},
   booktitle = {Advances in {{Neural Information Processing Systems}}},
@@ -87,6 +167,7 @@
   year = {2005},
   volume = {18},
   publisher = {{MIT Press}},
+  urldate = {2023-02-15},
   abstract = {In supervised learning scenarios, feature selection has been studied widely in the literature. Selecting features in unsupervised learning scenarios is a much harder problem, due to the absence of class labels that would guide the search for relevant information. And, almost all of previous unsupervised feature selection methods are "wrapper" techniques that require a learning algorithm to evaluate the candidate feature subsets. In this paper, we propose a "filter" method for feature selection which is independent of any learning algorithm. Our method can be performed in either supervised or unsupervised fashion. The proposed method is based on the observation that, in many real world classification problems, data from the same class are often close to each other. The importance of a feature is evaluated by its power of locality preserving, or, Laplacian Score. We compare our method with data variance (unsupervised) and Fisher score (supervised) on two data sets. Experimental results demonstrate the effectiveness and efficiency of our algorithm.},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\MEYJS6AX\\He e.a. - 2005 - Laplacian Score for Feature Selection.pdf}
 }
@@ -103,6 +184,7 @@
   pages = {273--324},
   issn = {0004-3702},
   doi = {10.1016/S0004-3702(97)00043-X},
+  urldate = {2023-02-15},
   abstract = {In the feature subset selection problem, a learning algorithm is faced with the problem of selecting a relevant subset of features upon which to focus its attention, while ignoring the rest. To achieve the best possible performance with a particular learning algorithm on a particular training set, a feature subset selection method should consider how the algorithm and the training set interact. We explore the relation between optimal feature subset selection and relevance. Our wrapper method searches for an optimal feature subset tailored to a particular algorithm and a domain. We study the strengths and weaknesses of the wrapper approach and show a series of improved designs. We compare the wrapper approach to induction without feature subset selection and to Relief, a filter approach to feature subset selection. Significant improvement in accuracy is achieved for some datasets for the two families of induction algorithms used: decision trees and Naive-Bayes.},
   langid = {english},
   keywords = {Classification,Feature selection,Filter,Wrapper},
@@ -119,10 +201,22 @@
   pages = {1110--1118},
   issn = {2041-210X},
   doi = {10.1111/2041-210X.12568},
+  urldate = {2023-03-09},
   abstract = {The Lambert W function is a mathematical function with a long history, but which was named and rigorously defined relatively recently. It is closely related to the logarithmic function and arises from many models in the natural sciences, including a surprising number of problems in ecology and evolution. I describe the basic properties of the function and present examples of its application to models of ecological and evolutionary processes. The Lambert W function makes it possible to solve explicitly several models where this is not possible with elementary functions. I present examples of such models from existing literature, as well as novel models. Solving models explicitly with the Lambert W function can provide deeper insight and a new point of view on a biological problem. Explicit solutions with the Lambert W function are easily amenable to further mathematical operations, such as differentiation and integration. These advantages apply to a wide range of models, from the marginal value theorem to population growth rates and disease epidemics.},
   langid = {english},
   keywords = {calculus,explicit solution,fertilization kinetics,Lambert W function,Lotka–Volterra model,marginal value theorem,mate search,modelling,population growth rate,SIR model},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\S77QF2U8\\Lehtonen - 2016 - The Lambert W function in ecological and evolution.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\QYQTRQAH\\2041-210X.html}
+}
+
+@inproceedings{m_alvim_invited_2018,
+  title = {Invited {{Paper}}: {{Local Differential Privacy}} on {{Metric Spaces}}: {{Optimizing}} the {{Trade-Off}} with {{Utility}}},
+  booktitle = {2018 {{IEEE}} 31st {{Computer Security Foundations Symposium}} ({{CSF}})},
+  author = {{M. Alvim} and {K. Chatzikokolakis} and {C. Palamidessi} and {A. Pazii}},
+  year = {2018},
+  month = jul,
+  pages = {262--267},
+  doi = {10.1109/CSF.2018.00026},
+  isbn = {2374-8303}
 }
 
 @article{mitra_unsupervised_2002,
@@ -136,9 +230,19 @@
   pages = {301--312},
   issn = {01628828},
   doi = {10.1109/34.990133},
+  urldate = {2023-02-15},
   abstract = {\DH In this article, we describe an unsupervised feature selection algorithm suitable for data sets, large in both dimension and size. The method is based on measuring similarity between features whereby redundancy therein is removed. This does not need any search and, therefore, is fast. A new feature similarity measure, called maximum information compression index, is introduced. The algorithm is generic in nature and has the capability of multiscale representation of data sets. The superiority of the algorithm, in terms of speed and performance, is established extensively over various real-life data sets of different sizes and dimensions. It is also demonstrated how redundancy and information loss in feature selection can be quantified with an entropy measure.},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\E9SIXSRR\\Mitra e.a. - 2002 - Unsupervised feature selection using feature simil.pdf}
+}
+
+@misc{noauthor_wayback_2020,
+  title = {Wayback {{Machine}}},
+  year = {2020},
+  month = sep,
+  urldate = {2023-03-16},
+  howpublished = {https://web.archive.org/web/20200913222203/https://arxiv.org/ftp/arxiv/papers/1410/1410.7744.pdf},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\M56L7GUH\\2020 - Wayback Machine.pdf}
 }
 
 @inproceedings{oya_is_2017,
@@ -151,10 +255,28 @@
   publisher = {{ACM}},
   address = {{Dallas Texas USA}},
   doi = {10.1145/3139550.3139555},
+  urldate = {2023-02-28},
   abstract = {Since its proposal in 2013, geo-indistinguishability has been consolidated as a formal notion of location privacy, generating a rich body of literature building on this idea. A problem with most of these follow-up works is that they blindly rely on geo-indistinguishability to provide location privacy, ignoring the numerical interpretation of this privacy guarantee. In this paper we provide an alternative formulation of geo-indistinguishability as an adversary error, and use it to show that the privacy vs. utility trade-off that can be obtained is not as appealing as implied by the literature. We also show that although geo-indistinguishability guarantees a lower bound on the adversary's error, this comes at the cost of achieving poorer performance than other noise generation mechanisms in terms of average error, and enabling the possibility of exposing obfuscated locations that are useless from the quality of service point of view.},
   isbn = {978-1-4503-5175-1},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\YFSMMX5M\\Oya et al. - 2017 - Is Geo-Indistinguishability What You Are Looking f.pdf}
+}
+
+@inproceedings{shejwalkar_revisiting_2019,
+  title = {Revisiting Utility Metrics for Location Privacy-Preserving Mechanisms},
+  booktitle = {Proceedings of the 35th {{Annual Computer Security Applications Conference}}},
+  author = {Shejwalkar, Virat and Houmansadr, Amir and {Pishro-Nik}, Hossein and Goeckel, Dennis},
+  year = {2019},
+  month = dec,
+  pages = {313--327},
+  publisher = {{ACM}},
+  address = {{San Juan Puerto Rico USA}},
+  doi = {10.1145/3359789.3359829},
+  urldate = {2023-03-17},
+  abstract = {The literature has extensively studied various location privacypreserving mechanisms (LPPMs) in order to improve the location privacy of the users of location-based services (LBSes). Such privacy, however, comes at the cost of degrading the utility of the underlying LBSes. The main body of previous work has used a generic distance-only based metric to quantify the quality loss incurred while employing LPPMs. In this paper, we argue that using such generic utility metrics misleads the design and evaluation of LPPMs, since generic utility metrics do not capture the actual utility perceived by the users. We demonstrate this for ride-hailing services, a popular class of LBS with complex utility behavior. Specifically, we design a privacy-preserving ride-hailing service, called PRide, and demonstrate the significant distinction between its generic and tailored metrics. Through various experiments we show the significant implications of using generic utility metrics in the design and evaluation of LPPMs. Our work concludes that LPPM design and evaluation should use utility metrics that are tailored to the individual LBSes.},
+  isbn = {978-1-4503-7628-0},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\NS6QKNSZ\\Shejwalkar et al. - 2019 - Revisiting utility metrics for location privacy-pr.pdf}
 }
 
 @article{solorio-fernandez_review_2020,
@@ -171,13 +293,36 @@
   abstract = {In recent years, unsupervised feature selection methods have raised considerable interest in many research areas; this is mainly due to their ability to identify and select relevant features without needing class label information. In this paper, we provide a comprehensive and structured review of the most relevant and recent unsupervised feature selection methods reported in the literature. We present a taxonomy of these methods and describe the main characteristics and the fundamental ideas they are based on. Additionally, we summarized the advantages and disadvantages of the general lines in which we have categorized the methods analyzed in this review. Moreover, an experimental comparison among the most representative methods of each approach is also presented. Finally, we discuss some important open challenges in this research area.}
 }
 
-@article{sun_distributed_2019-1,
-  title = {Distributed Clustering in the Anonymized Space with Local Differential Privacy},
+@misc{sun_distributed_2019,
+  title = {Distributed {{Clustering}} in the {{Anonymized Space}} with {{Local Differential Privacy}}},
   author = {Sun, Lin and Zhao, Jun and Ye, Xiaojun},
   year = {2019},
-  journal = {arXiv preprint arXiv:1906.11441},
-  eprint = {1906.11441},
-  archiveprefix = {arxiv}
+  month = jun,
+  number = {arXiv:1906.11441},
+  eprint = {arXiv:1906.11441},
+  publisher = {{arXiv}},
+  urldate = {2022-12-22},
+  abstract = {Clustering and analyzing on collected data can improve user experiences and quality of services in big data, IoT applications. However, directly releasing original data brings potential privacy concerns, which raises challenges and opportunities for privacy-preserving clustering. In this paper, we study the problem of non-interactive clustering in distributed setting under the framework of local differential privacy. We first extend the Bit Vector, a novel anonymization mechanism to be functionality-capable and privacy-preserving. Based on the modified encoding mechanism, we propose kCluster algorithm that can be used for clustering in the anonymized space. We show the modified encoding mechanism can be easily implemented in existing clustering algorithms that only rely on distance information, such as DBSCAN. Theoretical analysis and experimental results validate the effectiveness of the proposed schemes.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Cryptography and Security,Computer Science - Databases},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\8VTXE9HS\\Sun e.a. - 2019 - Distributed Clustering in the Anonymized Space wit.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\IRX6PFZC\\1906.html}
+}
+
+@article{sun_privbv_2022,
+  title = {{{PrivBV}}: {{Distance-aware}} Encoding for Distributed Data with Local Differential Privacy},
+  shorttitle = {{{PrivBV}}},
+  author = {Sun, Lin and Ping, Guolou and Ye, Xiaojun},
+  year = {2022},
+  month = apr,
+  journal = {Tsinghua Science and Technology},
+  volume = {27},
+  number = {2},
+  pages = {412--421},
+  issn = {1007-0214},
+  doi = {10.26599/TST.2021.9010027},
+  abstract = {Recently, local differential privacy (LDP) has been used as the de facto standard for data sharing and analyzing with high-level privacy guarantees. Existing LDP-based mechanisms mainly focus on learning statistical information about the entire population from sensitive data. For the first time in the literature, we use LDP for distance estimation between distributed datato support more complicated data analysis. Specifically, we propose PrivBV\textemdash a locally differentially private bit vector mechanism with a distance-aware property in the anonymized space. We also present an optimization strategy for reducing privacy leakage in the high-dimensional space. The distance-aware property of PrivBV brings new insights into complicated data analysis in distributed environments. As study cases, we show the feasibility of applying PrivBV to privacy-preserving record linkage and non-interactive clustering. Theoretical analysis and experimental results demonstrate the effectiveness of the proposed scheme.},
+  keywords = {Data analysis,Differential privacy,Distributed databases,Encoding,Estimation,local differential privacy,non-interactive clustering,Privacy,privacy-preserving data publishing,Sun},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\B8WDVH5J\\Sun e.a. - 2022 - PrivBV Distance-aware encoding for distributed da.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\JPL3C98G\\9552667.html}
 }
 
 @article{vinh_information_nodate-2,
@@ -186,6 +331,20 @@
   abstract = {Information theoretic measures form a fundamental class of measures for comparing clusterings, and have recently received increasing interest. Nevertheless, a number of questions concerning their properties and inter-relationships remain unresolved. In this paper, we perform an organized study of information theoretic measures for clustering comparison, including several existing popular measures in the literature, as well as some newly proposed ones. We discuss and prove their important properties, such as the metric property and the normalization property. We then highlight to the clustering community the importance of correcting information theoretic measures for chance, especially when the data size is small compared to the number of clusters present therein. Of the available information theoretic based measures, we advocate the normalized information distance (NID) as a general measure of choice, for it possesses concurrently several important properties, such as being both a metric and a normalized measure, admitting an exact analytical adjusted-for-chance form, and using the nominal [0, 1] range better than other normalized variants.},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\BB3A2I9Q\\Vinh e.a. - Information Theoretic Measures for Clusterings Com.pdf}
+}
+
+@article{wood_differential_2018,
+  title = {Differential {{Privacy}}: {{A Primer}} for a {{Non-Technical Audience}}},
+  shorttitle = {Differential {{Privacy}}},
+  author = {Wood, Alexandra and Altman, Micah and Bembenek, Aaron and Bun, Mark and Gaboardi, Marco and Honaker, James and Nissim, Kobbi and O'Brien, David and Steinke, Thomas and Vadhan, Salil},
+  year = {2018},
+  journal = {SSRN Electronic Journal},
+  issn = {1556-5068},
+  doi = {10.2139/ssrn.3338027},
+  urldate = {2023-03-17},
+  abstract = {This document is a primer on differential privacy, which is a formal mathematical framework for guaranteeing privacy protection when analyzing or releasing statistical data. Recently emerging from the theoretical computer science literature, differential privacy is now in initial stages of implementation and use in various academic, industry, and government settings. Using intuitive illustrations and limited mathematical formalism, this document provides an introduction to differential privacy for non-technical practitioners, who are increasingly tasked with making decisions with respect to differential privacy as it grows more widespread in use. In particular, the examples in this document illustrate ways in which social scientists can conceptualize the guarantees provided by differential privacy with respect to the decisions they make when managing personal data about research subjects and informing them about the privacy protection they will be afforded.},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\Y9WGZU9N\\Wood et al. - 2018 - Differential Privacy A Primer for a Non-Technical.pdf}
 }
 
 @article{xia_distributed_2020-1,
@@ -209,6 +368,7 @@
   pages = {277--284},
   issn = {01678655},
   doi = {10.1016/j.patrec.2019.12.022},
+  urldate = {2023-02-15},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\8Z855R66\\Yan e.a. - 2020 - An efficient unsupervised feature selection proced.pdf}
 }
@@ -225,6 +385,7 @@
   publisher = {{Nature Publishing Group}},
   issn = {2045-2322},
   doi = {10.1038/s41598-022-24893-0},
+  urldate = {2023-02-26},
   abstract = {Location-based services (LBS) are capable of providing location-based information retrieval, traffic navigation, entertainment services, emergency rescues, and several similar services primarily on the premise of the geographic location of users or mobile devices. However, in the process of introducing a new user experience, it is also easy to expose users' specific location which can result in more private information leakage. Hence, the protection of location privacy remains one of the critical issues of the location-based services. Moreover, the areas where humans work and live have different location semantics and sensitivities according to their different social functions. Although the privacy protection of a user's real location can be achieved by the perturbation algorithm, the attackers may employ the semantics information of the perturbed location to infer a user's real location semantics in an attempt to spy on a user's privacy to certain extent. In order to mitigate the above semantics inference attack, and further improve the quality of the location-based services, this paper hereby proposes a user side location perturbation and optimization algorithm based on geo-indistinguishability and location semantics. The perturbation area satisfying geo-indistinguishability is thus generated according to the planar Laplace mechanism and optimized by combining the semantics information and time characteristics of the location. The optimum perturbed location that is able to satisfy the minimum loss of location-based service quality is selected via a linear programming method, and can be employed to replace the real location of the user so as to prevent the leakage of the privacy. Experimental comparison of the actual road network and location semantics dataset manifests that the proposed method reduces approximately 37\% perturbation distance in contrast to the other state-of-the-art methods, maintains considerably lower similarity of location semantics, and improves region counting query accuracy by a margin of around 40\%.},
   copyright = {2022 The Author(s)},
   langid = {english},
