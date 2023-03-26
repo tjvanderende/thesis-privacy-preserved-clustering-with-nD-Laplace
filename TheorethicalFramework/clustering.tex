@@ -58,11 +58,12 @@ The same applies to DBSCAN, which scores relatively high on SI and DB due to the
 \subsubsection{Existing literature}
 %A recent and much-cited study uses \gls{ari} and accuracy as metrics for evaluating K-Means \cite{ahmed_k-means_2020}.
 %The accuracy is measured by calculating the percentage of the correct predicted labels and their truth labels.
-Comparable studies with differential privacy use mostly external validation \citep{xia_distributed_2020-1, sun_privbv_2022}.
+Comparable studies with differential privacy use external validation \citep{xia_distributed_2020-1, sun_privbv_2022}.
+Their experiment setup uses a so-called non-private cluster algorithm as external validation.
+This cluster algorithm is trained without the perturbed data and compared with the same clustering algorithm that is trained with perturbed data.
+Thus, the non-private variant functions as an external validation by providing the ground truth.
+
 They compare the mutual information between a baseline cluster algorithm using \gls{ami} \citep{9679364} or \gls{nmi} \citep{xia_distributed_2020-1,sun_privbv_2022}.
 Another study for evaluating \gls{dp} with \gls{ap} uses both \gls{ari} and \gls{ami}.
-The studies evaluate just a single cluster algorithm, and do not use the same metric to evaluate multiple.
-
-
-\todo[inline]{Compare AMI / against other}
-\todo[inline]{Analyze existing literature and what they use}
+In addition to mutual information and rand index scores, it is also not uncommon to calculate the error between the two cluster algorithm's centroids \citep{xia_distributed_2020-1, 9679364}.
+These two studies used Relative Error (RE) for this.

@@ -51,7 +51,7 @@ This section explains what methods/ algorithms we used and how we evaluate them.
 \subsection{Clustering methods}
 For the three different algorithms: K-Means, \gls{ap} and \gls{dbscan} we analyzed the most important decisions regarding parameter selection.
 In this section, we give a short list and explanation of the different parameters we used throughout the experiments.
-For all three Sklearn was used, for each of them we also provide the underlying formula.
+For all three Sklearn was used, and for each of them we also provide the underlying formula.
 \subsubsection{K-Means}
 \subsubsection{Affinity Propagation}
 \subsubsection{DBSCAN}
@@ -62,22 +62,41 @@ For all three Sklearn was used, for each of them we also provide the underlying 
 With differential privacy, it is a trade-off of utility versus privacy.
 Therefore, for the evaluation of the 2D/3D-Laplace algorithms, we compare both criteria to achieve a consensus between utility and privacy.
 \subsubsection{Utility}
-The utility of the cluster algorithm is decided by calculating the \gls{ami} between the baseline cluster algorithms.
-The clustering algorithm is trained using the plain data and functions as the ground truth \citep{9646464,sun_distributed_2019}.
-Because of this, we are being able to calculate the \gls{ami} and compare the centroids between the non-private and privately trained clusters.
-To reduce the possible bias of results we executed them 10 times for multiple privacy budgets and report the average for each \citep{9679364}.
-\todo[inline]{Explain why AMI and not another}
+Based on chapter \ref{theory:evaluate}, we can conclude that the corresponding literature mainly evaluates one clustering algorithm and not multiple ones.
+Because of this, we do not use any internal validation; because the different types of metrics are too easily influenced by the choice of clustering algorithm.
+Instead, we decided to pick up external validation methods similar to other studies as well.
+They did use either Rand Index or Mutual Information, but because both have different strengths we evaluate both.
 
-The second way to measure utility is to calculate the error between the non-private and perturbed data \citep{9679364,sun_distributed_2019,xia_distributed_2020-1}.
-There are several methods to do this (See \ref{theory:evaluate}), but we use the \gls{aee}.
-As with \gls{ami} we run the calculations for multiple privacy budgets 10 times and report the average for each budget.
-\todo[inline]{Explain why AEE and not RE}
+It is not likely that we will use many data points for research questions 1 and 2.
+To compensate for this, the adjusted version is used for both Rand Index and Mutual Information.
+Since both Mutual Information and Rand Index have different characteristics in the type of clustering algorithm, we use both.
+%The clustering algorithm is trained using the plain data and functions as the ground truth \citep{9646464,sun_distributed_2019}.
+%Because of this, we are being able to calculate the \gls{ami} and compare the centroids between the non-private and privately trained clusters.
+To reduce the possible bias of results we executed them 10 times for multiple privacy budgets and report the average for each \citep{9679364}.
+
+Finally, the implementation for these metrics is provided by the Scikit-learn package.
+With the underlying formulas:
+\begin{equation}
+  AMI(U, V) = \frac{MI(U, V) - E(MI(U, V))}{avg(H(U), H(V)) - E(MI(U, V))}
+\end{equation}
+\capequation{Adjusted Mutual Information formula \citep{vinh_information_nodate-2,hubert_comparing_1985-1}}
+\begin{gather}
+  RI = \frac{a + b}{C^{n}_{2}} \\
+  ARI = \frac{RI - E(RI)}{max(RI) - E(RI)}
+\end{gather}
+\capequation{(Adjusted) Rand Index formula \citep{rand_objective_1971, hubert_comparing_1985-1}}
+
+%%The second way to measure utility is to calculate the error between the non-private and perturbed data \citep{9679364,sun_distributed_2019,xia_distributed_2020-1}.
+%There are several methods to do this (See \ref{theory:evaluate}), but we use the \gls{aee}.
+%As with \gls{ami} we run the calculations for multiple privacy budgets 10 times and report the average for each budget.
+%\todo[inline]{Explain why AEE and not RE}
 
 \subsubsection{Privacy}
-The most important one here is the preserving of \gls{gi}.
-This validates that we applied the algorithms in the right way and automatically inherit the strong privacy guarantees provided by \gls{gi} (\ref{algo:2d-geo-indistinguishability}).
+The most important one here is the preserving of \gls{gi} according to formula \ref{algo:2d-geo-indistinguishability}.
+This validates that we applied the algorithms in the right way and automatically inherit the strong privacy guarantees provided by \gls{gi}.
 A disadvantage of this method is that it cannot be used to achieve a clear representation of privacy (it is either "yes" or "no").
-Therefore, we also calculate the average Euclidean distance between the non-private and perturbed data.
+Therefore, we also calculate the error between the non-private and perturbed data \ref{theory:evaluation-dp}.
+
 
 \subsection{Research question 1}
 
