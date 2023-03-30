@@ -13,15 +13,17 @@ In this chapter we explain:
 
 \section{Datasets}
 For this research, we will use a synthetic dataset for all three research questions.
+In addition to this, we used the LSun dataset as a lot of comparable literature uses this as well for evaluation.
+\todo[inline]{Describe LSun dataset}
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[h]
   \begin{tabular}{@{}lllll@{}}
     \toprule
     Records & Centers & Dimensions & Standard deviation & Research \\ \midrule
-    200     & 4       & 2          & 0.60               & RQ 1     \\ \bottomrule
-    200     & 4       & 3          & 0.60               & RQ 2     \\ \bottomrule
-    200     & 4       & 5          & 0.60               & RQ 2     \\ \bottomrule
+    50      & 4       & 2          & 0.60               & RQ 1     \\ \bottomrule
+    50      & 4       & 3          & 0.60               & RQ 2     \\ \bottomrule
+    50      & 4       & 5          & 0.60               & RQ 2     \\ \bottomrule
   \end{tabular}
 \end{table}
 
@@ -53,11 +55,46 @@ For the three different algorithms: K-Means, \gls{ap} and \gls{dbscan} we analyz
 In this section, we give a short list and explanation of the different parameters we used throughout the experiments.
 For all three Sklearn was used, and for each of them we also provide the underlying formula.
 \subsubsection{K-Means}
+\todo[inline]{Work in progress}
+\begin{equation}
+  \sum_{i=0}^{n}\min_{\mu_j \in C}(||x_i - \mu_j||^2)
+\end{equation}
+\begin{table}[h]
+  \begin{tabular}{|c|c|c|}
+    \hline
+    Parameter & Description & Value \\
+    \hline
+  \end{tabular}
+  \caption{K-Means provided by the Scikit-learn package}
+  \label{tab:kmeans-formula-sklearn}
+\end{table}
 \subsubsection{Affinity Propagation}
+\todo[inline]{Work in progress}
+\begin{table}[h]
+  \begin{tabular}{|c|c|c|}
+    \hline
+    Parameter    & Description  & Value        \\
+    \hline
+    Row 1 Data 1 & Row 1 Data 2 & Row 1 Data 3 \\
+    \hline
+  \end{tabular}
+  \caption{Affinity Propagation provided by the Scikit-learn package}
+  \label{tab:ap-formula-sklearn}
+\end{table}
 \subsubsection{DBSCAN}
+\todo[inline]{Work in progress}
+\begin{table}[h]
+  \begin{tabular}{|c|c|c|}
+    \hline
+    Parameter    & Description  & Value        \\
+    \hline
+    Row 1 Data 1 & Row 1 Data 2 & Row 1 Data 3 \\
+    \hline
+  \end{tabular}
+  \caption{DBSCAN provided by the Scikit-learn package}
+  \label{tab:dbscan-formula-sklearn}
+\end{table}
 
-\todo[inline]{Exact parameters we used for the algorithms}
-\todo[inline]{Which algorithms we used}
 \subsection{Evaluation}
 With differential privacy, it is a trade-off of utility versus privacy.
 Therefore, for the evaluation of the 2D/3D-Laplace algorithms, we compare both criteria to achieve a consensus between utility and privacy.
@@ -92,12 +129,15 @@ With the underlying formulas:
 %\todo[inline]{Explain why AEE and not RE}
 
 \subsubsection{Privacy}
-The most important one here is the preserving of \gls{gi} according to formula \ref{algo:2d-geo-indistinguishability}.
+The most important one here is the preserving of \gls{gi} according to the formula \ref{algo:2d-geo-indistinguishability}.
 This validates that we applied the algorithms in the right way and automatically inherit the strong privacy guarantees provided by \gls{gi}.
 A disadvantage of this method is that it cannot be used to achieve a clear representation of privacy (it is either "yes" or "no").
-Therefore, we also calculate the error between the non-private and perturbed data \ref{theory:evaluation-dp}.
+Therefore, it is more convenient to apply the geo-indistinguishability as an error metric provided in \ref{eq:geo-as-an-error}.
 
-
+\subsection{Scaling}
+Because we use a distance metric, we need to apply some data standardization.
+For this purpose, we use standard scaling provided by the Scikit-learn package \footnote{https://scikit-learn.org/stable/modules/preprocessing.html}.
+This is only for clustering, so it is applied after all the perturbation algorithms.
 \subsection{Research question 1}
 
 \mycomment{
@@ -138,10 +178,10 @@ An example of this is visualized:
   \caption{Representation of the remapping algorithm for clustering for points $z_3$ and $z_4$ }
 \end{figure}
 
-\subsubsection{Probability metric $K(x)(Z)$}
-\todo[inline]{Explain the probability metric $K$ we used}
+%\subsubsection{Probability metric $K(x)(Z)$}
+%\todo[inline]{Explain the probability metric $K$ we used}
 
-\newpage
+%\newpage
 \subsubsection{Algorithm}
 The full algorithm for the perturbation:
 \input{Method/algorithms/rq1.tex}
@@ -151,11 +191,3 @@ The full algorithm for the perturbation:
 \todo[inline]{Starts after RQ1}
 \subsection{Research question 3}
 \todo[inline]{Starts after RQ2}
-\section{Results}
-\subsection{Research question 1}
-For research question 1 the results are 2-dimensional plotted using a line diagram.
-\subsubsection{Utility}
-\subsubsection{Privacy}
-
-\subsection{Research question 2}
-\subsection{Research question 3}

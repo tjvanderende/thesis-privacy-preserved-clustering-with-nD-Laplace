@@ -8,11 +8,12 @@ For each of the different subsections, we visualize and explain open challenges 
 \glsaddall
 \leading{10pt}
 \printglossary[type=genericmath, nonumberlist]
+The other symbols can be found in section \ref{section:dp}.
 \subsection*{Geo-indistinguishability}
 As mentioned in the previous section, the \gls{gi} method can be applied to preserve the privacy using a differential privacy method specific to spatial data.
 The formula to measure if an algorithm preserves $\epsilon$-geo-indistinguishability can be expressed as \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{equation}
-  K(x)(y) \le e^{\epsilon * d(x,x`)} * K(x`)(y)
+  K(x)(y) \le e^{\epsilon * d(x,x`)} K(x`)(y)
   \label{algo:2d-geo-indistinguishability}
 \end{equation}
 Where $K$ is a probability method reporting $x, x` \in X$ as $z \in Z$.
@@ -24,9 +25,9 @@ Their definition for \gls{gi} is, therefore, $d_2$-privacy, but is essentially t
 \subsection{Planar and polar Laplace}
 \printglossary[type=2dlaplace]
 
-The idea of planar Laplace is to generate an area around $x0 \in X$ according to the multivariate Laplace distribution \todo{Link}.
+The idea of planar Laplace is to generate an area around $x0 \in X$ according to the multivariate Laplace distribution.
 The mechanism of planar Laplace is a modification of the Laplace algorithm to support distance \citep{DBLP:journals/corr/abs-1212-1984}.
-This distance method $dist(x, x_`)$ is defined as the Euclidean distance \todo{Link} between two points or sets.
+This distance method $dist(x, x_`)$ is defined as the Euclidean distance between two points or sets.
 Recalling the definition of Laplace, this method $|x-x_`|$ is replaced by the distance metric.
 Hence, the definition of the Probability Density Function (pdf) by Andrés et al. is:
 \begin{equation}
