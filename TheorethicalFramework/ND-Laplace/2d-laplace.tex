@@ -55,8 +55,8 @@ The purpose of the Lambert w function is to invert the CDF of the Laplace distri
 \textbf{Calculating $\theta$:}
 The other coordinate ($\theta$) is defined as a random number $[0, 2\pi]$. \newline \newline
 To visualize these methods it is necessary to convert the polar coordinates for $z = (r, \theta)$ back to a plane $(x, y)$.
-This is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals/corr/abs-1212-1984} and visualized using figure 1.
-\begin{figure}[h]
+This is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals/corr/abs-1212-1984} and visualized using figure \ref{figure:geo}.
+\begin{figure}[h] \label{figure:geo}
   \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/polar-laplace-to-planar.png}
   \centering
   \caption{Representation of converting the perturbed point $z = (r, \theta)$ to a point ${z_x, z_y}$}
@@ -86,7 +86,7 @@ They introduce a method to check this and efficiently remap to a nearby location
 The decision of the parameters for the algorithm is straightforward as it depends on the $\epsilon$. \label{paragraph:choosing-r}
 This constant is calculated by defining the radius $r$ and the desired level of privacy $l$ and $\epsilon$ is calculated using $l/r$.
 The $l$ is a predefined constant $l \in R^+$ but usually will be below 10.
-For geographical data, the $r$ is straightforward and can be configured by using meters as a unit of measure.
+For geographical data, the $r$ can be configured by using meters as a unit of measure.
 Therefore, $r = 200$ corresponds to a radius of 200m around point $x_0$.
 So, regarding clustering, it is a challenge to define a reasonable radius. \newline
 The $\epsilon$ can be considered the inverse unit of $r$ \citep{DBLP:journals/corr/abs-1212-1984}.
