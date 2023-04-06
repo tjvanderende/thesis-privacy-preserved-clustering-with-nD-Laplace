@@ -26,7 +26,7 @@ This is the maximal possible change when adding or removing a single record \cit
 
 \subsection{Local differential privacy}
 \subsection{Geo-indistinguishability}
-\subsection{Attacks on privacy}
+\subsection{Attacks on privacy} \label{section: MIA}
 \textbf{Membership inference attacks:}
 An attack model that plays a big role in machine learning is a membership inference attack.
 With this attack, an adversary attempts to infer the original data point $x \in X$ from a given data point $z \in Z$.
@@ -67,12 +67,13 @@ However, it is hard to find a way to protect privacy and utility as well, so it 
 In addition, it is hard to establish a member-inference attack on clustering as it requires a semi-supervised approach to be effective, as MIA requires classification \ref{fig:unsupervised-mia-attack}.
 
 
-\textbf{Reconstruction attacks:}
-Another attack that is a threat, especially to differential privacy is a reconstruction attack.
-This attack is also more known as the attribute inference attack and is more focused on the data itself than machine learning models \citep{rigaki_survey_2021}. \newline
-\textbf{Model extraction attacks:}
-The final attack that is considered, is the model extraction attack.
-This attack consists of the attacker being able to reconstruct and gather information about the original model.
+%\textbf{Reconstruction attacks:}
+%Another attack that is a threat, especially to differential privacy is a reconstruction attack.
+%This attack is also more known as the attribute inference attack and is more focused on the data itself than machine learning models \citep{rigaki_survey_2021}. 
+
+%\textbf{Model extraction attacks:}
+%The final attack that is considered, is the model extraction attack.
+%This attack consists of the attacker being able to reconstruct and gather information about the original model.
 
 % Jayaraman et al. evaluate inference attacks and differential privacy and express a metric called "privacy leakage"  \citep{jayaraman_evaluating_nodate}.
 
