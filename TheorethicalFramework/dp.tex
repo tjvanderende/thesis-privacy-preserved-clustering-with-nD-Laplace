@@ -53,20 +53,24 @@ While the existing models exploit the probability output for MIA, they solely re
 For this, they make use of the "HopSkipJump" attack; a so-called decision-based attack \citep{chen_hopskipjumpattack_2020}.
 Choquette-Choo et al. consider a more semi-black-box approach, for which the attacker still requires access to a subset of the original training data and the trained model.
 Another paper that also uses "HopSkipJump" requires only the trained model and achieves higher accuracy by using an approach with random data \citep{li_membership_2021}.
+It is mostly used for
 
 Another take on this is prediction and confidence-based MIA which are both proposed by \citep{yeom_privacy_2018}.
 They assume that an attacker knows the standard error and has access to the perturbation dataset.
-The algorithm is be-able to extract the truth label by minimizing the loss. \newline
+The algorithm is then able to extract the truth label by minimizing the loss. \newline
 
-To conclude on this, there are many methods for MIA and in that regard; the unsupervised methods look the most promising.
-They require less setup and there is plenty of black-box approaches that score between 70\% and 80\% success rates.
+To conclude on this, there are many methods for MIA and in that regard, the black-box approaches look the most promising.
+They require less setup and there is plenty of black-box approaches score with a success rate of 70\% and 80\%.
 For our use case, however, it is harder to establish an MIA; as we focus mainly on clustering.
-Anyhow, it is possible if we consider a semi-supervised approach where we consider the cluster labels as ground truth (\ref{})
-Differential privacy is proposed as a way of solving the inference attack for both white-box and black-box \citep{hu_membership_2022}.
-However, it is hard to find a way to protect privacy and utility as well, so it depends heavily on the privacy budget.
-In addition, it is hard to establish a member-inference attack on clustering as it requires a semi-supervised approach to be effective, as MIA requires classification \ref{fig:unsupervised-mia-attack}.
+Anyhow, it is possible if we consider a semi-supervised approach where we consider the cluster labels as ground truth.
+%%Differential privacy is proposed as a wmay of solving the inference attack for both white-box and black-box \citep{hu_membership_2022}.
+%%However, it is hard to find a way to protect privacy and utility as well, so it depends heavily on the privacy budget.
+\todo{Describe how dp is used to protect MIA}
 
+\textbf{Reconstruction attack: } This attack is a threat, especially to differential privacy.
+The attack is primarily focused on reconstructing the data rather than focusing on machine learning.
 
+\textbf{Poison attack:}
 %\textbf{Reconstruction attacks:}
 %Another attack that is a threat, especially to differential privacy is a reconstruction attack.
 %This attack is also more known as the attribute inference attack and is more focused on the data itself than machine learning models \citep{rigaki_survey_2021}. 

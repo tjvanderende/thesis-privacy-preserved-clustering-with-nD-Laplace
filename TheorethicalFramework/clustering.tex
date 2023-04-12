@@ -3,16 +3,36 @@
 \subsection{Methods}
 \todo[inline]{Describe each clustering method with important parameters that could influence the outcome}
 \subsubsection{K-Means} \label{theory:kmeans}
-\todo[inline]{Explain the working of the algorithm}.
-The most important parameter of the K-Means algorithm is the value of $k$.
-This value determines the number of clusters to consider and has a big influence on the results \cite{ahmed_k-means_2020}.
-One of the oldest methods to do this is to use an "elbow" plot \cite{kodinariya_review_2013}.
-This method can be used to determine the best $k$ by applying the algorithm multiple times and estimateing the best $k$.
+The KMeans algorithm is based on the algorithm of Loyd et al. \todo{Source}.
+The starting point is determined randomly by choosing k number of centroids.
+Each point is then assigned to a centroid based on the Euclidean distance.
+A new centroid is then determined based on the cluster average.
+This is repeated until the given number of iterations is reached or until the results are stable.
+
+\textbf{Choosing K:} The most important parameter of the K-Means algorithm is the value of $k$.
+This value determines the number of clusters to consider and has a big influence on the results \citep{ahmed_k-means_2020-1}.
+
+%These methods require a manual way of selecting the best $k$ by visual inspection of a plot.
+The first method is called an "elbow" plot \citep{kodinariya_review_2013}.
+This method can be used to determine the best $k$ by applying the algorithm multiple times and estimating the best $k$.
 \begin{figure}[H]
   \includegraphics{TheorethicalFramework/dentification-of-Elbow-point.png}
-  \caption{Illustration of determining $k$ using the "elbow" method \cite{kodinariya_review_2013}}
+  \caption{Illustration of determining $k$ using the "elbow" method \citep{kodinariya_review_2013}}
 \end{figure}
-However, sometimes the "elbow" is hard to find
+In this situation, a Silhouette plot can be used to determine the $k$.
+This method uses calculates the Silhouette coefficient for each cluster \citep{saputra_effect_2020}.
+It takes into consideration the separation and cohesion of the cluster.
+The plot can then be made by plotting the silhouette coefficient on the y-axis and $k$ on the x-axis \citep{saputra_effect_2020}.
+Then the K with the highest coefficient can be selected based on that. \newline
+Another popular method is the Gap statistic method \citep{yuan_research_2019}.
+It compares the total within-cluster variation for different values of k with their expected values under a null reference distribution of the data \citep{tibshirani_estimating_2001}.
+A practical appliance of this method uses a line plot for comparing the $k$-value and gap value \citep{yuan_research_2019}.
+Based on the visual change of the line, someone is be-able to select the best $k$.
+
+All in all, there is no fixed method to choose a good $k$ for K-means.
+The elbow method is common in the existing literature and is very popular due to its simplicity.
+However, one disadvantage is that it can be difficult to determine the "elbow" point, as it is not always present \citep{kodinariya_review_2013}.
+In that case, the silhouette method or gap statistic method can be chosen, with the algorithm for silhouette being the most obvious choice due to its simplicity.
 
 \subsubsection{Affinity Propagation}:
 \todo[inline]{Explain the working of the algorithm}.
@@ -21,6 +41,8 @@ However, sometimes the "elbow" is hard to find
 \citep{bozdemir_privacy-preserving_nodate}
 \todo[inline]{Explain the working of the algorithm}.
 \todo[inline]{Explain most important parameters}
+
+\subsubsection{Overfitting}
 
 \subsection{Evaluation methods} \label{theory:evaluate}
 Clustering comparison measures are important in cluster analysis for external validation by comparing clustering solutions to a "ground truth" clustering \citep{vinh_information_nodate-2}.
