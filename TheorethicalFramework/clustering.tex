@@ -32,16 +32,36 @@ Based on the visual change of the line, someone is be-able to select the best $k
 All in all, there is no fixed method to choose a good $k$ for K-means.
 The elbow method is common in the existing literature and is very popular due to its simplicity.
 However, one disadvantage is that it can be difficult to determine the "elbow" point, as it is not always present \citep{kodinariya_review_2013}.
-In that case, the silhouette method or gap statistic method can be chosen, with the algorithm for silhouette being the most obvious choice due to its simplicity.
+In that case, the silhouette method or gap statistic method can be chosen, with the algorithm for silhouette being the most obvious choice due to its simplicity. \newpage
+\subsubsection{Affinity Propagation}
+\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
+Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
+The method was introduced by Frey et al. and does not require any hyperparameters \citep{frey_clustering_2007}.
+Still, there are important properties that could potentially impact the clustering \citep{wang_adaptive_2007}. \newline
+\textbf{Choosing preference($p$): }
+Indicates the preference that a data point is selected as cluster center \citep{wang_adaptive_2007}.
+It highly influences the number of clusters, a high one would lead to more clusters and a small one to less \citep{moiane_evaluation_2018}.
+A good choice depending on the data is to set the $p$ to the median of all data similarities \citep{wang_adaptive_2007}.
+But, the effectiveness of this could highly be influenced based on the dataset.
+To validate if the preference is correctly set, it is possible to analyze the silhouette coefficient \citep{moiane_evaluation_2018}.
+\newline
+\textbf{Choosing damping factor($lam \in [0,1] $):}
+The damping factor is used to improve the stability (convergence) of the algorithm \citep{wang_adaptive_2007}.
+By default, this value is 0.5 and can be increased to 1 to reduce the impact of numerical oscillations.
+This can be applied manually, by re-running the algorithm and finding the optimal or just being increased.
+However, both approaches take a lot of time, especially for bigger datasets \citep{wang_adaptive_2007}. \newline
 
-\subsubsection{Affinity Propagation}:
-\todo[inline]{Explain the working of the algorithm}.
+To conclude on this, damping is important if big datasets are considered.
+However, this research does not use large datasets or consider time complexity as a metric.
+The preference on the other hand could influence the results a lot.
+For this, the silhouette coefficient can be evaluated to choose the best option.
+In general, it should be sufficient to take the median.
+\subsubsection{DBSCAN}
+\gls{dbscan} was introduced by \citep{ester_density-based_nodate} and works by drawing a radius (neighborhood) around data points.
+It then groups all points within this radius as clusters. The main advantage is its ability to find arbitrarily shaped clusters and detect outliers \citep{liu_privacy_2012}.
+
 \todo[inline]{Explain most important parameters}
-\subsubsection{DBSCAN}:
 \citep{bozdemir_privacy-preserving_nodate}
-\todo[inline]{Explain the working of the algorithm}.
-\todo[inline]{Explain most important parameters}
-
 \subsubsection{Overfitting}
 
 \subsection{Evaluation methods} \label{theory:evaluate}
