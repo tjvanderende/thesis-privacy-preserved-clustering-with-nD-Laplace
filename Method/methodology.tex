@@ -13,8 +13,8 @@ In this chapter we explain:
 
 \section{Datasets}
 For this research, we will use a synthetic dataset for all three research questions.
-In addition to this, we used the LSun dataset as a lot of comparable literature uses this as well for evaluation.
-\todo[inline]{Describe LSun dataset}
+%In addition to this, we used the LSun dataset as a lot of comparable literature uses this as well for evaluation.
+%\todo[inline]{Describe LSun dataset}
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[h]
@@ -26,9 +26,8 @@ In addition to this, we used the LSun dataset as a lot of comparable literature 
     3       & 50      & 4       & 5          & 0.60               & RQ 2     \\ \bottomrule
   \end{tabular}
 \end{table}
-
 Research question 3 uses a "real-world" dataset to properly assess the different dataset properties that are the subject of this research question.
-\todo[inline]{Describe datasets (RQ3)}
+
 \section{Environmental setup}
 For running the experiments we make use of 16GB ram memory and i7-10750H 2.6Ghz processor.
 The experiments are run using a Docker container which runs a pre-configured distribution of Linux Alpine.
@@ -158,14 +157,16 @@ With the underlying formulas:
 The most important one here is the preserving of \gls{gi} according to the formula \ref{algo:2d-geo-indistinguishability}.
 This validates that we applied the algorithms in the right way and automatically inherit the strong privacy guarantees provided by \gls{gi}.
 A disadvantage of this method is that it cannot be used to achieve a clear representation of privacy (it is either "yes" or "no").
-Therefore, we analyze our method according to a popular attack: Membership inference attack.
+Therefore, we also will analyze the average Euclidean distance the differential privacy provides for each epsilon.
 
-For this purpose, we make use of a black-box Member inference attack, called "HopSkipJump" \citep{chen_hopskipjumpattack_2020,li_membership_2021}.
-This attack is evaluated using a semi-supervised setup, as proposed in this figure: \ref{fig:unsupervised-mia-attack}.
-We will make use of a decision tree model for classification but can be replaced by any other classification model.
-Both the private and non-private trained models are evaluated based on the true positive rate (TPR) and false positive rate (FPR).
-Respectively meaning, the TPR is higher if the MIA is successful and likewise the FPR if the MIA is unsuccessful.
-We hypothesize that the private model leverages a higher FPR in comparison to the non-private variant.
+%Therefore, we analyze our method according to a popular attack: Membership inference attack.
+
+%For this purpose, we make use of a black-box Member inference attack, called "HopSkipJump" \citep{chen_hopskipjumpattack_2020,li_membership_2021}.
+%This attack is evaluated using a semi-supervised setup, as proposed in this figure: \ref{fig:unsupervised-mia-attack}.
+%We will make use of a decision tree model for classification but can be replaced by any other classification model.
+%Both the private and non-private trained models are evaluated based on the true positive rate (TPR) and false positive rate (FPR).
+%Respectively meaning, the TPR is higher if the MIA is successful and likewise the FPR if the MIA is unsuccessful.
+%We hypothesize that the private model leverages a higher FPR in comparison to the non-private variant.
 
 %Therefore, it is more convenient to apply the geo-indistinguishability as an error metric provided in \ref{eq:geo-as-an-error}.
 
