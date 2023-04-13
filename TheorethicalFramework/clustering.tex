@@ -33,7 +33,7 @@ All in all, there is no fixed method to choose a good $k$ for K-means.
 The elbow method is common in the existing literature and is very popular due to its simplicity.
 However, one disadvantage is that it can be difficult to determine the "elbow" point, as it is not always present \citep{kodinariya_review_2013}.
 In that case, the silhouette method or gap statistic method can be chosen, with the algorithm for silhouette being the most obvious choice due to its simplicity. \newpage
-\subsubsection{Affinity Propagation}
+\subsubsection{Affinity Propagation} \label{theory:clustering-ap}
 \gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
 Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
 The method was introduced by Frey et al. and does not require any hyperparameters \citep{frey_clustering_2007}.
@@ -56,12 +56,30 @@ However, this research does not use large datasets or consider time complexity a
 The preference on the other hand could influence the results a lot.
 For this, the silhouette coefficient can be evaluated to choose the best option.
 In general, it should be sufficient to take the median.
-\subsubsection{DBSCAN}
+\subsubsection{DBSCAN} \label{theory:clustering-dbscan}
 \gls{dbscan} was introduced by \citep{ester_density-based_nodate} and works by drawing a radius (neighborhood) around data points.
 It then groups all points within this radius as clusters. The main advantage is its ability to find arbitrarily shaped clusters and detect outliers \citep{liu_privacy_2012}.
+To do this, the \gls{dbscan} algorithm uses the inputs $minPts$, $radius(\epsilon)$ and a distance function \citep{schubert_dbscan_2017}.
+The $\epsilon$ is used to draw a neighborhood and the $minPts$ is used as a weight to evaluate which points should be inside the neighborhood.
+For the distance function, the Euclidean distance is used, to be consistent with the other algorithms. \newline
+\textbf{Choosing radius($\epsilon$):} The desired $\epsilon$ can be calculated using the K-NearestNeighbours algorithm \citep{ester_density-based_nodate,schubert_dbscan_2017}.
+The general approach for this is to choose a $K = 2*N - 1$ (where N is the number of features) and plot the distance for each point.
+This can then be plotted using a k-dist plot and the best "elbow" can be chosen for deciding the $\epsilon$ (similar to choosing the $k$ for K-means) \citep{elbatta_dynamic_2013}.
+\begin{figure}[H]
+  \includegraphics{TheorethicalFramework/K-dist-elbow.png}
+  \caption{K-dist plot example for $minPts = 4$ based on a 2-dimensional dataset \citep{ester_density-based_nodate}}
+  \label{k-dist-plot}
+\end{figure}
+\textbf{Choosing minimum points ($minPts$):} This hyperparameter is considered by a paper written by Sander et al.
+The work describes a way of calculating this parameter by doing two times the feature amount \citep{sander_density-based_1998}.
+So, using this approach a dataset with two features will have an $minPts$ of four.
+This is confirmed by Schubert et al. to use the default $minPts = 4$ for a 2-dimensional dataset \citep{schubert_dbscan_2017}. \newline
 
-\todo[inline]{Explain most important parameters}
-\citep{bozdemir_privacy-preserving_nodate}
+In conclusion, the parameters of \gls{dbscan} are a little harder to estimate than for \gls{ap}.
+But, as with K-means for $k$ there exists a selection method the $\epsilon$.
+Although \gls{dbscan} requires the most hyperparameters out of the three clustering algorithms, determining them is clearer than for K-means.
+There are clear methods for determining both the $minPts$ and $\epsilon$.
+
 \subsubsection{Overfitting}
 
 \subsection{Evaluation methods} \label{theory:evaluate}

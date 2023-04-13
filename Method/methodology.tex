@@ -18,12 +18,12 @@ In addition to this, we used the LSun dataset as a lot of comparable literature 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[h]
-  \begin{tabular}{@{}lllll@{}}
+  \begin{tabular}{@{}llllll@{}}
     \toprule
-    Records & Centers & Dimensions & Standard deviation & Research \\ \midrule
-    50      & 4       & 2          & 0.60               & RQ 1     \\ \bottomrule
-    50      & 4       & 3          & 0.60               & RQ 2     \\ \bottomrule
-    50      & 4       & 5          & 0.60               & RQ 2     \\ \bottomrule
+    Dataset & Records & Centers & Dimensions & Standard deviation & Research \\ \midrule
+    1       & 50      & 4       & 2          & 0.60               & RQ 1     \\ \bottomrule
+    2       & 50      & 4       & 3          & 0.60               & RQ 2     \\ \bottomrule
+    3       & 50      & 4       & 5          & 0.60               & RQ 2     \\ \bottomrule
   \end{tabular}
 \end{table}
 
@@ -60,38 +60,64 @@ For all three Sklearn was used, and for each of them we also provide the underly
   \sum_{i=0}^{n}\min_{\mu_j \in C}(||x_i - \mu_j||^2)
 \end{equation}
 \begin{table}[h]
-  \begin{tabular}{|c|c|c|}
+  \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter & Description & Value \\
+    Parameter & Description                          & Value & Dataset   \\ \hline
+    K-value   & Calculated based on an "elbow" plot. & ??    & Dataset 1 \\ \hline
+    K-value   & TODO                                 & ??    & Dataset 2 \\ \hline
+    K-value   & TODO                                 & ??    & Dataset 3 \\
+
+
     \hline
   \end{tabular}
-  \caption{K-Means provided by the Scikit-learn package}
-  \label{tab:kmeans-formula-sklearn}
+  \caption{K-Means hyperparameters for dataset 1 - 3}
+  \label{tab:kmeans-formula-dataset-2}
 \end{table}
+
 \subsubsection{Affinity Propagation}
 \todo[inline]{Work in progress}
 \begin{table}[h]
-  \begin{tabular}{|c|c|c|}
+  \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter    & Description  & Value        \\
+    Parameter      & Description                                                                                & Value & Dataset   \\
     \hline
-    Row 1 Data 1 & Row 1 Data 2 & Row 1 Data 3 \\
+    Preference     & We decided to use the median similarity as described in section \ref{theory:clustering-ap} & TODO  & dataset 1 \\
+    \hline
+    Preference     & ""                                                                                         & TODO  & dataset 2 \\
+    \hline
+    Preference     & ""                                                                                         & TODO  & dataset 3 \\
+    \hline
+    Damping factor & For now it is kept at the default value (\ref{theory:clustering-ap})                       & 0.5   & dataset 1 \\
+    \hline
+    Damping factor & ""                                                                                         & 0.5   & dataset 2 \\
+    \hline
+    Damping factor & ""                                                                                         & 0.5   & dataset 3 \\
     \hline
   \end{tabular}
-  \caption{Affinity Propagation provided by the Scikit-learn package}
+  \caption{Affinity Propagation hyperparameters for datasets 1 - 3}
   \label{tab:ap-formula-sklearn}
 \end{table}
+\newpage
 \subsubsection{DBSCAN}
-\todo[inline]{Work in progress}
 \begin{table}[h]
-  \begin{tabular}{|c|c|c|}
+  \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter    & Description  & Value        \\
+    Parameter      & Description                                                                                                    & Value & Dataset   \\
     \hline
-    Row 1 Data 1 & Row 1 Data 2 & Row 1 Data 3 \\
+    Epsilon        & Decided using the k-distance plot                                                                              & TODO  & Dataset 1 \\
+    \hline
+    Epsilon        & ""                                                                                                             & TODO  & Dataset 2 \\
+    \hline
+    Epsilon        & ""                                                                                                             & TODO  & Dataset 3 \\
+    \hline
+    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & 4     & Dataset 1 \\
+    \hline
+    Minimum points & ""                                                                                                             & 6     & Dataset 2 \\
+    \hline
+    Minimum points & ""                                                                                                             & 10    & Dataset 3 \\
     \hline
   \end{tabular}
-  \caption{DBSCAN provided by the Scikit-learn package}
+  \caption{DBSCAN  hyperparameters for datasets 1 - 3}
   \label{tab:dbscan-formula-sklearn}
 \end{table}
 
