@@ -12,7 +12,12 @@ MIA depends on the knowledge of the attacker (adversarial knowledge), which can 
   \item \textbf{White-box}: The attacker has all the data that is needed. Including target model parameters, the training dataset and even the architecture \citep{hu_membership_2022}.
   \item \textbf{Black-box}: The attacker has a limited amount of information, like training data distribution and the trained model \citep{hu_membership_2022}.
 \end{enumerate}
-One of the earlier works that used this attack was a black-box approach \citep{shokri_membership_2017}.
+The most well-known member inference attack is training shadow models \citep{rigaki_survey_2021}.
+In this attack, an attacker trains multiple models.
+These models do not necessarily have to be the same as the original model, and the focus is mainly on the data input/output.
+It is a black-box attack, but often the attacker also needs knowledge of the data distribution to create a good shadow dataset \citep{rigaki_survey_2021}.
+
+One of the earlier works that used this attack was Shokri et al. \citep{shokri_membership_2017}.
 An attacker trains multiple models (shadow model), with as goal to overfit the original modal.
 This idea is based on the fact that the model gives higher scores to the data on which it was trained (overfitting).
 Using this approach, attackers can retrieve the training data (member data) from the model by injecting a large amount of fake data (non-membership data).
@@ -27,7 +32,7 @@ They then proceed in clustering the probabilities into two clusters using K-Mean
 
 The above attacks do rely on the model to also provide the confidence or probabilities of the predictions.
 This is often not the case for the practical appliance of a model, and therefore Choquette-Choo et al. introduced a label-only attack.
-While the existing models exploit the probability output for MIA, they solely rely on labels.
+While the existing models exploit the probability output for MIA, they solely rely on labels \citep{choquette-choo_label-only_2021}.
 For this, they make use of the "HopSkipJump" attack; a so-called decision-based attack \citep{chen_hopskipjumpattack_2020}.
 Choquette-Choo et al. consider a more semi-black-box approach, for which the attacker still requires access to a subset of the original training data and the trained model.
 Another paper that also uses "HopSkipJump" requires only the trained model and achieves higher accuracy by using an approach with random data \citep{li_membership_2021}. \newline
@@ -55,6 +60,10 @@ The algorithm is then able to extract the truth label by minimizing the loss. \n
 \section{Reconstruction attack}
 This attack is a threat, especially to differential privacy.
 The attack is primarily focused on reconstructing the data rather than focusing on machine learning.
+\todo[inline]{Do research for this attack}
+
+\section{Model inversion attack}
+\todo[inline]{Do research for this attack}
 
 % \section{Poison attack}
 %\textbf{Reconstruction attacks:}
@@ -69,14 +78,25 @@ The attack is primarily focused on reconstructing the data rather than focusing 
 
 
 
-\section{Evaluation and metrics}
+\section{Attack evaluation}
+In this section, we compile a list of attacks and evaluate which attacks are best suited for adoption in this research.
+We also assess whether differential privacy provides protection for each attack and discuss how this can be measured. \newline
+\textbf{Member inference attacks:}
+% Research
+Most current research for MIA is evaluated for neural networks \citep{rigaki_survey_2021}.
+Just a small percentage evaluates this attack for supervised learning, with the majority using classification with decision trees.
+For these attacks, most studies have used a black-box approach \citep{rigaki_survey_2021}.
+This is not surprising, as these attacks have a high success rate and pose a greater risk of being exploited.
+
 % Metrics
-The introduction of differential privacy reduces the impact of a member inference attack. This is because the input to the model is perturbed. While it is still possible to retrieve the training data, the leaked privacy is significantly reduced.
+The introduction of differential privacy reduces the impact of a member inference attack \citep{rigaki_survey_2021,hu_membership_2022}.
+This is because the input to the model is perturbed. While it is still possible to retrieve the training data, the leaked privacy is significantly reduced.
 The leaked privacy can be measured using a metric called "adversarial advantage." This metric describes the percentage of privacy that is compromised in the event of a member inference attack \citep{yeom_privacy_2018}.
 This is calculated by subtracting the False Positive Rate from the True Positive Rate. The TPR represents the number of correctly predicted member data (training data) and the FPR represents the number of correctly predicted non-member data. \newline
 
 % Final remark
-The attacks that use member inference attacks are all based on supervised machine learning.
+In conclusion, we evaluate the attacks concerning this research.
+As mentioned before, the attacks that use member inference attacks are all based on supervised machine learning.
 However, in this study, we use cluster algorithms.
 Therefore, a semi-supervised approach can be used, as illustrated in figure \ref{figure:MIA-semi-supervised}.
 
@@ -85,3 +105,8 @@ Therefore, a semi-supervised approach can be used, as illustrated in figure \ref
   \includegraphics[width=1\textwidth]{TheorethicalFramework/Differential privacy/master-thesis-MIA.png}
   \caption{Semi-supervised black-box approach to execute a member inference attack.}
 \end{figure}
+
+\textbf{Reconstruction attacks:}
+\todo[inline]{Evaluate after we did research for reconstruction attacks}
+\textbf{Model inversion attacks:}
+\todo[inline]{Evaluate after we did research for model inversion attacks}
