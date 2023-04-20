@@ -1,9 +1,9 @@
 \section{Clustering}
 
 \subsection{Methods}
-\todo[inline]{Describe each clustering method with important parameters that could influence the outcome}
+In this chapter, a brief description is given of each clustering algorithm on how it works. The different parameters for the algorithm are also highlighted.
 \subsubsection{K-Means} \label{theory:kmeans}
-The KMeans algorithm is based on the algorithm of Loyd et al. \todo{Source}.
+The K-Means algorithm is based on the algorithm of Loyd et al. \todo{Source}.
 The starting point is determined randomly by choosing k number of centroids.
 Each point is then assigned to a centroid based on the Euclidean distance.
 A new centroid is then determined based on the cluster average.
@@ -29,7 +29,7 @@ It compares the total within-cluster variation for different values of k with th
 A practical appliance of this method uses a line plot for comparing the $k$-value and gap value \citep{yuan_research_2019}.
 Based on the visual change of the line, someone is be-able to select the best $k$.
 
-All in all, there is no fixed method to choose a good $k$ for K-means.
+All in all, there is no fixed method to choose a good $k$ for K-Means.
 The elbow method is common in the existing literature and is very popular due to its simplicity.
 However, one disadvantage is that it can be difficult to determine the "elbow" point, as it is not always present \citep{kodinariya_review_2013}.
 In that case, the silhouette method or gap statistic method can be chosen, with the algorithm for silhouette being the most obvious choice due to its simplicity. \newpage
