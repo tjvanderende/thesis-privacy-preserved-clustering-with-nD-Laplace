@@ -1,3 +1,4 @@
 {"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QFor this research, we will use a synthetic dataset for all three research questions.\\E$"}
 {"rule":"EN_UNPAIRED_BRACKETS","sentence":"^\\QFor clustering, we don't have the notion of \"other admissible \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q if n=0 \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q else\\E$"}
 {"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QResearch question 1.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QDataset 3.\\E$"}
