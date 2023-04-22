@@ -1,0 +1,15 @@
+\begin{algorithm}[H]
+  \caption{Black-box inference attack}\label{alg:shokri-mi}
+  \begin{algorithmic}
+    \Ensure $z$
+    \State $x_{target}, y_{target}, x_{shadow}, y_{shadow} = split(X)$ \Comment 75\% shadow data
+    \State $x_{target-train}, y_{target-train} = split(xy_{target})$ \Comment 12.5\% train data
+    \State $x_{target-test}, y_target_test = split(xy_{target})$ \Comment 12.5\% test data
+    \State $Z = 2/3nD-Laplace(x_{target-train})$ 
+    \State $private_classifier = RandomForestClassifier(Z, y_{target-train})$ \Comment See scikit-learn (\textbf{Bron})
+    \For{three times}
+      \State $dataset_{shadow} = generate_shadow_datasets$ \Comment using ART implementation
+    \EndFor
+
+  \end{algorithmic}
+\end{algorithm}

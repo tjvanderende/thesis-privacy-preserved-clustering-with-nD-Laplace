@@ -2,7 +2,7 @@
 
 To gain insights into the proposed methods for researching the appliance of (ND)-Laplace for cluster algorithms we conducted experiments.
 The experiment results are used to evaluate our method against other literature.
-In this chapter we explain:
+In this chapter, we explain:
 \begin{enumerate}
 
   \item Datasets
@@ -52,19 +52,18 @@ This section explains what methods/ algorithms we used and how we evaluate them.
 \subsection{Clustering methods}
 For the three different algorithms: K-Means, \gls{ap} and \gls{dbscan} we analyzed the most important decisions regarding parameter selection.
 In this section, we give a short list and explanation of the different parameters we used throughout the experiments.
-For all three Sklearn was used, and for each of them we also provide the underlying formula.
+For all three Scikit-learn was used, and for each of them we also provide the underlying formula.
 \subsubsection{K-Means}
-\todo[inline]{Work in progress}
 \begin{equation}
   \sum_{i=0}^{n}\min_{\mu_j \in C}(||x_i - \mu_j||^2)
 \end{equation}
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter & Description                          & Value & Dataset   \\ \hline
-    K-value   & Calculated based on an "elbow" plot. & 4     & Dataset 1 \\ \hline
-    K-value   & TODO                                 & ??    & Dataset 2 \\ \hline
-    K-value   & TODO                                 & ??    & Dataset 3 \\
+    Parameter & Description                          & Value                                                 & Dataset   \\ \hline
+    K-value   & Calculated based on an "elbow" plot. & 4 (see figure \ref{hyperparameters:k-means-dataset1}) & Dataset 1 \\ \hline
+    K-value   & TODO                                 & ??                                                    & Dataset 2 \\ \hline
+    K-value   & TODO                                 & ??                                                    & Dataset 3 \\
 
 
     \hline
@@ -74,7 +73,16 @@ For all three Sklearn was used, and for each of them we also provide the underly
 \end{table}
 
 \subsubsection{Affinity Propagation}
-\todo[inline]{Work in progress}
+As specified in section \ref{theory:clustering-ap}, the clustering algorithm has two types of similarity.
+The responsibility is calculated by the following formula:
+\begin{equation}
+  r(i, k) \leftarrow s(i, k) - max [ a(i, k') + s(i, k') \forall k' \neq k ]
+\end{equation}
+Then the availability is given using this formula:
+\begin{equation}
+  a(i, k) \leftarrow min [0, r(k, k) + \sum_{i'~s.t.~i' \notin \{i, k\}}{r(i', k)}]
+\end{equation}
+And iteratively calculated while considering the damping factor.
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
@@ -86,7 +94,7 @@ For all three Sklearn was used, and for each of them we also provide the underly
     \hline
     Preference     & ""                                                                                         & TODO  & dataset 3 \\
     \hline
-    Damping factor & For now it is kept at the default value (\ref{theory:clustering-ap})                       & 0.5   & dataset 1 \\
+    Damping factor & Default value as specified in section \ref{theory:clustering-ap}                           & 0.5   & dataset 1 \\
     \hline
     Damping factor & ""                                                                                         & 0.5   & dataset 2 \\
     \hline
@@ -101,19 +109,19 @@ For all three Sklearn was used, and for each of them we also provide the underly
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter      & Description                                                                                                    & Value & Dataset   \\
+    Parameter      & Description                                                                                                    & Value                                                  & Dataset   \\
     \hline
-    Epsilon        & Decided using the k-distance plot                                                                              & TODO  & Dataset 1 \\
+    Epsilon        & Decided using the k-distance plot                                                                              & 0.9 (see figure \ref{hyperparameters:DBSCAN-dataset1}) & Dataset 1 \\
     \hline
-    Epsilon        & ""                                                                                                             & TODO  & Dataset 2 \\
+    Epsilon        & ""                                                                                                             & TODO                                                   & Dataset 2 \\
     \hline
-    Epsilon        & ""                                                                                                             & TODO  & Dataset 3 \\
+    Epsilon        & ""                                                                                                             & TODO                                                   & Dataset 3 \\
     \hline
-    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & 4     & Dataset 1 \\
+    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & 4                                                      & Dataset 1 \\
     \hline
-    Minimum points & ""                                                                                                             & 6     & Dataset 2 \\
+    Minimum points & ""                                                                                                             & 6                                                      & Dataset 2 \\
     \hline
-    Minimum points & ""                                                                                                             & 10    & Dataset 3 \\
+    Minimum points & ""                                                                                                             & 10                                                     & Dataset 3 \\
     \hline
   \end{tabular}
   \caption{DBSCAN  hyperparameters for datasets 1 - 3}
@@ -123,20 +131,26 @@ For all three Sklearn was used, and for each of them we also provide the underly
 \subsection{Evaluation}
 With differential privacy, it is a trade-off of utility versus privacy.
 Therefore, for the evaluation of the 2D/3D-Laplace algorithms, we compare both criteria to achieve a consensus between utility and privacy.
-\subsubsection{Utility}
-Based on chapter \ref{theory:evaluate}, we can conclude that the corresponding literature mainly evaluates one clustering algorithm and not multiple ones.
-Because of this, we do not use any internal validation; because the different types of metrics are too easily influenced by the choice of clustering algorithm.
-Instead, we decided to pick up external validation methods similar to other studies as well.
-They did use either Rand Index or Mutual Information, but because both have different strengths we evaluate both.
+To reduce the measurement bias of results we executed them 10 times for multiple privacy budgets and report the average for each \citep{9679364}.
 
+\begin{enumerate}
+  \item All experiments are performed 10 times and the average is reported.
+  \item All experiments are performed per privacy budget (epsilon).
+        We have a fixed list for this: ${0.05, 0.1, 0.5, 1, 2, 3, 5, 7, 9}$.
+\end{enumerate}
+
+\subsubsection{Utility}
+Based on section \ref{theory:evaluate}, we can conclude that the corresponding literature mainly evaluates one clustering algorithm and not multiple ones.
+Furthermore, it can be concluded that if we only want to measure the coherence of the clusters, we can use an internal validation method. If we want a concrete measurement compared to the non-private version, an external validation method can be used.
+Both measurements are important to evaluate, so we use both external and internal validation. \newline
+
+\textbf{External validation:}
+We will use both \gls{ari} and \gls{ami} different strengths we evaluate both.
 It is not likely that we will use many data points for research questions 1 and 2.
 To compensate for this, the adjusted version is used for both Rand Index and Mutual Information.
-Since both Mutual Information and Rand Index have different characteristics in the type of clustering algorithm, we use both.
 %The clustering algorithm is trained using the plain data and functions as the ground truth \citep{9646464,sun_distributed_2019}.
 %Because of this, we are being able to calculate the \gls{ami} and compare the centroids between the non-private and privately trained clusters.
-To reduce the possible bias of results we executed them 10 times for multiple privacy budgets and report the average for each \citep{9679364}.
-
-Finally, the implementation for these metrics is provided by the Scikit-learn package.
+The implementation for these metrics is provided by the Scikit-learn package.
 With the underlying formulas:
 \begin{equation}
   AMI(U, V) = \frac{MI(U, V) - E(MI(U, V))}{avg(H(U), H(V)) - E(MI(U, V))}
@@ -148,17 +162,43 @@ With the underlying formulas:
 \end{gather}
 \capequation{(Adjusted) Rand Index formula \citep{rand_objective_1971, hubert_comparing_1985-1}}
 
+\textbf{Internal validation:}
+To evaluate the cluster algorithms, we use \gls{chi} and silhouette score.
+The expectation is that both will give a similar result, but they measure the cluster coherence in different ways.
+\todo[inline]{Include formulas}
 %%The second way to measure utility is to calculate the error between the non-private and perturbed data \citep{9679364,sun_distributed_2019,xia_distributed_2020-1}.
 %There are several methods to do this (See \ref{theory:evaluate}), but we use the \gls{aee}.
 %As with \gls{ami} we run the calculations for multiple privacy budgets 10 times and report the average for each budget.
 %\todo[inline]{Explain why AEE and not RE}
 
 \subsubsection{Privacy}
-The most important one here is the preserving of \gls{gi} according to the formula \ref{algo:2d-geo-indistinguishability}.
-This validates that we applied the algorithms in the right way and automatically inherit the strong privacy guarantees provided by \gls{gi}.
-A disadvantage of this method is that it cannot be used to achieve a clear representation of privacy (it is either "yes" or "no").
-Therefore, we also will analyze the average Euclidean distance the differential privacy provides for each epsilon.
+For this reason, we evaluate the privacy provided by the differential privacy algorithm by calculating the average (Euclidean) distance difference in comparison to the non-private data.
+Then, we evaluate the privacy method by simulating a membership inference attack and calculating the adversary advantage. \newline
+\textbf{Privacy distance:} We calculate the Euclidean average difference between non-perturbed data and the perturbed data.
+This is measured for each epsilon. \newline
+\textbf{Membership inference attack (adversary advantage):}
+%\input{Method/algorithms/shokri-setup-mi.tex}
+We used the MIA that was proposed by Shokri et al. with the implementation that was provided by Adversarial Robustness Toolkit (ART) \citep{noauthor_adversarial_2023}.
+An earlier study also explored this attack with as goal to evaluate differential privacy.
+Similar to this attack, we train a classifier with perturbed data and evaluate it using non-perturbed data (test-data / shadow-data) \citep{zhao_not_2020}.
+In this way, we can demonstrate privacy compared to if we had not applied differential privacy.
+For the classifier, we use a RandomForestClassifier, as this classifier is not yet applied for shadow model attacks \citep{rigaki_survey_2021}.
+We consider a semi-surpervised setup, so we generate the labels while using the K-Means algorithm.
+The 50 as the number of data samples are not enough to measure MIA. This is modified to 2000 samples.
 
+Finally, we evaluate the adversary advantage (percentage) using $TPR - FPR$.
+\begin{enumerate}
+  \item TPR: The amount the attacker inferred the member data correctly (the private training data).
+  \item FPR: The amount the attacker inferred the non-member data correctly (the non-private test data).
+\end{enumerate}
+A visual setup of the experiment is given in figure: \ref{figure:mi-attack}
+
+\begin{figure}
+  \includegraphics[width=1.2\textwidth]{Method/images/MI-setup.png}
+  \caption{Member inference attack using shadow models. The green swim lane illustrates the normal setup and the red swim lane projects the adversary steps.}
+  \label{figure:mi-attack}
+\end{figure}
+\newpage
 %Therefore, we analyze our method according to a popular attack: Membership inference attack.
 
 %For this purpose, we make use of a black-box Member inference attack, called "HopSkipJump" \citep{chen_hopskipjumpattack_2020,li_membership_2021}.
