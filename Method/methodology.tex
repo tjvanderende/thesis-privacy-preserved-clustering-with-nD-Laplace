@@ -184,7 +184,7 @@ Similar to this attack, we train a classifier with perturbed data and evaluate i
 In this way, we can demonstrate privacy compared to if we had not applied differential privacy.
 For the classifier, we use a RandomForestClassifier, as this classifier is not yet applied for shadow model attacks \citep{rigaki_survey_2021}.
 We consider a semi-surpervised setup, so we generate the labels while using the K-Means algorithm.
-The 50 as the number of data samples are not enough to measure MIA. This is modified to 2000 samples.
+The 50 as the number of data samples is not enough to measure MIA. This is modified to 2000 samples.
 
 Finally, we evaluate the adversary advantage (percentage) using $TPR - FPR$.
 \begin{enumerate}

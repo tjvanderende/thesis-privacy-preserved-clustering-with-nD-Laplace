@@ -80,30 +80,30 @@ But, as with K-means for $k$ there exists a selection method the $\epsilon$.
 Although \gls{dbscan} requires the most hyperparameters out of the three clustering algorithms, determining them is clearer than for K-means.
 There are clear methods for determining both the $minPts$ and $\epsilon$.
 
-\subsubsection{Overfitting}
-Overfitting is dangerous for machine learning models and one of the biggest mistakes with training machine learning models \citep{demsar_hands-training_2021}.
-It occurs when a machine learning model is trained on samples that are not representative of future test data \citep{bashir_information-theoretic_2020}.
-A common mistake is to evaluate a model, using the same data as it is trained on \citep{demsar_hands-training_2021}.
-The model appears to have high accuracy but just memorized the properties of a training dataset.
-Another cause of overfitting can be the size of the training data \citep{valdenegro-toro_machine_2022}.
+\mycomment{\subsection{Overfitting}
+  Overfitting is dangerous for machine learning models and one of the biggest mistakes with training machine learning models \citep{demsar_hands-training_2021}.
+  It occurs when a machine learning model is trained on samples that are not representative of future test data \citep{bashir_information-theoretic_2020}.
+  A common mistake is to evaluate a model, using the same data as it is trained on \citep{demsar_hands-training_2021}.
+  The model appears to have high accuracy but just memorized the properties of a training dataset.
+  Another cause of overfitting can be the size of the training data \citep{valdenegro-toro_machine_2022}.
 
-To measure if a model overfits, it is necessary to compute the generalization gap \citep{valdenegro-toro_machine_2022}.
-\begin{equation}
-  L_{gap} = L_{val} - L_{train}
-\end{equation}
-Where $L{val}$ and $L_{train}$ are the validation and training splits of the dataset.
-For splitting a dataset, a common approach is to have 50\% training data, 30\% for validation and 20\% test \citep{chicco_ten_2017}.
-In addition to this, if a dataset is too small cross-validation can be considered.
+  To measure if a model overfits, it is necessary to compute the generalization gap \citep{valdenegro-toro_machine_2022}.
+  \begin{equation}
+    L_{gap} = L_{val} - L_{train}
+  \end{equation}
+  Where $L{val}$ and $L_{train}$ are the validation and training splits of the dataset.
+  For splitting a dataset, a common approach is to have 50\% training data, 30\% for validation and 20\% test \citep{chicco_ten_2017}.
+  In addition to this, if a dataset is too small cross-validation can be considered.
 
-\todo[inline]{Needs more work for unsupervised / cluster problems}
+  \todo[inline]{Needs more work for unsupervised / cluster problems}
 
-In summary:
-\begin{enumerate}
-  \item It is necessary to evaluate a machine learning model on a dataset that was not used to train the model.
-  \item Use a representative training dataset, to work well on unseen data.
-  \item To reduce the chance of overfitting for supervised learning, it is a good practice to validate using a 30\% subset.
-\end{enumerate}
-
+  In summary:
+  \begin{enumerate}
+    \item It is necessary to evaluate a machine learning model on a dataset that was not used to train the model.
+    \item Use a representative training dataset, to work well on unseen data.
+    \item To reduce the chance of overfitting for supervised learning, it is a good practice to validate using a 30\% subset.
+  \end{enumerate}
+}
 
 \subsection{Evaluation methods} \label{theory:evaluate}
 Clustering comparison measures are important in cluster analysis for external validation by comparing clustering solutions to a "ground truth" clustering \citep{vinh_information_nodate-2}.
