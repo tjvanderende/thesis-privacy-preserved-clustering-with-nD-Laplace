@@ -1,6 +1,7 @@
 \input{TheorethicalFramework/Differential privacy/dp-math-symbols.tex}
 \section{Differential privacy} \label{section:dp}
 \todo[inline]{Explain general notion of privacy}
+\todo[inline]{Introduction to differential privacy}
 \glsaddall
 \leading{10pt}
 \printglossary[type=differential-privacy, nonumberlist]
@@ -9,7 +10,6 @@
   \caption{Randomization function $K$ gives $\epsilon$-differential privacy for all elements in $D_1$ and $D_2$ if they differ at most one element. \citep{dwork_differential_2006}}
   \label{fig:definition-dp}
 \end{figure}
-The privacy budget $\epsilon$ determines the amount of noise that is added.
 \subsection{Laplace algorithm}
 One way to achieve $\epsilon$-DP is using sampling noise from the Laplace or Gaussian distributions.
 \todo[inline]{Explain Gaussian / Laplace distributions}
@@ -24,8 +24,10 @@ This is the maximal possible change when adding or removing a single record \cit
 
 
 
-\subsection{Local differential privacy}
+\subsubsection{Local differential privacy}
+\todo[inline]{Explain}
 \subsection{Geo-indistinguishability}
+\todo[inline]{Explain in-depth}
 
 %The above attacks mainly target the clustering method after they have been trained. 
 %$Various attacks are more focused on data, like 
