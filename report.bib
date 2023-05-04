@@ -100,6 +100,39 @@
   langid = {english}
 }
 
+@misc{balle_improving_2018,
+  title = {Improving the {{Gaussian Mechanism}} for {{Differential Privacy}}: {{Analytical Calibration}} and {{Optimal Denoising}}},
+  shorttitle = {Improving the {{Gaussian Mechanism}} for {{Differential Privacy}}},
+  author = {Balle, Borja and Wang, Yu-Xiang},
+  year = {2018},
+  month = jun,
+  number = {arXiv:1805.06530},
+  eprint = {1805.06530},
+  primaryclass = {cs, stat},
+  publisher = {{arXiv}},
+  urldate = {2023-05-04},
+  abstract = {The Gaussian mechanism is an essential building block used in multitude of differentially private data analysis algorithms. In this paper we revisit the Gaussian mechanism and show that the original analysis has several important limitations. Our analysis reveals that the variance formula for the original mechanism is far from tight in the high privacy regime (\$\textbackslash varepsilon \textbackslash to 0\$) and it cannot be extended to the low privacy regime (\$\textbackslash varepsilon \textbackslash to \textbackslash infty\$). We address these limitations by developing an optimal Gaussian mechanism whose variance is calibrated directly using the Gaussian cumulative density function instead of a tail bound approximation. We also propose to equip the Gaussian mechanism with a post-processing step based on adaptive estimation techniques by leveraging that the distribution of the perturbation is known. Our experiments show that analytical calibration removes at least a third of the variance of the noise compared to the classical Gaussian mechanism, and that denoising dramatically improves the accuracy of the Gaussian mechanism in the high-dimensional regime.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\ZNLKHPG4\\Balle and Wang - 2018 - Improving the Gaussian Mechanism for Differential .pdf;C\:\\Users\\tjvan\\Zotero\\storage\\HFBS6V2H\\1805.html}
+}
+
+@misc{baraheem_survey_2022,
+  title = {A {{Survey}} on {{Differential Privacy}} with {{Machine Learning}} and {{Future Outlook}}},
+  author = {Baraheem, Samah and Yao, Zhongmei},
+  year = {2022},
+  month = nov,
+  number = {arXiv:2211.10708},
+  eprint = {2211.10708},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-04-27},
+  abstract = {Nowadays, machine learning models and applications have become increasingly pervasive. With this rapid increase in the development and employment of machine learning models, a concern regarding privacy has risen. Thus, there is a legitimate need to protect the data from leaking and from any attacks. One of the strongest and most prevalent privacy models that can be used to protect machine learning models from any attacks and vulnerabilities is differential privacy (DP). DP is strict and rigid definition of privacy, where it can guarantee that an adversary is not capable to reliably predict if a specific participant is included in the dataset or not. It works by injecting a noise to the data whether to the inputs, the outputs, the ground truth labels, the objective functions, or even to the gradients to alleviate the privacy issue and protect the data. To this end, this survey paper presents different differentially private machine learning algorithms categorized into two main categories (traditional machine learning models vs. deep learning models). Moreover, future research directions for differential privacy with machine learning algorithms are outlined.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Cryptography and Security,Computer Science - Machine Learning},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\96UJ8546\\Baraheem and Yao - 2022 - A Survey on Differential Privacy with Machine Lear.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\GJPWLYYR\\2211.html}
+}
+
 @misc{bashir_information-theoretic_2020,
   title = {An {{Information-Theoretic Perspective}} on {{Overfitting}} and {{Underfitting}}},
   author = {Bashir, Daniel and Montanez, George D. and Sehra, Sonia and Segura, Pedro Sandoval and Lauw, Julius},
@@ -273,6 +306,25 @@
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\WEU62HCZ\\Choquette-Choo e.a. - 2021 - Label-Only Membership Inference Attacks.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\KB6KNX7Y\\2007.html}
 }
 
+@inproceedings{cormode_privacy_2018-1,
+  title = {Privacy at {{Scale}}: {{Local Differential Privacy}} in {{Practice}}},
+  shorttitle = {Privacy at {{Scale}}},
+  booktitle = {Proceedings of the 2018 {{International Conference}} on {{Management}} of {{Data}}},
+  author = {Cormode, Graham and Jha, Somesh and Kulkarni, Tejas and Li, Ninghui and Srivastava, Divesh and Wang, Tianhao},
+  year = {2018},
+  month = may,
+  series = {{{SIGMOD}} '18},
+  pages = {1655--1658},
+  publisher = {{Association for Computing Machinery}},
+  address = {{New York, NY, USA}},
+  doi = {10.1145/3183713.3197390},
+  urldate = {2023-05-03},
+  abstract = {Local differential privacy (LDP), where users randomly perturb their inputs to provide plausible deniability of their data without the need for a trusted party, has been adopted recently by several major technology organizations, including Google, Apple and Microsoft. This tutorial aims to introduce the key technical underpinnings of these deployed systems, to survey current research that addresses related problems within the LDP model, and to identify relevant open problems and research directions for the community.},
+  isbn = {978-1-4503-4703-7},
+  keywords = {data collection,differential privacy,local differential privacy,privacy},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\NHJ6PSHC\\Cormode et al. - 2018 - Privacy at Scale Local Differential Privacy in Pr.pdf}
+}
+
 @article{craenendonck_using_nodate,
   title = {Using {{Internal Validity Measures}} to {{Compare Clustering Algorithms}}},
   author = {Craenendonck, Toon Van and Blockeel, Hendrik},
@@ -348,6 +400,14 @@
   abstract = {In the context of a single report of location information, existing researches define location privacy by adversary's uncertainty, inaccuracy, or incorrectness of the estimation, or by geo-indistinguishability which is a generalization of differential privacy. Each of these existing notions has problems in some specific scenarios. In this paper we illustrate the limitations of existing notions by constructing such scenarios, and introduce a formal definition on location privacy by quantifying the distance between the prior and posterior distribution over the possible locations. Further more, we show how to construct a near-optimal obfuscation mechanism by solving an optimization problem. We compare our proposed mechanism with the Laplace noise based geo-indistinguishable mechanism, and Shokri's optimal obfuscation mechanism, using both our proposed privacy metric and the traditional metric based on the estimated distance errors. The results show that our proposed metric better describes location privacy and our proposed mechanism makes a better tradeoff between privacy and utility.},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\C45AELKE\\Dong et al. - 2018 - On the limitations of existing notions of location.pdf}
+}
+
+@article{dwork_calibrating_nodate,
+  title = {Calibrating {{Noise}} to {{Sensitivity}} in {{Private Data Analysis}}},
+  author = {Dwork, Cynthia and McSherry, Frank and Nissim, Kobbi and Smith, Adam},
+  abstract = {We continue a line of research initiated in [10, 11] on privacypreserving statistical databases. Consider a trusted server that holds a database of sensitive information. Given a query function f mapping databases to reals, the so-called true answer is the result of applying f to the database. To protect privacy, the true answer is perturbed by the addition of random noise generated according to a carefully chosen distribution, and this response, the true answer plus noise, is returned to the user.},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\C63GKYIP\\Dwork e.a. - Calibrating Noise to Sensitivity in Private Data A.pdf}
 }
 
 @inproceedings{dwork_differential_2006,
@@ -448,6 +508,23 @@
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\F635ZNB5\\Friedman en Schuster - 2010 - Data mining with differential privacy.pdf}
 }
 
+@misc{hassan_differential_2019,
+  title = {Differential {{Privacy Techniques}} for {{Cyber Physical Systems}}: {{A Survey}}},
+  shorttitle = {Differential {{Privacy Techniques}} for {{Cyber Physical Systems}}},
+  author = {Hassan, Muneeb Ul and Rehmani, Mubashir Husain and Chen, Jinjun},
+  year = {2019},
+  month = sep,
+  number = {arXiv:1812.02282},
+  eprint = {1812.02282},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-05-04},
+  abstract = {Modern cyber physical systems (CPSs) has widely being used in our daily lives because of development of information and communication technologies (ICT).With the provision of CPSs, the security and privacy threats associated to these systems are also increasing. Passive attacks are being used by intruders to get access to private information of CPSs. In order to make CPSs data more secure, certain privacy preservation strategies such as encryption, and k-anonymity have been presented in the past. However, with the advances in CPSs architecture, these techniques also needs certain modifications. Meanwhile, differential privacy emerged as an efficient technique to protect CPSs data privacy. In this paper, we present a comprehensive survey of differential privacy techniques for CPSs. In particular, we survey the application and implementation of differential privacy in four major applications of CPSs named as energy systems, transportation systems, healthcare and medical systems, and industrial Internet of things (IIoT). Furthermore, we present open issues, challenges, and future research direction for differential privacy techniques for CPSs. This survey can serve as basis for the development of modern differential privacy techniques to address various problems and data privacy scenarios of CPSs.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Cryptography and Security},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\VNKHYWPJ\\Hassan et al. - 2019 - Differential Privacy Techniques for Cyber Physical.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\N6PMZLCU\\1812.html}
+}
+
 @article{hassani_using_2017,
   title = {Using Internal Evaluation Measures to Validate the Quality of Diverse Stream Clustering Algorithms},
   author = {Hassani, Marwan and Seidl, Thomas},
@@ -508,6 +585,24 @@
   abstract = {Differential privacy is a strong notion for privacy that can be used to prove formal guarantees, in terms of a privacy budget, , about how much information is leaked by a mechanism. When used in privacy-preserving machine learning, the goal is typically to limit what can be inferred from the model about individual training records. However, the calibration of the privacy budget is not well understood. Implementations of privacy-preserving machine learning often select large values of in order to get acceptable utility of the model, with little understanding of the impact of such choices on meaningful privacy. Moreover, in scenarios where iterative learning procedures are used, relaxed definitions of differential privacy are often used which appear to reduce the needed privacy budget but present poorly understood trade-offs between privacy and utility. In this paper, we quantify the impact of these choices on privacy in experiments with logistic regression and neural network models. Our main finding is that there is no way to obtain privacy for free\textemdash relaxed definitions of differential privacy that reduce the amount of noise needed to improve utility also increase the measured privacy leakage. Current mechanisms for differentially private machine learning rarely offer acceptable utility-privacy trade-offs for complex learning tasks: settings that provide limited accuracy loss provide little effective privacy, and settings that provide strong privacy result in useless models.},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\SL2RLCCC\\Jayaraman en Evans - Evaluating Diﬀerentially Private Machine Learning .pdf}
+}
+
+@misc{ji_differential_2014,
+  title = {Differential {{Privacy}} and {{Machine Learning}}: A {{Survey}} and {{Review}}},
+  shorttitle = {Differential {{Privacy}} and {{Machine Learning}}},
+  author = {Ji, Zhanglong and Lipton, Zachary C. and Elkan, Charles},
+  year = {2014},
+  month = dec,
+  number = {arXiv:1412.7584},
+  eprint = {1412.7584},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-05-04},
+  abstract = {The objective of machine learning is to extract useful information from data, while privacy is preserved by concealing information. Thus it seems hard to reconcile these competing interests. However, they frequently must be balanced when mining sensitive data. For example, medical research represents an important application where it is necessary both to extract useful information and protect patient privacy. One way to resolve the conflict is to extract general characteristics of whole populations without disclosing the private information of individuals.},
+  archiveprefix = {arxiv},
+  langid = {english},
+  keywords = {Computer Science - Cryptography and Security,Computer Science - Databases,Computer Science - Machine Learning},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\UZ23LGFZ\\Ji et al. - 2014 - Differential Privacy and Machine Learning a Surve.pdf}
 }
 
 @inproceedings{keller_balancing_2021,
@@ -644,6 +739,21 @@
   abstract = {The identification of significant underlying data patterns such as image composition and spatial arrangements is fundamental in remote sensing tasks. Therefore, the development of an effective approach for information extraction is crucial to achieve this goal. Affinity propagation (AP) algorithm is a novel powerful technique with the ability of handling with unusual data, containing both categorical and numerical attributes. However, AP has some limitations related to the choice of initial preference parameter, occurrence of oscillations and processing of large data sets. This paper evaluates the clustering performance of AP algorithm taking into account the influence of preference parameter and damping factor. The study was conducted considering the AP algorithm, the adaptive AP and partition AP. According to the experiments, the choice of preference and damping greatly influences on the quality and the final number of clusters.},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\HQPEFR7T\\Moiane en Machado - 2018 - EVALUATION OF THE CLUSTERING PERFORMANCE OF AFFINI.pdf}
+}
+
+@inproceedings{nissim_clustering_2018,
+  title = {Clustering {{Algorithms}} for the {{Centralized}} and {{Local Models}}},
+  booktitle = {Proceedings of {{Algorithmic Learning Theory}}},
+  author = {Nissim, Kobbi and Stemmer, Uri},
+  year = {2018},
+  month = apr,
+  pages = {619--653},
+  publisher = {{PMLR}},
+  issn = {2640-3498},
+  urldate = {2023-04-25},
+  abstract = {We revisit the problem of finding a minimum enclosing ball with differential privacy: Given a set of \$n\$ points in the \$d\$-dimensional Euclidean space and an integer \$t{$\leq$}n\$,  the goal is to find a ball of the smallest radius \$r\_\{opt\}\$ enclosing at least \$t\$ input points. The problem is motivated by its various applications to differential privacy, including the sample and aggregate technique, private data exploration, and clustering.   Without privacy concerns, minimum enclosing ball has a polynomial time approximation scheme (PTAS), which computes a ball of radius almost \$r\_\{opt\}\$ (the problem is NP-hard to solve exactly). In contrast, under differential privacy, until this work, only a \$O(\textbackslash sqrt\{\textbackslash log n\})\$-approximation algorithm was known.   We provide new constructions of differentially private algorithms for minimum enclosing ball achieving constant factor approximation to \$r\_\{opt\}\$ both in the centralized model (where a trusted curator collects the sensitive information and analyzes it with differential privacy) and in the local model (where each respondent randomizes her answers to the data curator to protect her privacy).   We demonstrate how to use our algorithms as a building block for approximating \$k\$-means in both models.},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\IGT9G6P6\\Nissim and Stemmer - 2018 - Clustering Algorithms for the Centralized and Loca.pdf}
 }
 
 @misc{noauthor_adversarial_2023,
@@ -1000,6 +1110,16 @@
   langid = {english},
   keywords = {Energy science and technology,Mathematics and computing},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\8VFPAXY2\\Yan et al. - 2022 - Perturb and optimize users’ location privacy using.pdf}
+}
+
+@article{yang_k-means_2022,
+  title = {K-{{Means Clustering}} with {{Local Distance Privacy}}},
+  author = {Yang, Mengmeng and Huang, Longxia and Tang, Chenghua},
+  year = {2022},
+  journal = {Big Data Mining and Analytics},
+  abstract = {With the development of information technology, a mass of data are generated every day. Collecting and analysing these data help service providers improve their services and gain an advantage in the fierce market competition. K-means clustering has been widely used for cluster analysis in real life. However, these analyses are based on users' data, which disclose users' privacy. Local differential privacy has attracted lots of attention recently due to its strong privacy guarantee and has been applied for clustering analysis. However, existing K-means clustering methods with local differential privacy protection cannot get an ideal clustering result due to the large amount of noise introduced to the whole dataset to ensure the privacy guarantee. To solve this problem, we propose a novel method that provides local distance privacy for users who participate in the clustering analysis. Instead of making the users' records in-distinguish from each other in high-dimensional space, we map the user's record into a one-dimensional distance space and make the records in such a distance space not be distinguished from each other. To be specific, we generate a noisy distance first and then synthesise the high-dimensional data record. We propose a Bounded Laplace Method (BLM) and a Cluster Indistinguishable Method (CIM) to sample such a noisy distance, which satisfies the local differential privacy guarantee and local dE -privacy guarantee, respectively. Furthermore, we introduce a way to generate synthetic data records in high-dimensional space. Our experimental evaluation results show that our methods outperform the traditional methods significantly.},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\ZHY4NLX7\\Yang et al. - 2022 - K-Means Clustering with Local Distance Privacy.pdf}
 }
 
 @inproceedings{yeom_privacy_2018,
