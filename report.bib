@@ -65,12 +65,12 @@
 
 @misc{ahuja_utility-preserving_2019,
   title = {A {{Utility-Preserving}} and {{Scalable Technique}} for {{Protecting Location Data}} with {{Geo-Indistinguishability}}},
+  author = {Ahuja, Ritesh and Ghinita, Gabriel and Shahabi, Cyrus},
   year = {2019},
   publisher = {{OpenProceedings.org}},
   doi = {10.5441/002/EDBT.2019.20},
   urldate = {2023-02-26},
   abstract = {Location-based apps provide users with personalized services tailored to their geographical position. This is highly-beneficial for mobile users, who are able to find points of interest close to their location, or connect with nearby friends. However, sharing location data with service providers also introduces privacy concerns. An adversary with access to fine-grained user locations can infer private details about individuals. Geo-indistinguishability (GeoInd) adapts the popular differential privacy (DP) model to make it suitable for protecting users' location information. However, existing techniques that implement GeoInd have major drawbacks. Some solutions, such as the planar Laplace mechanism, significantly lower data utility by adding excessive noise. Other approaches, such as the optimal mechanism, achieve good utility, but only work for small sets of candidate locations due to the use of computationally-expensive linear programming. In most cases, locations are used to answer online queries, so a quick response time is essential. In this paper, we propose a technique that achieves GeoInd and scales to large datasets while preserving data utility. Our central idea is to use the composability property of GeoInd to create a multiple-step algorithm that can be used in conjunction with a spatial index. We preserve utility by applying accurate GeoInd mechanisms and we achieve scalability by pruning the solution search space with the help of the index when seeking high-utility outcomes. Our extensive performance evaluation on top of real location datasets from social media apps shows that the proposed technique outperforms significantly the benchmark in terms of utility and/or computational overhead.},
-  collaborator = {Ahuja, Ritesh and Ghinita, Gabriel and Shahabi, Cyrus},
   langid = {english},
   keywords = {Database Technology},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\VN38ZL5N\\Ahuja et al. - 2019 - A Utility-Preserving and Scalable Technique for Pr.pdf}
@@ -98,6 +98,30 @@
   abstract = {Local differential privacy (LPD) is a distributed variant of differential privacy (DP) in which the obfuscation of the sensitive information is done at the level of the individual records, and in general it is used to sanitize data that are collected for statistical purposes. LPD has the advantage it does not need to assume a trusted third party. On the other hand LDP in general requires more noise than DP to achieve the same level of protection, with negative consequences on the utility. In practice, utility becomes acceptable only on very large collections of data, and this is the reason why LDP is especially successful among big companies such as Apple and Google, which can count on a huge number of users. In this paper, we propose a variant of LDP suitable for metric spaces, such as location data or energy consumption data, and we show that it provides a much better utility for the same level of privacy.},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\VXCWK8LH\\Alvim et al. - Local Differential Privacy on Metric Spaces optim.pdf}
+}
+
+@article{alvim_local_nodate-1,
+  title = {Local {{Differential Privacy}} on {{Metric Spaces}}: Optimizing the Trade-off with Utility},
+  author = {Alvim, Mario S and Chatzikokolakis, Konstantinos and Palamidessi, Catuscia and Pazii, Anna},
+  abstract = {Local differential privacy (LPD) is a distributed variant of differential privacy (DP) in which the obfuscation of the sensitive information is done at the level of the individual records, and in general it is used to sanitize data that are collected for statistical purposes. LPD has the advantage it does not need to assume a trusted third party. On the other hand LDP in general requires more noise than DP to achieve the same level of protection, with negative consequences on the utility. In practice, utility becomes acceptable only on very large collections of data, and this is the reason why LDP is especially successful among big companies such as Apple and Google, which can count on a huge number of users. In this paper, we propose a variant of LDP suitable for metric spaces, such as location data or energy consumption data, and we show that it provides a much better utility for the same level of privacy.},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\JDURNA3E\\Alvim et al. - Local Differential Privacy on Metric Spaces optim.pdf}
+}
+
+@misc{alvim_metric-based_2018-1,
+  title = {Metric-Based Local Differential Privacy for Statistical Applications},
+  author = {Alvim, M{\'a}rio S. and Chatzikokolakis, Konstantinos and Palamidessi, Catuscia and Pazii, Anna},
+  year = {2018},
+  month = may,
+  number = {arXiv:1805.01456},
+  eprint = {1805.01456},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-05-24},
+  abstract = {Local differential privacy (LPD) is a distributed variant of differential privacy (DP) in which the obfuscation of the sensitive information is done at the level of the individual records, and in general it is used to sanitize data that are collected for statistical purposes. LPD has the advantage it does not need to assume a trusted third party. On the other hand LDP in general requires more noise than DP to achieve the same level of protection, with negative consequences on the utility. In practice, utility becomes acceptable only on very large collections of data, and this is the reason why LDP is especially successful among big companies such as Apple and Google, which can count on a huge number of users. In this paper, we propose a variant of LDP suitable for metric spaces, such as location data or energy consumption data, and we show that it provides a much better utility for the same level of privacy.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Cryptography and Security},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\MKE6FHYG\\Alvim et al. - 2018 - Metric-based local differential privacy for statis.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\VQ4T8CX6\\1805.html}
 }
 
 @incollection{bailey_privacy_2016,
@@ -163,6 +187,16 @@
   archiveprefix = {arxiv},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Information Theory,Computer Science - Machine Learning,Statistics - Machine Learning},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\MFVDL5Q9\\Bashir e.a. - 2020 - An Information-Theoretic Perspective on Overfittin.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\ANXC3L8Z\\2010.html}
+}
+
+@book{blum_practical_2005,
+  title = {Practical Privacy: {{The SulQ}} Framework},
+  author = {Blum, Avrim and Dwork, Cynthia and McSherry, Frank and Nissim, Kobbi},
+  year = {2005},
+  month = jun,
+  journal = {Proceedings of the ACM SIGACT-SIGMOD-SIGART Symposium on Principles of Database Systems},
+  pages = {138},
+  doi = {10.1145/1065167.1065184}
 }
 
 @misc{bozdemir_privacy-preserving_nodate,
@@ -270,6 +304,21 @@
   author = {Chatzikokolakis, Konstantinos and ElSalamouny, Ehab and Palamidessi, Catuscia},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\355U7PAM\\Chatzikokolakis et al. - Practical Mechanisms for Location Privacy.pdf}
+}
+
+@book{chawla_proceedings_2020,
+  title = {Proceedings of the {{Fourteenth Annual ACM-SIAM Symposium}} on {{Discrete Algorithms}}},
+  editor = {Chawla, Shuchi},
+  year = {2020},
+  month = jan,
+  publisher = {{Society for Industrial and Applied Mathematics}},
+  address = {{Philadelphia, PA}},
+  doi = {10.1137/1.9781611975994},
+  urldate = {2023-05-15},
+  abstract = {We design a new algorithm for the Euclidean k-means problem that operates in the local model of differential privacy. Unlike in the non-private literature, differentially private algorithms for the k-means objective incur both additive and multiplicative errors. Our algorithm significantly reduces the additive error while keeping the multiplicative error the same as in previous state-of-the-art results. Specifically, on a database of size n, our algorithm guarantees O(1) multiplicative error and {$\approx$} n1/2+a additive error for an arbitrarily small constant a {$>$} 0. All previous algorithms in the local model had additive error {$\approx$} n2/3+a. Our techniques extend to k-median clustering.},
+  isbn = {978-1-61197-599-4},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\NNDWPXSM\\Chawla - 2020 - Proceedings of the Fourteenth Annual ACM-SIAM Symp.pdf}
 }
 
 @misc{chen_hopskipjumpattack_2020,
@@ -418,6 +467,23 @@
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\C45AELKE\\Dong et al. - 2018 - On the limitations of existing notions of location.pdf}
 }
 
+@misc{duchi_minimax_2017,
+  title = {Minimax {{Optimal Procedures}} for {{Locally Private Estimation}}},
+  author = {Duchi, John and Wainwright, Martin and Jordan, Michael},
+  year = {2017},
+  month = nov,
+  number = {arXiv:1604.02390},
+  eprint = {1604.02390},
+  primaryclass = {cs, math, stat},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.1604.02390},
+  urldate = {2023-05-13},
+  abstract = {Working under a model of privacy in which data remains private even from the statistician, we study the tradeoff between privacy guarantees and the risk of the resulting statistical estimators. We develop private versions of classical information-theoretic bounds, in particular those due to Le Cam, Fano, and Assouad. These inequalities allow for a precise characterization of statistical rates under local privacy constraints and the development of provably (minimax) optimal estimation procedures. We provide a treatment of several canonical families of problems: mean estimation and median estimation, generalized linear models, and nonparametric density estimation. For all of these families, we provide lower and upper bounds that match up to constant factors, and exhibit new (optimal) privacy-preserving mechanisms and computationally efficient estimators that achieve the bounds. Additionally, we present a variety of experimental results for estimation problems involving sensitive data, including salaries, censored blog posts and articles, and drug abuse; these experiments demonstrate the importance of deriving optimal procedures.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Information Theory,Mathematics - Statistics Theory,Statistics - Methodology},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\E2YPKIEK\\Duchi et al. - 2017 - Minimax Optimal Procedures for Locally Private Est.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\P6YN4GLQ\\1604.html}
+}
+
 @article{dwork_calibrating_nodate,
   title = {Calibrating {{Noise}} to {{Sensitivity}} in {{Private Data Analysis}}},
   author = {Dwork, Cynthia and McSherry, Frank and Nissim, Kobbi and Smith, Adam},
@@ -490,6 +556,22 @@
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\BJSQU8PU\\Fahad e.a. - 2014 - A Survey of Clustering Algorithms for Big Data Ta.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\8AUACR48\\stamp.html}
 }
 
+@misc{fernandes_generalised_2019,
+  title = {Generalised {{Differential Privacy}} for {{Text Document Processing}}},
+  author = {Fernandes, Natasha and Dras, Mark and McIver, Annabelle},
+  year = {2019},
+  month = feb,
+  number = {arXiv:1811.10256},
+  eprint = {1811.10256},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-05-11},
+  abstract = {We address the problem of how to "obfuscate" texts by removing stylistic clues which can identify authorship, whilst preserving (as much as possible) the content of the text. In this paper we combine ideas from "generalised differential privacy" and machine learning techniques for text processing to model privacy for text documents. We define a privacy mechanism that operates at the level of text documents represented as "bags-of-words" - these representations are typical in machine learning and contain sufficient information to carry out many kinds of classification tasks including topic identification and authorship attribution (of the original documents). We show that our mechanism satisfies privacy with respect to a metric for semantic similarity, thereby providing a balance between utility, defined by the semantic content of texts, with the obfuscation of stylistic clues. We demonstrate our implementation on a "fan fiction" dataset, confirming that it is indeed possible to disguise writing style effectively whilst preserving enough information and variation for accurate content classification tasks.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Cryptography and Security,Computer Science - Machine Learning},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\XQYR7E5I\\Fernandes et al. - 2019 - Generalised Differential Privacy for Text Document.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\ZLA8MZL4\\1811.html}
+}
+
 @article{franti_centroid_2014,
   title = {Centroid Index: {{Cluster}} Level Similarity Measure},
   shorttitle = {Centroid Index},
@@ -542,6 +624,70 @@
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\F635ZNB5\\Friedman en Schuster - 2010 - Data mining with differential privacy.pdf}
 }
 
+@misc{geng_optimal_2013,
+  title = {The {{Optimal Mechanism}} in {{Differential Privacy}}},
+  author = {Geng, Quan and Viswanath, Pramod},
+  year = {2013},
+  month = oct,
+  number = {arXiv:1212.1186},
+  eprint = {1212.1186},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-05-13},
+  abstract = {We derive the optimal \$\textbackslash epsilon\$-differentially private mechanism for single real-valued query function under a very general utility-maximization (or cost-minimization) framework. The class of noise probability distributions in the optimal mechanism has \{\textbackslash em staircase-shaped\} probability density functions which are symmetric (around the origin), monotonically decreasing and geometrically decaying. The staircase mechanism can be viewed as a \{\textbackslash em geometric mixture of uniform probability distributions\}, providing a simple algorithmic description for the mechanism. Furthermore, the staircase mechanism naturally generalizes to discrete query output settings as well as more abstract settings. We explicitly derive the optimal noise probability distributions with minimum expectation of noise amplitude and power. Comparing the optimal performances with those of the Laplacian mechanism, we show that in the high privacy regime (\$\textbackslash epsilon\$ is small), Laplacian mechanism is asymptotically optimal as \$\textbackslash epsilon \textbackslash to 0\$; in the low privacy regime (\$\textbackslash epsilon\$ is large), the minimum expectation of noise amplitude and minimum noise power are \$\textbackslash Theta(\textbackslash Delta e\^\{-\textbackslash frac\{\textbackslash epsilon\}\{2\}\})\$ and \$\textbackslash Theta(\textbackslash Delta\^2 e\^\{-\textbackslash frac\{2\textbackslash epsilon\}\{3\}\})\$ as \$\textbackslash epsilon \textbackslash to +\textbackslash infty\$, while the expectation of noise amplitude and power using the Laplacian mechanism are \$\textbackslash frac\{\textbackslash Delta\}\{\textbackslash epsilon\}\$ and \$\textbackslash frac\{2\textbackslash Delta\^2\}\{\textbackslash epsilon\^2\}\$, where \$\textbackslash Delta\$ is the sensitivity of the query function. We conclude that the gains are more pronounced in the low privacy regime.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Cryptography and Security,Computer Science - Data Structures and Algorithms},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\U7D8VWLC\\Geng and Viswanath - 2013 - The Optimal Mechanism in Differential Privacy.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\FWAXWWV8\\1212.html}
+}
+
+@article{geng_staircase_2015,
+  title = {The Staircase Mechanism in Differential Privacy},
+  author = {Geng, Quan and Kairouz, Peter and Oh, Sewoong and Viswanath, Pramod},
+  year = {2015},
+  month = oct,
+  journal = {IEEE Journal of Selected Topics in Signal Processing},
+  volume = {9},
+  number = {7},
+  pages = {1176--1184},
+  issn = {1932-4553, 1941-0484},
+  doi = {10.1109/JSTSP.2015.2425831},
+  urldate = {2023-05-13},
+  abstract = {Adding Laplacian noise is a standard approach in differential privacy to sanitize numerical data before releasing it. In this paper, we propose an alternative noise adding mechanism: the staircase mechanism, which is a geometric mixture of uniform random variables. The staircase mechanism can replace the Laplace mechanism in each instance in the literature and for the same level of differential privacy, the performance in each instance improves; the improvement is particularly stark in medium-low privacy regimes. We show that the staircase mechanism is the optimal noise adding mechanism in a universal context, subject to a conjectured technical lemma (which we also prove to be true for one and two dimensional data).},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\D345PLSC\\Geng et al. - 2015 - The Staircase Mechanism in Differential Privacy.pdf}
+}
+
+@article{george_marsaglia_choosing_1972,
+  title = {Choosing a {{Point}} from the {{Surface}} of a {{Sphere}}},
+  author = {{George Marsaglia}},
+  year = {1972},
+  month = apr,
+  journal = {The Annals of Mathematical Statistics},
+  volume = {43},
+  number = {2},
+  pages = {645--646},
+  doi = {10.1214/aoms/1177692644}
+}
+
+@article{gorban_high-dimensional_2020,
+  title = {High-{{Dimensional Brain}} in a {{High-Dimensional World}}: {{Blessing}} of {{Dimensionality}}},
+  shorttitle = {High-{{Dimensional Brain}} in a {{High-Dimensional World}}},
+  author = {Gorban, Alexander N. and Makarov, Valery A. and Tyukin, Ivan Y.},
+  year = {2020},
+  month = jan,
+  journal = {Entropy},
+  volume = {22},
+  number = {1},
+  pages = {82},
+  issn = {1099-4300},
+  doi = {10.3390/e22010082},
+  urldate = {2023-05-24},
+  abstract = {High-dimensional data and high-dimensional representations of reality are inherent features of modern Artificial Intelligence systems and applications of machine learning. The well-known phenomenon of the ``curse of dimensionality'' states: many problems become exponentially difficult in high dimensions. Recently, the other side of the coin, the ``blessing of dimensionality'', has attracted much attention. It turns out that generic high-dimensional datasets exhibit fairly simple geometric properties. Thus, there is a fundamental tradeoff between complexity and simplicity in high dimensional spaces. Here we present a brief explanatory review of recent ideas, results and hypotheses about the blessing of dimensionality and related simplifying effects relevant to machine learning and neuroscience.},
+  pmcid = {PMC7516518},
+  pmid = {33285855},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\P2A7W8LD\\Gorban et al. - 2020 - High-Dimensional Brain in a High-Dimensional World.pdf}
+}
+
 @misc{hassan_differential_2019,
   title = {Differential {{Privacy Techniques}} for {{Cyber Physical Systems}}: {{A Survey}}},
   shorttitle = {Differential {{Privacy Techniques}} for {{Cyber Physical Systems}}},
@@ -583,6 +729,22 @@
   urldate = {2023-02-15},
   abstract = {In supervised learning scenarios, feature selection has been studied widely in the literature. Selecting features in unsupervised learning scenarios is a much harder problem, due to the absence of class labels that would guide the search for relevant information. And, almost all of previous unsupervised feature selection methods are "wrapper" techniques that require a learning algorithm to evaluate the candidate feature subsets. In this paper, we propose a "filter" method for feature selection which is independent of any learning algorithm. Our method can be performed in either supervised or unsupervised fashion. The proposed method is based on the observation that, in many real world classification problems, data from the same class are often close to each other. The importance of a feature is evaluated by its power of locality preserving, or, Laplacian Score. We compare our method with data variance (unsupervised) and Fisher score (supervised) on two data sets. Experimental results demonstrate the effectiveness and efficiency of our algorithm.},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\MEYJS6AX\\He e.a. - 2005 - Laplacian Score for Feature Selection.pdf}
+}
+
+@inproceedings{ho_differential_2011,
+  title = {Differential Privacy for Location Pattern Mining},
+  booktitle = {Proceedings of the 4th {{ACM SIGSPATIAL International Workshop}} on {{Security}} and {{Privacy}} in {{GIS}} and {{LBS}} - {{SPRINGL}} '11},
+  author = {Ho, Shen-Shyang and Ruan, Shuhua},
+  year = {2011},
+  pages = {17},
+  publisher = {{ACM Press}},
+  address = {{Chicago, Illinois}},
+  doi = {10.1145/2071880.2071884},
+  urldate = {2022-12-28},
+  abstract = {One main concern for individuals to participate in the data collection of personal location history records is the disclosure of their location and related information when a user queries for statistical or pattern mining results derived from these records. In this paper, we investigate how the privacy goal that the inclusion of one's location history in a statistical database with location pattern mining capabilities does not substantially increase one's privacy risk. In particular, we propose a differentially private pattern mining algorithm for interesting geographic location discovery using a region quadtree spatial decomposition to preprocess the location points followed by applying a density-based clustering algorithm. A differentially private region quadtree is used for both de-noising the spatial domain and identifying the likely geographic regions containing the interesting locations. Then, a differential privacy mechanism is applied to the algorithm outputs, namely: the interesting regions and their corresponding stay point counts. The quadtree spatial decomposition enables one to obtain a localized reduced sensitivity to achieve the differential privacy goal and accurate outputs. Experimental results on synthetic datasets are used to show the feasibility of the proposed privacy preserving location pattern mining algorithm.},
+  isbn = {978-1-4503-1032-1},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\TF8DSXWE\\Ho en Ruan - 2011 - Differential privacy for location pattern mining.pdf}
 }
 
 @misc{hu_membership_2022,
@@ -637,6 +799,22 @@
   langid = {english},
   keywords = {Computer Science - Cryptography and Security,Computer Science - Databases,Computer Science - Machine Learning},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\UZ23LGFZ\\Ji et al. - 2014 - Differential Privacy and Machine Learning a Surve.pdf}
+}
+
+@misc{kaplan_differentially_2018,
+  title = {Differentially {{Private}} K-{{Means}} with {{Constant Multiplicative Error}}},
+  author = {Kaplan, Haim and Stemmer, Uri},
+  year = {2018},
+  month = jul,
+  number = {arXiv:1804.08001},
+  eprint = {1804.08001},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-05-14},
+  abstract = {We design new differentially private algorithms for the Euclidean k-means problem, both in the centralized model and in the local model of differential privacy. In both models, our algorithms achieve significantly improved error guarantees than the previous state-of-the-art. In addition, in the local model, our algorithm significantly reduces the number of interaction rounds. Although the problem has been widely studied in the context of differential privacy, all of the existing constructions achieve only super constant approximation factors. We present, for the first time, efficient private algorithms for the problem with constant multiplicative error. Furthermore, we show how to modify our algorithms so they compute private corsets for k-means clustering in both models.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Data Structures and Algorithms},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\ULNKA2BZ\\Kaplan and Stemmer - 2018 - Differentially Private k-Means with Constant Multi.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\E93GRCN6\\1804.html}
 }
 
 @inproceedings{keller_balancing_2021,
@@ -698,7 +876,7 @@
   urldate = {2023-03-09},
   abstract = {The Lambert W function is a mathematical function with a long history, but which was named and rigorously defined relatively recently. It is closely related to the logarithmic function and arises from many models in the natural sciences, including a surprising number of problems in ecology and evolution. I describe the basic properties of the function and present examples of its application to models of ecological and evolutionary processes. The Lambert W function makes it possible to solve explicitly several models where this is not possible with elementary functions. I present examples of such models from existing literature, as well as novel models. Solving models explicitly with the Lambert W function can provide deeper insight and a new point of view on a biological problem. Explicit solutions with the Lambert W function are easily amenable to further mathematical operations, such as differentiation and integration. These advantages apply to a wide range of models, from the marginal value theorem to population growth rates and disease epidemics.},
   langid = {english},
-  keywords = {calculus,explicit solution,fertilization kinetics,Lambert W function,Lotka–Volterra model,marginal value theorem,mate search,modelling,population growth rate,SIR model},
+  keywords = {calculus,explicit solution,fertilization kinetics,Lambert W function,Lotka\textendash Volterra model,marginal value theorem,mate search,modelling,population growth rate,SIR model},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\S77QF2U8\\Lehtonen - 2016 - The Lambert W function in ecological and evolution.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\QYQTRQAH\\2041-210X.html}
 }
 
@@ -741,6 +919,29 @@
   isbn = {2374-8303}
 }
 
+@inproceedings{m_alvim_invited_2018-2,
+  title = {Invited {{Paper}}: {{Local Differential Privacy}} on {{Metric Spaces}}: {{Optimizing}} the {{Trade-Off}} with {{Utility}}},
+  booktitle = {2018 {{IEEE}} 31st {{Computer Security Foundations Symposium}} ({{CSF}})},
+  author = {{M. Alvim} and {K. Chatzikokolakis} and {C. Palamidessi} and {A. Pazii}},
+  year = {2018},
+  month = jul,
+  pages = {262--267},
+  doi = {10.1109/CSF.2018.00026},
+  isbn = {2374-8303}
+}
+
+@article{marsaglia_choosing_1972,
+  title = {Choosing a Point from the Surface of a Sphere},
+  author = {Marsaglia, George},
+  year = {1972},
+  journal = {The Annals of Mathematical Statistics},
+  volume = {43},
+  number = {2},
+  pages = {645--646},
+  publisher = {{Institute of Mathematical Statistics}},
+  issn = {0003-4851}
+}
+
 @article{mitra_unsupervised_2002,
   title = {Unsupervised Feature Selection Using Feature Similarity},
   author = {Mitra, P. and Murthy, C.A. and Pal, S.K.},
@@ -773,6 +974,22 @@
   abstract = {The identification of significant underlying data patterns such as image composition and spatial arrangements is fundamental in remote sensing tasks. Therefore, the development of an effective approach for information extraction is crucial to achieve this goal. Affinity propagation (AP) algorithm is a novel powerful technique with the ability of handling with unusual data, containing both categorical and numerical attributes. However, AP has some limitations related to the choice of initial preference parameter, occurrence of oscillations and processing of large data sets. This paper evaluates the clustering performance of AP algorithm taking into account the influence of preference parameter and damping factor. The study was conducted considering the AP algorithm, the adaptive AP and partition AP. According to the experiments, the choice of preference and damping greatly influences on the quality and the final number of clusters.},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\HQPEFR7T\\Moiane en Machado - 2018 - EVALUATION OF THE CLUSTERING PERFORMANCE OF AFFINI.pdf}
+}
+
+@misc{nguyen_collecting_2016,
+  title = {Collecting and {{Analyzing Data}} from {{Smart Device Users}} with {{Local Differential Privacy}}},
+  author = {Nguy{\^e}n, Th{\^o}ng T. and Xiao, Xiaokui and Yang, Yin and Hui, Siu Cheung and Shin, Hyejin and Shin, Junbum},
+  year = {2016},
+  month = jun,
+  number = {arXiv:1606.05053},
+  eprint = {1606.05053},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-05-24},
+  abstract = {Organizations with a large user base, such as Samsung and Google, can potentially benefit from collecting and mining users' data. However, doing so raises privacy concerns, and risks accidental privacy breaches with serious consequences. Local differential privacy (LDP) techniques address this problem by only collecting randomized answers from each user, with guarantees of plausible deniability; meanwhile, the aggregator can still build accurate models and predictors by analyzing large amounts of such randomized data. So far, existing LDP solutions either have severely restricted functionality, or focus mainly on theoretical aspects such as asymptotical bounds rather than practical usability and performance. Motivated by this, we propose Harmony, a practical, accurate and efficient system for collecting and analyzing data from smart device users, while satisfying LDP. Harmony applies to multi-dimensional data containing both numerical and categorical attributes, and supports both basic statistics (e.g., mean and frequency estimates), and complex machine learning tasks (e.g., linear regression, logistic regression and SVM classification). Experiments using real data confirm Harmony's effectiveness.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Databases},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\7Y4VRWXH\\Nguyên et al. - 2016 - Collecting and Analyzing Data from Smart Device Us.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\36II3QW2\\1606.html}
 }
 
 @inproceedings{nissim_clustering_2018,
@@ -993,6 +1210,18 @@
   abstract = {In recent years, unsupervised feature selection methods have raised considerable interest in many research areas; this is mainly due to their ability to identify and select relevant features without needing class label information. In this paper, we provide a comprehensive and structured review of the most relevant and recent unsupervised feature selection methods reported in the literature. We present a taxonomy of these methods and describe the main characteristics and the fundamental ideas they are based on. Additionally, we summarized the advantages and disadvantages of the general lines in which we have categorized the methods analyzed in this review. Moreover, an experimental comparison among the most representative methods of each approach is also presented. Finally, we discuss some important open challenges in this research area.}
 }
 
+@article{stemmer_locally_2021,
+  title = {Locally Private K-Means Clustering},
+  author = {Stemmer, Uri},
+  year = {2021},
+  journal = {The Journal of Machine Learning Research},
+  volume = {22},
+  number = {1},
+  pages = {7964--7993},
+  publisher = {{JMLRORG}},
+  issn = {1532-4435}
+}
+
 @article{strehl_cluster_2002,
   title = {Cluster Ensembles---a Knowledge Reuse Framework for Combining Multiple Partitions},
   author = {Strehl, Alexander and Ghosh, Joydeep},
@@ -1002,6 +1231,40 @@
   number = {Dec},
   pages = {583--617},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\CTQ3ZAYE\\Strehl en Ghosh - Cluster Ensembles – A Knowledge Reuse Framework fo.pdf}
+}
+
+@misc{su_differentially_2015,
+  title = {Differentially {{Private}} \$k\$-{{Means Clustering}}},
+  author = {Su, Dong and Cao, Jianneng and Li, Ninghui and Bertino, Elisa and Jin, Hongxia},
+  year = {2015},
+  month = apr,
+  number = {arXiv:1504.05998},
+  eprint = {1504.05998},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.1504.05998},
+  urldate = {2023-05-14},
+  abstract = {There are two broad approaches for differentially private data analysis. The interactive approach aims at developing customized differentially private algorithms for various data mining tasks. The non-interactive approach aims at developing differentially private algorithms that can output a synopsis of the input dataset, which can then be used to support various data mining tasks. In this paper we study the tradeoff of interactive vs. non-interactive approaches and propose a hybrid approach that combines interactive and non-interactive, using \$k\$-means clustering as an example. In the hybrid approach to differentially private \$k\$-means clustering, one first uses a non-interactive mechanism to publish a synopsis of the input dataset, then applies the standard \$k\$-means clustering algorithm to learn \$k\$ cluster centroids, and finally uses an interactive approach to further improve these cluster centroids. We analyze the error behavior of both non-interactive and interactive approaches and use such analysis to decide how to allocate privacy budget between the non-interactive step and the interactive step. Results from extensive experiments support our analysis and demonstrate the effectiveness of our approach.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Cryptography and Security},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\NLFCUWY5\\Su et al. - 2015 - Differentially Private $k$-Means Clustering.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\ZMQ4SR8U\\1504.html}
+}
+
+@misc{su_differentially_2015-1,
+  title = {Differentially {{Private}} \$k\$-{{Means Clustering}}},
+  author = {Su, Dong and Cao, Jianneng and Li, Ninghui and Bertino, Elisa and Jin, Hongxia},
+  year = {2015},
+  month = apr,
+  number = {arXiv:1504.05998},
+  eprint = {1504.05998},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.1504.05998},
+  urldate = {2023-05-13},
+  abstract = {There are two broad approaches for differentially private data analysis. The interactive approach aims at developing customized differentially private algorithms for various data mining tasks. The non-interactive approach aims at developing differentially private algorithms that can output a synopsis of the input dataset, which can then be used to support various data mining tasks. In this paper we study the tradeoff of interactive vs. non-interactive approaches and propose a hybrid approach that combines interactive and non-interactive, using \$k\$-means clustering as an example. In the hybrid approach to differentially private \$k\$-means clustering, one first uses a non-interactive mechanism to publish a synopsis of the input dataset, then applies the standard \$k\$-means clustering algorithm to learn \$k\$ cluster centroids, and finally uses an interactive approach to further improve these cluster centroids. We analyze the error behavior of both non-interactive and interactive approaches and use such analysis to decide how to allocate privacy budget between the non-interactive step and the interactive step. Results from extensive experiments support our analysis and demonstrate the effectiveness of our approach.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Cryptography and Security},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\N43DH4MK\\Su et al. - 2015 - Differentially Private $k$-Means Clustering.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\VDQZ96GA\\1504.html}
 }
 
 @misc{sun_distributed_2019,
@@ -1087,6 +1350,30 @@
   abstract = {Affinity propagation clustering (AP) has two limitations: it is hard to know what value of parameter `preference' can yield an optimal clustering solution, and oscillations cannot be eliminated automatically if occur. The adaptive AP method is proposed to overcome these limitations, including adaptive scanning of preferences to search space of the number of clusters for finding the optimal clustering solution, adaptive adjustment of damping factors to eliminate oscillations, and adaptive escaping from oscillations when the damping adjustment technique fails. Experimental results on simulated and real data sets show that the adaptive AP is effective and can outperform AP in quality of clustering results.},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\UFTDF2JZ\\Wang e.a. - 2007 - Adaptive Affinity Propagation Clustering.pdf}
+}
+
+@misc{wang_collecting_2019,
+  title = {Collecting and {{Analyzing Multidimensional Data}} with {{Local Differential Privacy}}},
+  author = {Wang, Ning and Xiao, Xiaokui and Yang, Yin and Zhao, Jun and Hui, Siu Cheung and Shin, Hyejin and Shin, Junbum and Yu, Ge},
+  year = {2019},
+  month = jun,
+  number = {arXiv:1907.00782},
+  eprint = {1907.00782},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-05-13},
+  abstract = {Local differential privacy (LDP) is a recently proposed privacy standard for collecting and analyzing data, which has been used, e.g., in the Chrome browser, iOS and macOS. In LDP, each user perturbs her information locally, and only sends the randomized version to an aggregator who performs analyses, which protects both the users and the aggregator against private information leaks. Although LDP has attracted much research attention in recent years, the majority of existing work focuses on applying LDP to complex data and/or analysis tasks. In this paper, we point out that the fundamental problem of collecting multidimensional data under LDP has not been addressed sufficiently, and there remains much room for improvement even for basic tasks such as computing the mean value over a single numeric attribute under LDP. Motivated by this, we first propose novel LDP mechanisms for collecting a numeric attribute, whose accuracy is at least no worse (and usually better) than existing solutions in terms of worst-case noise variance. Then, we extend these mechanisms to multidimensional data that can contain both numeric and categorical attributes, where our mechanisms always outperform existing solutions regarding worst-case noise variance. As a case study, we apply our solutions to build an LDP-compliant stochastic gradient descent algorithm (SGD), which powers many important machine learning tasks. Experiments using real datasets confirm the effectiveness of our methods, and their advantages over existing solutions.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Computers and Society,Computer Science - Cryptography and Security,Computer Science - Databases,Computer Science - Machine Learning,{Local differential privacy, multidimensional data, stochastic gradient descent}},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\TQHUB828\\Wang et al. - 2019 - Collecting and Analyzing Multidimensional Data wit.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\LFBZ2YWQ\\1907.html}
+}
+
+@article{wang_locally_nodate,
+  title = {Locally {{Differentially Private Protocols}} for {{Frequency Estimation}}},
+  author = {Wang, Tianhao and Blocki, Jeremiah and Li, Ninghui and Jha, Somesh},
+  abstract = {Protocols satisfying Local Differential Privacy (LDP) enable parties to collect aggregate information about a population while protecting each user's privacy, without relying on a trusted third party. LDP protocols (such as Google's RAPPOR) have been deployed in real-world scenarios. In these protocols, a user encodes his private information and perturbs the encoded value locally before sending it to an aggregator, who combines values that users contribute to infer statistics about the population. In this paper, we introduce a framework that generalizes several LDP protocols proposed in the literature. Our framework yields a simple and fast aggregation algorithm, whose accuracy can be precisely analyzed. Our in-depth analysis enables us to choose optimal parameters, resulting in two new protocols (i.e., Optimized Unary Encoding and Optimized Local Hashing) that provide better utility than protocols previously proposed. We present precise conditions for when each proposed protocol should be used, and perform experiments that demonstrate the advantage of our proposed protocols.},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\MG77ETR5\\Wang et al. - Locally Differentially Private Protocols for Frequ.pdf}
 }
 
 @article{warner_randomized_1965-1,
@@ -1201,6 +1488,18 @@
   isbn = {978-1-5386-6680-7},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\7SZ28HF8\\Yeom e.a. - 2018 - Privacy Risk in Machine Learning Analyzing the Co.pdf}
+}
+
+@article{yuan_privacypreserving_2021,
+  title = {Privacy-preserving Mechanism for Mixed Data Clustering with Local Differential Privacy},
+  author = {Yuan, Liujie and Zhang, Shaobo and Zhu, Gengming and Alinani, Karim},
+  year = {2021},
+  month = jul,
+  journal = {Concurrency and Computation: Practice and Experience},
+  issn = {1532-0626, 1532-0634},
+  doi = {10.1002/cpe.6503},
+  urldate = {2023-05-24},
+  langid = {english}
 }
 
 @article{yuan_research_2019,
