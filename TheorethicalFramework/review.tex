@@ -39,6 +39,26 @@ Examples include mean, median, and density estimation.
 To achieve this, they use minimax, a technique for finding the worst-case probability distribution [Minimax].
 Additionally, they focus on existing work and propose several optimization strategies for it.
 
+This work extends the method proposed in the previous paragraph by Duchi et al. by adding support for bounded and multidimensional data \citep{wang_collecting_2019}.
+The authors introduce the Piecewise Mechanism (PM) to handle both numeric and categorical data and the Hybrid Mechanism (HM) which combines PM and Duchi et al.'s method for 1-dimensional data.
+The effectiveness of their method is demonstrated using Support Vector Machines (SVM), linear regression, and mean estimation.
+PM and HM are compared to Laplace, SCDF \todo{bron}, and Duchi et al.'s solutions.
+OUE \todo{bron} is also used for comparison, but for categorical data only, as this is not supported by the other methods.
+% Instead of using the aforementioned techniques, categorical data is compared using frequency counting.
+
+\subsection{Geo-indistinguishability methods}
+\todo[inline]{Currently still work in progress}
+\subsection{Cluster methods with (L)DP}
+This chapter examines the various studies that have been conducted on clustering in combination with differential privacy.
+Initially, we looked at the most fundamental papers in this field. Subsequently, the focus shifted toward researching well-known papers that have been published since 2020.
+
+The work that was proposed by Nissim et al. aims to improve differential privacy methods, such as Laplace, which use sensitivity to compensate the noise for a function.
+In addition to compensating the function, they also consider the dataset itself.
+The algorithm for this is called "smooth sensitivity" and is used for instance-specific noise.
+To apply it, the authors introduce a method/framework to effectively calculate it.
+To demonstrate the effectiveness of the method, they use K-means, among other cluster algorithms.
+Their method requires the calculation of cluster distances, using Wasserstein distance instead of Euclidean distance.
+Although, it preserves $(\epsilon, \delta)$-LDP it does not provide any experiments with real world datasets.\
 
 \subsection{Summary tables}
 \begin{landscape}
