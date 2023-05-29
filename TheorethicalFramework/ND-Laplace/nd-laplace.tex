@@ -5,3 +5,65 @@
 
 \section{nD-Laplace}
 \todo[inline]{Is considered for research question 2}
+As mentioned in the previous chapter, the paper that was introduced by Min et al. is be-able to handle 3-dimensional data.
+A small recap: a point $(r, \theta, \psi)$ gives us the spherical coordinates of a given 3-dimensional sphere.
+An important property for this is the fact that each of these coordinates can be generated separately \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
+The $r$ gives us the radius or distance from $(\theta, \psi)$ to the center of the sphere \footnote{https://mathworld.wolfram.com/SphericalCoordinates.html}.
+So, instead of having just these two coordinates, we are be-able to extend this to n-dimensions by considering an n-hypersphere \citep{fernandes_generalised_2019, 9646489}.
+To this end, besides points $\theta$ and $\psi$ we also consider $\theta \in S^n$, where S is a unit hypersphere.
+
+The first step to generate the noise is first to select the $r$ again.
+This method is almost the same as for 3-dimensional \todo{link to formula}.
+But, instead of applying a scale of 3, the scale will be $n$ for the number of dimensions in the data \citep{fernandes_generalised_2019}:
+\begin{equation}
+  \gamma(n, 1/\epsilon)
+\end{equation}
+For the other dimensions, we consider a vector $U = (\theta_1, \theta_2, \theta_n)$ which is uniformly selected based on a unit $n$-hypersphere $S^n$ \citep{fernandes_generalised_2019}.
+For this, we consider the work that was proposed by Marsaglia et al. for 4-sphere that can be used for selecting points from an n-hypersphere \citep{marsaglia_choosing_1972}:
+\begin{equation}
+  (2x_1 (1 - S)^{\frac{1}{2}}, x_2[(1 - S)]^{\frac{1}{2}}, 1 - 2S)
+\end{equation}
+Where $S$ is the surface of the sphere and $x_1, x_2, …, x_n$ are random variables generated using the Gaussian distribution \footnote{https://mathworld.wolfram.com/HyperspherePointPicking.html}.
+For clarity, this is projected using the following algorithm:
+\todo[inline]{Formula}
+\subsection{Cartesian coordinates}
+As with the 2/3D-Laplace, the spherical coordinates need to be converted to Cartesian to be-able to cluster.
+It is comparable to the way we did it in the previous chapters, however as there are several more angles the equation is repeated and slightly different:
+\begin{equation}
+  x_1 = r * cos (\theta_1),
+  x_2 = r * sin (\theta_1) * cos (\theta_2),
+  x_3 = r * sin(\theta_1) * sin(\theta_2) * cos(\theta_3)
+\end{equation}
+This is the same as for 3D-Laplace, but this is extended for n-dimensions using:
+\begin{equation}
+  x_{n} = r * sin(\theta_1) … sin(\theta_{n-2}) *cos (\theta_{n-1}), x_n= r * sin(\theta_{n-1}) * sin(\theta_{n-2}) * sin(\theta_{n-1})
+\end{equation}
+If we combine sections 1 and 2 of this chapter, we are being able to give a good overview of the solution using a similar image as for the 2D and 3D variants.
+\begin{figure}
+  \label{fig:nd-laplace-overview}
+  \includegraphics{TheorethicalFramework/ND-Laplace/Images/nd_laplace.png}
+  \caption{Overview of the nD-Laplace mechanism}
+\end{figure}
+
+\subsection{Curse of dimensionality}
+The algorithm shows some interesting behavior.
+If we continue adding dimensions, we notice the noise is shrinking proportionally.
+To understand this behavior, we first have to examine the formula for a hypersphere’s volume.
+\begin{equation}
+  S_n = \frac{2 \pi^{n/2}}{\gamma(\frac{1}{2}n)}
+\end{equation}
+Where $\gamma$ is the gamma distribution that is determined based on the number of dimensions $n$ \footnote{https://mathworld.wolfram.com/Hypersphere.html}.
+As the amount of dimensions increases, the most volume is located on the hypersphere surface.
+The decreasing amount of volume is illustrated using this figure:
+\begin{figure}
+  \label{fig:curse-of-dimensionality}
+  \includegraphics{TheorethicalFramework/ND-Laplace/Images/volume.png}
+  \caption{Illustration of the decreasing volume while increasing the number of dimensions}
+\end{figure}
+When we convert the points to Cartesian coordinates, some will be located at the center (e.g., 0.5), while others will be close to the surface (e.g., 0.0).
+However, as the number of dimensions increases, the majority will be close to the surface (e.g., 0.99).
+
+This is a known challenge in machine learning \todo{specify}, as well as for the nD-Laplace mechanism.
+Solutions for this can be using Principal Component Analysis (PCA) \citep{gorban_high-dimensional_2020}.
+This technique is used to reduce dimensionality by reducing the number of features while preserving the information.
+It uses the correlation between the features to contain that information.

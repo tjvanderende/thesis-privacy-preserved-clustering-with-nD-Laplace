@@ -32,7 +32,7 @@ Based on the visual change of the line, someone is be-able to select the best $k
 All in all, there is no fixed method to choose a good $k$ for K-Means.
 The elbow method is common in the existing literature and is very popular due to its simplicity.
 However, one disadvantage is that it can be difficult to determine the "elbow" point, as it is not always present \citep{kodinariya_review_2013}.
-In that case, the silhouette method or gap statistic method can be chosen, with the algorithm for silhouette being the most obvious choice due to its simplicity. \newpage
+In that case, the silhouette method or gap statistic method can be chosen, with the algorithm for silhouette being the most obvious choice due to its simplicity.
 \subsubsection{Affinity Propagation} \label{theory:clustering-ap}
 \gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
 Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
@@ -127,9 +127,9 @@ The metric exists also in an adjusted version as \gls{ami}.
 This works in the same way as for the \gls{ari} and is mostly needed if the number of data items is small in comparison to the number of clusters \citep{vinh_information_nodate-2}. \newline
 
 Besides the external validity measurements for clustering, it is also possible to use internal validation methods.
-These metrics focus entirely on the intrinsic dataset properties, instead of relying on an external baseline cluster algorithm \cite{craenendonck_using_nodate}.
-Assessing two important concepts of clustering: compactness and separation \cite{hassani_using_2017}.
-Both studies, consider three different metrics and measure both concepts at the same time \cite{hassani_using_2017}:
+These metrics focus entirely on the intrinsic dataset properties, instead of relying on an external baseline cluster algorithm \citep{craenendonck_using_nodate}.
+Assessing two important concepts of clustering: compactness and separation \citep{hassani_using_2017}.
+Both studies, consider three different metrics and measure both concepts at the same time \citep{hassani_using_2017}:
 \begin{enumerate}
   \item \gls{chi} \citep{calinski_dendrite_1974-1} is used to measure the cluster variance (well-separated clusters) and low variance within the clusters (tightly coupled data). A high score indicates better clustering.
   \item Silhouette Index \citep{rousseeuw_silhouettes_1987} this metric is similar, by also measuring cohesion within clusters and separation of clusters. However, this metric uses the pairwise distance \cite{hassani_using_2017}. A score of -1 indicates incorrect clustering and +1 for dense clusters \cite{rousseeuw_silhouettes_1987}.
@@ -137,7 +137,7 @@ Both studies, consider three different metrics and measure both concepts at the 
 \end{enumerate}
 
 K-Means scores relatively high for \gls{chi} \citep{craenendonck_using_nodate,hassani_using_2017} and SI \citep{craenendonck_using_nodate}.
-The same applies to DBSCAN, which scores relatively high on SI and DB due to the sensitivity of noise \cite{craenendonck_using_nodate}.
+The same applies to DBSCAN, which scores relatively high on SI and DB due to the sensitivity of noise \citep{craenendonck_using_nodate}.
 % Thus, these metrics are difficult to use for very different cluster algorithms \cite{craenendonck_using_nodate}.
 \subsubsection{Existing literature}
 %A recent and much-cited study uses \gls{ari} and accuracy as metrics for evaluating K-Means \cite{ahmed_k-means_2020}.
