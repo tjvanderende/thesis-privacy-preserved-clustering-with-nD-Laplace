@@ -41,7 +41,7 @@ This is the same as for 3D-Laplace, but this is extended for n-dimensions using:
 If we combine sections 1 and 2 of this chapter, we are being able to give a good overview of the solution using a similar image as for the 2D and 3D variants.
 \begin{figure}
   \label{fig:nd-laplace-overview}
-  \includegraphics{TheorethicalFramework/ND-Laplace/Images/nd_laplace.png}
+  \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/nd_laplace.png}
   \caption{Overview of the nD-Laplace mechanism}
 \end{figure}
 
@@ -55,9 +55,9 @@ To understand this behavior, we first have to examine the formula for a hypersph
 Where $\gamma$ is the gamma distribution that is determined based on the number of dimensions $n$ \footnote{https://mathworld.wolfram.com/Hypersphere.html}.
 As the amount of dimensions increases, the most volume is located on the hypersphere surface.
 The decreasing amount of volume is illustrated using this figure:
-\begin{figure}
+\begin{figure}[ht]
   \label{fig:curse-of-dimensionality}
-  \includegraphics{TheorethicalFramework/ND-Laplace/Images/volume.png}
+  \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/volume.png}
   \caption{Illustration of the decreasing volume while increasing the number of dimensions}
 \end{figure}
 When we convert the points to Cartesian coordinates, some will be located at the center (e.g., 0.5), while others will be close to the surface (e.g., 0.0).
@@ -67,3 +67,5 @@ This is a known challenge in machine learning \todo{specify}, as well as for the
 Solutions for this can be using Principal Component Analysis (PCA) \citep{gorban_high-dimensional_2020}.
 This technique is used to reduce dimensionality by reducing the number of features while preserving the information.
 It uses the correlation between the features to contain that information.
+
+\subsection{Truncation}
