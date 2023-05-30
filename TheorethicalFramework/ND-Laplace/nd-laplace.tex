@@ -2,9 +2,8 @@
 
 \input{TheorethicalFramework/ND-Laplace/2d-laplace.tex}
 \input{TheorethicalFramework/ND-Laplace/3d-laplace.tex}
-
+\newpage
 \section{nD-Laplace}
-\todo[inline]{Is considered for research question 2}
 As mentioned in the previous chapter, the paper that was introduced by Min et al. is be-able to handle 3-dimensional data.
 A small recap: a point $(r, \theta, \psi)$ gives us the spherical coordinates of a given 3-dimensional sphere.
 An important property for this is the fact that each of these coordinates can be generated separately \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
@@ -29,19 +28,16 @@ For clarity, this is projected using the following algorithm:
 \subsection{Cartesian coordinates}
 As with the 2/3D-Laplace, the spherical coordinates need to be converted to Cartesian to be-able to cluster.
 It is comparable to the way we did it in the previous chapters, however as there are several more angles the equation is repeated and slightly different:
-\begin{equation}
-  x_1 = r * cos (\theta_1),
-  x_2 = r * sin (\theta_1) * cos (\theta_2),
-  x_3 = r * sin(\theta_1) * sin(\theta_2) * cos(\theta_3)
-\end{equation}
-This is the same as for 3D-Laplace, but this is extended for n-dimensions using:
-\begin{equation}
-  x_{n} = r * sin(\theta_1) … sin(\theta_{n-2}) *cos (\theta_{n-1}), x_n= r * sin(\theta_{n-1}) * sin(\theta_{n-2}) * sin(\theta_{n-1})
-\end{equation}
+\begin{align*}
+  x_1 = r * cos (\theta_1)                                          \\
+  x_2 = r * sin (\theta_1) * cos (\theta_2)                         \\
+  x_{n} = r * sin(\theta_1) … sin(\theta_{n-2}) *cos (\theta_{n-1}) \\
+  x_n = r * sin(\theta_{n-1}) * sin(\theta_{n-2}) * sin(\theta_{n-1})
+\end{align*}
 If we combine sections 1 and 2 of this chapter, we are being able to give a good overview of the solution using a similar image as for the 2D and 3D variants.
 \begin{figure}
   \label{fig:nd-laplace-overview}
-  \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/nd_laplace.png}
+  \includegraphics[width=0.6\textwidth]{TheorethicalFramework/ND-Laplace/Images/nd_laplace.png}
   \caption{Overview of the nD-Laplace mechanism}
 \end{figure}
 
