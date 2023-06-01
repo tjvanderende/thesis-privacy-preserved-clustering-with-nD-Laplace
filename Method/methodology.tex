@@ -18,7 +18,7 @@ The datasets are sourced from the UCI Machine Learning Repository \citep{noautho
   \item Seeds dataset \footnote{http://archive.ics.uci.edu/ml/datasets/seeds}: This dataset was used in several related works and contains 210 samples with 7 (numerical) attributes.
         The dataset contains information about seeds like kernel width and density.
   \item Cardiotocography dataset \footnote{https://archive.ics.uci.edu/ml/datasets/cardiotocography}: This dataset is selected because of the mixed data and amount of instances.
-        It has 23 attributes of which 10 are numerical.
+        It has 23 attributes of which 10 are numerical, and has 2126 samples.
         The dataset contains information about measurements of fetal heart rate (FHR) and uterine contraction (UC).
 \end{enumerate}
 \section{Environmental setup}
@@ -42,6 +42,7 @@ The packages for python are:
 \section{Methods}
 This section explains what methods/ algorithms we used and how we evaluate them.
 \subsection{Clustering methods}
+\todo[inline]{In progress}
 For the three different algorithms: K-Means, \gls{ap} and \gls{dbscan} we analyzed the most important decisions regarding parameter selection.
 In this section, we give a short list and explanation of the different parameters we used throughout the experiments.
 For all three Scikit-learn was used, and for each of them we also provide the underlying formula.
@@ -157,29 +158,35 @@ With the underlying formulas:
 
 \textbf{Internal validation:}
 To evaluate the cluster algorithms, we use \gls{chi} and silhouette score.
-The expectation is that both will give a similar result, but they measure the cluster coherence in different ways.
-\todo[inline]{Include formulas}
+The expectation is that both will give a similar result, but they measure the cluster coherence in different ways. \newline
 %%The second way to measure utility is to calculate the error between the non-private and perturbed data \citep{9679364,sun_distributed_2019,xia_distributed_2020-1}.
 %There are several methods to do this (See \ref{theory:evaluate}), but we use the \gls{aee}.
 %As with \gls{ami} we run the calculations for multiple privacy budgets 10 times and report the average for each budget.
 %\todo[inline]{Explain why AEE and not RE}
+\textbf{Comparison:}
+It is important to compare our mechanism to comparable methods.
+Therefore, we compare our results with similar methods that are proposed in the literature, based on these criteria:
+\begin{enumerate}
+  \item It should work with n-dimensional data.
+  \item It should have an open-source implementation to be able for us to compare it.
+  \item The method should be general-purpose (e.g. not only mean-estimation) and work preferably locally.
+\end{enumerate}
+For checking these requirements, we have defined the tables (\ref{tab:summary_table_dp}, \ref{tab:summary_table_kmeans}) as a summary of our literature review.
+Based on this, it can be concluded that the "piecewise" mechanism is the only one that meets this requirement.
 
 \subsubsection{Privacy}
-For this reason, we evaluate the privacy provided by the differential privacy algorithm by calculating the average (Euclidean) distance difference in comparison to the non-private data.
-Then, we evaluate the privacy method by simulating a membership inference attack and calculating the adversary advantage. \newline
-\textbf{Privacy distance:} We calculate the Euclidean average difference between non-perturbed data and the perturbed data.
+Privacy is hard to quantify, but we can measure the privacy loss/gain by calculating the Euclidean distance between the non-perturbed data and the perturbed data.
+In addition, we evaluate privacy by simulating a membership inference attack and calculating the adversary advantage. \newline
+\textbf{Privacy distance:} We calculate the Euclidean average difference between non-perturbed data and perturbed data.
 This is measured for each epsilon. \newline
 \textbf{Membership inference attack (adversary advantage):}
 %\input{Method/algorithms/shokri-setup-mi.tex}
 We used the MIA that was proposed by Shokri et al. with the implementation that was provided by Adversarial Robustness Toolkit (ART) \citep{noauthor_adversarial_2023}.
 An earlier study also explored this attack with as goal to evaluate differential privacy.
 Similar to this attack, we train a classifier with perturbed data and evaluate it using non-perturbed data (test-data / shadow-data) \citep{zhao_not_2020}.
-In this way, we can demonstrate privacy compared to if we had not applied differential privacy.
-For the classifier, we use a RandomForestClassifier, as this classifier is not yet applied for shadow model attacks \citep{rigaki_survey_2021}.
-We consider a semi-surpervised setup, so we generate the labels while using the K-Means algorithm.
-The 50 as the number of data samples is not enough to measure MIA. This is modified to 2000 samples.
-
-Finally, we evaluate the adversary advantage (percentage) using $TPR - FPR$.
+We consider a semi-surpervised setup (figure \ref{figure:MIA-semi-supervised}), where we train a classifier with the perturbed data and evaluate it using non-perturbed data (test-data / shadow-data).
+For the classifier, we use a RandomForestClassifier, because this classifier is not yet applied for shadow model attacks \citep{rigaki_survey_2021}.
+Finally, we evaluate the adversary advantage (percentage) using $TPR - FPR$ \cite{yeom_privacy_2018}.
 \begin{enumerate}
   \item TPR: The amount the attacker inferred the member data correctly (the private training data).
   \item FPR: The amount the attacker inferred the non-member data correctly (the non-private test data).

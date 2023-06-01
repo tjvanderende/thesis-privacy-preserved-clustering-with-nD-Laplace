@@ -93,6 +93,7 @@ The introduction of differential privacy reduces the impact of a member inferenc
 This is because the input to the model is perturbed. While it is still possible to retrieve the training data, the leaked privacy is significantly reduced.
 The leaked privacy can be measured using a metric called "adversarial advantage." This metric describes the percentage of privacy that is compromised in the event of a member inference attack \citep{yeom_privacy_2018}.
 This is calculated by subtracting the False Positive Rate from the True Positive Rate. The TPR represents the number of correctly predicted member data (training data) and the FPR represents the number of correctly predicted non-member data. \newline
+\todo[inline]{Refactor some stuff, misses inbalance between tpr/fpr}
 
 % Final remark
 In conclusion, the attacks that use member inference attacks are all based on supervised machine learning.

@@ -43,7 +43,7 @@ A point $z \in Z$ where $z = (r, \theta)$ is randomly generated using two separa
 \end{figure}
 
 \textbf{Calculating $r$:}
-This variable is described as $dist(x_0, z)$ and can be randomly drawn by inverting the CDF \todo{show CDF} for the Laplace distribution:
+This variable is described as $dist(x_0, z)$ and can be randomly drawn by inverting the CDF for the Laplace distribution:
 \begin{equation}
   C{_\epsilon}{^{-1}}(p) = - \frac{1}{\epsilon}(W_-1 (\frac{p - 1}{e}) + 1)
 \end{equation}
@@ -76,7 +76,7 @@ This is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals
 The truncation is an important part of the mechanism to ensure the data is contained within the domain of the original data $X$.
 If this is not the case, the data is easily distinguished by an unwanted adversary \citep{DBLP:journals/corr/abs-1212-1984,9646489}.
 We assume that a user has a set of data points with a range of [-1, 1].
-If noise is added to it, it can be ensured that this data falls outside this range (figure \ref{figure:truncation-2d}).
+If noise is added to it, it cannot be ensured that this data falls outside this range (figure \ref{figure:truncation-2d}).
 \begin{figure}[ht]
   \includegraphics[width=0.7\textwidth]{TheorethicalFramework/ND-Laplace/Images/remapping.png}
   \caption{Representation of truncation of data points for 2-dimensional Laplace mechanism.}
@@ -100,17 +100,17 @@ The decision of the parameters for the algorithm is straightforward as it depend
 This constant is calculated by defining the radius $r$ and the desired level of privacy $l$ and $\epsilon$ is calculated using $l/r$.
 The $l$ is a predefined constant $l \in R^+$ but usually will be below 10.
 For geographical data, the $r$ can be configured by using meters as a unit of measure.
-Therefore, $r = 200$ corresponds to a radius of 200m around point $x_0$.
-So, regarding clustering, it is a challenge to define a reasonable radius.
+So for example $r = 200$ corresponds to a radius of 200m around point $x_0$.
+Without a unit, it is a challenge to define a reasonable radius.
 %The $\epsilon$ can be considered the inverse unit of $r$ \citep{DBLP:journals/corr/abs-1212-1984}.
 
 In that regard, the radius can also be a flexible value that is defined based on the crowdedness of a region \citep{chatzikokolakis_constructing_2015}.
-If a user is located in a crowded area, the radius can be smaller than if the user is located in a rural area.
-Because the user location is indistinguishable due to the overlap of other users' locations.
+If a user is located in a crowded area, the radius can be smaller than if the user is located in a rural area (because the user's location is indistinguishable due to the overlap of other users' locations).
 Instead of providing \gls{gi}, the authors introduce a more flexible privacy definition $d_x$-privacy.
-The $r$ is calculated based on the mass of other locations in the region $r$, they call \emph{privacy mass}.
+The $r$ is calculated based on the mass of other locations in the region $r$, which they call \emph{privacy mass}.
 So, the total mass of a set A is defined as $M(A) = \sum_{x \in A} m(x) = a + q(x)b$.
-Where $m(x)$ is the mass of a location $x$ and a value between 0 and 1 and $a$ is the number of points assigned to each location.
+Where $m(x)$ is the mass of a location $x$ and is of value [0, 1].
+For this formula, $a$ is the number of points assigned to each location.
 The authors define $q(x)$ as the "quality" of a point, which is essentially the number of other users that are also interested in the same point (e.g. a mall).
 
 The $a$ is defined as a Euclidean ball $B_r = {x' | d_{euc}(x, x') \leq r}$, which returns all locations within the radius $r$.
@@ -122,7 +122,7 @@ To retrieve a value within [0, 1], the authors use the following formula:
 If the locations are only considered for space and not quality, $q(x)$ is defined as 0 \citep{chatzikokolakis_constructing_2015}. \newline
 %A radius can be defined per-use case based on how crowded a place is \citep{chatzikokolakis_constructing_2015}.
 
-Although the method is an interesting approach to increasing utility while not reducing privacy it is hard to adopt for this research.
+Although the method is an interesting approach to increasing utility while not reducing privacy it is hard to adopt for the purpose of clustering.
 For applying it for \gls{ldp}, it is required to supply each user with prior knowledge of the dataset.
 This would require an interactive setup of the mechanism instead of non-interactive \todo{Give link to Laplace}. \newline
 

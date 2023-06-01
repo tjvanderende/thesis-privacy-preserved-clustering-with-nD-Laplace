@@ -1,5 +1,5 @@
 \section{Literature review} \label{theory:literature-review}
-The related literature is divided into three parts:
+The related literature is divided into two parts:
 \begin{enumerate}
   \item Differential privacy methods
   \item Cluster methods with (L)DP
@@ -7,24 +7,21 @@ The related literature is divided into three parts:
 Afterward, we provide a summary for both in the form of a table.
 This table includes components such as the type (LDP or DP) and whether there is a public code available.
 
+In the search for related literature, we focused mainly on (L)DP mechanisms that can be used for general purposes (e.g. not only mean estimation), as this is the most comparable to our mechanism.
+
 \subsection{Differential privacy methods}
 As was discussed in earlier sections, the Laplace method was the first one to establish \gls{dp} \citep{dwork_differential_2006}.
-In the search for related literature, research has mainly focused on algorithms that can be used for general applications.
-This includes investigating whether the mechanisms can also be applied to n-dimensional data, as is the case with our mechanism.
 
-The first paper is provided by Soria-Comas et al. and considers the distribution of the dataset for the provided noise \citep{soria-comas_optimal_2013}.
-It does however not depend on the data and does not calibrate sensitivity.
-Their work claims the Laplace mechanism is not optimal for a univariate function and aims at improving it by introducing their Laplace-based mechanism.
-The method that is proposed performs slightly better than Laplace.
-For multivariate/multiple queries the Laplace distribution underperforms.
+The first paper we discuss is provided by Soria-Comas et al. and considers the distribution of the dataset for the generating \citep{soria-comas_optimal_2013}.
+Their work claims the Laplace mechanism is not optimal for a univariate function and aims at improving it by introducing their mechanism based on Laplace.
+The method that is proposed performs slightly better than Laplace on multivariate/multiple queries.
 
 Quan et al. also proposed a new method as an extension of Dwork et al.'s Laplace algorithm \citep{geng_staircase_2013}.
 They introduced the staircase mechanism for 1-dimensional noise, which was later extended to support multidimensional data \citep{geng_staircase_2015}.
-
-The mechanism aims to improve optimally by adding the same level of privacy while adding less noise.
+The mechanism aims to improve utility by adding the same level of privacy while adding less noise.
 It is represented as a staircase-shaped probability density function, hence the name Staircase Mechanism (SM).
 This mechanism accepts three configurable parameters, which are comparable to those of the Laplace mechanism.
-The authors' work can handle multidimensional numerical data and preserve the pure version of differential privacy.
+The authors' work can handle multidimensional numerical data and preserve the $(\epsilon$)-differential privacy.
 %One disadvantage of the staircase mechanism is that it can produce an unbounded output, as noted by Wang et al. 
 %This means that the perturbed data can exceed the original bounds of the data. 
 %Additionally, the authors do not compare their results to comparable work in an experimental setting.
@@ -32,19 +29,21 @@ The authors' work can handle multidimensional numerical data and preserve the pu
 Another paper introduces a new local differential privacy (LDP) mechanism for working with numerical data \citep{nguyen_collecting_2016}
 Their primary focus is on estimating means and frequencies, with a particular emphasis on machine learning techniques such as Support Vector Machines (SVM) and linear regression using Empirical Risk Minimization.
 Initially, the authors analyze Duchi et al.'s method \citep{duchi_privacy_2013} and highlight several shortcomings.
-To address these issues, they introduce Harmony as a mechanism for LDP perturbation. Additionally, they extend other work (Bassily and Smith's method) to introduce a method for perturbing multi-dimensional categorical attributes.
-The authors then create a hybrid model by combining Duchi et al.'s method and Bassily and Smith's method to handle respectively numeric and categorical data. This allows them to compare their method Harmony to the hybrid mechanism and measure the utility/accuracy differences.
+To address these issues, they introduce Harmony as a mechanism for LDP perturbation.
+Additionally, they extend other work \citep{bassily_local_2015} to introduce a method for perturbing multidimensional categorical attributes.
+The authors then create a hybrid model by combining Duchi et al.'s method and Bassily et al.'s method to handle respectively numeric and categorical data.
+This allows them to compare their method Harmony to the hybrid mechanism and measure the utility/accuracy differences.
 
 Duchi et al. improved their method by proposing a formalization of the trade-off between statistical utility and (local) privacy, analyzing multiple types of estimation problems \citep{duchi_minimax_2017}.
 Examples include mean, median, and density estimation.
-To achieve this, they use minimax, a technique for finding the worst-case probability distribution [Minimax].
+To achieve this, they use minimax, a technique for finding the worst-case probability distribution.
 Additionally, they focus on existing work and propose several optimization strategies for it.
 
-This work extends the method proposed in the previous paragraph by Duchi et al. by adding support for bounded and multidimensional data \citep{wang_collecting_2019}.
+Duchi et al.'s method was then extended by adding support for bounded and multidimensional data \citep{wang_collecting_2019}.
 The authors introduce the Piecewise Mechanism (PM) to handle both numeric and categorical data and the Hybrid Mechanism (HM) which combines PM and Duchi et al.'s method for 1-dimensional data.
 The effectiveness of their method is demonstrated using Support Vector Machines (SVM), linear regression, and mean estimation.
-PM and HM are compared to Laplace, SCDF \todo{bron}, and Duchi et al.'s solutions.
-OUE \todo{bron} is also used for comparison, but for categorical data only, as this is not supported by the other methods.
+PM and HM are compared to Laplace and Duchi et al.'s solutions.
+Optimized Unary Encoding (OUE) \citep{wang_locally_nodate} is also used for comparison, but for categorical data only, as this is not supported by the other methods.
 % Instead of using the aforementioned techniques, categorical data is compared using frequency counting.
 
 
@@ -54,7 +53,7 @@ OUE \todo{bron} is also used for comparison, but for categorical data only, as t
 This chapter examines the various studies that have been conducted on clustering in combination with differential privacy.
 Initially, we looked at the most fundamental papers in this field. Subsequently, the focus shifted toward researching well-known papers that have been published since 2020.
 
-The work that was proposed by Nissim et al. aims to improve differential privacy methods, such as Laplace, which use sensitivity to compensate the noise for a function.
+The first work we highlight was proposed by Nissim et al. and aims at improving differential privacy methods, such as Laplace, which uses sensitivity to compensate the noise for a function \citep{nissim_smooth_2007}.
 In addition to compensating the function, they also consider the dataset itself.
 The algorithm for this is called "smooth sensitivity" and is used for instance-specific noise.
 To apply it, the authors introduce a method/framework to effectively calculate it.
@@ -63,50 +62,51 @@ Their method requires the calculation of cluster distances, using Wasserstein di
 %Although, it preserves $(\epsilon, \delta)$-LDP it does not provide any experiments with real world datasets.
 
 Another study focuses on both interactive and non-interactive approaches for differential privacy in K-Means \citep{su_differentially_2015-1}.
-The study builds upon the work done for DPLloyd, an interactive privacy extension of K-Means described by Blum et al. \citep{blum_practical_2005}.
+The study builds upon the work that was done for DPLloyd, an interactive privacy extension of K-Means described by Blum et al. \citep{blum_practical_2005}.
 The DPLLoyd mechanism partitions an n-dimensional dataset into a grid and releases the count for each grid by adding Laplacian noise to each count.
 Another part of their research focuses on determining the width of the data cells.
 The grid estimation method used in their research is called the extended uniform grid approach (EUG), and the complete K-Means method is called EUGkM.
-The experiment consists of comparing against the DPLloyd mechanism, which performs better for an interactive setting.
+The experiment consists of evaluating it against the DPLloyd mechanism, which performs better in an interactive setting.
 Therefore, they combine their algorithm for combining both aspects into a hybrid approach (EUGkM + DPLloyd approach) and show a better final performance.
 
 The study of Nissim et al. researches the idea of finding the smallest possible radius in the Euclidean space  $R^d$ for a set of $n$ points \citep{nissim_clustering_2018}.
-They propose a new solution that uses locality-sensitive hashing (LSH) for differential privacy, which they use to find 1-cluster in the $d$-dimensional Euclidean space.
+They propose a new solution that uses locality-sensitive hashing (LSH) for differential privacy and use it to find 1-cluster in the $d$-dimensional Euclidean space.
 This method works for differential privacy (LSH-GoodCenter), but they also extend this to the local model (LDP-GoodCenter).
 The algorithm to find this radius is used to count the points enclosed by the radius and Laplace noise is added to the count to preserve differential privacy.
-This mechanism is combined and applied to work with the K-Means algorithm (LDP-K-Mean).
-This method was later extended in a paper proposed by Kaplan et al. and introduces a similar LDP method \citep{kaplan_differentially_2018}.
+The mechanism is combined and applied to work with the K-Means algorithm (LDP-K-Mean).
+This mechanism was extended later in a paper proposed by Kaplan et al. and introduces a similar LDP method \citep{kaplan_differentially_2018}.
 They aim to reduce the number of interactions needed between the server and users to one, instead of the $O(k\log n)$ required for Nissam et al.’s solution \citep{nissim_clustering_2018}.
-To increase the success probability, they use the same idea but extend it to have multiple centers instead of one large one.
+To increase the success probability, they use the same idea but extend it to have multiple centers instead of a single large one.
 They call it the LSH-Procedure and the algorithm Private-Centers is applied to generate centers to use with K-Means.
 Then, they apply the same method to the LDP method that was also originally proposed by Nissam et al. (LDP-GoodCenter).
 The most recent work by Stemmer et al. focuses on improving the work that was done by Kaplan et al. \citep{kaplan_differentially_2018,stemmer_locally_2021}.
-Because this work has a higher additive error, which means the noise that is added introduces a lot of error.
+Because the original mechanism has a higher additive error, which means the noise that is added introduces a lot of error.
 To solve this, the authors aim at reducing this error by improving the original GoodCenter algorithm \citep{nissim_clustering_2018}.
-Their extended method is called WeightedCenters and adds weights to candidate centers.
-So, in addition to calculating the centroids for each iteration, it also calculates the weights for each.
+Their extended method is called WeightedCenters and also adds weights to candidate centers.
+%So, in addition to calculating the centroids for each iteration, it also calculates the weights for each.
 In the final iteration, the weights are used to create the K-Means or K-Median clusters.
 
-Sun et al. proposed a method for distributed clustering using local differential privacy (LDP) to preserve distance-based information.
+Sun et al. proposed a mechanism for distributed clustering using local differential privacy (LDP) to preserve distance-based information.
 They claim to have the first non-interactive LDP algorithm for clustering \citep{sun_differentially_2019}.
 This means, they are being able to perturb the data locally at once and sent it to the server to cluster with both K-Means and DBSCAN.
 They encode the client-side data into an anonymous hamming space using Bit Vector (BV) and modify the encoding to preserve Euclidean distance.
-As their method only is be-able to share distance information they were not able to use K-Means directly. To overcome this, they modified the algorithm and called it K-Cluster.
+As their mechanism only shares distance information they were not able to use K-Means directly.
+To overcome this, they modified the algorithm and called it K-Cluster.
 Finally, the method is evaluated using Normalized Mutual Information (NMI) and Average Estimated Error (AEE).
-\todo[inline]{PrivBV}
+%\todo[inline]{PrivBV}
 
 Xia et al. noticed the shortcoming of Sun et al.'s work which is the need to share privacy-sensitive distance information \citep{xia_distributed_2020-1}.
 Therefore, they propose a new interactive method for distributed K-means clustering using LDP.
-The method converts features to binary strings and uses a Random Response mechanism (RR) to perturb each feature into a feature vector.
+The method converts features to binary strings and uses the Random Response mechanism (RR) to perturb each feature into a feature vector.
 The privacy cost depends on the length of the bits of each feature transformation, meaning that a longer length yields more information at the cost of the privacy budget.
-In each iteration, the server-side calculates and sends K-means centroids to each user, who recalculates distances until the centroids become stable.
+In each iteration, the serverside calculates and sends K-means centroids to each user, who recalculates distances until the centroids become stable.
 The approach has the disadvantage of a high correlation between user data and the clusters.
 To solve this problem, the algorithm is improved by having the client-side send not only the user data but also a set of random zero strings.
 The server side then performs similar calculations to determine the true cluster.
 Huang et al. propose a private distributed K-means clustering algorithm for interval data that addresses a shortcoming in Xia et al.'s work by using Condensed Local Differential Privacy (CLDP) for small-scale values and LDP for large-scale values \citep{9679364}.
 They preserve distance using a Square Wave (SW) mechanism and apply a classical K-Means algorithm on the server side to the perturbed data.
 
-Another more recent mechanism that also builds around K-Means to preserve LDP, is called the LDPK mechanism \citep{yuan_privacypreserving_2021}.
+A very recent mechanism that also builds around K-Means to preserve LDP, is called the LDPK mechanism \citep{yuan_privacypreserving_2021}.
 As K-Means works only with numerical data, they use K-prototypes for supporting mixed data types.
 The LDPK mechanism perturbs the user data first locally and interactively exchanges information with the server to complete the clustering process.
 The mechanism they use for perturbation is the Harmony algorithm, which was proposed earlier by \citep{nguyen_collecting_2016}.
@@ -118,15 +118,15 @@ To this end, they perturb the clusters with the GRR (Generalized Random Response
 Their evaluation focuses on the privacy budget and the amount of data points.
 They show that if the amount of data points increases the clustering quality does as well. \newline
 
-The conclusion from the previous paragraphs is that most of the related work focuses on variants of the K-Means algorithm.
-Finally, two interesting studies focus on differential privacy and \gls{ap} or \gls{dbscan}.
+Most existing work focuses on (L)DP in combination with K-Means.
+Finally, two interesting studies focus on differential privacy for \gls{ap} or \gls{dbscan}.
 A study conducted by Cai et al. focuses on \gls{ap} \citep{cai_dp-ap_2020}.
 Their method involves adding Laplace noise to the responsibility matrix.
 For each sample data, a neighborhood is specified using a radius around the data point.
 This area is called the neighborhood density, and each sample point’s preference value is adjusted according to its density value.
 Higher density yields a higher chance of belonging to a cluster center and then being ranked based on size.
 The perturbed responsibility matrix and densities are combined and used to run AP.
-Finally, they evaluated their method using the  \gls{ari}, Fowlkes-Mallows Index (FMI), and \gls{ami}.
+They evaluated their method using the  \gls{ari}, Fowlkes-Mallows Index (FMI), and \gls{ami}.
 
 Another recent study focuses on differential privacy for \gls{dbscan} \citep{bozdemir_privacy-preserving_nodate}.
 The proposed solution involves clustering data between two or more parties using two servers.
@@ -137,34 +137,35 @@ The proposed protocol is named privacy-preserving \gls{dbscan} (ppDBSCAN).
 The calculations in this study are based on squared Euclidean distance (SED) and are evaluated using different methods.
 To evaluate the performance of ppDBSCAN, the study compares its Adjusted Rand Index (ARI) to that of K-means.
 
-\subsection{Summary}
-\todo[inline]{Short summary}
+%\subsection{Summary}
+%\todo[inline]{Short summary}
 \begin{landscape}
   \begin{table}[ht]
     \centering
     \begin{adjustbox}{width=1.8\textwidth}
       \begin{tabular}{rlllllllll}
         \toprule
-        year              & Name                                                                                                          & Data type                            & Dataset                                            & Code implementations                    & preserving                 & Type                & Interactive     & Methods                                   & Privacy                                                                                                       \\
+        year                                            & Name                                                                                                          & Data type                            & Dataset                                            & Code implementations                    & preserving                 & Type                & Interactive     & Methods                                   & Privacy                                                                                                       \\
         \midrule
-        2022              & PrivBV: Distance-aware encoding for distributed...                                                            & -                                    & Synthetic dataset                                  & -                                       & Local differential privacy & K-Means             & Non interactive & -                                         & \$(\textbackslash epsilon, \textbackslash delta)\$-LDP                                                        \\
-        2021              & Private distributed K-means clustering on inter...                                                            & -                                    & ??                                                 & -                                       & Local differential privacy & K-Means             & Interactive     & -                                         & -                                                                                                             \\
-        2021              & Locally Private k-Means Clustering                                                                            & numerical                            & -                                                  & -                                       & Local differential privacy & K-Means             & Interactive     & -                                         & -                                                                                                             \\
-        2021              & Privacy‐preserving mechanism for mixed data clu...                                                            & n-dimensional numeric \& categorical & Adult dataset, US Census dataset                   & -                                       & Local differential privacy & K-Prototypes        & Interactive     & LDPK and ELDPK                            & LDP                                                                                                           \\
-        2021              & Privacy-preserving Density-based Clustering                                                                   & -                                    & Deer dataset, Lsun dataset, S1                     & -                                       & Differential privacy       & DBSCAN              & -               & ppDBSCAN                                  & -                                                                                                             \\
-        2020              & DP-AP: Differential Privacy-Preserving Affinity...                                                            & -                                    & Iris dataset, Seeds dataset                        & -                                       & Differential privacy       & AffinityPropagation & -               & DP-AP                                     & -                                                                                                             \\
-        2020              & Distributed K-Means clustering guaranteeing loc...                                                            & n-dimensional numerical data         & 3D Road Network, CarGPS                            & -                                       & Local differential privacy & K-Means             & Interactive     & LDPKmeans                                 & -                                                                                                             \\
-        2019              & Distributed Clustering in the Anonymized Space...                                                             & n-dimensional numerical data         & Aggregation dataset, Digit dataset, Pathbased d... & -                                       & Local differential privacy & DBSCAN, K-Means     & Non interactive & Distance Aware Bit Vector (DPBV)          & -                                                                                                             \\
-        2018              & Clustering algorithms for the centralized and l...                                                            & n-dimensional numerical data         & -                                                  & -                                       & Local differential privacy & K-Means             & Interactive     & LDP-GOODCenter                            & \$(\textbackslash epsilon, \textbackslash delta)\$-LDP and \$(\textbackslash epsilon, \textbackslash delta... \\
-        2018              & Differentially private K-means with constant mu...                                                            & -                                    & -                                                  & -                                       & -                          & K-Means             & Interactive     & - LSH-Procedure
-        - Private-Centers & \$(\textbackslash epsilon, \textbackslash delta)\$-DP, \$(\textbackslash epsilon, \textbackslash delta)\$-LDP                                                                                                                                                                                                                                                                                                                                                                        \\
-        2015              & Differentially Private k-Means Clustering                                                                     & 2 - 10-dimensional numerical data    & Adult dataset, Gowalla dataset, Image dataset, ... & https://github.com/DongSuIBM/PrivKmeans & Differential privacy       & K-Means             & Both            & EUGkM and hybrid EUGkM + DPLloyd          & -                                                                                                             \\
+        2022 \citep{sun_privbv_2022}                    & PrivBV: Distance-aware encoding for distributed...                                                            & -                                    & Synthetic dataset                                  & -                                       & Local differential privacy & K-Means             & Non interactive & -                                         & \$(\textbackslash epsilon, \textbackslash delta)\$-LDP                                                        \\
+        2021 \citep{9679364}                            & Private distributed K-means clustering on inter...                                                            & -                                    & -                                                  & -                                       & Local differential privacy & K-Means             & Interactive     & -                                         & -                                                                                                             \\
+        2021 \citep{stemmer_locally_2021}               & Locally Private k-Means Clustering                                                                            & numerical                            & -                                                  & -                                       & Local differential privacy & K-Means             & Interactive     & -                                         & -                                                                                                             \\
+        2021 \citep{yuan_privacypreserving_2021}        & Privacy‐preserving mechanism for mixed data clu...                                                            & n-dimensional numeric \& categorical & Adult dataset, US Census dataset                   & -                                       & Local differential privacy & K-Prototypes        & Interactive     & LDPK and ELDPK                            & LDP                                                                                                           \\
+        2021 \citep{bozdemir_privacy-preserving_nodate} & Privacy-preserving Density-based Clustering                                                                   & -                                    & Deer dataset, Lsun dataset, S1                     & -                                       & Differential privacy       & DBSCAN              & -               & ppDBSCAN                                  & -                                                                                                             \\
+        2020 \citep{cai_dp-ap_2020}                     & DP-AP: Differential Privacy-Preserving Affinity...                                                            & -                                    & Iris dataset, Seeds dataset                        & -                                       & Differential privacy       & AffinityPropagation & -               & DP-AP                                     & -                                                                                                             \\
+        2020 \citep{xia_distributed_2020-1}             & Distributed K-Means clustering guaranteeing loc...                                                            & n-dimensional numerical data         & 3D Road Network, CarGPS                            & -                                       & Local differential privacy & K-Means             & Interactive     & LDPKmeans                                 & -                                                                                                             \\
+        2019 \citep{sun_distributed_2019}               & Distributed Clustering in the Anonymized Space...                                                             & n-dimensional numerical data         & Aggregation dataset, Digit dataset, Pathbased d... & -                                       & Local differential privacy & DBSCAN, K-Means     & Non interactive & Distance Aware Bit Vector (DPBV)          & -                                                                                                             \\
+        2018 \citep{nissim_clustering_2018}             & Clustering algorithms for the centralized and l...                                                            & n-dimensional numerical data         & -                                                  & -                                       & Local differential privacy & K-Means             & Interactive     & LDP-GOODCenter                            & \$(\textbackslash epsilon, \textbackslash delta)\$-LDP and \$(\textbackslash epsilon, \textbackslash delta... \\
+        2018 \citep{nissim_clustering_2018}             & Differentially private K-means with constant mu...                                                            & -                                    & -                                                  & -                                       & -                          & K-Means             & Interactive     & - LSH-Procedure
+        - Private-Centers                               & \$(\textbackslash epsilon, \textbackslash delta)\$-DP, \$(\textbackslash epsilon, \textbackslash delta)\$-LDP                                                                                                                                                                                                                                                                                                                                                                        \\
+        2015 \citep{su_differentially_2015-1}           & Differentially Private k-Means Clustering                                                                     & 2 - 10-dimensional numerical data    & Adult dataset, Gowalla dataset, Image dataset, ... & https://github.com/DongSuIBM/PrivKmeans & Differential privacy       & K-Means             & Both            & EUGkM and hybrid EUGkM + DPLloyd          & -                                                                                                             \\
         %2011              & Differential privacy for location pattern mining                                                              & 2-dimensional geographical data      & Synthetic dataset with GPS trajectories            & -                                       & Differential privacy       & DBSCAN              & -               & DPQuadTree                                & -                                                                                                             \\
-        2011              & Smooth sensitivity and sampling in private data...                                                            & n-dimensional numeric                & -                                                  & -                                       & Local differential privacy & K-Means             & Non interactive & Smooth sensitivity for K-Means clustering & \$(\textbackslash epsilon, \textbackslash delta)\$-LDP                                                        \\
+        2007 \citep{nissim_smooth_2007}                 & Smooth sensitivity and sampling in private data...                                                            & n-dimensional numeric                & -                                                  & -                                       & Local differential privacy & K-Means             & Non interactive & Smooth sensitivity for K-Means clustering & \$(\textbackslash epsilon, \textbackslash delta)\$-LDP                                                        \\
         \bottomrule
       \end{tabular}
     \end{adjustbox}
     \caption{Summary table of the literature review for (L)DP clustering algorithms.}
+    \label{tab:summary_table_kmeans}
   \end{table}
 
 
@@ -174,20 +175,21 @@ To evaluate the performance of ppDBSCAN, the study compares its Adjusted Rand In
 
       \begin{tabular}{rlllllllll}
         \toprule
-        year                   & Name                                               & Data type                                          & Dataset                                            & Code implementations                               & preserving                 & Type                        & Interactive     & Methods                    & Privacy                         \\
+        year                                & Name                                               & Data type                                          & Dataset                                            & Code implementations                               & preserving                 & Type                        & Interactive     & Methods                  & Privacy                         \\
         \midrule
         %2022                    & 3D Geo-Indistinguishability for Indoor Location... & 3-dimensional geographical data                    & -                                                  & -                                                  & Geo-indistinguishability   & Differential privacy method & -               & 3-dimensional Laplace mechanism & -                               \\
         %2019                    & Generalised Differential Privacy for Text Docum... & n-dimensional (?? data)                            & -                                                  & -                                                  & Differential privacy       & Differential privacy method & -               & n-dimensional Laplace mechanism & -                               \\
-        2019                   & Collecting and Analyzing Multidimensional Data ... & n-dimensional (PM), but HM is 1-dimensional and... & BR, MR                                             & -https://github.com/forestneo/sunPytools/blob/m... & Local differential privacy & Differential privacy method & -               & - Piecewise Mechanism (PM)
-        - Hybrid Mechanism ... & -                                                                                                                                                                                                                                                                                                                                                             \\
-        2017                   & Minimax optimal procedures for locally private ... & 1-dimensional numerical data                       & -                                                  & https://github.com/forestneo/sunPytools/blob/ma... & Local differential privacy & Differential privacy method & -               & -                          & -                               \\
-        2016                   & Collecting and analyzing data from smart device... & numerical, binary and categorical data. Domain ... & BR (4M records 12 categorical and 6 numeric), U... & -                                                  & Local differential privacy & Differential privacy method & -               & Harmony                    & \$\textbackslash epsilon\$-LDP  \\
-        2015                   & The staircase mechanism in differential privacy    & n-dimensional numerical data                       & -                                                  & https://github.com/IBM/differential-privacy-lib... & Differential privacy       & Differential privacy method & -               & Staircase mechanism (SM)   & -                               \\
-        2013                   & Optimal data-independent noise for differential... & n-dimensional                                      & -                                                  & -                                                  & Differential privacy       & Differential privacy method & Non interactive & -                          & \$(\textbackslash epsilon)\$-DP \\
+        2019 \citep{wang_collecting_2019}   & Collecting and Analyzing Multidimensional Data ... & n-dimensional (PM), but HM is 1-dimensional and... & BR, MR                                             & -https://github.com/forestneo/sunPytools/blob/m... & Local differential privacy & Differential privacy method & -               & Piecewise Mechanism (PM)
+        - Hybrid Mechanism ...              & -                                                                                                                                                                                                                                                                                                                                                           \\
+        2017 \citep{duchi_minimax_2017}     & Minimax optimal procedures for locally private ... & 1-dimensional numerical data                       & -                                                  & https://github.com/forestneo/sunPytools/blob/ma... & Local differential privacy & Differential privacy method & -               & -                        & -                               \\
+        2016 \citep{nguyen_collecting_2016} & Collecting and analyzing data from smart device... & numerical, binary and categorical data. Domain ... & BR (4M records 12 categorical and 6 numeric), U... & -                                                  & Local differential privacy & Differential privacy method & -               & Harmony                  & \$\textbackslash epsilon\$-LDP  \\
+        2015 \citep{geng_staircase_2015}    & The staircase mechanism in differential privacy    & n-dimensional numerical data                       & -                                                  & https://github.com/IBM/differential-privacy-lib... & Differential privacy       & Differential privacy method & -               & Staircase mechanism (SM) & -                               \\
+        2013 \citep{geng_optimal_2013}      & Optimal data-independent noise for differential... & n-dimensional                                      & -                                                  & -                                                  & Differential privacy       & Differential privacy method & Non interactive & -                        & \$(\textbackslash epsilon)\$-DP \\
         %2012                    & Geo-indistinguishability: Differential privacy ... & 2-dimensional geographical data                    & -                                                  & -                                                  & Geo-indistinguishability   & Differential privacy method & -               & 2-dimensional Laplace mechanism & -                               \\
         \bottomrule
       \end{tabular}
     \end{adjustbox}
     \caption{Summary table of the literature review for (L)DP algorithms.}
+    \label{tab:summary_table_dp}
   \end{table}
 \end{landscape}
