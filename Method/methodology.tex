@@ -12,29 +12,21 @@ In this chapter, we explain:
 \end{enumerate}
 
 \section{Datasets}
-For this research, we will use a synthetic dataset for all three research questions.
-%In addition to this, we used the LSun dataset as a lot of comparable literature uses this as well for evaluation.
-%\todo[inline]{Describe LSun dataset}
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{table}[h]
-  \begin{tabular}{@{}llllll@{}}
-    \toprule
-    Dataset & Records & Centers & Dimensions & Standard deviation & Research \\ \midrule
-    1       & 50      & 4       & 2          & 0.60               & RQ 1     \\ \bottomrule
-    2       & 50      & 4       & 3          & 0.60               & RQ 2     \\ \bottomrule
-    3       & 50      & 4       & 5          & 0.60               & RQ 2     \\ \bottomrule
-  \end{tabular}
-\end{table}
-Research question 3 uses a "real-world" dataset to properly assess the different dataset properties that are the subject of this research question.
-
+For this research, we selected datasets based on the related papers (\ref{theory:literature-review}).
+The datasets are sourced from the UCI Machine Learning Repository \citep{noauthor_uci_nodate}.
+\begin{enumerate}
+  \item Seeds dataset \footnote{http://archive.ics.uci.edu/ml/datasets/seeds}: This dataset was used in several related works and contains 210 samples with 7 (numerical) attributes.
+        The dataset contains information about seeds like kernel width and density.
+  \item Cardiotocography dataset \footnote{https://archive.ics.uci.edu/ml/datasets/cardiotocography}: This dataset is selected because of the mixed data and amount of instances.
+        It has 23 attributes of which 10 are numerical.
+        The dataset contains information about measurements of fetal heart rate (FHR) and uterine contraction (UC).
+\end{enumerate}
 \section{Environmental setup}
 For running the experiments we make use of 16GB ram memory and i7-10750H 2.6Ghz processor.
 The experiments are run using a Docker container which runs a pre-configured distribution of Linux Alpine.
 It includes a pre-installed Anaconda environment for python \footnote{https://github.com/devcontainers/images/tree/main/src/anaconda}\footnote{tag: mcr.microsoft.com/devcontainers/anaconda:0-3}.
 We run the container using the dev-container feature for visual-studio code \footnote{https://code.visualstudio.com/docs/devcontainers/containers}.
 This allows us to create a reproducible experiment environment.
-\newpage
 \subsection{Libraries \& code versions}
 We use python version 3.9.13 with Jupyter notebook for creating a reproducible experimental environment.
 The packages for python are:
@@ -265,6 +257,13 @@ The full algorithm for the perturbation:
 %% We apply the theory for planar laplace proposed by \citep{DBLP:journals/corr/abs-1212-1984}
 
 \subsection{Research question 2}
-\todo[inline]{Starts after RQ1}
+
 \subsection{Research question 3}
-\todo[inline]{Starts after RQ2}
+\todo[inline]{Added ideas for research question 3}
+\begin{enumerate}
+  \item Research the impact of the number of dimensions on privacy \ref{theory:privacy-utility-nd}.
+  \item Research the impact of the number of records on the privacy/utility.
+  \item Explore options to extend the method to support categorical data.
+  \item Explore options to extend the method to support binary data.
+  \item Research possibility to include the privacy mass: \ref{equation:privacy-mass-a}
+\end{enumerate}

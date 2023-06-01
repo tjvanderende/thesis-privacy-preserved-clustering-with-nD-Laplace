@@ -26,6 +26,7 @@ The tuple $U = (\theta, \psi)$ is randomly selected based on the uniform distrib
 \textbf{Calculating $r$}: The radius $r$ (distance from the center) is calculated using the following equation:
 \begin{equation}
   r = \frac{1}{2}\epsilon^3 * r^2 * e^{-\epsilon * r}
+  \label{eq:3d-laplace-r}
 \end{equation}
 Where the gamma scale is the same as for 2D-Laplace, but with a shape of 3 instead of 2.
 The noise is added to the original location $x$ to obtain the perturbed location $z$: $z = x + U*r$.
@@ -47,5 +48,15 @@ This is also visualized in figure \ref{fig:3d-laplace}.
   \caption{3D-Laplace noise distribution according to the method proposed by Min et al. \citep{9646489}}
   \label{fig:3d-laplace}
 \end{figure}
+\newpage
 \subsection{Truncation}
-\todo[inline]{Todo: Add truncation to 3D-Laplace}
+As with the 2D-Laplace method, the 3D-Laplace method also has a truncation method.
+This truncation method is also based on the same method as the 2D-Laplace method.
+Instead of a plane grid, a cuboid grid is used for 3-dimensional space.
+This also remaps the noise to the closest grid point or existing point.
+To demonstrate this, we plotted example data points on a 3-dimensional grid in figure \ref{fig:3d-laplace-example}.
+\begin{figure} [ht]
+  \includegraphics{TheorethicalFramework/ND-Laplace/Images/example_3d_laplace.png}
+  \caption{Applying 3-dimensional noise with $\epsilon = 1$ (red dots) to a dataset $X$ (green dots). Demonstrating remapping to the closest grid point (blue) or $X$.}
+  \label{fig:3d-laplace-example}
+\end{figure}

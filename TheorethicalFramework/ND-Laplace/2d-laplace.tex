@@ -1,14 +1,13 @@
 \input{TheorethicalFramework/ND-Laplace/general-math-symbols.tex}
 \section{2D-Laplace}
-The theory for this subject is inspired by the paper that was written by Andrés et al. \citep{DBLP:journals/corr/abs-1212-1984}.
-This notion of \gls{gi} was introduced to solve the issue of privacy and location data.
-It offers an alternative approach for differential privacy by adding noise to the location locally before sending it to a location-based system (LBS) like Google maps.
-This section starts with an introduction to mathematics for the planar and polar Laplace algorithm.
-For each of the different subsections, we visualize and explain open challenges and theoretic for applying them for clustering.
-\glsaddall
-\leading{10pt}
-\printglossary[type=genericmath, nonumberlist]
-The other symbols can be found in section \ref{section:dp}.
+The idea of \gls{gi} was introduced to solve the issue of privacy and location data \citep{DBLP:journals/corr/abs-1212-1984}.
+It offers an alternative approach for achieving differential privacy for geographical data (latitude/longitude).
+The mechanism achieves this by adding noise to the location locally before sending it to a location-based system (LBS) like Google Maps for example.
+This section starts with an introduction to mathematics and for each of the different subsections, we visualize and explain open challenges and theoretic for applying them for clustering.
+%\glsaddall
+%\leading{10pt}
+%\printglossary[type=genericmath, nonumberlist]
+%The other symbols can be found in section \ref{section:dp}.
 \subsection*{Geo-indistinguishability}
 As mentioned in the previous section, the \gls{gi} method can be applied to preserve the privacy using a differential privacy method specific to spatial data.
 The formula to measure if an algorithm preserves $\epsilon$-geo-indistinguishability can be expressed as \citep{DBLP:journals/corr/abs-1212-1984}:
@@ -23,8 +22,7 @@ An extension of this is called $d_x$-privacy and is a more general notation of d
 Their definition for \gls{gi} is, therefore, $d_2$-privacy, but is essentially the same as the proof provided for \gls{gi}.
 
 \subsection{Planar and polar Laplace}
-\printglossary[type=2dlaplace]
-
+%\printglossary[type=2dlaplace]
 The idea of planar Laplace is to generate an area around $x0 \in X$ according to the multivariate Laplace distribution.
 The mechanism of planar Laplace is a modification of the Laplace algorithm to support distance \citep{DBLP:journals/corr/abs-1212-1984}.
 This distance method $dist(x, x_`)$ is defined as the Euclidean distance between two points or sets.
@@ -37,14 +35,15 @@ Which is the likelihood a generated point $z \in Z$ is close to $x0$.
 The method works for Cartesian coordinates but was modified to support polar coordinates by including $\theta$.
 So each point is reflected as $(r, \theta)$ and can be modified by using a slight modification to work for polar Laplace.
 A point $z \in Z$ where $z = (r, \theta)$ is randomly generated using two separate methods for calculating $r$ and $\theta$.
-\begin{figure}[h] \label{figure:parea}
+\begin{figure}[h]
   \includegraphics[scale=0.6]{TheorethicalFramework/ND-Laplace/Images/polar-laplace.png}
   \centering
   \caption{Representation of the generated $z = {r \theta}$ and original point $x0$.}
+  \label{figure:parea}
 \end{figure}
 
 \textbf{Calculating $r$:}
-This variable is described as $dist(x_0, z)$ and can be randomly drawn by inverting the CDF (\textbf{Link}) for the Laplace distribution:
+This variable is described as $dist(x_0, z)$ and can be randomly drawn by inverting the CDF \todo{show CDF} for the Laplace distribution:
 \begin{equation}
   C{_\epsilon}{^{-1}}(p) = - \frac{1}{\epsilon}(W_-1 (\frac{p - 1}{e}) + 1)
 \end{equation}
@@ -53,13 +52,14 @@ The Lambert w function, also called the product logarithm is defined as $W(x)e^{
 The purpose of the Lambert w function is to invert the CDF of the Laplace distribution to generate random noise for one of the coordinates ($r$) using the random value of $p$.
 
 \textbf{Calculating $\theta$:}
-The other coordinate ($\theta$) is defined as a random number $[0, 2\pi]$. \newline \newline
+The other coordinate ($\theta$) is defined as a random number $[0, 2\pi]$. \newline
 To visualize these methods it is necessary to convert the polar coordinates for $z = (r, \theta)$ back to a plane $(x, y)$.
 This is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals/corr/abs-1212-1984} and visualized using figure \ref{figure:geo}.
-\begin{figure}[h] \label{figure:geo}
+\begin{figure}[h]
   \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/polar-laplace-to-planar.png}
   \centering
   \caption{Representation of converting the perturbed point $z = (r, \theta)$ to a point ${z_x, z_y}$}
+  \label{figure:geo}
 \end{figure}
 
 \mycomment{
@@ -73,14 +73,27 @@ This is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals
 
 \newpage
 \subsection{Truncation} \label{theory:truncation}
-Because we have a finite space, it can be possible the perturbed points are off-graph (outside the given domain).
-The solution was described in step 5 of the Laplacian mechanism for 2D space. This explains the idea of remapping to the closest admissible location in set A.
-For which $A \subset \mathbb{R^2}$, where A is the set of admissible locations \citep{DBLP:journals/corr/abs-1212-1984}.
-This is also described by chatzikokolakis et al, who also describes a method to do it.
-When a perturbed point $z$ is located at the sea or in water, it is easily distinguishable as a fake location.
-They introduce a method to check this and efficiently remap to a nearby location.
-\todo[inline]{Describe the method}
-\todo[inline]{Analyze other methods}
+The truncation is an important part of the mechanism to ensure the data is contained within the domain of the original data $X$.
+If this is not the case, the data is easily distinguished by an unwanted adversary \citep{DBLP:journals/corr/abs-1212-1984,9646489}.
+We assume that a user has a set of data points with a range of [-1, 1].
+If noise is added to it, it can be ensured that this data falls outside this range (figure \ref{figure:truncation-2d}).
+\begin{figure}[ht]
+  \includegraphics[width=0.7\textwidth]{TheorethicalFramework/ND-Laplace/Images/remapping.png}
+  \caption{Representation of truncation of data points for 2-dimensional Laplace mechanism.}
+  \label{figure:truncation-2d}
+\end{figure}
+
+A solution was described by Andres et al. in step 5 of the Laplacian mechanism for 2D space \citep{DBLP:journals/corr/abs-1212-1984}.
+The idea is to create a grid around the diameter of the set of points $X = R^2$ that belong to the user.
+This grid is defined as $G = \{g_1, g_2, ..., g_n\}$ where $g_i$ is a grid point.
+So, if a point is generated outside the given domain, it is remapped to the closest in $X \subset G$.
+
+This was later improved by chatzikokolakis et al, introducing an optimized way of remapping \citep{chatzikokolakis_practical_nodate}.
+The algorithm uses the Bayesian rule for minimizing the loss of utility while remapping the data.
+Instead of remapping to the closest point, it remaps to a location where the loss is minimal.
+To decrease the performance impact of this algorithm, it is possible to only consider a certain region around the perturbed point $z$.
+The disadvantage of this method is the need for a prior set of data points to calculate the optimal remapping.
+It does not work for new users, and it extends the training period.
 
 \subsection{Optimizing for clustering}
 The decision of the parameters for the algorithm is straightforward as it depends on the $\epsilon$. \label{paragraph:choosing-r}
@@ -88,10 +101,30 @@ This constant is calculated by defining the radius $r$ and the desired level of 
 The $l$ is a predefined constant $l \in R^+$ but usually will be below 10.
 For geographical data, the $r$ can be configured by using meters as a unit of measure.
 Therefore, $r = 200$ corresponds to a radius of 200m around point $x_0$.
-So, regarding clustering, it is a challenge to define a reasonable radius. \newline
-The $\epsilon$ can be considered the inverse unit of $r$ \citep{DBLP:journals/corr/abs-1212-1984}.
-A radius can be defined per-use case based on how crowded a place is \citep{chatzikokolakis_constructing_2015}.
-\todo[inline]{Give the algorithm}
+So, regarding clustering, it is a challenge to define a reasonable radius.
+%The $\epsilon$ can be considered the inverse unit of $r$ \citep{DBLP:journals/corr/abs-1212-1984}.
+
+In that regard, the radius can also be a flexible value that is defined based on the crowdedness of a region \citep{chatzikokolakis_constructing_2015}.
+If a user is located in a crowded area, the radius can be smaller than if the user is located in a rural area.
+Because the user location is indistinguishable due to the overlap of other users' locations.
+Instead of providing \gls{gi}, the authors introduce a more flexible privacy definition $d_x$-privacy.
+The $r$ is calculated based on the mass of other locations in the region $r$, they call \emph{privacy mass}.
+So, the total mass of a set A is defined as $M(A) = \sum_{x \in A} m(x) = a + q(x)b$.
+Where $m(x)$ is the mass of a location $x$ and a value between 0 and 1 and $a$ is the number of points assigned to each location.
+The authors define $q(x)$ as the "quality" of a point, which is essentially the number of other users that are also interested in the same point (e.g. a mall).
+
+The $a$ is defined as a Euclidean ball $B_r = {x' | d_{euc}(x, x') \leq r}$, which returns all locations within the radius $r$.
+To retrieve a value within [0, 1], the authors use the following formula:
+\begin{equation}
+  a = \frac{1}{|B_r|}
+  \label{equation:privacy-mass-a}
+\end{equation}
+If the locations are only considered for space and not quality, $q(x)$ is defined as 0 \citep{chatzikokolakis_constructing_2015}. \newline
+%A radius can be defined per-use case based on how crowded a place is \citep{chatzikokolakis_constructing_2015}.
+
+Although the method is an interesting approach to increasing utility while not reducing privacy it is hard to adopt for this research.
+For applying it for \gls{ldp}, it is required to supply each user with prior knowledge of the dataset.
+This would require an interactive setup of the mechanism instead of non-interactive \todo{Give link to Laplace}. \newline
 
 A drawn area as shown in \ref{figure:parea} can be expressed as a perturbation area $P_{area}$ \citep{yan_perturb_2022-2}.
 This metric was formulated as:
@@ -100,4 +133,5 @@ This metric was formulated as:
 \end{equation}
 The method loops through each perturbed point $r$ on center $x_0$ (recall \ref{figure:parea}) and calculates the Euclidean distance for an $n$ amount of perturbation points.
 Although the method does not contribute to the Laplace algorithm, it is useful for visualization purposes.
+This method can also be applied for efficiently calculating the grid points for the truncation method (recall \ref{theory:truncation}).
 \newpage
