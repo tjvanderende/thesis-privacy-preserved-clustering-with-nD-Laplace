@@ -97,8 +97,9 @@ And iteratively calculated while considering the damping factor.
   \caption{Affinity Propagation hyperparameters for datasets 1 - 3}
   \label{tab:ap-formula-sklearn}
 \end{table}
-\newpage
 \subsubsection{DBSCAN}
+\todo[inline]{Give algorithm formula}
+\todo[inline]{Describe how we choose for OPTICS}
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
@@ -266,11 +267,19 @@ The full algorithm for the perturbation:
 \subsection{Research question 2}
 
 \subsection{Research question 3}
+
 \todo[inline]{Added ideas for research question 3}
+In this research question, we compare the behavior of our mechanism with what we have observed in the literature for similar mechanisms.
+To do this, we have formulated several hypotheses.
 \begin{enumerate}
-  \item Research the impact of the number of dimensions on privacy \ref{theory:privacy-utility-nd}.
-  \item Research the impact of the number of records on the privacy/utility.
+  \item The privacy leakage (adversary advantage) is higher for a higher number of dimensions:
+        It is expected that privacy leakage increases with the number of dimensions, based on our own observation (\ref{theory:privacy-utility-nd}).
+        \todo[inline]{Also include literature}
+\end{enumerate}
+In addition to testing the hypotheses, we also want to investigate the behavior of our mechanism in more detail.
+\begin{enumerate}
+  \item Research the applicability of the mechanism for other cluster algorithms, like hierarchical clustering.
   \item Explore options to extend the method to support categorical data.
   \item Explore options to extend the method to support binary data.
-  \item Research possibility to include the privacy mass: \ref{equation:privacy-mass-a}
+  \item Research possibility to include the privacy mass: \ref{equation:privacy-mass-a}.
 \end{enumerate}

@@ -81,10 +81,13 @@ The definition for \gls{ldp} is the as for equation \ref{approxiate-dp} with $\d
   \caption{Local differential privacy, which moves the noise-adding step to the client-side.}
   \label{fig:local-dp}
 \end{figure}
+\todo[inline]{Explain interactive versus non-interactive}
+
 \subsubsection{$\epsilon$-geo-indistinguishability}
 The last and for this study's most important type of differential privacy is \gls{gi}.
 This is a type of differential privacy that is specifically designed for location data.
-
+\todo[inline]{More introduction about geo-indistinguishability}
+\todo[inline]{Describe notion of geo-indistinguishability}
 \subsection{Mechanisms}
 In this section, we will explain the various mechanisms that are used to achieve differential privacy.
 The different mechanisms are not limited to the type of \gls{dp} and some can be applied to multiple types.
@@ -130,6 +133,7 @@ Also, the introduction of this method makes Laplace preserve $(\epsilon, \delta)
 \subsubsection{Gaussian mechanism} \label{gaussian}
 Another mechanism that works comparably is the Gaussian mechanism.
 This mechanism makes use of the Gaussian distribution to add noise to the data.
+\todo[inline]{Explain more about Gaussian mechanism}
 % This means, that if the sensitivity is low, the noise is as well.
 % The metric is combined with the privacy budget $\epsilon$ to control the noise that is being added by a mechanism like Laplace \citep{friedman_data_2010}.
 
