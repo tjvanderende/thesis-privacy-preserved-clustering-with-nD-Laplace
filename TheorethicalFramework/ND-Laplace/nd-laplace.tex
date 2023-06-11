@@ -57,7 +57,7 @@ As the amount of dimensions increases, the most volume is located on the hypersp
 When we convert the points to Cartesian coordinates, some will be located at the center (e.g., 0.5), while others will be close to the surface (e.g., 0.0).
 However, as the number of dimensions increases, the majority will be close to the surface (e.g., 0.99).
 The decreasing amount of volume is illustrated using this figure:
-\begin{figure}[ht]
+\begin{figure}[H]
   \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/volume.png}
   \caption{Illustration of the decreasing volume while increasing the number of dimensions}
   \label{fig:curse-of-dimensionality}
@@ -66,6 +66,87 @@ The decreasing amount of volume is illustrated using this figure:
 The noise decreases as the dimensions increase, increasing utility.
 Hence, it is intriguing to observe the behavior of privacy relative to utility.
 This behavior will be further emphasized in a later stage of this research.
-
+\newpage
 \subsection{Truncation}
-\todo[inline]{In progress}
+For 2D/3D Laplace, a grid and cuboid were respectively introduced to truncate noise mechanisms \citep{DBLP:journals/corr/abs-1212-1984,9646489}.
+This section introduces an extension for handling any number of dimensions, which can also substitute for 2D/3D. We want to note that this section focuses on improving utility with remapping.
+Any remap function preserves geo-indistinguishability [Chatzikokolakis et al.], so we do not consider privacy to be a leading factor.
+
+Recalling both mechanisms, the 2D version operates on a plane and approximates on a grid $G$, while the 3D version works in a 3D space using a cuboid grid.
+Given a set of input points $X \subset R^2$, we can truncate points that are outside the domain by remapping them to points within $G$ ($Z = X \cap G$) \citep{DBLP:journals/corr/abs-1212-1984}.
+Here, $X$ represents other data points reported locally by the same user.
+The calculations for this are straightforward. \todo{See link for formulas}
+To extend this approach to n-dimensional data, we need an efficient way to search points in an n-dimensional hypersphere.
+To do this, we adopt the idea proposed by Chatzikokolakis et al. of using a kd-tree for efficient searching \citep{chatzikokolakis_practical_nodate}.
+\subsubsection{Grid with kd-tree remapping}
+A kd-tree is a multidimensional tree of k-dimensions used to store spatial data \citep{bentley_multidimensional_1975}.
+Each record is a node in the tree and points to either null or another node.
+It is of great interest to our research as it allows for efficient nearest neighbor searching \citep{washington_k-d_2002}.
+This enables efficient searching of records based on space. This is illustrated using a two-dimensional representation based on figure \todo{add figure reference}.
+The biggest benefit of a kd-tree is its efficiency, as its space complexity is $O(kn)$, where $k$ is the number of dimensions and $n$ is the dataset size.
+Additionally, nearest neighbor (NN) searching is efficient, with a time complexity of $O(\log n)$ \citep{washington_k-d_2002}. \todo{Add a link in the appendix to time complexity}.
+\begin{figure}[H]
+  \includegraphics[width=1\textwidth]{TheorethicalFramework/ND-Laplace/Images/KD-tree.png}
+  \caption{Representation of a kd-tree with 2 dimensions to remap based on a grid.}
+  \label{fig:kd-tree}
+\end{figure}
+When using a kd-tree to search for a data point $z_i$, the algorithm begins with an unbalanced binary tree.
+The root is split by the x-axis, and since 4.5 is greater than 3.5, we go to the right.
+This means that we no longer need to consider the left (greyed out) part of the grid.
+We continue traversing the tree until we find the nearest point based on Euclidean distance.
+
+Using this algorithm, we can effectively remap point $z \in Z$ to either $X$ or $G$ based on the closest Euclidean distance.
+The utility of this method depends on the number of grid cells in $G$, since a smaller distance will result in more frequent mapping to the surface of the grid.
+When $\epsilon$ is very low (and thus closer), the data points are more likely to map to the grid surface \todo{Add see link to 3D Laplace}.
+Increasing the number of grid cells can improve the utility, but this comes at the cost of significantly increased space complexity for $k$ dimensions.
+This is because a grid of $n*m$ dimensions has a complexity of $O(n^2)$.
+Therefore, we also explore the optimal remapping algorithm proposed by Chatzikokolakis et al.
+
+\subsubsection{Optimal remapping}
+As we discussed, the remapping will be performance intensive and that is why we adopt the optimal remapping \citep{chatzikokolakis_practical_nodate}.
+Consider the grid that was proposed in \ref{fig:kd-tree}.
+After remapping point $z_i$, it is mapped to the center for the grid cell.
+Based on the cell width, the distance to the original point $x_i$ and $ z_i$ could be really large.
+Therefore, it is more efficient to remap in the following way:
+\begin{figure}[H]
+  \includegraphics[width=0.7\textwidth]{TheorethicalFramework/ND-Laplace/Images/optimal-remapping.png}
+  \caption{Representation of optimal remapping \citep{chatzikokolakis_practical_nodate}, where $z_i$ is remapped to $x_i$ using $\sigma(x)$ instead of the center of the grid cell.}
+  \label{fig:optimal-remapping}
+\end{figure}
+The remapping algorithm works on the idea of crowded places \todo{Reference RQ1}, with the intuition that a crowded place leverages indistinguishability by crowdedness.
+This works by considering a prior set of data points $Q \in R^n$.
+Which are other data points that belong to the user.
+We are interested in the data points that are within the radius $r$ around $z$.
+This is denoted as $B_r(z)$, which is the vector of all points within radius $r$ around $z$.
+In addition to this, there is also a $Q_r$ that is a convex hull of all nearby points.
+Hence, this is described as $Q_r = B_r \cap Q$ (See section 3.1.3. \todo{add link}).
+The final intuition here is that $r$ is automatically generated based on crowdedness (see circle inside figure \ref{fig:optimal-remapping}).
+
+The first step is to assign weights $w(q) $ to each data point in $Q_r$, which is described by Chatzikokolakis et al. as the “popularity” of a prior location $q$.
+Because we do not consider locations (where points of interest are fixed coordinates) we are not able to get an accurate count for $w(q)$.
+Therefore, we re-use equation 3.4 and define $ w(x)$ as $ |Q_r|$ and use kd-tree again to efficiently find $|Q_r|$.
+The second step revolves around calculating $\sigma(x)$:
+\begin{equation}
+  \sigma(x) = \frac{w(x)e^{-\epsilon d(x, z)}}{\sum{_{q\in Q_r} w(q)e^{-\epsilon d(q, z)}}}
+  \label{eq:optimal-remapping-formula-1}
+\end{equation}
+The last step is to take the mean value of $\sigma(x)$.
+Unfortunately, optimal remapping is not possible for users that do not have sufficient data (e.g. new users).
+The remapping is not applied for these users and is also not applied for $z$ if it is within the domain of $X$.
+
+\subsubsection{Practical implementation}
+For practical implementation, we will consider $Q_r$ as a set of locations within a radius $r$ of $z$.
+As explained in the previous paragraph, it is difficult to interpret $w(q) \in Q_r$ because we cannot calculate "crowded" places.
+Therefore, we interpret $w(q)$ as a simple count of all data points within $Q_r$ excluding $z$. Calculating $z'$ using $\sigma(x)$ is easier:
+\begin{equation}
+  \sigma(x) = \frac{w(x)e^{-\epsilon d(x, z)}}{w(q)e^{-\epsilon d(q, z)}}
+  \label{eq:optimal-remapping-formula-2}
+\end{equation}
+So, $w(x) = 1$ and $w(q)$ is the count of all locations except $x$ and $z$. It is also not necessary anymore to calculate the mean.
+
+It is also possible to implement equation \ref{eq:optimal-remapping-formula-1} without any modifications.
+This requires us to implement the mechanism interactively.
+In this approach, all clients perturb their data and sent it to the server.
+The server clusters the private data and calculates weight based on cluster information (e.g., crowdedness/density) and shares it with the clients.
+The clients then use the optimal remap and share their private information with the server again.
+Although this system requires only a single round-trip between server and clients, it reveals cluster information, so we prefer the non-interactive setup.

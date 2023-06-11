@@ -272,9 +272,13 @@ The full algorithm for the perturbation:
 In this research question, we compare the behavior of our mechanism with what we have observed in the literature for similar mechanisms.
 To do this, we have formulated several hypotheses.
 \begin{enumerate}
-  \item The privacy leakage (adversary advantage) is higher for a higher number of dimensions:
+  \item The privacy leakage (adversary advantage) increases for a higher number of dimensions:
         It is expected that privacy leakage increases with the number of dimensions, based on our own observation (\ref{theory:privacy-utility-nd}).
         \todo[inline]{Also include literature}
+  \item The boundary distance attack proposed by Choquette et al. yields better results on our data.
+        We evaluated research questions 1 and 2 using the attack model proposed by Shokri et al. \cite{shokri_membership_2017}.
+        However, Choquette et al. proposed a new attack model that is more suitable for our data \cite{choquette_privacy-preserving_2019}.
+        We expect that the results of this attack model are better than the results of the attack model proposed by Shokri et al.
 \end{enumerate}
 In addition to testing the hypotheses, we also want to investigate the behavior of our mechanism in more detail.
 \begin{enumerate}

@@ -91,9 +91,15 @@ This is not surprising, as these attacks have a high success rate and pose a gre
 % Metrics
 The introduction of differential privacy reduces the impact of a member inference attack \citep{rigaki_survey_2021,hu_membership_2022}.
 This is because the input to the model is perturbed. While it is still possible to retrieve the training data, the leaked privacy is significantly reduced.
-The leaked privacy can be measured using a metric called "adversarial advantage." This metric describes the percentage of privacy that is compromised in the event of a member inference attack \citep{yeom_privacy_2018}.
-This is calculated by subtracting the False Positive Rate from the True Positive Rate. The TPR represents the number of correctly predicted member data (training data) and the FPR represents the number of correctly predicted non-member data. \newline
-\todo[inline]{Refactor some stuff, misses inbalance between tpr/fpr}
+A simple, but effective way to measure the privacy leakage is by calculating the accuracy of correctly predicting membership by the adversary \citep{choquette-choo_label-only_2021}.
+Yeom et al. created a metric specifically for membership inference attacks which can be measured using a metric called "adversarial advantage."
+This metric describes the percentage of privacy that is compromised in the event of a member inference attack \citep{yeom_privacy_2018}.
+This is calculated by subtracting the False Positive Rate from the True Positive Rate.
+The TPR represents the number of correctly predicted member data (training data) and the FPR represents the number of correctly predicted non-member data.
+Although these metrics are commonly applied in the literature for MIA, they do not provide enough information \citep{carlini_membership_2022}.
+Both metrics do not take into account the imbalance between the TPR and FPR.
+The metric should emphasize the TPR, as this is the percentage of correctly predicted member data.
+Therefore, they propose to use a ROC curve to show the effectiveness of a membership inference attack \citep{carlini_membership_2022}. \newline
 
 % Final remark
 In conclusion, the attacks that use member inference attacks are all based on supervised machine learning.
