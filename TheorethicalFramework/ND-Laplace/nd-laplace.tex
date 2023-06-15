@@ -83,9 +83,9 @@ To do this, we adopt the idea proposed by Chatzikokolakis et al. of using a kd-t
 A kd-tree is a multidimensional tree of k-dimensions used to store spatial data \citep{bentley_multidimensional_1975}.
 Each record is a node in the tree and points to either null or another node.
 It is of great interest to our research as it allows for efficient nearest neighbor searching \citep{washington_k-d_2002}.
-This enables efficient searching of records based on space. This is illustrated using a two-dimensional representation based on figure \todo{add figure reference}.
+This enables efficient searching of records based on space. This is illustrated using a two-dimensional representation (figure \ref{fig:kd-tree}).
 The biggest benefit of a kd-tree is its efficiency, as its space complexity is $O(kn)$, where $k$ is the number of dimensions and $n$ is the dataset size.
-Additionally, nearest neighbor (NN) searching is efficient, with a time complexity of $O(\log n)$ \citep{washington_k-d_2002}. \todo{Add a link in the appendix to time complexity}.
+Additionally, nearest neighbor (NN) searching is efficient, with a time complexity of $O(\log n)$ \citep{washington_k-d_2002}.
 \begin{figure}[H]
   \includegraphics[width=1\textwidth]{TheorethicalFramework/ND-Laplace/Images/KD-tree.png}
   \caption{Representation of a kd-tree with 2 dimensions to remap based on a grid.}
@@ -96,12 +96,14 @@ The root is split by the x-axis, and since 4.5 is greater than 3.5, we go to the
 This means that we no longer need to consider the left (greyed out) part of the grid.
 We continue traversing the tree until we find the nearest point based on Euclidean distance.
 
-Using this algorithm, we can effectively remap point $z \in Z$ to either $X$ or $G$ based on the closest Euclidean distance.
+Using this algorithm, we can effectively remap point $z \in Z$ to either $X$ or $G$ based on the closest Euclidean distance (algorithm \ref{alg:grid-remapping-laplace}) and find data points in an n-dimensional space that is outside the original domain (algorithm \ref{alg:find-outside-domain-laplace}).
 The utility of this method depends on the number of grid cells in $G$, since a smaller distance will result in more frequent mapping to the surface of the grid.
 When $\epsilon$ is very low (and thus closer), the data points are more likely to map to the grid surface (\ref{fig:3d-laplace-noise}, \ref{fig:3d-laplace-example}).
 Increasing the number of grid cells can improve the utility, but this comes at the cost of significantly increased space complexity for $k$ dimensions.
 This is because a grid of $n*m$ dimensions has a complexity of $O(n^2)$.
 Therefore, we also explore the optimal remapping algorithm proposed by Chatzikokolakis et al \citep{chatzikokolakis_efficient_2017}.
+\input{TheorethicalFramework/ND-Laplace/algorithms/outside-domain.tex}
+\input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}
 
 \subsubsection{Optimal remapping}
 As we discussed, the remapping will be performance intensive and that is why we adopt the optimal remapping \citep{chatzikokolakis_efficient_2017}.
@@ -150,8 +152,16 @@ This requires us to implement the mechanism interactively.
 In this approach, all clients perturb their data and sent it to the server.
 The server clusters the private data and calculates weight based on cluster information (e.g., crowdedness/density) and shares it with the clients.
 The clients then use the optimal remap and share their private information with the server again.
-Although this system requires only a single round-trip between server and clients, it reveals cluster information, so we prefer the non-interactive setup.
+Although this system requires only a single round-trip between server and clients \todo {Add link to figure next section}, it reveals cluster information, so we prefer the non-interactive setup (\todo{Add link to figure next section}).
 
-\subsection{Extending to $d_x$-privacy}
-\todo[inline]{Find if this is possible}
+\input{TheorethicalFramework/ND-Laplace/algorithms/optimal-remapping.tex}
+
+\subsection{Putting it together}
+\todo[inline]{Create algorithm for nD-Laplace}
+%\subsection{Extending to $d_x$-privacy}
+%\todo[inline]{Find if this is possible}
+
 %Constructing elastic distinguishability metrics for location privacy
+\newpage
+
+\input{TheorethicalFramework/ND-Laplace/mechanism-design.tex}
