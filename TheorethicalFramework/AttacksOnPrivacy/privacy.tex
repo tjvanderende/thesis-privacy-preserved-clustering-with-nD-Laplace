@@ -1,5 +1,21 @@
 \chapter{Attacks on privacy} \label{section: MIA}
-This chapter focuses on the prevalent attacks that machine learning algorithms face. Towards the end, we will assess their impact on differential privacy and discuss evaluation methods.
+This chapter is devoted to investigating and evaluating attacks on machine learning models.
+Differential privacy protects the centrally stored dataset from leaking sensitive information.
+Assessing the performance of the algorithm is, therefore, best measurable using common attacks \citep{jayaraman_evaluating_nodate}.
+In this context, we evaluate attacks specifically aimed at uncovering training data from a privately trained model.
+We consider two types of attacks:
+\begin{enumerate}
+  \item \textbf{Membership inference attack}: An adversary attempts to infer whether a data point was used for training.
+  \item \textbf{Reconstruction attack}: An adversary attempts to reconstruct the training data using the model.
+\end{enumerate}
+The knowledge of the attacker (adversarial knowledge) is an important factor to consider.
+This knowledge can be divided into white-box and black-box approaches \citep{hu_membership_2022}.
+\begin{enumerate}
+  \item \textbf{White-box}: The attacker has all the data that is needed. Including target model parameters, the training dataset and even the architecture \citep{hu_membership_2022}.
+  \item \textbf{Black-box}: The attacker has a limited amount of information, like training data distribution and the trained model \citep{hu_membership_2022}.
+\end{enumerate}
+We will discuss both type of attacks and types in the next two sections.
+
 \section{Membership inference attacks}
 An attack model that plays a big role in machine learning is a membership inference attack (MIA).
 With this attack, an adversary attempts to infer the training data $x \in X$ (member) from a given data point $z \in Z$ (non-member).
@@ -7,11 +23,6 @@ The attack happens exclusively on supervised learning models, which either predi
 Most attacks on models trained on a centralized dataset occur during the inference phase, where the trained model is used to make predictions. \citep{rigaki_survey_2021}.
 This is also why we are primarily interested in this phase, as we are not using a distributed learning model.
 
-MIA depends on the knowledge of the attacker (adversarial knowledge), which can be divided into white-box and black-box approaches \citep{hu_membership_2022}.
-\begin{enumerate}
-  \item \textbf{White-box}: The attacker has all the data that is needed. Including target model parameters, the training dataset and even the architecture \citep{hu_membership_2022}.
-  \item \textbf{Black-box}: The attacker has a limited amount of information, like training data distribution and the trained model \citep{hu_membership_2022}.
-\end{enumerate}
 The most well-known member inference attack is training shadow models \citep{rigaki_survey_2021}.
 In this attack, an attacker trains multiple models.
 These models do not necessarily have to be the same as the original model, and the focus is mainly on the data input/output.
@@ -58,10 +69,38 @@ The algorithm is then able to extract the truth label by minimizing the loss. \n
 
 \newpage
 \section{Reconstruction attack}
-This attack is a threat, especially to differential privacy.
-The attack is primarily focused on reconstructing the data rather than focusing on machine learning.
-\todo[inline]{Do research for this attack}
+The concept of reconstruction attacks predates differential privacy, as this principle also gave rise to the idea of necessary database privatization \citep{dinur_revealing_2003}.
+Using a reconstruction attack, an adversary could reconstruct training data from a given (classifier) model.
+The research they did evaluates the perturbation that is needed to be added to a database to protect it versus a reconstruction attack.
 
+A general reconstruction attack for our use-case is the attribute inference attack \citep{dwork_exposed_2017} or model inference \citep{rigaki_survey_2021}.
+Both terms are essentially the same, and we have chosen to name attribute inference attack, as it is the most common one in most literature \citep{jegorova_survey_2022}.
+Attribute inference focuses on a reconstruction attack with the adversary's goal of retrieving the secret from each user \citep{dwork_exposed_2017}.
+For example, an attacker may attempt to reconstruct information about someone's heart disease using the individual's properties.
+
+A practical implementation of the attack was provided by Fredrikson et al. as a way to infer sensitive features \citep{fredrikson_model_2015}.
+To accomplish this, they used a decision tree attack, which was a white-box approach as they also accessed the count of instances for each decision tree branch.
+They also considered a black-box approach with access only to the target model (ML-as-a-service in this example).
+% Finally, they showed that if the attacker can capture a single output label, they can reproduce the original data with high confidence \citep{fredrikson_model_2015}.
+The attack targets gradient descent, which is used to optimize the input data of an attack to mimic the original data.
+It has only been shown to work on a neural network for face identification images (named MIFace) \citep{fredrikson_model_2015}, but it could be extended to another machine learning classifier if it uses gradient descent (e.g. Support Vector Machines) \citep{nicolae_adversarial_2019}.
+%Most other comparable work focus almost exclusively on neural networks [decristofaroOverviewPrivacyMachine2020a, jegorovaSurveyLeakagePrivacy2022].
+A more general approach was undertaken by Yeom et al., building upon the same research discussed in the previous section (Member inference).
+In their work, Yeom et al. proposed a membership inference attack, which can also be utilized for attribute inference in a white-box setting.
+The attribute inference attack follows a similar methodology, wherein the target model is queried to assess the loss of synthetic data, based on adversarial knowledge.
+By repeating the process, the attack identifies and selects the value with the highest prior probability, incorporating membership information \citep{yeom_privacy_2018,jayaraman_are_2022}.
+Evaluating the effectiveness of such attacks faces a significant challenge, as it relies on the correlation between attributes, irrespective of whether the data belongs to the training or test dataset \citep{zhao_feasibility_2021}.
+Therefore, Yeom et al. focus on the similarity between both membership/attribute- inference and combine them to evaluate the attribute inference attack \citep{yeom_privacy_2018}. \newline
+
+The objective of differential privacy is to introduce sufficient noise to mitigate the risk of various attacks \citep{dwork_exposed_2017,jayaraman_evaluating_nodate}.
+Assessing the privacy leakage of our model can be effectively accomplished by employing attribute/membership inference techniques.
+
+%A separate investigation by Javaraman et al. examined the efficacy of differential privacy through Membership Inference attacks proposed by Shokri et al. and Yeom et al. 
+%Furthermore, they also leveraged Yeom et al.'s attribute inference attack.
+Within this thesis, our focus is mainly on Membership Inference attacks.
+We aim to establish a quantifiable measure for our mechanism, and combining both attribute and membership attacks is not beneficial since they essentially capture the same information.
+To reach this goal, it is sufficient to concentrate on membership inference attacks. %using available code implementations \citep{nicolae_adversarial_2019}.
+\newpage
 %\section{Model inversion attack}
 %\todo[inline]{Do research for this attack}
 
