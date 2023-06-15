@@ -1,8 +1,23 @@
 \begin{algorithm}[H]
   \caption{Algorithm for finding points outside the domain of $X$.}
   \begin{algorithmic}
-    \Require $x \in X$  \Comment n-dimensional array of original points
-
+    \Require $x \in X$  \Comment original dataset
+    \Require $z \in Z$ \Comment perturbed dataset
+    \State $tree \gets KDTree(X)$ \Comment construct a KDTree from the original data.
+    \State $X_{domain} \gets$ \Call{KDTree::query}{$Z$} \Comment find the closest points.
+    \State $X_{features} \gets$ X.features \Comment retrieve dataset dimensions
+    \State $X_{outside-domain} \gets []$
+    \For{$feature \in X_{features}$}
+      \For{$index \in X[feature]$}
+        \If{$Z[index][feature] \leq \Call{X::min}{Z} $}
+          \State append $row$ to $X_{outside-domain}$
+        \EndIf
+        \If{$Z[index][feature] \geq \Call{X::max}{Z} $}
+          \State append $row$ to $X_{outside-domain}$
+        \EndIf
+      \EndFor
+    \EndFor
+    \State \Return $X_{outside-domain}$ \Comment The index of points outside the domain of $X$.
   \end{algorithmic}
   \label{alg:find-outside-domain-laplace}
 \end{algorithm}
