@@ -451,6 +451,22 @@
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\HVVT4GUR\\Andrés e.a. - 2012 - Geo-indistinguishability Differential privacy for.pdf}
 }
 
+@misc{de_cristofaro_overview_2020-1,
+  title = {An {{Overview}} of {{Privacy}} in {{Machine Learning}}},
+  author = {De Cristofaro, Emiliano},
+  year = {2020},
+  month = may,
+  number = {arXiv:2005.08679},
+  eprint = {2005.08679},
+  primaryclass = {cs, stat},
+  publisher = {{arXiv}},
+  urldate = {2023-06-14},
+  abstract = {Over the past few years, providers such as Google, Microsoft, and Amazon have started to provide customers with access to software interfaces allowing them to easily embed machine learning tasks into their applications. Overall, organizations can now use Machine Learning as a Service (MLaaS) engines to outsource complex tasks, e.g., training classifiers, performing predictions, clustering, etc. They can also let others query models trained on their data. Naturally, this approach can also be used (and is often advocated) in other contexts, including government collaborations, citizen science projects, and business-to-business partnerships. However, if malicious users were able to recover data used to train these models, the resulting information leakage would create serious issues. Likewise, if the inner parameters of the model are considered proprietary information, then access to the model should not allow an adversary to learn such parameters. In this document, we set to review privacy challenges in this space, providing a systematic review of the relevant research literature, also exploring possible countermeasures. More specifically, we provide ample background information on relevant concepts around machine learning and privacy. Then, we discuss possible adversarial models and settings, cover a wide range of attacks that relate to private and/or sensitive information leakage, and review recent results attempting to defend against such attacks. Finally, we conclude with a list of open problems that require more work, including the need for better evaluations, more targeted defenses, and the study of the relation to policy and data protection efforts.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Computers and Society,Computer Science - Cryptography and Security,Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\9ZT8RLE8\\De Cristofaro - 2020 - An Overview of Privacy in Machine Learning.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\GIIBIXPX\\2005.html}
+}
+
 @article{del_rey_comprehensive_2020-1,
   title = {A {{Comprehensive Survey}} on {{Local Differential Privacy}}},
   author = {Xiong, Xingxing and Liu, Shubo and Li, Dan and Cai, Zhaohui and Niu, Xiaoguang},
@@ -668,6 +684,23 @@
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\4IJJ6ZVN\\Fränti e.a. - 2014 - Centroid index Cluster level similarity measure.pdf}
 }
 
+@inproceedings{fredrikson_model_2015,
+  title = {Model {{Inversion Attacks}} That {{Exploit Confidence Information}} and {{Basic Countermeasures}}},
+  booktitle = {Proceedings of the 22nd {{ACM SIGSAC Conference}} on {{Computer}} and {{Communications Security}}},
+  author = {Fredrikson, Matt and Jha, Somesh and Ristenpart, Thomas},
+  year = {2015},
+  month = oct,
+  pages = {1322--1333},
+  publisher = {{ACM}},
+  address = {{Denver Colorado USA}},
+  doi = {10.1145/2810103.2813677},
+  urldate = {2023-06-14},
+  abstract = {Machine-learning (ML) algorithms are increasingly utilized in privacy-sensitive applications such as predicting lifestyle choices, making medical diagnoses, and facial recognition. In a model inversion attack, recently introduced in a case study of linear classifiers in personalized medicine by Fredrikson et al. [13], adversarial access to an ML model is abused to learn sensitive genomic information about individuals. Whether model inversion attacks apply to settings outside theirs, however, is unknown.},
+  isbn = {978-1-4503-3832-5},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\MXSQEW3H\\Fredrikson et al. - 2015 - Model Inversion Attacks that Exploit Confidence In.pdf}
+}
+
 @article{frey_clustering_2007,
   title = {Clustering by {{Passing Messages Between Data Points}}},
   author = {Frey, Brendan J. and Dueck, Delbert},
@@ -853,12 +886,45 @@
   issn = {0176-4268}
 }
 
+@inproceedings{jayaraman_are_2022,
+  title = {Are {{Attribute Inference Attacks Just Imputation}}?},
+  booktitle = {Proceedings of the 2022 {{ACM SIGSAC Conference}} on {{Computer}} and {{Communications Security}}},
+  author = {Jayaraman, Bargav and Evans, David},
+  year = {2022},
+  month = nov,
+  pages = {1569--1582},
+  publisher = {{ACM}},
+  address = {{Los Angeles CA USA}},
+  doi = {10.1145/3548606.3560663},
+  urldate = {2023-06-14},
+  isbn = {978-1-4503-9450-5},
+  langid = {english},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\5RCFP7VC\\Jayaraman and Evans - 2022 - Are Attribute Inference Attacks Just Imputation.pdf}
+}
+
 @article{jayaraman_evaluating_nodate,
   title = {Evaluating {{Differentially Private Machine Learning}} in {{Practice}}},
   author = {Jayaraman, Bargav and Evans, David},
   abstract = {Differential privacy is a strong notion for privacy that can be used to prove formal guarantees, in terms of a privacy budget, , about how much information is leaked by a mechanism. When used in privacy-preserving machine learning, the goal is typically to limit what can be inferred from the model about individual training records. However, the calibration of the privacy budget is not well understood. Implementations of privacy-preserving machine learning often select large values of in order to get acceptable utility of the model, with little understanding of the impact of such choices on meaningful privacy. Moreover, in scenarios where iterative learning procedures are used, relaxed definitions of differential privacy are often used which appear to reduce the needed privacy budget but present poorly understood trade-offs between privacy and utility. In this paper, we quantify the impact of these choices on privacy in experiments with logistic regression and neural network models. Our main finding is that there is no way to obtain privacy for free\textemdash relaxed definitions of differential privacy that reduce the amount of noise needed to improve utility also increase the measured privacy leakage. Current mechanisms for differentially private machine learning rarely offer acceptable utility-privacy trade-offs for complex learning tasks: settings that provide limited accuracy loss provide little effective privacy, and settings that provide strong privacy result in useless models.},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\SL2RLCCC\\Jayaraman en Evans - Evaluating Diﬀerentially Private Machine Learning .pdf}
+}
+
+@misc{jegorova_survey_2022,
+  title = {Survey: {{Leakage}} and {{Privacy}} at {{Inference Time}}},
+  shorttitle = {Survey},
+  author = {Jegorova, Marija and Kaul, Chaitanya and Mayor, Charlie and O'Neil, Alison Q. and Weir, Alexander and {Murray-Smith}, Roderick and Tsaftaris, Sotirios A.},
+  year = {2022},
+  month = sep,
+  number = {arXiv:2107.01614},
+  eprint = {2107.01614},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-06-14},
+  abstract = {Leakage of data from publicly available Machine Learning (ML) models is an area of growing significance as commercial and government applications of ML can draw on multiple sources of data, potentially including users' and clients' sensitive data. We provide a comprehensive survey of contemporary advances on several fronts, covering involuntary data leakage which is natural to ML models, potential malevolent leakage which is caused by privacy attacks, and currently available defence mechanisms. We focus on inference-time leakage, as the most likely scenario for publicly available models. We first discuss what leakage is in the context of different data, tasks, and model architectures. We then propose a taxonomy across involuntary and malevolent leakage, available defences, followed by the currently available assessment metrics and applications. We conclude with outstanding challenges and open questions, outlining some promising directions for future research.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Machine Learning},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\7LDL7KF5\\Jegorova et al. - 2022 - Survey Leakage and Privacy at Inference Time.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\DHHGV9I2\\2107.html}
 }
 
 @misc{ji_differential_2014,
@@ -1070,6 +1136,22 @@
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\7Y4VRWXH\\Nguyên et al. - 2016 - Collecting and Analyzing Data from Smart Device Us.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\36II3QW2\\1606.html}
 }
 
+@misc{nicolae_adversarial_2019,
+  title = {Adversarial {{Robustness Toolbox}} v1.0.0},
+  author = {Nicolae, Maria-Irina and Sinn, Mathieu and Tran, Minh Ngoc and Buesser, Beat and Rawat, Ambrish and Wistuba, Martin and Zantedeschi, Valentina and Baracaldo, Nathalie and Chen, Bryant and Ludwig, Heiko and Molloy, Ian M. and Edwards, Ben},
+  year = {2019},
+  month = nov,
+  number = {arXiv:1807.01069},
+  eprint = {1807.01069},
+  primaryclass = {cs, stat},
+  publisher = {{arXiv}},
+  urldate = {2023-06-14},
+  abstract = {Adversarial Robustness Toolbox (ART) is a Python library supporting developers and researchers in defending Machine Learning models (Deep Neural Networks, Gradient Boosted Decision Trees, Support Vector Machines, Random Forests, Logistic Regression, Gaussian Processes, Decision Trees, Scikit-learn Pipelines, etc.) against adversarial threats and helps making AI systems more secure and trustworthy. Machine Learning models are vulnerable to adversarial examples, which are inputs (images, texts, tabular data, etc.) deliberately modified to produce a desired response by the Machine Learning model. ART provides the tools to build and deploy defences and test them with adversarial attacks. Defending Machine Learning models involves certifying and verifying model robustness and model hardening with approaches such as pre-processing inputs, augmenting training data with adversarial samples, and leveraging runtime detection methods to flag any inputs that might have been modified by an adversary. The attacks implemented in ART allow creating adversarial attacks against Machine Learning models which is required to test defenses with state-of-the-art threat models. Supported Machine Learning Libraries include TensorFlow (v1 and v2), Keras, PyTorch, MXNet, Scikit-learn, XGBoost, LightGBM, CatBoost, and GPy. The source code of ART is released with MIT license at https://github.com/IBM/adversarial-robustness-toolbox. The release includes code examples, notebooks with tutorials and documentation (http://adversarial-robustness-toolbox.readthedocs.io).},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\E5S6Z567\\Nicolae et al. - 2019 - Adversarial Robustness Toolbox v1.0.0.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\HUVL8PU5\\1807.html}
+}
+
 @inproceedings{nissim_clustering_2018,
   title = {Clustering {{Algorithms}} for the {{Centralized}} and {{Local Models}}},
   booktitle = {Proceedings of {{Algorithmic Learning Theory}}},
@@ -1100,17 +1182,6 @@
   isbn = {978-1-59593-631-8},
   langid = {english},
   file = {C\:\\Users\\tjvan\\Zotero\\storage\\JCRGPZCJ\\Nissim e.a. - 2007 - Smooth sensitivity and sampling in private data an.pdf}
-}
-
-@misc{noauthor_adversarial_2023,
-  title = {Adversarial {{Robustness Toolbox}} ({{ART}}) v1.14},
-  year = {2023},
-  month = apr,
-  urldate = {2023-04-17},
-  abstract = {Adversarial Robustness Toolbox (ART) - Python Library for Machine Learning Security - Evasion, Poisoning, Extraction, Inference - Red and Blue Teams},
-  copyright = {MIT},
-  howpublished = {Trusted-AI},
-  keywords = {adversarial-attacks,adversarial-examples,adversarial-machine-learning,ai,artificial-intelligence,attack,blue-team,evasion,extraction,inference,machine-learning,poisoning,privacy,python,red-team,trusted-ai,trustworthy-ai}
 }
 
 @misc{noauthor_uci_nodate,
@@ -1606,6 +1677,22 @@
   pages = {226--235},
   publisher = {{MDPI}},
   issn = {2571-8800}
+}
+
+@misc{zhao_feasibility_2021,
+  title = {On the ({{In}}){{Feasibility}} of {{Attribute Inference Attacks}} on {{Machine Learning Models}}},
+  author = {Zhao, Benjamin Zi Hao and Agrawal, Aviral and Coburn, Catisha and Asghar, Hassan Jameel and Bhaskar, Raghav and Kaafar, Mohamed Ali and Webb, Darren and Dickinson, Peter},
+  year = {2021},
+  month = mar,
+  number = {arXiv:2103.07101},
+  eprint = {2103.07101},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  urldate = {2023-06-14},
+  abstract = {With an increase in low-cost machine learning APIs, advanced machine learning models may be trained on private datasets and monetized by providing them as a service. However, privacy researchers have demonstrated that these models may leak information about records in the training dataset via membership inference attacks. In this paper, we take a closer look at another inference attack reported in literature, called attribute inference, whereby an attacker tries to infer missing attributes of a partially known record used in the training dataset by accessing the machine learning model as an API. We show that even if a classification model succumbs to membership inference attacks, it is unlikely to be susceptible to attribute inference attacks. We demonstrate that this is because membership inference attacks fail to distinguish a member from a nearby non-member. We call the ability of an attacker to distinguish the two (similar) vectors as strong membership inference. We show that membership inference attacks cannot infer membership in this strong setting, and hence inferring attributes is infeasible. However, under a relaxed notion of attribute inference, called approximate attribute inference, we show that it is possible to infer attributes close to the true attributes. We verify our results on three publicly available datasets, five membership, and three attribute inference attacks reported in literature.},
+  archiveprefix = {arxiv},
+  keywords = {Computer Science - Cryptography and Security,Computer Science - Machine Learning},
+  file = {C\:\\Users\\tjvan\\Zotero\\storage\\NQJKYNZG\\Zhao et al. - 2021 - On the (In)Feasibility of Attribute Inference Atta.pdf;C\:\\Users\\tjvan\\Zotero\\storage\\CXQ92257\\2103.html}
 }
 
 @inproceedings{zhao_not_2020,
