@@ -3,7 +3,21 @@
     \begin{algorithmic}
       \Require $x \in X$  \Comment 3D array of points
       \Require $l \in R^ +$
-      
+      \Require $r \in R^ +$ 
+      \Ensure $z \in Z$ \Comment 3D array of perturbed points
+      %\State $r = \frac{\sigma}{2}$ \Comment formula 4.1
+      \State $\epsilon \gets \frac{l}{r}$ \Comment Calculating privacy budget \citep{DBLP:journals/corr/abs-1212-1984}
+      \State $Z \gets []$
+      \For{$point_i \in X$}
+        \State $\theta \gets {1, \pi2}$       \Comment Random noise according to equation 3.7
+        \State $p \gets \frac{1}{2\pi}$     \Comment Random noise according to equation 3.8
+        \State $r \gets \frac{1}{2}\epsilon^3 * r^2 * e^{-\epsilon * r}$          \Comment Draw $r$ based on equation \ref{eq:3d-laplace-r}
+      %\State $z_i \gets T(x_{min}, x_{max}, point_i, z_i)$ \Comment algorithm 1.
+        \State $z_x \gets r * \sin(\theta) * \sin(\psi)$ 
+        \State $z_y \gets r * \sin(\theta) * \cos(\psi)$
+        \State $z_z \gets r * \cos(\theta)$
+      \State $Z::Add(z)$                      \Comment Adds z to the list Z.
+      \EndFor
       \State \Return Z
     \end{algorithmic}
     \label{alg:3d-laplace}
