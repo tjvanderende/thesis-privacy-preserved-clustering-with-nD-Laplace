@@ -9,7 +9,7 @@ We consider two types of attacks:
   \item \textbf{Reconstruction attack}: An adversary attempts to reconstruct the training data using the model.
 \end{enumerate}
 The knowledge of the attacker (adversarial knowledge) is an important factor to consider.
-This knowledge can be divided into white-box and black-box approaches \citep{hu_membership_2022}.
+This can be divided into white-box and black-box approaches \citep{hu_membership_2022}.
 \begin{enumerate}
   \item \textbf{White-box}: The attacker has all the data that is needed. Including target model parameters, the training dataset and even the architecture \citep{hu_membership_2022}.
   \item \textbf{Black-box}: The attacker has a limited amount of information, like training data distribution and the trained model \citep{hu_membership_2022}.
@@ -118,8 +118,8 @@ To reach this goal, it is sufficient to concentrate on membership inference atta
 
 
 \section{Attack evaluation} \label{theory:attack-evaluation}
-In this section, we compile a list of attacks and evaluate which attacks are best suited for adoption in this research.
-We also assess whether differential privacy provides protection for each attack and discuss how this can be measured.
+In this section, we evaluate the membership inference attack and evaluate as it is the most appropiate for this study (See previous chapter).
+We assess whether differential privacy provides protection for the attack and discuss how this can be measured.
 \subsection{Member inference attacks}
 % Research
 Most current research for MIA is evaluated for neural networks \citep{rigaki_survey_2021}.
@@ -150,7 +150,3 @@ Therefore, a semi-supervised approach can be used, as illustrated in this figure
   \includegraphics[width=1\textwidth]{TheorethicalFramework/Differential privacy/master-thesis-MIA.png}
   \caption{Semi-supervised black-box approach to execute a member inference attack.}
 \end{figure}
-
-\subsection{Reconstruction attacks:}
-\todo[inline]{Evaluate after we did research for reconstruction attacks}
-
