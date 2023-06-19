@@ -99,7 +99,7 @@ And iteratively calculated while considering the damping factor.
 \end{table}
 \subsubsection{DBSCAN}
 \todo[inline]{Give algorithm formula}
-\todo[inline]{Describe how we choose for OPTICS}
+\todo[inline]{Describe how/why we choose for OPTICS}
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
@@ -122,6 +122,7 @@ And iteratively calculated while considering the damping factor.
   \label{tab:dbscan-formula-sklearn}
 \end{table}
 
+\newpage
 \subsection{Evaluation}
 With differential privacy, it is a trade-off of utility versus privacy.
 Therefore, for the evaluation of the 2D/3D-Laplace algorithms, we compare both criteria to achieve a consensus between utility and privacy.
@@ -187,11 +188,12 @@ An earlier study also explored this attack with as goal to evaluate differential
 Similar to this attack, we train a classifier with perturbed data and evaluate it using non-perturbed data (test-data / shadow-data) \citep{zhao_not_2020}.
 We consider a semi-surpervised setup (figure \ref{figure:MIA-semi-supervised}), where we train a classifier with the perturbed data and evaluate it using non-perturbed data (test-data / shadow-data).
 For the classifier, we use a RandomForestClassifier, because this classifier is not yet applied for shadow model attacks \citep{rigaki_survey_2021}.
-Finally, we evaluate the adversary advantage (percentage) using $TPR - FPR$ \cite{yeom_privacy_2018}.
+Finally, we evaluate the adversary advantage (percentage) using $TPR - FPR$ \citep{yeom_privacy_2018}.
 \begin{enumerate}
   \item TPR: The amount the attacker inferred the member data correctly (the private training data).
   \item FPR: The amount the attacker inferred the non-member data correctly (the non-private test data).
 \end{enumerate}
+\todo[inline]{Include ROC plot rationale}
 A visual setup of the experiment is given in figure: \ref{figure:mi-attack}
 
 \begin{figure}
@@ -201,22 +203,24 @@ A visual setup of the experiment is given in figure: \ref{figure:mi-attack}
 \end{figure}
 \newpage
 %Therefore, we analyze our method according to a popular attack: Membership inference attack.
-
 %For this purpose, we make use of a black-box Member inference attack, called "HopSkipJump" \citep{chen_hopskipjumpattack_2020,li_membership_2021}.
 %This attack is evaluated using a semi-supervised setup, as proposed in this figure: \ref{fig:unsupervised-mia-attack}.
 %We will make use of a decision tree model for classification but can be replaced by any other classification model.
 %Both the private and non-private trained models are evaluated based on the true positive rate (TPR) and false positive rate (FPR).
 %Respectively meaning, the TPR is higher if the MIA is successful and likewise the FPR if the MIA is unsuccessful.
 %We hypothesize that the private model leverages a higher FPR in comparison to the non-private variant.
-
 %Therefore, it is more convenient to apply the geo-indistinguishability as an error metric provided in \ref{eq:geo-as-an-error}.
-
 \subsection{Scaling}
 Because we use a distance metric, we need to apply some data standardization.
 For this purpose, we use standard scaling provided by the Scikit-learn package \footnote{https://scikit-learn.org/stable/modules/preprocessing.html}.
 This is only for clustering, so it is applied after all the perturbation algorithms.
 \subsection{Research question 1}
-
+For research question 1 we evaluate the following methods:
+\begin{enumerate}
+  \item 2D-Laplace: algorithm \ref{alg:2d-laplace}.
+  \item 2D-Laplace: truncated algorithm \ref{alg:find-outside-domain-laplace} and \ref{alg:grid-remapping-laplace}.
+  \item Piecewise: algorithm \todo{Provide piecewise}.
+\end{enumerate}
 \mycomment{
   We propose several solutions for open issues based on the theoretical framework. \newline
   \subsubsection{Choosing r: } Based, on the idea of chatzikokolakis et al. to lower the size of the radius if the place is crowded, we can do the same with clustering.
@@ -231,54 +235,60 @@ This is only for clustering, so it is applied after all the perturbation algorit
   \end{equation}
   The $\sigma$ being our diameter $d$, the radius $r$ is then calculated as $\frac{d}{2}$. \newline
 }
-\subsubsection{Truncation:}
-We explained the theory for truncation earlier in paragraph \ref{theory:truncation}.
-The methods proposed work correctly for a geographic map where other (historic) locations for remapping are available.
+\mycomment{\subsubsection{Truncation:}
+  We explained the theory for truncation earlier in paragraph \ref{theory:truncation}.
+  The methods proposed work correctly for a geographic map where other (historic) locations for remapping are available.
 
-However, it is difficult to apply this to data clustering.
-The number of data points is not known beforehand, so we may remap to a location that is too far away.
-This way we lose important distance information, which hurts the clustering.
-Also, the truncation threshold is so clear (the points are outside the known 2D domain), that we do not have to rely on historical data for remapping.
-Our algorithm can be much simpler by re-calculating the noise until it will be within the domain:
+  However, it is difficult to apply this to data clustering.
+  The number of data points is not known beforehand, so we may remap to a location that is too far away.
+  This way we lose important distance information, which hurts the clustering.
+  Also, the truncation threshold is so clear (the points are outside the known 2D domain), that we do not have to rely on historical data for remapping.
+  Our algorithm can be much simpler by re-calculating the noise until it will be within the domain:
+}
 \mycomment{
   \begin{equation}
     T(x_{max}, x_{min}, z, x_0) \begin{cases} z &\text{if } 0 < 1 \\ T(x_{max}, x_{min}, planarLaplace(epsilon, x_0), x_0)  &\text{else} \end{cases}
   \end{equation}
 }
-\input{Method/algorithms/truncation-rq1.tex}
-This algorithm uses $x_{min}$ and $x_{max}$ to re-calculate the points within the domain using respectively the minimum X/Y and maximum X/Y.
-An example of this is visualized:
-\begin{figure}[h]
-  \includegraphics[width=0.8\textwidth]{Method/images/truncation-rq1.png}
-  \label{fig:truncation}
-  \centering
-  \caption{Representation of the remapping algorithm for clustering for points $z_3$ and $z_4$ }
-\end{figure}
+%\input{Method/algorithms/truncation-rq1.tex}
+%This algorithm uses $x_{min}$ and $x_{max}$ to re-calculate the points within the domain using respectively the minimum X/Y and maximum X/Y.
+%An example of this is visualized:
+%\begin{figure}[h]
+%  \includegraphics[width=0.8\textwidth]{Method/images/truncation-rq1.png}
+%  \label{fig:truncation}
+%  \centering
+%  \caption{Representation of the remapping algorithm for clustering for points $z_3$ and $z_4$ }
+%\end{figure}
 
 %\subsubsection{Probability metric $K(x)(Z)$}
 %\todo[inline]{Explain the probability metric $K$ we used}
 
 %\newpage
-\subsubsection{Algorithm}
-The full algorithm for the perturbation:
-\input{Method/algorithms/rq1.tex}
+%\subsubsection{Algorithm}
+%The full algorithm for the perturbation:
+%\input{Method/algorithms/rq1.tex}
 %% We apply the theory for planar laplace proposed by \citep{DBLP:journals/corr/abs-1212-1984}
 
 \subsection{Research question 2}
-
+The setup for research question 2 is similar to research question 1, but we use 3D-Laplace instead of 2D-Laplace.
+\begin{enumerate}
+  \item 3D-Laplace: algorithm \ref{alg:3d-laplace}.
+  \item 3D-Laplace: truncated algorithm \ref{alg:find-outside-domain-laplace} and \ref{alg:grid-remapping-laplace}.
+  \item Piecewise: algorithm.
+\end{enumerate}
+\newpage
 \subsection{Research question 3}
-
-\todo[inline]{Added ideas for research question 3}
+%\todo[inline]{Added ideas for research question 3}
 In this research question, we compare the behavior of our mechanism with what we have observed in the literature for similar mechanisms.
 To do this, we have formulated several hypotheses.
 \begin{enumerate}
   \item The privacy leakage (adversary advantage) increases for a higher number of dimensions:
         It is expected that privacy leakage increases with the number of dimensions, based on our own observation (\ref{theory:privacy-utility-nd}).
         \todo[inline]{Also include literature}
-  \item The boundary distance attack proposed by Choquette et al. yields better results on our data.
+        \mycomment{\item The boundary distance attack proposed by Choquette et al. yields better results on our data.
         We evaluated research questions 1 and 2 using the attack model proposed by Shokri et al. \cite{shokri_membership_2017}.
         However, Choquette et al. proposed a new attack model that is more suitable for our data \cite{choquette_privacy-preserving_2019}.
-        We expect that the results of this attack model are better than the results of the attack model proposed by Shokri et al.
+        We expect that the results of this attack model are better than the results of the attack model proposed by Shokri et al.}
   \item Adding optimal remapping improves utility without sacrificing privacy \todo{link}.
         \todo[inline]{Include more information}
 \end{enumerate}
