@@ -69,17 +69,24 @@ This behavior will be further emphasized in a later stage of this research.
 \newpage
 \subsection{Truncation}
 For 2D/3D Laplace, a grid and cuboid were respectively introduced to truncate noise mechanisms \citep{DBLP:journals/corr/abs-1212-1984,9646489}.
-For this section, we extend the research we did for 2D/3D Laplace (\ref{theory:truncation}, \ref{2d:optimizing}) \newline
+This section extends the work done for 2D and 3D Laplace (\ref{theory:truncation}, \ref{2d:optimizing}) \newline
 This section introduces an extension for handling any number of dimensions, which can also substitute for 2D/3D.
 We want to note that this section focuses on improving utility with remapping.
-Any remap function preserves geo-indistinguishability [Chatzikokolakis et al.], so we do not consider privacy to be a leading factor.
+Any remap function preserves geo-indistinguishability \cite{chatzikokolakis_efficient_2017}, so the required privacy is still preserved.
 
 Recalling both mechanisms, the 2D version operates on a plane and approximates on a grid $G$, while the 3D version works in a 3D space using a cuboid grid.
 Given a set of input points $X \subset R^2$, we can truncate points that are outside the domain by remapping them to points within $G$ ($Z = X \cap G$) \citep{DBLP:journals/corr/abs-1212-1984}.
 Here, $X$ represents other data points reported locally by the same user.
 To extend this approach to n-dimensional data, we need an efficient way to search points in an n-dimensional hypersphere.
-To do this, we adopt the idea proposed by Chatzikokolakis et al. of using a kd-tree for efficient searching \citep{chatzikokolakis_efficient_2017}.
-\subsubsection{Grid with kd-tree remapping}
+To do this, we adopt the idea proposed by Chatzikokolakis et al. of using a kd-tree for efficient searching of the grid \citep{chatzikokolakis_efficient_2017}.
+In their research, they describe the utilization of a kd-tree for searching nearby points for a given point.
+For this reason, we also use a kd-tree for the following tasks:
+\begin{enumerate}
+  \item Finding nearby points for $z \in G$ (section: \hyperref[theory:grid-remapping]{Grid with kd-tree remapping}).
+  \item Finding nearby points for $x \in X$ and $z \in Z$ (section \hyperref[theory:optimal-remapping]{Optimal remapping}).
+\end{enumerate}
+
+\subsubsection{Grid with kd-tree remapping} \label{theory:grid-remapping}
 A kd-tree is a multidimensional tree of k-dimensions used to store spatial data \citep{bentley_multidimensional_1975}.
 Each record is a node in the tree and points to either null or another node.
 It is of great interest to our research as it allows for efficient nearest neighbor searching \citep{washington_k-d_2002}.
@@ -105,7 +112,7 @@ Therefore, we also explore the optimal remapping algorithm proposed by Chatzikok
 \input{TheorethicalFramework/ND-Laplace/algorithms/outside-domain.tex}
 \input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}
 
-\subsubsection{Optimal remapping}
+\subsubsection{Optimal remapping} \label{theory:optimal-remapping}
 As we discussed, the remapping will be performance intensive and that is why we adopt the optimal remapping \citep{chatzikokolakis_efficient_2017}.
 Consider the grid that was proposed in \ref{fig:kd-tree}.
 After remapping point $z_i$, it is mapped to the center for the grid cell.

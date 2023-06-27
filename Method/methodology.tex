@@ -11,7 +11,7 @@ In this chapter, we explain:
   \item For each research question: Results.
 \end{enumerate}
 
-\section{Datasets}
+\section{Datasets} \label{datasets-section}
 For this research, we selected datasets based on the related papers (\ref{theory:literature-review}).
 The datasets are sourced from the UCI Machine Learning Repository \citep{noauthor_uci_nodate}.
 \begin{enumerate}
@@ -183,7 +183,7 @@ In addition, we evaluate privacy by simulating a membership inference attack and
 This is measured for each epsilon. \newline
 \textbf{Membership inference attack (adversary advantage):}
 %\input{Method/algorithms/shokri-setup-mi.tex}
-We used the MIA that was proposed by Shokri et al. with the implementation that was provided by Adversarial Robustness Toolkit (ART) \citep{noauthor_adversarial_2023}.
+We used the MIA that was proposed by Shokri et al. with the implementation that was provided by Adversarial Robustness Toolkit (ART) \citep{nicolae_adversarial_2019}.
 An earlier study also explored this attack with as goal to evaluate differential privacy.
 Similar to this attack, we train a classifier with perturbed data and evaluate it using non-perturbed data (test-data / shadow-data) \citep{zhao_not_2020}.
 We consider a semi-surpervised setup (figure \ref{figure:MIA-semi-supervised}), where we train a classifier with the perturbed data and evaluate it using non-perturbed data (test-data / shadow-data).

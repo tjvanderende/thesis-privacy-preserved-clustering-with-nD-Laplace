@@ -12,12 +12,12 @@ This section starts with an introduction to mathematics and for each of the diff
 As mentioned in the previous section, the \gls{gi} method can be applied to preserve the privacy using a differential privacy method specific to spatial data.
 The formula to measure if an algorithm preserves $\epsilon$-geo-indistinguishability can be expressed as \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{equation}
-  K(x)(y) \le e^{\epsilon * d(x,x`)} K(x`)(y)
+  K(x)(y) \le e^{\epsilon * d(x,x')} K(x')(y)
   \label{algo:2d-geo-indistinguishability}
 \end{equation}
-Where $K$ is a probability method reporting $x, x` \in X$ as $z \in Z$.
+Where $K$ is a probability method reporting $x, x' \in X$ as $z \in Z$.
 The idea of this algorithm looks a lot like that of differential privacy using the La Place method; but includes distance.
-The intuition for this is that it displays the distinguishability level between two secret locations/points $x$ and $x`$ \citep{chatzikokolakis_constructing_2015}.
+The intuition for this is that it displays the distinguishability level between two secret locations/points $x$ and $x'$ \citep{chatzikokolakis_constructing_2015}.
 An extension of this is called $d_x$-privacy and is a more general notation of distance-aware differential privacy.
 Their definition for \gls{gi} is, therefore, $d_2$-privacy, but is essentially the same as the proof provided for \gls{gi}.
 
@@ -25,8 +25,8 @@ Their definition for \gls{gi} is, therefore, $d_2$-privacy, but is essentially t
 %\printglossary[type=2dlaplace]
 The idea of planar Laplace is to generate an area around $x0 \in X$ according to the multivariate Laplace distribution.
 The mechanism of planar Laplace is a modification of the Laplace algorithm to support distance \citep{DBLP:journals/corr/abs-1212-1984}.
-This distance method $dist(x, x_`)$ is defined as the Euclidean distance between two points or sets.
-Recalling the definition of Laplace, this method $|x-x_`|$ is replaced by the distance metric.
+This distance method $dist(x, x')$ is defined as the Euclidean distance between two points or sets.
+Recalling the definition of Laplace, this method $|x-x'|$ is replaced by the distance metric.
 Hence, the definition of the Probability Density Function (pdf) by Andrés et al. is:
 \begin{equation}
   \frac{\epsilon^2}{2*\pi}e(-\epsilon d(x_0, x))
@@ -88,7 +88,7 @@ The idea is to create a grid around the diameter of the set of points $X = R^2$ 
 This grid is defined as $G = \{g_1, g_2, ..., g_n\}$ where $g_i$ is a grid point.
 So, if a point is generated outside the given domain, it is remapped to the closest in $X \subset G$.
 
-This was later improved by chatzikokolakis et al, introducing an optimized way of remapping \citep{chatzikokolakis_practical_nodate}.
+This was later improved by chatzikokolakis et al, introducing an optimized way of remapping \citep{chatzikokolakis_efficient_2017}.
 The algorithm uses the Bayesian rule for minimizing the loss of utility while remapping the data.
 Instead of remapping to the closest point, it remaps to a location where the loss is minimal.
 To decrease the performance impact of this algorithm, it is possible to only consider a certain region around the perturbed point $z$.
@@ -126,7 +126,7 @@ Although the method is an interesting approach to increasing utility while not r
 For applying it for \gls{ldp}, it is required to supply each user with prior knowledge of the dataset.
 This would require an interactive setup of the mechanism instead of non-interactive \todo[inline]{TODO, introduce interactive/non-interactive in earlier parts of the study}. \newline
 
-A drawn area as shown in \ref{figure:parea} can be expressed as a perturbation area $P_{area}$ \citep{yan_perturb_2022-2}.
+A drawn area as shown in \ref{figure:parea} can be expressed as a perturbation area $P_{area}$ \citep{yan_perturb_2022}.
 This metric was formulated as:
 \begin{equation}
   P_{area}=\left\{ center = x_{0},radius = \frac{1}{N}\times \sum _{i=1}^{N}r_{i}\right\}

@@ -73,7 +73,7 @@ However, with $(\epsilon, \delta)$-differential privacy, the information can lea
 \subsubsection{$\epsilon$-local differential privacy}
 As the name suggests, \gls{ldp} is executed on the client-side instead of on the server, as was the case in figure \ref{fig:central-dp}.
 This is illustrated in figure \ref{fig:local-dp}.
-Local differential privacy was introduced to remove the "trusted" curator, preventing sensitive data leakage even if an attacker gains access to the dataset \citep{del_rey_comprehensive_2020-1}.
+Local differential privacy was introduced to remove the "trusted" curator, preventing sensitive data leakage even if an attacker gains access to the dataset \citep{del_rey_comprehensive_2020}.
 The definition for \gls{ldp} is the as for equation \ref{approxiate-dp} with $\delta = 0$ being equal to equation \ref{pure-dp}.
 \todo[inline]{Describe issues with local differential privacy}
 \begin{figure}[h]
@@ -94,22 +94,22 @@ The different mechanisms are not limited to the type of \gls{dp} and some can be
 %The mechanisms are divided into three categories: \gls{dp}, \gls{ldp} and \gls{gi}.
 \subsubsection{Randomized response mechanism}
 The random response method is a relatively simple method and was first applied in 1965 by Warner et al.
-It was originally used to mask the answers of individuals by randomly switching the answers with predictable randomness \citep{warner_randomized_1965-1}.
+It was originally used to mask the answers of individuals by randomly switching the answers with predictable randomness \citep{warner_randomized_1965}.
 Therefore, the method is mainly used for categorical data.
-This method satisfies its own set of requirements for LDP \citep{del_rey_comprehensive_2020-1}, which differs from the formal definition that was mentioned earlier
+This method satisfies its own set of requirements for LDP \citep{del_rey_comprehensive_2020}, which differs from the formal definition that was mentioned earlier
 
-Since then, it is still one of the better-known methods, and larger organizations such as Google use it \citep{erlingsson_rappor_2014-2}.
+Since then, it is still one of the better-known methods, and larger organizations such as Google use it \citep{erlingsson_rappor_2014}.
 They have named their extension RAPPOR and expanded it with bloom filters to be able to collect numerical data as well.
-It has been possible to ensure $\epsilon$-differential privacy in this way, and it is also possible to preserve \gls{ldp} \citep{del_rey_comprehensive_2020-1}.
+It has been possible to ensure $\epsilon$-differential privacy in this way, and it is also possible to preserve \gls{ldp} \citep{del_rey_comprehensive_2020}.
 \subsubsection{Laplace mechanism} \label{laplace}
 The method that was originally proposed in the differential privacy paper by Dwork et al. is the Laplace algorithm \citep{dwork_differential_2006}.
-Therefore, the method works by configuring the $\epsilon$ and $\delta$. A shorthand definition is provided by Rey et al \citep{del_rey_comprehensive_2020-1}:
+Therefore, the method works by configuring the $\epsilon$ and $\delta$. A shorthand definition is provided by Rey et al \citep{del_rey_comprehensive_2020}:
 \begin{equation}
   M\left(f\left(x\right),\varepsilon\right)=f\left(x\right)+\left(Z_{1},\ldots,Z_{d}\right)
 \end{equation}
 The mechanism is based on the Laplace distribution with scale $\lambda f/\epsilon$, where $\lambda f$ is the same as in equation \ref{sensitivity-dp}.
 Therefore, the Laplace mechanism is tightly linked to the definition of pure-dp and so it is $\epsilon$-differential privacy \citep{dwork_differential_2006}.
-It is also suitable for preserving \gls{ldp} \citep{del_rey_comprehensive_2020-1}.
+It is also suitable for preserving \gls{ldp} \citep{del_rey_comprehensive_2020}.
 One disadvantage is that sensitivity is always required, and this parameter can sometimes be difficult to configure.
 Especially when there is no clear function and the entire dataset is perturbed.
 This can make it challenging to find the right balance between ensuring privacy and utility.

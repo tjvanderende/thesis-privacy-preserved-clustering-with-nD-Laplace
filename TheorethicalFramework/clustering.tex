@@ -10,7 +10,7 @@ A new centroid is then determined based on the cluster average.
 This is repeated until the given number of iterations is reached or until the results are stable.
 
 \textbf{Choosing K:} The most important parameter of the K-Means algorithm is the value of $k$.
-This value determines the number of clusters to consider and has a big influence on the results \citep{ahmed_k-means_2020-1}.
+This value determines the number of clusters to consider and has a big influence on the results \citep{ahmed_k-means_2020}.
 
 %These methods require a manual way of selecting the best $k$ by visual inspection of a plot.
 The first method is called an "elbow" plot \citep{kodinariya_review_2013}.
@@ -62,7 +62,11 @@ It then groups all points within this radius as clusters. The main advantage is 
 To do this, the \gls{dbscan} algorithm uses the inputs $minPts$, $radius(\epsilon)$ and a distance function \citep{schubert_dbscan_2017}.
 The $\epsilon$ is used to draw a neighborhood and the $minPts$ is used as a weight to evaluate which points should be inside the neighborhood.
 For the distance function, the Euclidean distance is used, to be consistent with the other algorithms. \newline
-\textbf{Choosing radius($\epsilon$):} The desired $\epsilon$ can be calculated using the K-NearestNeighbours algorithm \citep{ester_density-based_nodate,schubert_dbscan_2017}.
+\textbf{Choosing minimum points ($minPts$):} This hyperparameter is considered by a paper written by Sander et al.
+The work describes a way of calculating this parameter by doing two times the feature amount \citep{sander_density-based_1998}.
+So, using this approach a dataset with two features will have an $minPts$ of four.
+This is confirmed by Schubert et al. to use the default $minPts = 4$ for a 2-dimensional dataset \citep{schubert_dbscan_2017}. \newpage
+\textbf{Choosing radius($\epsilon'$):} The desired $\epsilon'$ (not to be confused with the privacy budget $\epsilon$) can be calculated using the K-NearestNeighbours algorithm \citep{ester_density-based_nodate,schubert_dbscan_2017}.
 The general approach for this is to choose a $K = 2*N - 1$ (where N is the number of features) and plot the distance for each point.
 This can then be plotted using a k-dist plot and the best "elbow" can be chosen for deciding the $\epsilon$ (similar to choosing the $k$ for K-means) \citep{elbatta_dynamic_2013}.
 \begin{figure}[H]
@@ -70,15 +74,24 @@ This can then be plotted using a k-dist plot and the best "elbow" can be chosen 
   \caption{K-dist plot example for $minPts = 4$ based on a 2-dimensional dataset \citep{ester_density-based_nodate}}
   \label{k-dist-plot}
 \end{figure}
-\textbf{Choosing minimum points ($minPts$):} This hyperparameter is considered by a paper written by Sander et al.
-The work describes a way of calculating this parameter by doing two times the feature amount \citep{sander_density-based_1998}.
-So, using this approach a dataset with two features will have an $minPts$ of four.
-This is confirmed by Schubert et al. to use the default $minPts = 4$ for a 2-dimensional dataset \citep{schubert_dbscan_2017}. \newline
 
-In conclusion, the parameters of \gls{dbscan} are a little harder to estimate than for \gls{ap}.
-But, as with K-means for $k$ there exists a selection method the $\epsilon$.
-Although \gls{dbscan} requires the most hyperparameters out of the three clustering algorithms, determining them is clearer than for K-means.
-There are clear methods for determining both the $minPts$ and $\epsilon$.
+
+The epsilon value is crucial for the DBSCAN algorithm and highly dependent on the dataset \todo{Source}.
+Since we employ various types of datasets and algorithms, it is desirable to have an automated method for determining this value.
+For this reason, research has also been conducted on an extension of DBSCAN called OPTICS.
+
+This algorithm attempts different epsilon values to achieve the best result \todo{Add OPTICS source} \citep{ankerst_optics_nodate}.
+Instead of directly assigning data points to clusters, certain distance calculations are first stored in a list.
+For each data point, two values are tracked: core-distance and reachability-distance.
+These represent the shortest distance to make a data point, $p$, a core point and the shortest distance from $p$ to another core point, $p'$, respectively.
+A specific ordering is maintained to ensure that clusters with higher density values are processed first.
+By using this ordering, along with the minPts parameter and the two data point attributes, a DBSCAN algorithm can be constructed in an hierarchical way \citep{schubert_dbscan_2017}. \newline
+%Thus, minPts becomes the only hyperparameter, allowing us to use DBSCAN for a variety of datasets and privacy mechanisms without the need for constant adjustment of the radius. \newline
+
+In conclusion, both K-Means and Affinity Propagation have clear methods for determining the hyperparameters.
+For K-Means, the elbow method is the most common and for Affinity Propagation, the median is used for the preference.
+DBSCAN is a little harder due to the variety of datasets and noise altering mechanisms we experiment with.
+This is why we use OPTICS to determine the best $\epsilon$, and choose $minPts$ based on the number of features times two.
 
 \mycomment{\subsection{Overfitting}
   Overfitting is dangerous for machine learning models and one of the biggest mistakes with training machine learning models \citep{demsar_hands-training_2021}.
@@ -106,32 +119,32 @@ There are clear methods for determining both the $minPts$ and $\epsilon$.
 }
 
 \subsection{Evaluation methods} \label{theory:evaluate}
-Clustering comparison measures are important in cluster analysis for external validation by comparing clustering solutions to a "ground truth" clustering \citep{vinh_information_nodate-2}.
+Clustering comparison measures are important in cluster analysis for external validation by comparing clustering solutions to a "ground truth" clustering \citep{vinh_information_nodate}.
 These external validity indices are a common way to assess the quality of unsupervised machine learning methods like clustering \citep{warrens_understanding_2022}.
 A method that could be used for this is the Rand Index \citep{rand_objective_1971}.
 It is a commonly applied method for comparing two different cluster algorithms \citep{wagner_comparing_nodate}.
-An improvement of this method is adjusted for chance by considering the similarity of pairwise cluster comparisons \citep{vinh_information_nodate-2}.
-Both the Rand Index (RI) and Adjusted Rand Index (ARI) \citep{hubert_comparing_1985-1} report a value between 0 and 1.
+An improvement of this method is adjusted for chance by considering the similarity of pairwise cluster comparisons \citep{vinh_information_nodate}.
+Both the Rand Index (RI) and Adjusted Rand Index (ARI) \citep{hubert_comparing_1985} report a value between 0 and 1.
 Where 0 is for no-similarity and 1 for identical clusters.
 Alternatives for RI are the Fowles-Mallows Index and Mirkin Metric.
 However, these two methods have their disadvantages. Respectively, being sensitive to a few clusters and cluster sizes \citep{wagner_comparing_nodate}.
 The ARI metric suffers from cluster size imbalance as well, so it only provides not a lot of information on smaller clusters \citep{warrens_understanding_2022}.
 Instead, they recommend using the cluster index metric that was proposed by Fränti et al. \citep{franti_centroid_2014}.
 
-Another popular group of methods is the information theoric-based measures \citep{vinh_information_nodate-2}.
-This metric measures the information between centroids; the higher the value, the better \citep{vinh_information_nodate-2}.
+Another popular group of methods is the information theoric-based measures \citep{vinh_information_nodate}.
+This metric measures the information between centroids; the higher the value, the better \citep{vinh_information_nodate}.
 \gls{mi} is such metric, which calculates the probability of an element belonging to cluster $C$ or $C`$.
 But, is not easy to interpret as it does not have a maximum value \citep{wagner_comparing_nodate}.
 To this end, \gls{nmi} can be used to report a value between 0 and 1 using the geometric mean \citep{strehl_cluster_2002}.
 The metric exists also in an adjusted version as \gls{ami}.
-This works in the same way as for the \gls{ari} and is mostly needed if the number of data items is small in comparison to the number of clusters \citep{vinh_information_nodate-2}. \newline
+This works in the same way as for the \gls{ari} and is mostly needed if the number of data items is small in comparison to the number of clusters \citep{vinh_information_nodate}. \newline
 
 Besides the external validity measurements for clustering, it is also possible to use internal validation methods.
 These metrics focus entirely on the intrinsic dataset properties, instead of relying on an external baseline cluster algorithm \citep{craenendonck_using_nodate}.
 Assessing two important concepts of clustering: compactness and separation \citep{hassani_using_2017}.
 Both studies, consider three different metrics and measure both concepts at the same time \citep{hassani_using_2017}:
 \begin{enumerate}
-  \item \gls{chi} \citep{calinski_dendrite_1974-1} is used to measure the cluster variance (well-separated clusters) and low variance within the clusters (tightly coupled data). A high score indicates better clustering.
+  \item \gls{chi} \citep{calinski_dendrite_1974} is used to measure the cluster variance (well-separated clusters) and low variance within the clusters (tightly coupled data). A high score indicates better clustering.
   \item Silhouette Index \citep{rousseeuw_silhouettes_1987} this metric is similar, by also measuring cohesion within clusters and separation of clusters. However, this metric uses the pairwise distance \cite{hassani_using_2017}. A score of -1 indicates incorrect clustering and +1 for dense clusters \cite{rousseeuw_silhouettes_1987}.
   \item Davies-Bouldin \citep{davies_cluster_1979} uses the average distance between centroids. A lower score indicates good clustering.
 \end{enumerate}
@@ -142,12 +155,12 @@ The same applies to DBSCAN, which scores relatively high on SI and DB due to the
 \subsubsection{Existing literature}
 %A recent and much-cited study uses \gls{ari} and accuracy as metrics for evaluating K-Means \cite{ahmed_k-means_2020}.
 %The accuracy is measured by calculating the percentage of the correct predicted labels and their truth labels.
-Comparable studies with differential privacy use external validation \citep{xia_distributed_2020-1, sun_privbv_2022}.
+Comparable studies with differential privacy use external validation \citep{xia_distributed_2020, sun_privbv_2022}.
 Their experiment setup uses a so-called non-private cluster algorithm as external validation.
 This cluster algorithm is trained without the perturbed data and compared with the same clustering algorithm that is trained with perturbed data.
 Thus, the non-private variant functions as an external validation by providing the ground truth.
 
-They compare the mutual information between a baseline cluster algorithm using \gls{ami} \citep{9679364} or \gls{nmi} \citep{xia_distributed_2020-1,sun_privbv_2022}.
+They compare the mutual information between a baseline cluster algorithm using \gls{ami} \citep{9679364} or \gls{nmi} \citep{xia_distributed_2020,sun_privbv_2022}.
 Another study for evaluating \gls{dp} with \gls{ap} uses both \gls{ari} and \gls{ami}.
-In addition to mutual information and rand index scores, it is also not uncommon to calculate the error between the two cluster algorithm's centroids \citep{xia_distributed_2020-1, 9679364}.
+In addition to mutual information and rand index scores, it is also not uncommon to calculate the error between the two cluster algorithm's centroids \citep{xia_distributed_2020, 9679364}.
 These two studies used Relative Error (RE) for this.
