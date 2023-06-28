@@ -2,7 +2,7 @@
 Now we established all formulas and theories for 2D, 3D and nD-Laplace we are being able to give a full design of the mechanism.
 
 \begin{figure}[H]
-    \includegraphics[width=0.6\textwidth]{TheorethicalFramework/ND-Laplace/Images/final_mechanism_design.png}
+    \includesvg[width=1\textwidth]{TheorethicalFramework/ND-Laplace/Images/final_mechanism_design}
     \caption{Non-interactive mechanism design for nD-Laplace.}
     \label{fig:final-mechanism-design}
 \end{figure}
@@ -16,7 +16,6 @@ For easy navigation, we provide a list of all algorithms:
     \item Grid remapping: \ref{alg:grid-remapping-laplace}
     \item Optimal remapping: \ref{alg:optimal-remapping-laplace}
 \end{enumerate}
-\newpage
 \subsubsection{Practical example}
 The shape of the dataset is important for the usefulness of clustering.
 With our algorithm, there are four different shapes/variants of the dataset.
@@ -29,4 +28,15 @@ Grid remapping and ultimately optimal remapping are used to achieve this goal.
     \caption{Example of optimal remapping for the 3D-dataset: Cardiotocography. The example shows the different steps of the mechanism in sequence for a dataset perturbed with a privacy budget of 0.1.}
 \end{figure}
 
-\todo[inline]{Explain more in-depth what is happening in the example.}
+\begin{enumerate}
+    \item Dataset: the blue dots represent the original dataset without any modifications.
+    \item Adding noise: the green crosses represent the dataset after adding noise, for this particular example this is 3D-Laplace (Algorithm \ref{alg:3d-laplace}):
+          As can be observed, the data is generated from the center, causing many data points to fall outside the original domain of the dataset.
+    \item Grid-remapping: the red dots represent the dataset after grid-remapping (Algorithm \ref{alg:grid-remapping-laplace})
+          After performing the grid remapping algorithm, all points within the domain are plotted.
+          However, the original shape of the data is mostly lost.
+          This makes it challenging to cluster the data as was possible with the original data.
+    \item Optimal-remapping: the green dots represent the dataset after optimal-remapping (Algorithm \ref{alg:optimal-remapping-laplace}).
+          After completing the previous step, the data points that were remapped are now again remapped based on the (original) density.
+          This results in the restoration of the original shape of the data and consequently the clusters.
+\end{enumerate}
