@@ -8,14 +8,14 @@
     \State $X_{features} \gets$ X.features \Comment retrieve dataset dimensions
     \State $X_{outside-domain} \gets []$
     \For{$feature \in X_{features}$}
-      \For{$index \in X[feature]$}
-        \If{$Z[index][feature] \leq \Call{X::min}{Z} $}
-          \State append $row$ to $X_{outside-domain}$
-        \EndIf
-        \If{$Z[index][feature] \geq \Call{X::max}{Z} $}
-          \State append $row$ to $X_{outside-domain}$
-        \EndIf
-      \EndFor
+    \For{$index \in X[feature]$}
+    \If{$Z[index][feature] \leq \Call{X::min}{Z} $}
+    \State append $row$ to $X_{outside-domain}$
+    \EndIf
+    \If{$Z[index][feature] \geq \Call{X::max}{Z} $}
+    \State append $row$ to $X_{outside-domain}$
+    \EndIf
+    \EndFor
     \EndFor
     \State \Return $X_{outside-domain}$ \Comment The index of points outside the domain of $X$.
   \end{algorithmic}

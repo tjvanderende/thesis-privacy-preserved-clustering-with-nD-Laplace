@@ -177,6 +177,8 @@ Now that we have the sets of points around $x_i$ and $z_i$, we can calculate the
 Where $w(q)$ is the weight of a point $q in Q_r$, and can be seen as points that are visited earlier by the user or other users (e.g. point of interests).
 We will revisit this topic in the next paragraph when discussing the practical implementation of the nd-Laplace algorithm.
 The same applies to $w(x)$, but for an individual point $q \in Q_r$ instead of the summation.
+Finally, the new $z'$ is calculated by taking the mean value of $\sigma(x)$ \citep{chatzikokolakis_efficient_2017}.
+\todo{Also include equations for generating coefficinets and probabilities}
 %Chatzikokolakis et al's work considers a prior set of data point $Q \in R^n$.
 %Which are other data points that belong to the user.
 %We are interested in the data points that are within the radius $r$ around $z$.
@@ -188,7 +190,7 @@ The same applies to $w(x)$, but for an individual point $q \in Q_r$ instead of t
 %Unfortunately, optimal remapping is not possible for users that do not have sufficient data (e.g. new users).
 %The remapping is not applied for these users and is also not applied for $z$ if it is within the domain of $X$.
 \subsubsection{Practical implementation}
-It is difficult to interpret $w(q) \in Q_r$ beforehand based on other users, as we do not have this information.
+It is difficult to interpret $w(q) \in Q_r$ beforehand based on other users, as we do not have this information (there is a way, but we explain this at the end of this section).
 To this end, we will interpret $w(x)$ as the number of points within the radius $r$ around a point $x \in Q_r$.
 Afterwards, it is possible to divide the outcome of this value by the sum of these points (as done in Algorithm \ref{eq:optimal-remapping-formula-1}).
 We therefore remain to the same algoritm as proposed by Chatzikokolakis et al. but interpret the weight differently.

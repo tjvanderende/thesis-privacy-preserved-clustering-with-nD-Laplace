@@ -2,7 +2,28 @@
   \caption{Algorithm to implement the optimal remapping of $z \in Z$ to be in the domain of $x \in X$}
   \begin{algorithmic}
     \Require $x \in X$  \Comment n-dimensional array of original points
-
+    \Require $z \in Z$ \Comment n-dimensional array of grid-remapped perturbed points
+    \Require $epsilon$ \Comment privacy budget
+    \Ensure $z' \in Z$ \Comment n-dimensional array of optimal-remapped perturbed points
+    \State $Z' = FindRemappedPoints(Z)$
+    \State $tree \gets KDTree(X)$ \Comment construct a KDTree from the original data.
+    \For{$z' \in Z'$}
+    \State $r = \Call{FindRadius}{(z')}$ \Comment Get original radius $r$.
+    \State $X_r \gets \Call{KDTree::query}{x}$ \Comment find $q \in X$ around $x$ with radius $r$.
+    \State $B_r \gets \Call{KDTree::query}{z'} $
+    \State $sigma(x) = []$
+    \State $Q_r = \gets X_r \cap B_r$
+    \For{$q \in Q_r$}
+    \State $q \gets \Call{KDTree::query}{q}$
+    \State $w_x = \Call{Length}{X_r, B_r}$ \Comment weight is simply adding density of $X_r$ and $B_r$.
+    \State $w_q = \Call{Length}{Q_r}$ \Comment $w_q$ is the density of each point $q$ within $Q_r$.
+    \State $sigma(w_x) \gets \Call{Remap}{w_x, epsilon}$ \Comment Use equation \ref{eq:optimal-remapping-formula-1} to remap $w_x$.
+    \State $sigma(x) \gets \Call{Append}{sigma(x), \frac{sigma(w_x)}{w_q}}$ \Comment add to the list $sigma(x)$.
+    \EndFor
+    \State $C \gets sigma(x) * x$. \Comment multiply each point in $x$ with the corresponding value in $sigma(x)$.
+    \State $P \gets \sum_{c \in C} \frac{c}{\Call{Length}{C}}$ \Comment calculate the probability by dividing each point in $C$ with the total.
+    \State $z' \gets \Call{Average}{sigma(x), P}$ \Comment take the average of $\sigma(x)$ by applying probabilities.
+    \EndFor
   \end{algorithmic}
   \label{alg:optimal-remapping-laplace}
 \end{algorithm}

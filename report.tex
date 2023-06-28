@@ -18,6 +18,7 @@
 \let\oldFootnote\footnote
 \newcommand\nextToken\relax
 
+
 \renewcommand\footnote[1]{%
     \oldFootnote{#1}\futurelet\nextToken\isFootnote}
 
@@ -66,8 +67,8 @@
 %% Include an optional title page.
 
 \frontmatter
-
-
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
 \let\cleardoublepage\clearpage
 
 % Optional Dedication, Acknowledgement
