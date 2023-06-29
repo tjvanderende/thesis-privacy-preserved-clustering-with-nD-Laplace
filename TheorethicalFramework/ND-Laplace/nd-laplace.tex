@@ -177,8 +177,29 @@ Now that we have the sets of points around $x_i$ and $z_i$, we can calculate the
 Where $w(q)$ is the weight of a point $q in Q_r$, and can be seen as points that are visited earlier by the user or other users (e.g. point of interests).
 We will revisit this topic in the next paragraph when discussing the practical implementation of the nd-Laplace algorithm.
 The same applies to $w(x)$, but for an individual point $q \in Q_r$ instead of the summation.
-Finally, the new $z'$ is calculated by taking the mean value of $\sigma(x)$ \citep{chatzikokolakis_efficient_2017}.
-\todo{Also include equations for generating coefficinets and probabilities}
+The outcome of the formula is a collection of values that indicate the degree of density. Which we call $\sigma \in S$.
+With this data, we are be-able to calculate a new $z'$ that is closer to $x_i$ to minimize the expected loss of utility \citep{chatzikokolakis_efficient_2017}.
+
+The collection $S$ can be seen as the coefficient for each point $x \in X$, that can be used as a scale to apply for each point $X$ \citep{chatzikokolakis_efficient_2017}:
+\begin{equation}
+  \bar{\sigma} = \sum_{\sigma \in S} \sigma(x) * x
+  \label{eq:optimal-remapping-formula-2}
+\end{equation}
+Then next, the probabilities are calculated:
+\begin{equation}
+  W = \forall \sigma \in S = \frac{\sigma(x)}{\bar{\sigma}}
+  \label{eq:optimal-remapping-formula-3}
+\end{equation}
+Finally, the $z'$ is calculated by calculating the average with the probabilities as weight:
+\begin{equation}
+  z' = \frac{\sum_{weight \in W} x * weight }{\sum_{weight \in W} weight}
+  \label{eq:optimal-remapping-formula-4}
+\end{equation}
+%The first step is to calculate the coefficients for each point $x \in X$ by multiplying the density $\sigma(x)$ with the original point $x$.
+
+%The probability that $z'$ will be closer to $x$ is higher, and this probability is calculated based on the original value $x \in X$ to first determine the coefficient.
+%Finally, the new $z'$ is calculated by taking the mean value of $\sigma(x)$ \citep{chatzikokolakis_efficient_2017}.
+%As described by chatzikokolakis et al., the 
 %Chatzikokolakis et al's work considers a prior set of data point $Q \in R^n$.
 %Which are other data points that belong to the user.
 %We are interested in the data points that are within the radius $r$ around $z$.

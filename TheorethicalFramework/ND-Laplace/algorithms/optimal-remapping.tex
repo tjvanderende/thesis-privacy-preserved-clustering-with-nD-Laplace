@@ -20,9 +20,7 @@
     \State $sigma(w_x) \gets \Call{Remap}{w_x, epsilon}$ \Comment Use equation \ref{eq:optimal-remapping-formula-1} to remap $w_x$.
     \State $sigma(x) \gets \Call{Append}{sigma(x), \frac{sigma(w_x)}{w_q}}$ \Comment add to the list $sigma(x)$.
     \EndFor
-    \State $C \gets sigma(x) * x$. \Comment multiply each point in $x$ with the corresponding value in $sigma(x)$.
-    \State $P \gets \sum_{c \in C} \frac{c}{\Call{Length}{C}}$ \Comment calculate the probability by dividing each point in $C$ with the total.
-    \State $z' \gets \Call{Average}{sigma(x), P}$ \Comment take the average of $\sigma(x)$ by applying probabilities.
+    \State $z' \gets \Call{Average}{sigma(x), P}$ \Comment Calculate $z'$ using the equations: \ref{eq:optimal-remapping-formula-2}, \ref{eq:optimal-remapping-formula-3} and \ref{eq:optimal-remapping-formula-4}.
     \EndFor
   \end{algorithmic}
   \label{alg:optimal-remapping-laplace}
