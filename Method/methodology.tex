@@ -193,11 +193,11 @@ Finally, we evaluate the adversary advantage (percentage) using $TPR - FPR$ \cit
   \item TPR: The amount the attacker inferred the member data correctly (the private training data).
   \item FPR: The amount the attacker inferred the non-member data correctly (the non-private test data).
 \end{enumerate}
-\todo[inline]{Include ROC plot rationale}
-A visual setup of the experiment is given in figure: \ref{figure:mi-attack}
+To have a clear difference between TPR and FPR, we also consider a ROC plot (see Section \ref{theory:attack-evaluation}).
+A visual setup of the experiment is provided in the Figure: \ref{figure:mi-attack}
 
-\begin{figure}
-  \includegraphics[width=1.2\textwidth]{Method/images/MI-setup.png}
+\begin{figure}[H]
+  \includegraphics[width=1\textwidth]{Method/images/MI-setup.png}
   \caption{Member inference attack using shadow models. The green swim lane illustrates the normal setup and the red swim lane projects the adversary steps.}
   \label{figure:mi-attack}
 \end{figure}
@@ -219,7 +219,7 @@ For research question 1 we evaluate the following methods:
 \begin{enumerate}
   \item 2D-Laplace: algorithm \ref{alg:2d-laplace}.
   \item 2D-Laplace: truncated algorithm \ref{alg:find-outside-domain-laplace} and \ref{alg:grid-remapping-laplace}.
-  \item Piecewise: algorithm \todo{Provide piecewise}.
+  \item Piecewise: algorithm \todo[inline]{Provide piecewise}
 \end{enumerate}
 \mycomment{
   We propose several solutions for open issues based on the theoretical framework. \newline

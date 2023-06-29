@@ -24,6 +24,7 @@ This method is almost identical to the one for 3-dimensional (\ref{eq:3d-laplace
 But, instead of applying a scale of 3, the scale will be $n$ for the number of dimensions in the data \citep{fernandes_generalised_2019}:
 \begin{equation}
   \gamma(n, 1/\epsilon)
+  \label{eq:nd-laplace-r}
 \end{equation}
 For the other dimensions, we consider a vector $U = (\theta_1, \theta_2, \theta_n)$ which is uniformly selected based on a unit $n$-hypersphere $S^n$ \citep{fernandes_generalised_2019}.
 We consider the work that was proposed by Marsaglia et al. for 4-sphere that can be used for selecting points from an n-hypersphere \citep{marsaglia_choosing_1972}.
@@ -33,19 +34,19 @@ We adopted the approach that uses the Gaussian distribution \footnote{https://ma
 \subsection{Cartesian coordinates}
 As with the 2/3D-Laplace, the spherical coordinates need to be converted to Cartesian to be able to cluster.
 It is comparable to the way it was done in the previous chapters, however, as there are an $n$-amount of angles the equation is repeated and slightly different:
-\begin{align*}
+\begin{align}
   x_1 = r * cos (\theta_1)                                          \\
   x_2 = r * sin (\theta_1) * cos (\theta_2)                         \\
   x_{n} = r * sin(\theta_1) … sin(\theta_{n-2}) *cos (\theta_{n-1}) \\
   x_n = r * sin(\theta_{n-1}) * sin(\theta_{n-2}) * sin(\theta_{n-1})
-\end{align*}
+  \label{eq:nd-laplace-cartesian}
+\end{align}
 If we combine sections 1 and 2 of this chapter, we are being able to give a good overview of the solution using a similar image as for the 2D and 3D variants (figure \ref{fig:nd-laplace-overview}).
-\begin{figure}[ht]
-  \includegraphics[width=0.6\textwidth]{TheorethicalFramework/ND-Laplace/Images/nd_laplace.png}
+\begin{figure}[H]
+  \includesvg[width=0.6\textwidth]{TheorethicalFramework/ND-Laplace/Images/nd_laplace}
   \caption{Overview of the nD-Laplace mechanism}
   \label{fig:nd-laplace-overview}
 \end{figure}
-\newpage
 \subsection{Privacy versus utility} \label{theory:privacy-utility-nd}
 If we continue adding dimensions, we notice the noise is shrinking proportionally.
 To understand this behavior, we first have to examine the formula for a hypersphere’s volume.
@@ -226,7 +227,6 @@ Although this system requires only a single round-trip between server and client
 \input{TheorethicalFramework/ND-Laplace/algorithms/optimal-remapping.tex}
 
 \subsection{Putting it together}
-\todo[inline]{Create algorithm for nD-Laplace}
 \input{TheorethicalFramework/ND-Laplace/algorithms/nd-laplace.tex}
 %\subsection{Extending to $d_x$-privacy}
 %\todo[inline]{Find if this is possible}
