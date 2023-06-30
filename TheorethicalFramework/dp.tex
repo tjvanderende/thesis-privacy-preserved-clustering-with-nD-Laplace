@@ -69,25 +69,71 @@ The purpose of $\epsilon$ now is to calibrate the desired amount of privacy.
 To some extent, the delta represents the probability of the algorithm leaking information \citep{aitsam_differential_2021}.
 With $\epsilon$-differential privacy, there would be no difference in the case of information leakage (delta = 0).
 However, with $(\epsilon, \delta)$-differential privacy, the information can leak up to the probability of delta.
-
+\newpage
 \subsubsection{$\epsilon$-local differential privacy}
 As the name suggests, \gls{ldp} is executed on the client-side instead of on the server, as was the case in figure \ref{fig:central-dp}.
 This is illustrated in figure \ref{fig:local-dp}.
 Local differential privacy was introduced to remove the "trusted" curator, preventing sensitive data leakage even if an attacker gains access to the dataset \citep{del_rey_comprehensive_2020}.
 The definition for \gls{ldp} is the as for equation \ref{approxiate-dp} with $\delta = 0$ being equal to equation \ref{pure-dp}.
-\todo[inline]{Describe issues with local differential privacy}
-\begin{figure}[h]
-  \includegraphics[width=0.3\textwidth]{TheorethicalFramework/Differential privacy/master-thesis-Pagina-8.png}
+\begin{figure}[ht]
+  \includegraphics[width=0.4\textwidth]{TheorethicalFramework/Differential privacy/master-thesis-Pagina-8.png}
   \caption{Local differential privacy, which moves the noise-adding step to the client-side.}
   \label{fig:local-dp}
 \end{figure}
-\todo[inline]{Explain interactive versus non-interactive}
+\todo[inline]{Describe issues with local differential privacy}
+Local differential privacy has two different frameworks.
+It can be set up as interactive or non-interactive \citep{del_rey_comprehensive_2020}.
+Where interactive can be distinguished as either sequentially interactive or fully interactive \footnote{Image source: \url{https://www.majos.net/focs_19_talk.pdf}}:
+\begin{figure}[H]
+  \includegraphics[width=\textwidth]{TheorethicalFramework/nont-interactive-versus-interactive.png}
+  \caption{Non-interactive versus sequentially interactive versus fully interactive local differential privacy \citep{joseph_role_2019-1}}
+  \label{fig:non-interactive-versus-interactive}
+\end{figure}
+In the non-interactive framework, the privacy mechanism operates on a single data instance (e.g. users’ smartphone) without requiring any interaction with other clients or between data-points.
+This means that each data point is perturbed independently, and the privacy guarantees are achieved without any communication or coordination between the data points.
+In the interactive framework, the privacy mechanism involves a process of iterative interactions between users’ clients.
+Each data point takes into account the responses of other data points in order to determine its own perturbation or privacy level.
+The interactions can occur through a communication channel, where data points exchange information with each other or a trusted mediator.
+The iterative nature of the interactive framework allows for refining and improving the privacy guarantees based on the global knowledge of the data set.
+
+In figure \ref{fig:non-interactive-versus-interactive} the different interactive types are visualised, where the most notable difference is the around of rounds \citep{xiongComprehensiveSurveyLocal2020}.
+A sequentially interactive mechanism passes at most one message between data-points.
+A fully interactive mechanism could provide an unknown and unlimited amount of messages between data-points.
+As the interactive mechanism has unlimited access to other data-points, it is most suitable for practical appliances \citep{xiongComprehensiveSurveyLocal2020}.
+This is because the mutual correlation between the data points also contributes \citep{wang_comprehensive_2020}.
 
 \subsubsection{$\epsilon$-geo-indistinguishability}
 The last and for this study's most important type of differential privacy is \gls{gi}.
-This is a type of differential privacy that is specifically designed for location data.
-\todo[inline]{More introduction about geo-indistinguishability}
-\todo[inline]{Describe notion of geo-indistinguishability}
+%This is a type of differential privacy that is specifically designed for location data.
+\gls{gi} can be applied to preserve the privacy using a differential privacy method specific to spatial data \citep{DBLP:journals/corr/abs-1212-1984}.
+Consider a local based system (LBS) that provides a map service to its users (e.g. Google Maps).
+The users can query the LBS for a route from their current location to a destination.
+This information is stricly personal, and the LBS should not be able to track the user's location.
+Instead, the LBS should only receive a approxiamate location enough to provide the service at an adequate level.
+This happens completely locally, so there is not a central server inbetween like classical \gls{dp}.
+
+A client (e.g. smartphone) is ellible to define a privacy radius $r$ around their location $x$.
+Within this radius a fake location is generated, based on the Euclidean distance $d$.
+This is based on the privacy level $l$, which is combined with $r$ to obtain a privacy budget $\epsilon$ using the formula $\epsilon = \frac{l}{r}$:
+\begin{figure}[H]
+  \includegraphics[width=0.5\textwidth]{TheorethicalFramework/geo-indistinguishability.png}
+  \caption{Visualisation of radius $r$ with $l$ to provide Geo-indistinguishability mechanism \citep{DBLP:journals/corr/abs-1212-1984}}
+  \label{fig:geo-indistinguishability}
+\end{figure}
+
+The formula for \gls{gi} to measure if an algorithm preserves $\epsilon$-geo-indistinguishability can be expressed as:
+\begin{equation}
+  K(x)(y) \le e^{\epsilon * d(x,x')} K(x')(y)
+  \label{algo:2d-geo-indistinguishability}
+\end{equation}
+Where $K$ is a probability method reporting $x, x' \in X$ as $z \in Z$.
+The idea of this algorithm looks a lot like that of differential privacy using the La Place method; but includes distance.
+The intuition for this is that it displays the distinguishability level between two secret locations/points $x$ and $x'$ \citep{chatzikokolakis_constructing_2015}.
+An extension of this is called $d_x$-privacy and is a more general notation of distance-aware differential privacy.
+Their definition for \gls{gi} is, therefore, $d_2$-privacy, but is essentially the same as the proof provided for \gls{gi}.
+
+
+\newpage
 \subsection{Mechanisms}
 In this section, we will explain the various mechanisms that are used to achieve differential privacy.
 The different mechanisms are not limited to the type of \gls{dp} and some can be applied to multiple types.

@@ -8,19 +8,6 @@ This section starts with an introduction to mathematics and for each of the diff
 %\leading{10pt}
 %\printglossary[type=genericmath, nonumberlist]
 %The other symbols can be found in section \ref{section:dp}.
-\subsection*{Geo-indistinguishability}
-As mentioned in the previous section, the \gls{gi} method can be applied to preserve the privacy using a differential privacy method specific to spatial data.
-The formula to measure if an algorithm preserves $\epsilon$-geo-indistinguishability can be expressed as \citep{DBLP:journals/corr/abs-1212-1984}:
-\begin{equation}
-  K(x)(y) \le e^{\epsilon * d(x,x')} K(x')(y)
-  \label{algo:2d-geo-indistinguishability}
-\end{equation}
-Where $K$ is a probability method reporting $x, x' \in X$ as $z \in Z$.
-The idea of this algorithm looks a lot like that of differential privacy using the La Place method; but includes distance.
-The intuition for this is that it displays the distinguishability level between two secret locations/points $x$ and $x'$ \citep{chatzikokolakis_constructing_2015}.
-An extension of this is called $d_x$-privacy and is a more general notation of distance-aware differential privacy.
-Their definition for \gls{gi} is, therefore, $d_2$-privacy, but is essentially the same as the proof provided for \gls{gi}.
-
 \subsection{Planar and polar Laplace}
 %\printglossary[type=2dlaplace]
 The idea of planar Laplace is to generate an area around $x0 \in X$ according to the multivariate Laplace distribution.
