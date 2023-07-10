@@ -17,9 +17,21 @@ The datasets are sourced from the UCI Machine Learning Repository \citep{noautho
 \begin{enumerate}
   \item Seeds dataset \footnote{http://archive.ics.uci.edu/ml/datasets/seeds}: This dataset was used in several related works and contains 210 samples with 7 (numerical) attributes.
         The dataset contains information about seeds like kernel width and density.
-  \item Cardiotocography dataset \footnote{https://archive.ics.uci.edu/ml/datasets/cardiotocography}: This dataset is selected because of the mixed data and amount of instances.
+        We conducted experiments with 2, 3 and 7 dimensions and decided to use the following features (based on the correlation between the features):
+        \begin{enumerate}
+          \item 2-dimensional data: area and perimeter.
+          \item 3-dimensional data: area, perimeter and lenght of kernel.
+          \item 7-dimensional data: All numerical features.
+        \end{enumerate}
+  \item Heart dataset \footnote{https://archive.ics.uci.edu/ml/datasets/cardiotocography}: This dataset is selected because of the mixed data and amount of instances.
         It has 23 attributes of which 10 are numerical, and has 2126 samples.
         The dataset contains information about measurements of fetal heart rate (FHR) and uterine contraction (UC).
+        We conducted experiments with 2, 3 and 10 dimensions and decided to use the following features (based on the correlation between the features):
+        \begin{enumerate}
+          \item 2-dimensional data: FHR baseline and histrogram-min.
+          \item 3-dimensional data: FHR baseline, histrogram-min and accelerations.
+          \item 10-dimensional data: All numerical features.
+        \end{enumerate}
 \end{enumerate}
 \section{Environmental setup}
 For running the experiments we make use of 16GB ram memory and i7-10750H 2.6Ghz processor.
@@ -34,7 +46,7 @@ The packages for python are:
   \item Scikit-learn: 1.0.*
   \item Yellow-brick: 1.5
   \item Numpy: 1.24.*
-  \item Pandas: 1.4.*
+  \item Pandas: 2.0.*
   \item Seaborn: 0.11.*
   \item Mathplotlib: 3.5.*
 \end{enumerate}
@@ -42,8 +54,7 @@ The packages for python are:
 \section{Methods}
 This section explains what methods/ algorithms we used and how we evaluate them.
 \subsection{Clustering methods}
-\todo[inline]{In progress}
-For the three different algorithms: K-Means, \gls{ap} and \gls{dbscan} we analyzed the most important decisions regarding parameter selection.
+For the three different algorithms: K-Means, \gls{ap} and \gls{dbscan} (OPTICS) we analyzed the most important decisions regarding parameter selection.
 In this section, we give a short list and explanation of the different parameters we used throughout the experiments.
 For all three Scikit-learn was used, and for each of them we also provide the underlying formula.
 \subsubsection{K-Means}
@@ -53,12 +64,9 @@ For all three Scikit-learn was used, and for each of them we also provide the un
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter & Description                          & Value                                                 & Dataset   \\ \hline
-    K-value   & Calculated based on an "elbow" plot. & 4 (see figure \ref{hyperparameters:k-means-dataset1}) & Dataset 1 \\ \hline
-    K-value   & TODO                                 & ??                                                    & Dataset 2 \\ \hline
-    K-value   & TODO                                 & ??                                                    & Dataset 3 \\
-
-
+    Parameter & Description                          & Value                                                 & Dataset       \\ \hline
+    K-value   & Calculated based on an "elbow" plot. & 4 (see figure \ref{hyperparameters:k-means-dataset1}) & Seeds dataset \\ \hline
+    K-value   & ""                                   & \textbf{TODO}                                         & Heart dataset \\ \hline
     \hline
   \end{tabular}
   \caption{K-Means hyperparameters for dataset 1 - 3}
@@ -79,43 +87,41 @@ And iteratively calculated while considering the damping factor.
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter      & Description                                                                                & Value & Dataset   \\
+    Parameter      & Description                                                                                & Value  & Dataset       \\
     \hline
-    Preference     & We decided to use the median similarity as described in section \ref{theory:clustering-ap} & TODO  & dataset 1 \\
+    Preference     & We decided to use the median similarity as described in section \ref{theory:clustering-ap} & Median & Seeds dataset \\
     \hline
-    Preference     & ""                                                                                         & TODO  & dataset 2 \\
+    Preference     & ""                                                                                         & Median & Heart dataset \\
     \hline
-    Preference     & ""                                                                                         & TODO  & dataset 3 \\
+
+    Damping factor & Default value as specified in section \ref{theory:clustering-ap}                           & 0.5    & Seeds dataset \\
     \hline
-    Damping factor & Default value as specified in section \ref{theory:clustering-ap}                           & 0.5   & dataset 1 \\
-    \hline
-    Damping factor & ""                                                                                         & 0.5   & dataset 2 \\
-    \hline
-    Damping factor & ""                                                                                         & 0.5   & dataset 3 \\
+    Damping factor & ""                                                                                         & 0.5    & Heart dataset \\
     \hline
   \end{tabular}
-  \caption{Affinity Propagation hyperparameters for datasets 1 - 3}
+  \caption{Affinity Propagation hyperparameters for the datasets}
   \label{tab:ap-formula-sklearn}
 \end{table}
 \subsubsection{DBSCAN}
-\todo[inline]{Give algorithm formula}
-\todo[inline]{Describe how/why we choose for OPTICS}
+As previously explained in section ..., we use OPTICS as an implementation of DBSCAN to automatically determine the epsilon/radius.
+Instead of referring to \gls{dbscan}, we will now refer to OPTICS in the remaining parts of this thesis.
+\todo[inline]{Provide algorithm implementation}
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter      & Description                                                                                                    & Value                                                  & Dataset   \\
+    Parameter      & Description                                                                                                    & Value & Dataset                       \\
     \hline
-    Epsilon        & Decided using the k-distance plot                                                                              & 0.9 (see figure \ref{hyperparameters:DBSCAN-dataset1}) & Dataset 1 \\
+    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & 4     & Seeds dataset (2-dimensions)  \\
     \hline
-    Epsilon        & ""                                                                                                             & TODO                                                   & Dataset 2 \\
+    Minimum points & ""                                                                                                             & 6     & Seeds dataset (3-dimensions)  \\
     \hline
-    Epsilon        & ""                                                                                                             & TODO                                                   & Dataset 3 \\
+    Minimum points & ""                                                                                                             & 14    & Seeds dataset (7-dimensions)  \\
     \hline
-    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & 4                                                      & Dataset 1 \\
+    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & 4     & Heart dataset (2-dimensions)  \\
     \hline
-    Minimum points & ""                                                                                                             & 6                                                      & Dataset 2 \\
+    Minimum points & ""                                                                                                             & 6     & Heart dataset (3-dimensions)  \\
     \hline
-    Minimum points & ""                                                                                                             & 10                                                     & Dataset 3 \\
+    Minimum points & ""                                                                                                             & 20    & Heart dataset (10-dimensions) \\
     \hline
   \end{tabular}
   \caption{DBSCAN  hyperparameters for datasets 1 - 3}
@@ -289,14 +295,16 @@ To do this, we have formulated several hypotheses.
         We evaluated research questions 1 and 2 using the attack model proposed by Shokri et al. \cite{shokri_membership_2017}.
         However, Choquette et al. proposed a new attack model that is more suitable for our data \cite{choquette_privacy-preserving_2019}.
         We expect that the results of this attack model are better than the results of the attack model proposed by Shokri et al.}
-  \item Adding optimal remapping improves utility without sacrificing privacy \todo{link}.
+  \item Adding optimal remapping improves utility without sacrificing privacy.
+        \todo[inline]{Include more information}
+  \item The impact of the data shape has an impact on privacy leakage and utility of the mechanism.
         \todo[inline]{Include more information}
 \end{enumerate}
-In addition to testing the hypotheses, we also want to investigate the behavior of our mechanism in more detail.
-\begin{enumerate}
-  \item Research the applicability of the mechanism for other cluster algorithms, like hierarchical clustering.
-  \item Research the impact of the data shape on privacy leakage.
-  \item Explore options to extend the method to support categorical data.
-  \item Explore options to extend the method to support binary data.
-        %\item Research possibility to include the privacy mass: \ref{equation:privacy-mass-a}.
-\end{enumerate}
+%In addition to testing the hypotheses, we also want to investigate the behavior of our mechanism in more detail.
+%\begin{enumerate}
+%\item Research the applicability of the mechanism for other cluster algorithms, like hierarchical clustering.
+%  \item Research the impact of the data shape on privacy leakage.
+%\item Explore options to extend the method to support categorical data.
+%\item Explore options to extend the method to support binary data.
+%\item Research possibility to include the privacy mass: \ref{equation:privacy-mass-a}.
+%\end{enumerate}

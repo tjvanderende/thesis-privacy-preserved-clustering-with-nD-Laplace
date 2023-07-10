@@ -1,6 +1,7 @@
 \documentclass{ou-report}
 \newcommand{\mycomment}[1]{}
 \newcommand{\capequation}[1]{\begin{center} #1 \end{center}}
+\setcounter{tocdepth}{1}
 \usepackage[acronym, section=sub subsection]{glossaries}
 \usepackage{booktabs}
 \usepackage{todonotes}
@@ -11,9 +12,12 @@
 \usepackage{hyperref}
 \usepackage{amsmath}
 \usepackage{subfigure} %  for subfigures environments 
+\usepackage{graphicx}
 \usepackage{longtable}
 \usepackage{adjustbox}
 \usepackage{pdflscape}
+\usepackage{tabularx}
+
 \usepackage[inkscapeformat=png]{svg}
 \let\oldFootnote\footnote
 \newcommand\nextToken\relax

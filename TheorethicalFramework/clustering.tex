@@ -76,11 +76,12 @@ This can then be plotted using a k-dist plot and the best "elbow" can be chosen 
 \end{figure}
 
 
-The epsilon value is crucial for the DBSCAN algorithm and highly dependent on the dataset \todo{Source}.
-Since we employ various types of datasets and algorithms, it is desirable to have an automated method for determining this value.
+%The epsilon value is crucial for the DBSCAN algorithm and highly dependent on the dataset \todo{Source}.
+Since we employ various types of datasets and algorithms, it is desirable to have an automated method for determining the epsilon (radius) value.
+The epsilon could possibly influence the results as the clusters are determined by the radius.
 For this reason, research has also been conducted on an extension of DBSCAN called OPTICS.
 
-This algorithm attempts different epsilon values to achieve the best result \todo{Add OPTICS source} \citep{ankerst_optics_nodate}.
+This algorithm attempts different epsilon values to achieve the best result \citep{ankerst_optics_nodate}.
 Instead of directly assigning data points to clusters, certain distance calculations are first stored in a list.
 For each data point, two values are tracked: core-distance and reachability-distance.
 These represent the shortest distance to make a data point, $p$, a core point and the shortest distance from $p$ to another core point, $p'$, respectively.
