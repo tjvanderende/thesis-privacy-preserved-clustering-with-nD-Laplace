@@ -165,7 +165,6 @@ The x-axis displays the privacy budget, and the y-axis shows the corresponding A
     \end{minipage}
 
 \end{figure}
-\todo[inline]{Re-run these experiments (weird display for figure)}
 \newpage
 \section{Privacy}
 The images below display a ROC curve plot of membership inference attacks as described in the methodology.
@@ -190,6 +189,22 @@ Finally, we provide a table with the mechanism and mean of the epsilon that is o
 \input{Results/RQ1/heart-dataset/privacy_scores_mean.tex}
 \newpage
 \input{Results/RQ1/seeds-dataset/privacy_scores_mean.tex}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[c]{0.90\textwidth}
+        \includegraphics[width=1\textwidth]{Results/RQ1/seeds-dataset/privacy_distance_plot.png}
+        \caption{Privacy distance for each mechanism for seeds-dataset.}
+        \label{fig:privacy_seeds-dataset_comparison_2d_privacy_distance_plot}
+    \end{minipage}
+    \begin{minipage}[c]{0.90\textwidth}
+        \includegraphics[width=1\textwidth]{Results/RQ1/heart-dataset/privacy_distance_plot.png}
+        \caption{Privacy distance for each mechanism for heart-dataset.}
+        \label{fig:privacy_heart-dataset_comparison_2d_privacy_distance_plot}
+    \end{minipage}
+\end{figure}
+
 \newpage
 \subsection{3-dimensional data}
 \begin{figure}[H]
@@ -203,6 +218,20 @@ Finally, we provide a table with the mechanism and mean of the epsilon that is o
         \includegraphics[width=1\textwidth]{Results/RQ2/heart-dataset/roc_plot.png}
         \caption{ROC-curve for privacy per privacy mechanism for 3-dimensional heart-dataset.}
         \label{fig:privacy_heart-dataset_comparison_3d_roc_plot}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[c]{0.70\textwidth}
+        \includegraphics[width=1\textwidth]{Results/RQ2/seeds-dataset/privacy_distance_plot.png}
+        \caption{Privacy distance for each mechanism for 3D seeds-dataset.}
+        \label{fig:privacy_seeds-dataset_comparison_3d_privacy_distance_plot}
+    \end{minipage}
+    \begin{minipage}[c]{0.70\textwidth}
+        \includegraphics[width=1\textwidth]{Results/RQ2/heart-dataset/privacy_distance_plot.png}
+        \caption{Privacy distance for each mechanism for 3D heart-dataset.}
+        \label{fig:privacy_heart-dataset_comparison_3d_privacy_distance_plot}
     \end{minipage}
 \end{figure}
 \input{Results/RQ2/heart-dataset/privacy_scores_mean.tex}
@@ -237,10 +266,25 @@ Finally, we provide a table with the mechanism and mean of the epsilon that is o
         \label{fig:privacy_heart-dataset_comparison_nd_roc_plot}
     \end{minipage}
 \end{figure}
-\todo[inline]{Check why baseline is missing for heart dataset}
-\todo[inline]{Still running results for this}
+
+
 %\input{Results/RQ2-nd/heart-dataset/privacy_scores_mean.tex}
-%\input{Results/RQ2-nd/seeds-dataset/privacy_scores_mean.tex}
+\input{Results/RQ2-nd/seeds-dataset/privacy_scores_mean.tex}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[c]{0.80\textwidth}
+        \includegraphics[width=1\textwidth]{Results/RQ2-nd/seeds-dataset/privacy_distance_plot.png}
+        \caption{Privacy distance for each mechanism for nD seeds-dataset.}
+        \label{fig:privacy_seeds-dataset_comparison_nd_privacy_distance_plot}
+    \end{minipage}
+    \begin{minipage}[c]{0.80\textwidth}
+        \includegraphics[width=1\textwidth]{Results/RQ2-nd/heart-dataset/privacy_distance_plot.png}
+        \caption{Privacy distance for each mechanism for nD heart-dataset.}
+        \label{fig:privacy_heart-dataset_comparison_nd_privacy_distance_plot}
+    \end{minipage}
+\end{figure}
+
 \newpage
 \section{Dimensionality}
 \todo[inline]{Work in progress}
