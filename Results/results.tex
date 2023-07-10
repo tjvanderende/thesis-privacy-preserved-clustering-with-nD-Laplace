@@ -5,21 +5,24 @@ For all four mechanisms, we applied a prefix to indicate the number of dimension
 For example, we named the piecewise mechanism used on 2-dimensional data as "2d-piecewise," even though the underlying method is not different from the original piecewise method.
 The results are presented in the following order:
 \begin{enumerate}
-    \item Cluster utility: We use external validation (AMI/ARI) to show the difference between the three different cluster algorithms when trained privately with nD-laplace (\ref{fig:final-mechanism-design}) and piecewise.
+    \item Cluster utility: We use external validation (AMI/ARI) to compare the results between the three different cluster algorithms when trained privately with nD-laplace (\ref{fig:final-mechanism-design}) and piecewise.
     \item Mechanism utility: We compare the three types of laplace (normal, grid-based, and optimal truncation) and piecewise using external validation.
-    \item Privacy: We compare the three types of laplace and piecewise using the ROC-curve for evaluating the membership inference attack (MIA).
+    \item Privacy: We compare the three types of nD-laplace and piecewise using the ROC-curve for evaluating the membership inference attack (MIA).
     \item Dimensionality: We evaluate the influence of the number of dimensions on both utility and privacy. \todo[inline]{In progress}
     \item Shape: The shape of the data is being investigated to measure its impact on the utility and privacy of the Laplace mechanism. \todo[inline]{In progress}
 \end{enumerate}
-The seconts 1 till 3 are structured according to the amount of dimensions. So we start with 2-dimensional data (2D-Laplace), then 3-dimensional data (3D-Laplace), and finally n-dimensional data (nD-Laplace). See the mechanism flowchart for a reference structure: \ref{fig:final-mechanism-design}.
+The points 1 till 3 are structured according to the amount of dimensions. So we start with 2-dimensional data (2D-Laplace), then 3-dimensional data (3D-Laplace), and finally n-dimensional data (nD-Laplace). See the mechanism flowchart for a reference structure: \ref{fig:final-mechanism-design}.
 All results are reported for each dataset (See methodology: \ref{datasets-section}) separately.
 \newpage
 \section{Cluster utility}
 The below results display the difference between the three different cluster algorithms for both piecewise and laplace with optimal truncation for 2/3/n-dimensional data.
 The first figure shows the seeds-dataset and the second one shows the heart-dataset. \newline
-Using the legend, the different cluster algorithms are displayed, along with their corresponding hyperparameters. The x-axis shows the privacy budget and the y-axis shows the adjusted mutual information (AMI) and the adjusted rand index (ARI).
-For the larger datasets (>1000 data points with 3 > dimensions), the experiments for the affinity propagation cluster algorithm were omitted. This algorithm required too much computational power for our experimental setup.
-\todo[inline]{Add links to scilliouette plots and other plots}
+Using the legend, the different cluster algorithms are displayed, along with their corresponding hyperparameters.
+The x-axis shows the privacy budget and the y-axis shows the adjusted mutual information (AMI) and the adjusted rand index (ARI).
+For the larger datasets (>1000 data points with 3 > dimensions), the experiments for the affinity propagation cluster algorithm were omitted.
+This algorithm required too much computational power for our experimental setup.
+
+Please refer to the plots in the appendix for internal validation and the other variants (Laplace / Laplace-truncated): \ref{appendix:results-cluster-utility}
 % For research question 1 the results are 2-dimensional plotted using a line diagram.
 \subsection{2-dimensional data}
 \begin{figure}[!htbp]
@@ -115,7 +118,7 @@ For the larger datasets (>1000 data points with 3 > dimensions), the experiments
 In the images below, the different types of Laplace mechanisms and piecewise are compared using a barplot.
 Since both ARI and AMI provide the same information, we have chosen to show only the Adjusted Mutual Information (AMI) to avoid redundant information. For the same reason, only the K-Means algorithm was used to calculate the AMI.
 The x-axis displays the privacy budget, and the y-axis shows the corresponding AMI.
-\todo[inline]{Add links to scilliouette plots and other plots}
+Please refer to the plots in the appendix for internal validation: \ref{appendix:results-cluster-utility}.
 
 \subsection{2-dimensional data}
 \begin{figure}[H]
@@ -171,6 +174,8 @@ The images below display a ROC curve plot of membership inference attacks as des
 There are three baseline values: The red and green dashed lines represent the baseline True Positive Rate (TPR) and False Positive Rate (FPR), respectively. These baselines represent the attack without using any privacy mechanism. The "random guess" is the baseline for the ROC curve and reflects the 50\% chance that an adversary has in determining whether a data point is a member. Anything above this baseline can be considered an improvement in that chance.
 The y-axis represents the TPR, and the x-axis represents the FPR. For each mechanism, a ROC curve is shown using different lines.
 Finally, we provide a table with the mechanism and mean of the epsilon that is outside the specification of the TPR (TPR of the non-private dataset).
+Please refer to the plots in the appendix for the comparison between the other variants (laplace / laplace-truncated): \ref{appendix:results-cluster-utility}.
+
 \subsection{2-dimensional data}
 \begin{figure}[H]
     \centering

@@ -33,7 +33,7 @@ In comparison to Laplace, Duchi et al's performs better in terms of variance for
 However, it performs worse when the epsilon value is higher because the algorithm does not take into account the privacy budget for values that are 0.
 The multidimensional varaint looks much a like the one-dimensional variant, but samples the noise each data-point independently.
 
-\subsubsection*{Piecewise mechanism}
+\subsubsection*{Piecewise mechanism} \ref{theory:piecewise}
 The authors aim to create a method that combines the advantages of the Laplace mechanism and Duchi et al.'s methods \citep{wang_collecting_2019}.
 The goal is to reduce the variance for a wider range of privacy budgets.
 Similar to the aforementioned mechanism, the Piecewise mechanism also only accepts data within the range of -1 to 1.
