@@ -4,7 +4,7 @@ The idea of \gls{gi} was introduced to solve the issue of privacy and location d
 To recall what we discussed earlier (Equation \ref{algo:2d-geo-indistinguishability})
 It offers an alternative approach for achieving differential privacy for geographical data (latitude/longitude).
 The mechanism achieves this by adding noise to the location locally before sending it to a location-based system (LBS).
-This section starts with an introduction to mathematics and for each of the different subsections, we visualize and explain open challenges and theoretic for applying them for clustering.
+This section starts with an introduction to mathematics, and for each of the different subsections, we visualize and explain open challenges and theoretic for applying them for clustering.
 %\glsaddall
 %\leading{10pt}
 %\printglossary[type=genericmath, nonumberlist]
@@ -35,13 +35,13 @@ This variable is described as $dist(x_0, z)$ and can be randomly drawn by invert
 \begin{equation}
   C{_\epsilon}{^{-1}}(p) = - \frac{1}{\epsilon}(W_-1 (\frac{p - 1}{e}) + 1)
 \end{equation}
-For this equation, $W_-1$ is a Lambert W function with -1 branch.
-The Lambert w function, also called the product logarithm is defined as $W(x)e^{W(x)} = x$ \citep{lehtonen_lambert_2016}.
+For this equation, $W_-1$ is a Lambert W function with a -1 branch.
+The Lambert w function also called the product logarithm, is defined as $W(x)e^{W(x)} = x$ \citep{lehtonen_lambert_2016}.
 The purpose of the Lambert w function is to invert the CDF of the Laplace distribution to generate random noise for one of the coordinates ($r$) using the random value of $p$.
 
 \textbf{Calculating $\theta$:}
 The other coordinate ($\theta$) is defined as a random number $[0, 2\pi]$. \newline
-To visualize these methods it is necessary to convert the polar coordinates for $z = (r, \theta)$ back to a plane $(x, y)$.
+To visualize these methods, it is necessary to convert the polar coordinates for $z = (r, \theta)$ back to a plane $(x, y)$.
 This is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals/corr/abs-1212-1984} and visualized using figure \ref{figure:geo}.
 \begin{figure}[h]
   \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/polar-laplace-to-planar.png}
@@ -61,10 +61,10 @@ This is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals
 
 \newpage
 \subsection{Truncation} \label{theory:truncation}
-The truncation is an important part of the mechanism to ensure the data is contained within the domain of the original data $X$.
+The truncation is an essential part of the mechanism to ensure the data is contained within the domain of the original data $X$.
 If this is not the case, the data is easily distinguished by an unwanted adversary \citep{DBLP:journals/corr/abs-1212-1984,9646489}.
-We assume that a user has a set of data points with a range of [-1, 1].
-If noise is added to it, it cannot be ensured that this data falls outside this range (figure \ref{figure:truncation-2d}).
+We assume a user has a set of data points with a range of [-1, 1].
+If noise is added, it cannot be ensured that this data falls outside this range (figure \ref{figure:truncation-2d}).
 \begin{figure}[ht]
   \includegraphics[width=0.7\textwidth]{TheorethicalFramework/ND-Laplace/Images/remapping.png}
   \caption{Representation of truncation of data points for 2-dimensional Laplace mechanism.}
@@ -74,21 +74,21 @@ If noise is added to it, it cannot be ensured that this data falls outside this 
 A solution was described by Andres et al. in step 5 of the Laplacian mechanism for 2D space \citep{DBLP:journals/corr/abs-1212-1984}.
 The idea is to create a grid around the diameter of the set of points $X = R^2$ that belong to the user.
 This grid is defined as $G = \{g_1, g_2, ..., g_n\}$ where $g_i$ is a grid point.
-So, if a point is generated outside the given domain, it is remapped to the closest in $X \subset G$.
+So, a point generated outside the given domain is remapped to the closest in $X \subset G$.
 
-This was later improved by chatzikokolakis et al, introducing an optimized way of remapping \citep{chatzikokolakis_efficient_2017}.
-The algorithm uses the Bayesian rule for minimizing the loss of utility while remapping the data.
+This was later improved by Chatzikokolakis et al., introducing an optimized way of remapping \citep{chatzikokolakis_efficient_2017}.
+The algorithm uses the Bayesian rule to minimize the loss of utility while remapping the data.
 Instead of remapping to the closest point, it remaps to a location where the loss is minimal.
 To decrease the performance impact of this algorithm, it is possible to only consider a certain region around the perturbed point $z$.
 The disadvantage of this method is the need for a prior set of data points to calculate the optimal remapping.
-It does not work for new users, and it extends the training period.
+It does not work for new users and extends the training period.
 
 \subsection{Optimizing for clustering} \label{2d:optimizing}
 The decision of the parameters for the algorithm is straightforward as it depends on the $\epsilon$. \label{paragraph:choosing-r}
-This constant is calculated by defining the radius $r$ and the desired level of privacy $l$ and $\epsilon$ is calculated using $l/r$.
+This constant is calculated by defining the radius $r$, and the desired level of privacy $l$ and $\epsilon$ is calculated using $l/r$.
 The $l$ is a predefined constant $l \in R^+$ but usually will be below 10.
-For geographical data, the $r$ can be configured by using meters as a unit of measure.
-So for example $r = 200$ corresponds to a radius of 200m around point $x_0$.
+For geographical data, the $r$ can be configured using meters as a unit of measure.
+So, for example, $r = 200$ corresponds to a radius of 200m around point $x_0$.
 Without a unit, it is a challenge to define a reasonable radius.
 %The $\epsilon$ can be considered the inverse unit of $r$ \citep{DBLP:journals/corr/abs-1212-1984}.
 
@@ -110,12 +110,12 @@ To retrieve a value within [0, 1], the authors use the following formula:
 If the locations are only considered for space and not quality, $q(x)$ is defined as 0 \citep{chatzikokolakis_constructing_2015}. \newline
 %A radius can be defined per-use case based on how crowded a place is \citep{chatzikokolakis_constructing_2015}.
 
-Although the method is an interesting approach to increasing utility while not reducing privacy it is hard to adopt for the purpose of clustering.
+Although the method is an interesting approach to increasing utility while not reducing privacy, it is hard to adopt for the purpose of clustering.
 For applying it for \gls{ldp}, it is required to supply each user with prior knowledge of the dataset.
-This would require an interactive setup of the mechanism instead of non-interactive. \newline
+This would require an interactive setup of the mechanism instead of a non-interactive one. \newline
 
-A drawn area as shown in \ref{figure:parea} can be expressed as a perturbation area $P_{area}$ \citep{yan_perturb_2022}.
-This metric was formulated as:
+A drawn area, as shown in \ref{figure:parea}, can be expressed as a perturbation area $P_{area}$ \citep{yan_perturb_2022}.
+This metric was formulated as follows:
 \begin{equation}
   P_{area}=\left\{ center = x_{0},radius = \frac{1}{N}\times \sum _{i=1}^{N}r_{i}\right\}
 \end{equation}

@@ -1,6 +1,6 @@
 \chapter{Methodology}
 
-To gain insights into the proposed methods for researching the appliance of (ND)-Laplace for cluster algorithms we conducted experiments.
+We conducted experiments to gain insights into the proposed methods for researching the appliance of (ND)-Laplace for cluster algorithms.
 The experiment results are used to evaluate our method against other literature.
 In this chapter, we explain:
 \begin{enumerate}
@@ -15,33 +15,45 @@ In this chapter, we explain:
 For this research, we selected datasets based on the related papers (\ref{theory:literature-review}).
 The datasets are sourced from the UCI Machine Learning Repository \citep{noauthor_uci_nodate}.
 \begin{enumerate}
-  \item Seeds dataset \footnote{http://archive.ics.uci.edu/ml/datasets/seeds}: This dataset was used in several related works and contains 210 samples with 7 (numerical) attributes.
-        The dataset contains information about seeds like kernel width and density.
-        We conducted experiments with 2, 3 and 7 dimensions and decided to use the following features (based on the correlation between the features):
+  \item \textbf{Seeds dataset} \footnote{http://archive.ics.uci.edu/ml/datasets/seeds}: This dataset was used in several related works and contains 210 samples with 7 (numerical) attributes.
+        The dataset contains information about seeds, like kernel width and density.
+        We conducted experiments with 2, 3, and 7 dimensions and decided to use the following features (based on the correlation between the features):
         \begin{enumerate}
           \item 2-dimensional data: area and perimeter.
-          \item 3-dimensional data: area, perimeter and lenght of kernel.
+          \item 3-dimensional data: area, perimeter, and length of the kernel.
           \item 7-dimensional data: All numerical features.
         \end{enumerate}
-  \item Heart dataset \footnote{https://archive.ics.uci.edu/ml/datasets/cardiotocography}: This dataset is selected because of the mixed data and amount of instances.
-        It has 23 attributes of which 10 are numerical, and has 2126 samples.
+  \item \textbf{Heart dataset} \footnote{https://archive.ics.uci.edu/ml/datasets/cardiotocography}: This dataset is selected because of the mixed data and amount of instances.
+        It has 23 attributes, ten numerical attributes, and 2126 samples.
         The dataset contains information about measurements of fetal heart rate (FHR) and uterine contraction (UC).
-        We conducted experiments with 2, 3 and 10 dimensions and decided to use the following features (based on the correlation between the features):
+        We conducted experiments with 2, 3, and 10 dimensions and decided to use the following features (based on the correlation between the features):
         \begin{enumerate}
-          \item 2-dimensional data: FHR baseline and histrogram-min.
-          \item 3-dimensional data: FHR baseline, histrogram-min and accelerations.
+          \item 2-dimensional data: FHR baseline and histogram-min.
+          \item 3-dimensional data: FHR baseline, histogram-min, and accelerations.
           \item 10-dimensional data: All numerical features.
         \end{enumerate}
 \end{enumerate}
+The following datasets are for a component investigated in research question 3.
+Further detail is provided in Section: \ref{method:research-question-3}.
+\begin{figure}[H]
+  \includegraphics[width=1.0\textwidth]{Method/images/rq3.png}
+  \caption{Synthetic datasets with 1000 samples and 2-dimensions}
+  \label{rq3:synthetic-datasets}
+\end{figure}
+\begin{enumerate}
+  \item \textbf{circle dataset:} Dataset with a circle shape.
+  \item \textbf{line dataset:} Dataset is a line (shape is much like the seeds dataset).
+  \item \textbf{skewed dataset:} Dataset samples are skewed/concentrated to one side (shape is much like the heart dataset).
+\end{enumerate}
 \section{Environmental setup}
-For running the experiments we make use of 16GB ram memory and i7-10750H 2.6Ghz processor.
+For running the experiments, we use 16GB RAM and an i7-10750H 2.6Ghz processor.
 The experiments are run using a Docker container which runs a pre-configured distribution of Linux Alpine.
-It includes a pre-installed Anaconda environment for python \footnote{https://github.com/devcontainers/images/tree/main/src/anaconda}\footnote{tag: mcr.microsoft.com/devcontainers/anaconda:0-3}.
+It includes a pre-installed Anaconda environment for Python \footnote{https://github.com/devcontainers/images/tree/main/src/anaconda}\footnote{tag: mcr.microsoft.com/devcontainers/anaconda:0-3}.
 We run the container using the dev-container feature for visual-studio code \footnote{https://code.visualstudio.com/docs/devcontainers/containers}.
 This allows us to create a reproducible experiment environment.
 \subsection{Libraries \& code versions}
-We use python version 3.9.13 with Jupyter notebook for creating a reproducible experimental environment.
-The packages for python are:
+We use Python version 3.9.13 with Jupyter Notebook for creating a reproducible experimental environment.
+The packages for Python are:
 \begin{enumerate}
   \item Scikit-learn: 1.0.*
   \item Yellow-brick: 1.5
@@ -53,10 +65,33 @@ The packages for python are:
 
 \section{Methods}
 This section explains what methods/ algorithms we used and how we evaluate them.
+
+\subsection{Privacy mechanisms}
+
+We will evaluate two different privacy frameworks called kd-Laplace (our method) and piecewise (\ref{fig:piecewise-C}).
+For the first one, we test three configurations:
+\begin{enumerate}
+  \item kd-Laplace: Plain mechanism without any additions for truncation.
+  \item kd-Laplace/grid: Mechanism with truncation using grid-remapping (See Equation: \ref{alg:grid-remapping-laplace}).
+  \item kd-Laplace/grid/optimal: Mechanism with truncation using grid-remapping in combination with optimal-remapping (See Equation: \ref{alg:optimal-remapping-laplace}).
+\end{enumerate}
+The variants of kd-Laplace are different on the implementation level for 2, 3, and n-dimensional data (See figure \ref{fig:final-mechanism-design}).
+Piecewise, however, will be the same for any data dimension.
+
+We evaluate all privacy mechanisms by comparing them in utility and privacy.
+To reduce the measurement bias of results, we executed them ten times for multiple privacy budgets and reported the average for each \citep{9679364}.
+\begin{enumerate}
+  \item The experiments run ten times, and we report the mean.
+  \item All experiments run for multiple epsilons: ${0.1, 0.5, 1, 2, 3, 5, 7, 9}$.
+\end{enumerate}
+Firstly, we primarily focus on evaluating the utility in terms of clustering.
+Then, we shift our focus to comparing the privacy mechanisms themselves.
+Lastly, we compare the four mechanisms in terms of privacy.
+\newpage
 \subsection{Clustering methods}
-For the three different algorithms: K-Means, \gls{ap} and \gls{dbscan} (OPTICS) we analyzed the most important decisions regarding parameter selection.
-In this section, we give a short list and explanation of the different parameters we used throughout the experiments.
-For all three Scikit-learn was used, and for each of them we also provide the underlying formula.
+For the three different algorithms: K-Means, \gls{ap}, and OPTICS, we analyzed the most important decisions regarding parameter selection (See section \ref{paragraph:choosing-r}).
+This section gives a short list and explanation of the parameters we used throughout the experiments.
+In addition to this, we also provide the corresponding algorithms as implemented by the Scikit-learn package.
 \subsubsection{K-Means}
 \begin{equation}
   \sum_{i=0}^{n}\min_{\mu_j \in C}(||x_i - \mu_j||^2)
@@ -75,7 +110,7 @@ For all three Scikit-learn was used, and for each of them we also provide the un
 
 \subsubsection{Affinity Propagation}
 As specified in section \ref{theory:clustering-ap}, the clustering algorithm has two types of similarity.
-The responsibility is calculated by the following formula:
+The following formula calculates the responsibility:
 \begin{equation}
   r(i, k) \leftarrow s(i, k) - max [ a(i, k') + s(i, k') \forall k' \neq k ]
 \end{equation}
@@ -102,8 +137,8 @@ And iteratively calculated while considering the damping factor.
   \caption{Affinity Propagation hyperparameters for the datasets}
   \label{tab:ap-formula-sklearn}
 \end{table}
-\subsubsection{DBSCAN}
-As previously explained in section ..., we use OPTICS as an implementation of DBSCAN to automatically determine the epsilon/radius.
+\subsubsection{OPTICS}
+As previously explained in section \ref{theory:clustering-dbscan}, we use OPTICS to automatically implement DBSCAN to determine the epsilon/radius.
 Instead of referring to \gls{dbscan}, we will now refer to OPTICS in the remaining parts of this thesis.
 \todo[inline]{Provide algorithm implementation}
 \begin{table}[h]
@@ -129,84 +164,67 @@ Instead of referring to \gls{dbscan}, we will now refer to OPTICS in the remaini
 \end{table}
 
 \newpage
-\subsection{Evaluation}
-With differential privacy, it is a trade-off of utility versus privacy.
-Therefore, for the evaluation of the 2D/3D-Laplace algorithms, we compare both criteria to achieve a consensus between utility and privacy.
-To reduce the measurement bias of results we executed them 10 times for multiple privacy budgets and report the average for each \citep{9679364}.
-
+\subsection{Utility and privacy evaluation}
+\subsubsection*{Utility}
+To measure cluster utility, both internal and external validation methods are used:
+%Based on section \ref{theory:evaluate}, we can conclude that the corresponding literature mainly evaluates one clustering algorithm and not multiple ones.
+%Furthermore, it can be concluded that if we only want to measure the coherence of the clusters, we can use an internal validation method. If we want a concrete measurement compared to the non-private version, an external validation method can be used.
+%Both measurements are important to evaluate, so we use both external and internal validation. \newline
+\mycomment{
+  The Scikit-learn package provides the implementation for these metrics.
+  With the underlying formulas:
+  \begin{equation}
+    AMI(U, V) = \frac{MI(U, V) - E(MI(U, V))}{avg(H(U), H(V)) - E(MI(U, V))}
+  \end{equation}
+  \capequation{Adjusted Mutual Information formula \citep{vinh_information_nodate-2,hubert_comparing_1985-1}}
+  \begin{gather}
+    RI = \frac{a + b}{C^{n}_{2}} \\
+    ARI = \frac{RI - E(RI)}{max(RI) - E(RI)}
+  \end{gather}
+  \capequation{(Adjusted) Rand Index formula \citep{rand_objective_1971, hubert_comparing_1985-1}}
+}
 \begin{enumerate}
-  \item All experiments are performed 10 times and the average is reported.
-  \item All experiments are performed per privacy budget (epsilon).
-        We have a fixed list for this: ${0.05, 0.1, 0.5, 1, 2, 3, 5, 7, 9}$.
+  \item \textbf{External validation: }
+        The external validation is measured by comparing the labels of non-private trained cluster algorithms with those trained using a privacy mechanism.
+        The outcome is between 0 and 1, where 1 indicates the highest similarity (thus the best result).
+        AMI (Adjusted Mutual Information) and ARI (Adjusted Rand Index) are used to assess the external validity of the cluster algorithms (See section \ref{theory:evaluate}).
+  \item \textbf{Internal validation: }
+        The internal validation measures the intrinsic properties of the clustering algorithms.
+        The outcome is a value between -1 and 1 for the SC evaluation.
+        Where -1 indicates incorrect clustering and 1 dense clustering.
+        Another metric we use is the CH metric, where a higher value suggests good clustering.
 \end{enumerate}
-
-\subsubsection{Utility}
-Based on section \ref{theory:evaluate}, we can conclude that the corresponding literature mainly evaluates one clustering algorithm and not multiple ones.
-Furthermore, it can be concluded that if we only want to measure the coherence of the clusters, we can use an internal validation method. If we want a concrete measurement compared to the non-private version, an external validation method can be used.
-Both measurements are important to evaluate, so we use both external and internal validation. \newline
-
-\textbf{External validation:}
-We will use both \gls{ari} and \gls{ami} different strengths we evaluate both.
-For the validation we want to validate how much utility we lose using our method for a given privacy budget ($\epsilon$).
-Therefore, we evaluate smaller sets of data to measure this for local perturbation.
-To compensate for this, the adjusted version is used for both Rand Index and Mutual Information.
-%The clustering algorithm is trained using the plain data and functions as the ground truth \citep{9646464,sun_distributed_2019}.
-%Because of this, we are being able to calculate the \gls{ami} and compare the centroids between the non-private and privately trained clusters.
-The implementation for these metrics is provided by the Scikit-learn package.
-With the underlying formulas:
-\begin{equation}
-  AMI(U, V) = \frac{MI(U, V) - E(MI(U, V))}{avg(H(U), H(V)) - E(MI(U, V))}
-\end{equation}
-\capequation{Adjusted Mutual Information formula \citep{vinh_information_nodate-2,hubert_comparing_1985-1}}
-\begin{gather}
-  RI = \frac{a + b}{C^{n}_{2}} \\
-  ARI = \frac{RI - E(RI)}{max(RI) - E(RI)}
-\end{gather}
-\capequation{(Adjusted) Rand Index formula \citep{rand_objective_1971, hubert_comparing_1985-1}}
-
-\textbf{Internal validation:}
-To evaluate the cluster algorithms, we use \gls{chi} and silhouette score.
-The expectation is that both will give a similar result, but they measure the cluster coherence in different ways. \newline
-%%The second way to measure utility is to calculate the error between the non-private and perturbed data \citep{9679364,sun_distributed_2019,xia_distributed_2020-1}.
-%There are several methods to do this (See \ref{theory:evaluate}), but we use the \gls{aee}.
-%As with \gls{ami} we run the calculations for multiple privacy budgets 10 times and report the average for each budget.
-%\todo[inline]{Explain why AEE and not RE}
-\textbf{Comparison:}
-It is important to compare our mechanism to comparable methods.
-Therefore, we compare our results with similar methods that are proposed in the literature, based on these criteria:
-\begin{enumerate}
-  \item It should work with n-dimensional data.
-  \item It should have an open-source implementation to be able for us to compare it.
-  \item The method should be general-purpose (e.g. not only mean-estimation) and work preferably locally.
-\end{enumerate}
-For checking these requirements, we have defined the tables (\ref{tab:summary_table_dp}, \ref{tab:summary_table_kmeans}) as a summary of our literature review.
-Based on this, it can be concluded that the "piecewise" mechanism is the only one that meets this requirement.
+Because the cluster algorithms rely on Euclidean distance, we need to apply some data standardization.
+For this purpose, we use standard scaling provided by the Scikit-learn package \footnote{https://scikit-learn.org/stable/modules/preprocessing.html}.
 
 \subsubsection{Privacy}
-Privacy is hard to quantify, but we can measure the privacy loss/gain by calculating the Euclidean distance between the non-perturbed data and the perturbed data.
-In addition, we evaluate privacy by simulating a membership inference attack and calculating the adversary advantage. \newline
-\textbf{Privacy distance:} We calculate the Euclidean average difference between non-perturbed data and perturbed data.
-This is measured for each epsilon. \newline
-\textbf{Membership inference attack (adversary advantage):}
-%\input{Method/algorithms/shokri-setup-mi.tex}
-We used the MIA that was proposed by Shokri et al. with the implementation that was provided by Adversarial Robustness Toolkit (ART) \citep{nicolae_adversarial_2019}.
-An earlier study also explored this attack with as goal to evaluate differential privacy.
-Similar to this attack, we train a classifier with perturbed data and evaluate it using non-perturbed data (test-data / shadow-data) \citep{zhao_not_2020}.
-We consider a semi-surpervised setup (figure \ref{figure:MIA-semi-supervised}), where we train a classifier with the perturbed data and evaluate it using non-perturbed data (test-data / shadow-data).
-For the classifier, we use a RandomForestClassifier, because this classifier is not yet applied for shadow model attacks \citep{rigaki_survey_2021}.
-Finally, we evaluate the adversary advantage (percentage) using $TPR - FPR$ \citep{yeom_privacy_2018}.
+Privacy is hard to quantify, but we can measure the privacy loss/gain by calculating the Euclidean distance between the non-perturbed and perturbed data.
+In addition, we evaluate privacy by simulating a membership inference attack and calculating the adversary advantage.
 \begin{enumerate}
-  \item TPR: The amount the attacker inferred the member data correctly (the private training data).
-  \item FPR: The amount the attacker inferred the non-member data correctly (the non-private test data).
-\end{enumerate}
-To have a clear difference between TPR and FPR, we also consider a ROC plot (see Section \ref{theory:attack-evaluation}).
-A visual setup of the experiment is provided in the Figure: \ref{figure:mi-attack}
+  \item \textbf{Privacy distance: }
+        The first measurement we evaluate is the distance between the dataset's non-private and private variants.
+        This metric gives us a sense of how much extra distance (and privacy) the privacy mechanisms offer compared to the non-private variant.
+        To this end, the average Euclidean distance is measured and reported per epsilon.
+  \item \textbf{Adversarial advantage: }
+        We used the Membership Inference Attack (MIA) that Shokri et al. proposed with the implementation that was provided by Adversarial Robustness Toolkit (ART) \citep{nicolae_adversarial_2019}.
+        An earlier study also explored this attack to evaluate differential privacy.
+        Similar to this attack, we train a classifier with perturbed data and evaluate it using non-perturbed data (test-data / shadow-data) \citep{zhao_not_2020}.
+        We consider a semi-supervised setup (figure \ref{figure:MIA-semi-supervised}), where we train a classifier with the perturbed data and evaluate it using non-perturbed data (test-data / shadow-data).
+        For the classifier, we use a RandomForestClassifier \citep{rigaki_survey_2021}.
+        Finally, we evaluate the adversary advantage (percentage) using $TPR - FPR$ \citep{yeom_privacy_2018}.
+        Figure: \ref{figure:mi-attack} provides a visual setup of the experiment.
 
-\begin{figure}[H]
-  \includegraphics[width=1\textwidth]{Method/images/MI-setup.png}
-  \caption{Member inference attack using shadow models. The green swim lane illustrates the normal setup and the red swim lane projects the adversary steps.}
-  \label{figure:mi-attack}
-\end{figure}
+        Although the adversary advantage is a proven method for measuring MI attacks, we also include the TPR as an essential measurement.
+        This metric is most interesting to us because this displays the percentage of the actual leaked labels (see Section \ref{theory:attack-evaluation}).
+        \begin{figure}[H]
+          \includegraphics[width=1\textwidth]{Method/images/MI-setup.png}
+          \caption{Member inference attack using shadow models. The green swim lane illustrates the normal setup, and the red swim lane projects the adversary steps.}
+          \label{figure:mi-attack}
+        \end{figure}
+\end{enumerate}
+\newpage
+%\input{Method/algorithms/shokri-setup-mi.tex}
+
 %Therefore, we analyze our method according to a popular attack: Membership inference attack.
 %For this purpose, we make use of a black-box Member inference attack, called "HopSkipJump" \citep{chen_hopskipjumpattack_2020,li_membership_2021}.
 %This attack is evaluated using a semi-supervised setup, as proposed in this figure: \ref{fig:unsupervised-mia-attack}.
@@ -215,28 +233,14 @@ A visual setup of the experiment is provided in the Figure: \ref{figure:mi-attac
 %Respectively meaning, the TPR is higher if the MIA is successful and likewise the FPR if the MIA is unsuccessful.
 %We hypothesize that the private model leverages a higher FPR in comparison to the non-private variant.
 %Therefore, it is more convenient to apply the geo-indistinguishability as an error metric provided in \ref{eq:geo-as-an-error}.
-\subsection{Scaling}
-Because we use a distance metric, we need to apply some data standardization.
-For this purpose, we use standard scaling provided by the Scikit-learn package \footnote{https://scikit-learn.org/stable/modules/preprocessing.html}.
-This is only for clustering, so it is applied after all the perturbation algorithms.
-
-\subsection{Mechanisms}
-We utilize four mechanisms for conducting the experiments (based on Figure: \ref{fig:final-mechanism-design}.).
-\begin{enumerate}
-  \item Laplace: 2D-implementation using no truncation.
-  \item Laplace-truncated: 3D-implemention using grid remapping (Algorithm \ref{alg:grid-remapping-laplace}).
-  \item Laplace-optimal-truncated: n-dimensional implementation using optimal remapping (Algorithm \ref{alg:optimal-remapping-laplace}).
-  \item Piecewise: The implementation as provided in section \ref{thoery:piecewise}.
-\end{enumerate}
-
 \mycomment{
   We propose several solutions for open issues based on the theoretical framework. \newline
-  \subsubsection{Choosing r: } Based, on the idea of chatzikokolakis et al. to lower the size of the radius if the place is crowded, we can do the same with clustering.
+  \subsubsection{Choosing r: } Based on the idea of Chatzikokolakis et al. to lower the radius size if the place is crowded, we can do the same with clustering.
   For this, we could use a metric like the standard division.
-  This metric does exactly this, by providing the deviation from the mean:
+  This metric does precisely this by providing the deviation from the mean:
 
-  This metric increases based on clutteredness of the data, which allows us to generate a radius $r$ automatically regardless of domain.
-  Therefore, we depend on the configurability of epsilon entirely on privacy level $l$.
+  This metric increases based on the clutteredness of the data, which allows us to generate a radius $r$ automatically regardless of domain.
+  Therefore, we depend on the reconfigurability of epsilon entirely on privacy level $l$.
   The generic standard deviation can be defined as:
   \begin{equation}
     \sigma = \sqrt{\frac{\sum{(x_i - \mu)^2}}{n}}
@@ -245,13 +249,13 @@ We utilize four mechanisms for conducting the experiments (based on Figure: \ref
 }
 \mycomment{\subsubsection{Truncation:}
   We explained the theory for truncation earlier in paragraph \ref{theory:truncation}.
-  The methods proposed work correctly for a geographic map where other (historic) locations for remapping are available.
+  The methods proposed work correctly for a geographic map where other (historical) locations for remapping are available.
 
   However, it is difficult to apply this to data clustering.
-  The number of data points is not known beforehand, so we may remap to a location that is too far away.
-  This way we lose important distance information, which hurts the clustering.
-  Also, the truncation threshold is so clear (the points are outside the known 2D domain), that we do not have to rely on historical data for remapping.
-  Our algorithm can be much simpler by re-calculating the noise until it will be within the domain:
+  The number of data points is unknown beforehand, so we may remap to a location that is too far away.
+  This way, we lose essential distance information, which hurts the clustering.
+  Also, the truncation threshold is so clear (the points are outside the known 2D domain) that we do not have to rely on historical data for remapping.
+  Our algorithm can be much more straightforward by re-calculating the noise until it is within the domain:
 }
 \mycomment{
   \begin{equation}
@@ -277,22 +281,24 @@ We utilize four mechanisms for conducting the experiments (based on Figure: \ref
 %\input{Method/algorithms/rq1.tex}
 %% We apply the theory for planar laplace proposed by \citep{DBLP:journals/corr/abs-1212-1984}
 
-\subsection{Research question 3}
+\subsection{Research question 3} \label{method:research-question-3}
 %\todo[inline]{Added ideas for research question 3}
 In this research question, we compare the behavior of our mechanism with what we have observed in the literature for similar mechanisms.
 To do this, we have formulated several hypotheses.
 \begin{enumerate}
-  \item The privacy leakage (adversary advantage) increases for a higher number of dimensions:
-        It is expected that privacy leakage increases with the number of dimensions, based on our own observation (\ref{theory:privacy-utility-nd}).
-        \todo[inline]{Also include literature}
-        \mycomment{\item The boundary distance attack proposed by Choquette et al. yields better results on our data.
-        We evaluated research questions 1 and 2 using the attack model proposed by Shokri et al. \cite{shokri_membership_2017}.
-        However, Choquette et al. proposed a new attack model that is more suitable for our data \cite{choquette_privacy-preserving_2019}.
-        We expect that the results of this attack model are better than the results of the attack model proposed by Shokri et al.}
-  \item Adding optimal remapping improves utility without sacrificing privacy.
-        \todo[inline]{Include more information}
-  \item The impact of the data shape has an impact on privacy leakage and utility of the mechanism.
-        \todo[inline]{Include more information}
+  \item \textit{Adding optimal remapping improves utility without sacrificing privacy:}
+        Since the noise is updated based on the density of the data points, the clusters stay preserved (\ref{alg:optimal-remapping-laplace}).
+        As a result, the utility increases while the data points remain indistinguishable.
+        Therefore, we have extended our mechanism with optimal remapping and named it kd-Laplace/grid/optimal.
+  \item \textit{The privacy leakage (adversary advantage) increases for a higher number of dimensions:}
+        The hypothesis arose from our observation while investigating/implementing kd-laplace/grid/optimal (\ref{theory:privacy-utility-nd}).
+        Adding more dimensions (5 >) decreases the added noise gradually.
+        The study is conducted for the kd-Laplace/grid/optimal mechanism and compared with the Piecewise mechanism.
+  \item \textit{The shape of the data negatively impacts the kd-Laplace mechanism in terms of privacy:}
+        Because the mechanism heavily relies on Euclidean distance, the shape (distance between the data points) can ultimately harm utility.
+        We have already observed this difference when comparing the heart and seed datasets in research questions 1 and 2.
+        But, to rule out the potential impact of the number of data points (the heart dataset has 2126 samples and the seed-dataset 210), we generate three synthetic datasets, each with 1000 samples (See section \ref{datasets-section}).
+
 \end{enumerate}
 %In addition to testing the hypotheses, we also want to investigate the behavior of our mechanism in more detail.
 %\begin{enumerate}

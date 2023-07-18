@@ -12,18 +12,18 @@ This table includes components such as the type (LDP or DP) and whether there is
 \subsection{Differential privacy methods}
 As was discussed in earlier sections, the Laplace method was the first one to establish \gls{dp} \citep{dwork_differential_2006}.
 
-The first paper we discuss is provided by Soria-Comas et al. and considers the distribution of the dataset for the generating \citep{soria-comas_optimal_2013}.
+The first paper we discuss is provided by Soria-Comas et al. and considers the distribution of the dataset for generating \citep{soria-comas_optimal_2013}.
 Their work claims the Laplace mechanism is not optimal for a univariate function and aims at improving it by introducing their mechanism based on Laplace.
-The method that is proposed performs slightly better than Laplace on multivariate/multiple queries.
+The proposed method performs slightly better than Laplace on multivariate/multiple queries.
 
-Quan et al. also proposed a new method as an extension of Dwork et al.'s Laplace algorithm \citep{geng_staircase_2015}.
+Quan et al. also proposed a new method to extend Dwork et al.'s Laplace algorithm \citep{geng_staircase_2015}.
 They introduced the staircase mechanism for 1-dimensional noise, which was later extended to support multidimensional data \citep{geng_staircase_2015}.
 The mechanism aims to improve utility by adding the same level of privacy while adding less noise.
-It is represented as a staircase-shaped probability density function, hence the name Staircase Mechanism (SM).
-This mechanism accepts three configurable parameters, which are comparable to those of the Laplace mechanism.
+It is represented as a staircase-shaped probability density function called Staircase Mechanism (SM).
+This mechanism accepts three configurable parameters comparable to those of the Laplace mechanism.
 The authors' work can handle multidimensional numerical data and preserve the  $(\epsilon$)-differential privacy, where $\epsilon$ is the privacy budget (see \ref{pure-dp}).
-The previous two paragraphs, we have mainly focused on the literature that is interesting to us regarding differential privacy.
-Next, the succeeding paragraphs will mainly center around related literature concerning local differential privacy.
+In the previous two paragraphs, we have mainly focused on the interesting literature regarding differential privacy.
+Next, the succeeding paragraphs will mainly center on related literature concerning local differential privacy.
 %One disadvantage of the staircase mechanism is that it can produce an unbounded output, as noted by Wang et al. 
 %This means that the perturbed data can exceed the original bounds of the data. 
 %Additionally, the authors do not compare their results to comparable work in an experimental setting.

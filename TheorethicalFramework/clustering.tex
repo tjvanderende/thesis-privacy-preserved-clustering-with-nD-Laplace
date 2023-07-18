@@ -20,35 +20,35 @@ This method can be used to determine the best $k$ by applying the algorithm mult
   \caption{Illustration of determining $k$ using the "elbow" method \citep{kodinariya_review_2013}}
 \end{figure}
 In this situation, a Silhouette plot can be used to determine the $k$.
-This method uses calculates the Silhouette coefficient for each cluster \citep{saputra_effect_2020}.
+This method uses the Silhouette coefficient for each cluster \citep{saputra_effect_2020}.
 It takes into consideration the separation and cohesion of the cluster.
 The plot can then be made by plotting the silhouette coefficient on the y-axis and $k$ on the x-axis \citep{saputra_effect_2020}.
 Then the K with the highest coefficient can be selected based on that. \newline
 Another popular method is the Gap statistic method \citep{yuan_research_2019}.
 It compares the total within-cluster variation for different values of k with their expected values under a null reference distribution of the data \citep{tibshirani_estimating_2001}.
 A practical appliance of this method uses a line plot for comparing the $k$-value and gap value \citep{yuan_research_2019}.
-Based on the visual change of the line, someone is be-able to select the best $k$.
+Based on the line's visual change, someone can select the best $k$.
 
 All in all, there is no fixed method to choose a good $k$ for K-Means.
 The elbow method is common in the existing literature and is very popular due to its simplicity.
-However, one disadvantage is that it can be difficult to determine the "elbow" point, as it is not always present \citep{kodinariya_review_2013}.
-In that case, the silhouette method or gap statistic method can be chosen, with the algorithm for silhouette being the most obvious choice due to its simplicity.
+However, one disadvantage is that it can be challenging to determine the "elbow" point, as it is not always present \citep{kodinariya_review_2013}.
+In that case, the silhouette or gap statistic method can be chosen, with the algorithm for silhouette being the most obvious choice due to its simplicity.
 \subsubsection{Affinity Propagation} \label{theory:clustering-ap}
 \gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
 Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
 The method was introduced by Frey et al. and does not require any hyperparameters \citep{frey_clustering_2007}.
 Still, there are important properties that could potentially impact the clustering \citep{wang_adaptive_2007}. \newline
 \textbf{Choosing preference($p$): }
-Indicates the preference that a data point is selected as cluster center \citep{wang_adaptive_2007}.
-It highly influences the number of clusters, a high one would lead to more clusters and a small one to less \citep{moiane_evaluation_2018}.
-A good choice depending on the data is to set the $p$ to the median of all data similarities \citep{wang_adaptive_2007}.
-But, the effectiveness of this could highly be influenced based on the dataset.
-To validate if the preference is correctly set, it is possible to analyze the silhouette coefficient \citep{moiane_evaluation_2018}.
+Indicates the preference for selecting a data point as cluster center \citep{wang_adaptive_2007}.
+It highly influences the number of clusters; a high one would lead to more clusters and a small one to less \citep{moiane_evaluation_2018}.
+Depending on the data, a good choice is to set the $p$ to the median of all data similarities \citep{wang_adaptive_2007}.
+But, the effectiveness of this could be highly influenced based on the dataset.
+Analyzing the silhouette coefficient \citep{moiane_evaluation_2018} to validate if the preference is correctly set is possible.
 \newline
 \textbf{Choosing damping factor($lam \in [0,1] $):}
 The damping factor is used to improve the stability (convergence) of the algorithm \citep{wang_adaptive_2007}.
 By default, this value is 0.5 and can be increased to 1 to reduce the impact of numerical oscillations.
-This can be applied manually, by re-running the algorithm and finding the optimal or just being increased.
+This can be applied manually by re-running the algorithm, finding the optimal, or increasing.
 However, both approaches take a lot of time, especially for bigger datasets \citep{wang_adaptive_2007}. \newline
 
 To conclude on this, damping is important if big datasets are considered.
@@ -74,7 +74,6 @@ This can then be plotted using a k-dist plot and the best "elbow" can be chosen 
   \caption{K-dist plot example for $minPts = 4$ based on a 2-dimensional dataset \citep{ester_density-based_nodate}}
   \label{k-dist-plot}
 \end{figure}
-
 
 %The epsilon value is crucial for the DBSCAN algorithm and highly dependent on the dataset \todo{Source}.
 Since we employ various types of datasets and algorithms, it is desirable to have an automated method for determining the epsilon (radius) value.
