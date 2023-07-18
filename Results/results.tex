@@ -1,24 +1,18 @@
 \chapter{Results}
 This chapter aims to present the results to the reader.
-We tested four mechanisms for their utility and privacy, as indicated in the methodology.
-For all four mechanisms, we applied a prefix to indicate the number of dimensions on which the mechanism was used.
-For example, we named the piecewise mechanism used on 2-dimensional data as "2d-piecewise," even though the underlying method is not different from the original piecewise method.
+As indicated in the methodology, we tested four mechanisms (three variants of kd-Laplace and Piecewise) for their utility and privacy.
 The results are presented in the following order:
 \begin{enumerate}
-    \item Cluster utility: We use external validation (AMI/ARI) to compare the results between the three different cluster algorithms when trained privately with nD-laplace (\ref{fig:final-mechanism-design}) and piecewise.
-    \item Mechanism utility: We compare the three types of Laplace (normal, grid-based, and optimal truncation) and piecewise, using external validation.
-    \item Privacy: We compare the three types of nD-laplace and piecewise using the ROC-curve for evaluating the membership inference attack (MIA).
-    \item Dimensionality: We evaluate the number of dimensions' influence on utility and privacy.
-    \item Shape: We are investigating the shape of the data to measure its impact on the utility and privacy of the Laplace mechanism.
+    \item Cluster utility: We use external validation (AMI/ARI) to compare the results between the three different cluster algorithms when trained privately with kd-laplace (\ref{fig:final-mechanism-design}) and piecewise.
+    \item Mechanism utility: We compare the three variants of kd-Laplace and Piecewise using external validation.
+    \item Privacy: We compare the three variants of kd-Laplace and Piecewise by evaluating the membership inference attack (MIA).
+    \item Dimensionality: We evaluate the number of dimensions' influence on privacy.
+    \item Shape: We are investigating the shape of the data to measure its impact on the utility and privacy of the kd-Laplace mechanism.
 \end{enumerate}
-Points 1 to 3 are structured according to the number of dimensions. So we start with 2-dimensional data (2D-Laplace), then 3-dimensional data (3D-Laplace), and finally n-dimensional data (nD-Laplace). See the mechanism flowchart for a reference structure: \ref{fig:final-mechanism-design}.
 All results are reported for each dataset (See methodology: \ref{datasets-section}) separately.
-And after each section, a summary is provided for the results.
-
 \newpage
 \section{Cluster utility}
-The results below display the difference between the three cluster algorithms for Piecewise and Laplace with optimal truncation for 2/3/n-dimensional data.
-
+The results below display the difference between the three cluster algorithms for Piecewise and kd-Laplace/grid/optimal for 2/3/n-dimensional data.
 The first figure shows the seeds dataset, and the second shows the heart dataset. \newline
 Displaying the different cluster algorithms and their corresponding hyperparameters is done using the legend.
 The x-axis shows the privacy budget, and the y-axis shows the adjusted mutual information (AMI) and the adjusted rand index (ARI).
@@ -26,11 +20,10 @@ We conducted this research for the following cluster algorithms.
 \begin{enumerate}
     \item \textbf{K-Means:} Displayed as a blue line.
     \item \textbf{Affinity Propagation:} Displayed as a red line.
-          For the larger datasets (>1000 data points with 3 > dimensions), the experiments for the affinity propagation cluster algorithm were omitted.
+          The \gls{ap} experiments are omitted for the larger datasets (>1000 data points with 3 > dimensions).
           This algorithm required too much computational power for our experimental setup.
     \item \textbf{OPTICS:} Displayed as a green line.
 \end{enumerate}
-
 Please refer to the plots in the appendix for internal validation and the other variants (Laplace / Laplace-truncated): \ref{appendix:results-cluster-utility}.
 
 % For research question 1 the results are 2-dimensional plotted using a line diagram.
@@ -53,7 +46,7 @@ Please refer to the plots in the appendix for internal validation and the other 
 The above plots show the AMI and ARI scores for the seeds-dataset with kd-laplace/grid/optimal (left-side) and piecewise (right-side).
 Piecewise shows a higher AMI / ARI for epsilons 7 and 9. In contrast, the kd-Laplace mechanism scores higher for all the other epsilons (0.1 onward 7).
 K-Means achieves the best score for kd-Laplace with a slight margin compared to AP.
-However, for the Piecewise mechanism, K-Means is the clear winner.
+However, for the Piecewise mechanism, K-Means performs better.
 For both the mechanisms, OPTICS underperforms heavily but still scores the same as AP for Piecewise.
 \begin{figure}[H]
     \caption{External validation piecewise \& kd-Laplace/grid/optimal mechanisms for the 2-dimensional data heart-dataset}
@@ -69,11 +62,10 @@ For both the mechanisms, OPTICS underperforms heavily but still scores the same 
         \label{fig:external-validation-heart-dataset_comparison_2d-piecewise}
     \end{minipage}
 \end{figure}
-The above plots show the AMI and ARI scores for the heart dataset with kd-laplace/grid/optimal (left-side) and piecewise (right-side).
 The kd-Laplace mechanism performs better (0.8 - 1.0 from epsilon 1.0 to 9) for all epsilons for K-Means.
 \gls{ap} and OPTICS show the same trend, reaching their peaks around epsilon 7 and 9.
 Both underperform by delivering maximum results for these epsilons below 0.3-0.4 AMI/ARI.\newline
-
+\newpage
 \subsection{3-dimensional data}
 \begin{figure}[H]
     \caption{External validation piecewise \& kd-Laplace/grid/optimal for the 3-dimensional data seeds-dataset}
@@ -89,11 +81,10 @@ Both underperform by delivering maximum results for these epsilons below 0.3-0.4
         \label{fig:external-validation-seeds-dataset_comparison_3d-piecewise}
     \end{minipage}
 \end{figure}
-The above plots show the AMI and ARI scores for the seeds dataset with kd-laplace/grid/optimal (left-side) and piecewise (right-side).
 Piecewise performs better for epsilon 9 but worse for the lower epsilons (0.1 - 5).
 K-Means scores 0.7 - 0.8 AMI/ARI, followed by \gls{ap}, which is 0.6.
 The kd-Laplace mechanism, on the other hand, shows more difference (K-Means 0.65 - 0.7 and AP 0.3 - 0.2).
-OPTICS scores again low but shows a slight upwards trend when the epsilon increases.
+OPTICS scores are again low but show a slight upwards trend when the epsilon increases.
 
 \begin{figure}[H]
     \caption{External validation piecewise \& kd-Laplace/grid/optimal mechanisms for the 3-dimensional data heart-dataset}
@@ -109,7 +100,6 @@ OPTICS scores again low but shows a slight upwards trend when the epsilon increa
         \label{fig:external-validation-heart-dataset_comparison_3d-piecewise}
     \end{minipage}
 \end{figure}
-The above plots show the AMI and ARI scores for the heart dataset with kd-laplace/grid/optimal (left-side) and piecewise (right-side).
 Piecewise for K-Means performs well (0.78 and 0.93 ARI) for epsilon 7 and 9, respectively.
 However, from epsilon 1 onwards kd-Laplace scores 0.77 to 0.93 ARI for K-Means.
 On the other hand, OPTICS scores low for kd-Laplace.
@@ -152,20 +142,12 @@ But, for ARI, the scores for OPTICS and \gls{ap} lay close together for epsilon 
         \label{fig:external-validation-heart-dataset_comparison_nd-piecewise}
     \end{minipage}
 \end{figure}
-The above plots show the ARI and AMI scores for the heart dataset with kd-laplace/grid/optimal (top) and Piecewise (bottom).
 Piecewise shows similar trends for K-Means and OPICS. But, K-Means scores better (0.65 ARI) for epsilon 9, while OPTICS peaks at 0.5 ARI.
 However, Piecewise scores (<0.2 ARI) for epsilon 0.1 til 3.5.
 In contrast, kd-Laplace scores more evenly (0.6 - 0.7 ARI) between epsilon 3.5 and 9. Conversely, OPTICS scores lower (< 0.2 ARI) for all epsilon values.
-
-\subsection{Summary}
-The seeds-dataset and heart-dataset show similarities.
-K-Means performs the best, followed by AP and OPTICS.
-Noteworthy is the fact that kd-Laplace overall performs better on the heart dataset than the seeds dataset.
-\todo[inline]{Still has to be written}
-\newpage
 \section{Mechanism utility}
-In the images below, the different types of Laplace mechanisms and piecewise are compared using a barplot.
-Since ARI and AMI provide the same information, we have shown only the Adjusted Mutual Information (AMI) to avoid redundant information.
+In the sections below, the different types of Laplace mechanisms and piecewise are compared using a barplot.
+Since ARI and AMI provide the same information, we show only the Adjusted Mutual Information (AMI) to avoid redundant information.
 For the same reason, only the K-Means algorithm was used to calculate the AMI.
 The x-axis displays the privacy budget, and the y-axis shows the corresponding AMI.
 The privacy mechanisms are displayed as follows:
@@ -193,9 +175,10 @@ Please refer to the plots in the appendix for internal validation: \ref{appendix
     \end{minipage}
 
 \end{figure}
-The two plots compare external validation (AMI) between the two privacy frameworks, Piecewise, and kd-Laplace, with three variants. A clear trend in AMI can be observed in the top plot, with the lowest epsilon (0.1) yielding the lowest score for the mechanisms. Piecewise consistently scores lower for all epsilons, except for epsilons 7 and 9. Additionally, we notice minimal differences among the variants of kd-Laplace, but kd-Laplace/grid/optimal performs slightly better for epsilon 0.1 while scoring worse for 7 and 9.
-
-
+The two plots compare external validation (AMI) between the two privacy frameworks, Piecewise, and kd-Laplace, with three variants.
+A clear trend in AMI can be observed in the top plot, with the lowest epsilon (0.1) yielding the lowest score for the mechanisms.
+Piecewise consistently scores lower for all epsilons, except for epsilons 7 and 9.
+Additionally, we notice minimal differences among the variants of kd-Laplace, but kd-Laplace/grid/optimal performs slightly better for epsilon 0.1 while scoring worse for 7 and 9.
 \newpage
 \subsection{3-dimensional data}
 \begin{figure}[H]
@@ -244,17 +227,9 @@ For the heart dataset (bottom graph), the scores are relatively similar across a
 
 \newpage
 \section{Privacy}
-The images below display a ROC curve plot of membership inference attacks as described in the methodology.
-There are three baseline values: The red and green dashed lines represent the baseline True Positive Rate (TPR) and False Positive Rate (FPR), respectively. These baselines represent the attack without using any privacy mechanism. The "random guess" is the baseline for the ROC curve and reflects the 50\% chance that an adversary has in determining whether a data point is a member. Anything above this baseline can be considered an improvement in that chance.
-The y-axis represents the TPR, and the x-axis represents the FPR. For each mechanism, a ROC curve is shown using different lines.
-Finally, we provide a table with the mechanism and mean of the epsilon that is outside the specification of the TPR (TPR of the non-private dataset). \newline
+The images below display bar plots for the membership advantage and TPR of membership inference attacks as described in the methodology.
 We use the same color scheme in the previous section to display the different mechanisms.
-With as addition, a red line is drawn to indicate the baseline TPR (the non-private dataset's TPR). \newline
-Please refer to the plots in the appendix for comparing the other variants (laplace / laplace-truncated): \ref{appendix:results-cluster-utility}.
-
-\todo[inline]{Add interpretation of results}
-\newpage
-
+In addition, a red line was drawn to indicate the baseline TPR (the non-private dataset's TPR). \newline
 \subsection{2-dimensional data}
 \mycomment{\begin{figure}[H]
         \centering
@@ -272,14 +247,14 @@ Please refer to the plots in the appendix for comparing the other variants (lapl
 \begin{figure}[H]
     \centering
     \begin{minipage}[c]{1.1\textwidth}
-        \includegraphics[width=0.55\textwidth]{Results/RQ1/seeds-dataset/shokri_mi_adv_seeds-dataset_comparison.png}
-        \includegraphics[width=0.55\textwidth]{Results/RQ1/seeds-dataset/tpr_seeds-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ1/seeds-dataset/shokri_mi_adv_seeds-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ1/seeds-dataset/tpr_seeds-dataset_comparison.png}
         \caption{Barplot for adversary advantage (left) and TPR (right) per privacy mechanism for seeds-dataset.}
         \label{fig:privacy_seeds-dataset_comparison_2d_aa_plot}
     \end{minipage}
     \begin{minipage}[c]{1.1\textwidth}
-        \includegraphics[width=0.55\textwidth]{Results/RQ1/heart-dataset/shokri_mi_adv_heart-dataset_comparison.png}
-        \includegraphics[width=0.55\textwidth]{Results/RQ1/heart-dataset/tpr_heart-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ1/heart-dataset/shokri_mi_adv_heart-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ1/heart-dataset/tpr_heart-dataset_comparison.png}
         \caption{Barplot for adversary advantage (left) and TPR (right) per privacy mechanism for heart-dataset.}
         \label{fig:privacy_heart-dataset_comparison_2d_add_plot}
     \end{minipage}
@@ -329,12 +304,12 @@ For the TPR, all mechanisms are below the baseline value. They score the same, b
 \newpage
 \begin{figure}[H]
     \centering
-    \begin{minipage}[c]{0.70\textwidth}
+    \begin{minipage}[c]{1\textwidth}
         \includegraphics[width=1\textwidth]{Results/RQ2/seeds-dataset/privacy_distance_plot.png}
         \caption{Privacy distance for each mechanism for 3D seeds-dataset.}
         \label{fig:privacy_seeds-dataset_comparison_3d_privacy_distance_plot}
     \end{minipage}
-    \begin{minipage}[c]{0.70\textwidth}
+    \begin{minipage}[c]{1\textwidth}
         \includegraphics[width=1\textwidth]{Results/RQ2/heart-dataset/privacy_distance_plot.png}
         \caption{Privacy distance for each mechanism for 3D heart-dataset.}
         \label{fig:privacy_heart-dataset_comparison_3d_privacy_distance_plot}

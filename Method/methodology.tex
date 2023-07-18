@@ -99,10 +99,12 @@ In addition to this, we also provide the corresponding algorithms as implemented
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter & Description                          & Value                                                 & Dataset       \\ \hline
-    K-value   & Calculated based on an "elbow" plot. & 4 (see figure \ref{hyperparameters:k-means-dataset1}) & Seeds dataset \\ \hline
-    K-value   & ""                                   & \textbf{TODO}                                         & Heart dataset \\ \hline
-    \hline
+    Parameter & Description                          & Value                                                       & Dataset        \\ \hline
+    K-value   & Calculated based on an "elbow" plot. & 4 (see Figure \ref{hyperparameters:k-means-seeds-dataset})  & Seeds dataset  \\ \hline
+    K-value   & ""                                   & \textbf{TODO}                                               & Heart dataset  \\ \hline
+    K-value   & ""                                   & 5 (see Figure \ref{hyperparameters:k-means-circle-dataset}) & circle dataset \\ \hline
+    K-value   & ""                                   & 4 (see Figure \ref{hyperparameters:k-means-line-dataset})   & line dataset   \\ \hline
+    K-value   & ""                                   & 4 (see Figure \ref{hyperparameters:k-means-skewed-dataset}) & skewed dataset \\ \hline
   \end{tabular}
   \caption{K-Means hyperparameters for dataset 1 - 3}
   \label{tab:kmeans-formula-dataset-2}
@@ -204,7 +206,7 @@ In addition, we evaluate privacy by simulating a membership inference attack and
   \item \textbf{Privacy distance: }
         The first measurement we evaluate is the distance between the dataset's non-private and private variants.
         This metric gives us a sense of how much extra distance (and privacy) the privacy mechanisms offer compared to the non-private variant.
-        To this end, the average Euclidean distance is measured and reported per epsilon.
+        To this end, the average Euclidean distance is measured and reported per epsilon. A higher distance indicates more privacy.
   \item \textbf{Adversarial advantage: }
         We used the Membership Inference Attack (MIA) that Shokri et al. proposed with the implementation that was provided by Adversarial Robustness Toolkit (ART) \citep{nicolae_adversarial_2019}.
         An earlier study also explored this attack to evaluate differential privacy.
