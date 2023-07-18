@@ -379,8 +379,19 @@ Among the kd-Laplace variants, the variant without optimizations adds the least 
         \label{fig:privacy_heart-dataset_comparison_nd_aa_plot}
     \end{minipage}
 \end{figure}
+%The above graphs display the adversary advantage (left) and TPR (right) per epsilon for the seeds dataset (top) and heart dataset (bottom).
 
+The seeds dataset shows that Piecewise has a higher adversary advantage for epsilons ranging from 0.1 to 1.
+However, the TPR for Piecewise is consistently lower than that of kd-Laplace. There is no clear distinction among the kd-Laplace variants.
+However, for epsilon values 7 and 9, kd-Laplace/grid/optimal does not exceed the baseline for TPR, while the other variants do.
 
+For the heart dataset, the Piecewise mechanism scores below 0.10 for adversary advantage for epsilons 0.1 to 3.
+In contrast, the kd-Laplace variants yield values above 0.25 for the same epsilon values.
+The Piecewise mechanism also scores lower for epsilon values 3.5 and 5, but they have nearly equal scores for epsilons 7 and 9.
+Among the variants of kd-Laplace, kd-Laplace, and kd-Laplace/grid perform slightly worse for epsilon 0.1, but for the other epsilons, they function similarly.
+The TPR follows a similar trend to the adversary advantage, except for epsilon 0.1, where the kd-Laplace variants have equal scores.
+
+\newpage
 %\input{Results/RQ2-nd/heart-dataset/privacy_scores_mean.tex}
 
 \begin{figure}[H]
@@ -396,19 +407,60 @@ Among the kd-Laplace variants, the variant without optimizations adds the least 
         \label{fig:privacy_heart-dataset_comparison_nd_privacy_distance_plot}
     \end{minipage}
 \end{figure}
+The Piecewise mechanism for epsilon 0.1 to 3.5 for the seeds dataset adds the most Euclidean distance. After that, the Piecewise mechanism decreases significantly and scores lower than the kd-Laplace variants. For kd-Laplace/grid/optimal, the privacy distance starts lowest up to epsilon 1.5. After that, the variants of the kd-Laplace score are almost the same.
+
+For the heart dataset, the Piecewise mechanism also adds the most Euclidean distance, only now for all epsilons. The kd-Laplace/grid/optimal mechanism starts as the lowest again but is then the highest of all variants, and scores for epsilon 9 are almost equal to the Piecewise mechanism. The other two variants of kd-Laplace (grid / no optimization) score the same.
 
 \newpage
 \section{Dimensionality}
+The chart below provides two heat maps for the seeds dataset (top) and the heart dataset (bottom). The y-axis column represents the privacy budget (epsilon), and the x-axis represents the dimensions. In each cell of the matrix, the TPR (True Positive Rate) is indicated, so the darker the cell, the higher the TPR. A higher value implies that, on average, more information is leaked.
 \begin{figure}[H]
     \includegraphics[width=0.8\textwidth]{Results/RQ3/seeds-dataset/security_dimensions_heatmap_nd-laplace-optimal-truncated.png}
     \caption{Heatmap for TPR and dimensionality for the seeds-dataset for kd-Laplace/grid/optimal}
     \label{fig:security_dimensions_heatmap_seeds-dataset_comparison_nd-laplace-optimal-truncated}
+    \includegraphics[width=0.8\textwidth]{Results/RQ3/heart-dataset/security_dimensions_heatmap_nd-laplace-optimal-truncated.png}
+    \caption{Heatmap for TPR and dimensionality for the heart-dataset for kd-Laplace/grid/optimal}
+    \label{fig:security_dimensions_heatmap_hearts-dataset_comparison_nd-laplace-optimal-truncated}
 \end{figure}
-\begin{figure}[H]
-    \includegraphics[width=0.8\textwidth]{Results/RQ3/seeds-dataset/security_dimensions_heatmap_nd-piecewise.png}
-    \caption{Heatmap for TPR and dimensionality for the seeds-dataset for Piecewise}
-    \label{fig:security_dimensions_heatmap_seeds-dataset_comparison_nd-piecewise}
-\end{figure}
+Generally, a higher epsilon value corresponds to a higher TPR for the seeds dataset. Dimensions 4 and 5 have the highest scores (0.60 >) starting from epsilon 5. The bottom row achieves the highest scores, and for dimensions 4, 5, and 6, TPR values less than 0.40 are reported for epsilon 0.1. No clear trend is visible for the remaining epsilon values based on increasing dimensions.
+
+The heart dataset's lowest scores (< 0.50) are also observed for epsilon 0.1 and dimensions 4 and 5. From epsilon 2 onwards, the values increase (> 0.50 TPR) for dimensions 4 and 5. The heatmap becomes darker for dimensions higher than 5, indicating TPR values higher than 0.60. From epsilon 6 and 8 dimensions, the scores exceed 0.70 TPR.
 \newpage
 
 \section{Shape}
+This chapter examines three datasets with a specific shape: circle, line, and left-skewed.
+The adversary advantages (privacy) and AMI (utility) are compared between the mechanisms for all three datasets.
+We compare kd-Laplace/grid/optimal (green) and Piecewise (yellow).
+\begin{figure}[H]
+    \begin{minipage}[c]{0.55\textwidth}
+        \includegraphics[width=\textwidth]{Results/RQ3/circle-dataset/ami_circle-dataset_comparison.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.55\textwidth}
+        \includegraphics[width=\textwidth]{Results/RQ3/circle-dataset/shokri_mi_adv_circle-dataset_comparison.png}
+    \end{minipage}
+    \label{fig:advantage_circle-dataset_comparison}
+    \caption{The AMI (left) and adversary advantage (right) for the circle-dataset}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{minipage}[c]{0.55\textwidth}
+        \includegraphics[width=\textwidth]{Results/RQ3/line-dataset/ami_line-dataset_comparison.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.55\textwidth}
+        \includegraphics[width=\textwidth]{Results/RQ3/line-dataset/shokri_mi_adv_line-dataset_comparison.png}
+    \end{minipage}
+    \label{fig:advantage_line-dataset_comparison}
+    \caption{The AMI (left) and adversary advantage (right) for the line dataset}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{minipage}[c]{0.55\textwidth}
+        \includegraphics[width=\textwidth]{Results/RQ3/skewed-dataset/ami_skewed-dataset_comparison.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.55\textwidth}
+        \includegraphics[width=\textwidth]{Results/RQ3/skewed-dataset/shokri_mi_adv_skewed-dataset_comparison.png}
+    \end{minipage}
+    \label{fig:advantage_skewed-dataset_comparison}
+    \caption{The AMI (left) and adversary advantage (right) for the skewed dataset}
+
+\end{figure}
