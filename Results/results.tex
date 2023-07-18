@@ -441,7 +441,7 @@ We compare kd-Laplace/grid/optimal (green) and Piecewise (yellow).
     \label{fig:advantage_circle-dataset_comparison}
     \caption{The AMI (left) and adversary advantage (right) for the circle-dataset}
 \end{figure}
-
+There's a noticeable difference between the Piecewise and kd-Laplace/grid/optimal mechanisms in the circle dataset. For the AMI, Piecewise scores are significantly higher at epsilon 7 to 9. In comparison, kd-Laplace/grid/optimal scores are lower than 0.2 for most other epsilons. Regarding the adversary advantage, kd-Laplace/grid-optimal scores are lower than Piecewise, except for epsilon 1 and 1.5.
 \begin{figure}[H]
     \begin{minipage}[c]{0.55\textwidth}
         \includegraphics[width=\textwidth]{Results/RQ3/line-dataset/ami_line-dataset_comparison.png}
@@ -452,7 +452,7 @@ We compare kd-Laplace/grid/optimal (green) and Piecewise (yellow).
     \label{fig:advantage_line-dataset_comparison}
     \caption{The AMI (left) and adversary advantage (right) for the line dataset}
 \end{figure}
-
+In the line dataset, Piecewise outperforms kd-Laplace/grid/optimal for epsilon values above 5 for the AMI metric. For epsilons between 0.1 and 5, kd-Laplace/grid/optimal scores are higher. Regarding adversary advantage, Piecewise performs worse for epsilons between 0.1 and 1.5, while kd-Laplace/grid/optimal scores worse for epsilons 2 to 7.
 \begin{figure}[H]
     \begin{minipage}[c]{0.55\textwidth}
         \includegraphics[width=\textwidth]{Results/RQ3/skewed-dataset/ami_skewed-dataset_comparison.png}
@@ -464,3 +464,6 @@ We compare kd-Laplace/grid/optimal (green) and Piecewise (yellow).
     \caption{The AMI (left) and adversary advantage (right) for the skewed dataset}
 
 \end{figure}
+Kd-Laplace/grid/optimal is better than Piecewise for skewed datasets, across all epsilon values, with AMI scores ranging from 0.6 to 0.8. For adversary advantage, Kd-Laplace/grid/optimal outperforms Piecewise between 0.1 and 1.0 epsilon values. The adversary advantage stays low for both mechanisms (below 0.1).
+
+
