@@ -4,10 +4,11 @@ As indicated in the methodology, we tested four mechanisms (three variants of kd
 The results are presented in the following order:
 \begin{enumerate}
     \item Cluster utility: We use external validation (AMI/ARI) to compare the results between the three different cluster algorithms when trained privately with kd-laplace (\ref{fig:final-mechanism-design}) and piecewise.
-    \item Mechanism utility: We compare the three variants of kd-Laplace and Piecewise using external validation.
+    \item Mechanism utility: We compare the three variants of kd-Laplace and Piecewise using external validation. For the comparison, we use K-Means as a clustering algorithm.
     \item Privacy: We compare the three variants of kd-Laplace and Piecewise by evaluating the membership inference attack (MIA).
     \item Dimensionality: We evaluate the number of dimensions' influence on privacy.
     \item Shape: We are investigating the shape of the data to measure its impact on the utility and privacy of the kd-Laplace mechanism.
+          For the comparison, we use K-Means as a clustering algorithm.
 \end{enumerate}
 All results are reported for each dataset (See methodology: \ref{datasets-section}) separately.
 \newpage
@@ -283,14 +284,14 @@ For both datasets, the Piecewise mechanism adds the most privacy. When consideri
 \begin{figure}[H]
     \centering
     \begin{minipage}[c]{1.1\textwidth}
-        \includegraphics[width=0.55\textwidth]{Results/RQ2/seeds-dataset/shokri_mi_adv_seeds-dataset_comparison.png}
-        \includegraphics[width=0.55\textwidth]{Results/RQ2/seeds-dataset/tpr_seeds-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ2/seeds-dataset/shokri_mi_adv_seeds-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ2/seeds-dataset/tpr_seeds-dataset_comparison.png}
         \caption{Barplot for adversary advantage (left) and TPR (right) per privacy mechanism for seeds-dataset.}
         \label{fig:privacy_seeds-dataset_comparison_3d_aa_plot}
     \end{minipage}
     \begin{minipage}[c]{1.1\textwidth}
-        \includegraphics[width=0.55\textwidth]{Results/RQ2/heart-dataset/shokri_mi_adv_heart-dataset_comparison.png}
-        \includegraphics[width=0.55\textwidth]{Results/RQ2/heart-dataset/tpr_heart-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ2/heart-dataset/shokri_mi_adv_heart-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ2/heart-dataset/tpr_heart-dataset_comparison.png}
         \caption{Barplot for adversary advantage (left) and TPR (right) per privacy mechanism for heart-dataset.}
         \label{fig:privacy_heart-dataset_comparison_3d_aa_plot}
     \end{minipage}
@@ -342,14 +343,14 @@ Among the kd-Laplace variants, the variant without optimizations adds the least 
 \begin{figure}[H]
     \centering
     \begin{minipage}[c]{1.1\textwidth}
-        \includegraphics[width=0.55\textwidth]{Results/RQ2-nd/seeds-dataset/shokri_mi_adv_seeds-dataset_comparison.png}
-        \includegraphics[width=0.55\textwidth]{Results/RQ2-nd/seeds-dataset/tpr_seeds-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ2-nd/seeds-dataset/shokri_mi_adv_seeds-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ2-nd/seeds-dataset/tpr_seeds-dataset_comparison.png}
         \caption{Barplot for adversary advantage (left) and TPR (right) per privacy mechanism for seeds-dataset.}
         \label{fig:privacy_seeds-dataset_comparison_nd_aa_plot}
     \end{minipage}
     \begin{minipage}[c]{1.1\textwidth}
-        \includegraphics[width=0.55\textwidth]{Results/RQ2-nd/heart-dataset/shokri_mi_adv_heart-dataset_comparison.png}
-        \includegraphics[width=0.55\textwidth]{Results/RQ2-nd/heart-dataset/tpr_heart-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ2-nd/heart-dataset/shokri_mi_adv_heart-dataset_comparison.png}
+        \includegraphics[width=0.50\textwidth]{Results/RQ2-nd/heart-dataset/tpr_heart-dataset_comparison.png}
         \caption{Barplot for adversary advantage (left) and TPR (right) per privacy mechanism for heart-dataset.}
         \label{fig:privacy_heart-dataset_comparison_nd_aa_plot}
     \end{minipage}
@@ -403,6 +404,7 @@ The heart dataset's lowest scores (< 0.50) are also observed for epsilon 0.1 and
 \newpage
 
 \section{Shape}
+\todo[inline]{Uses incorrect k for k-means}
 This chapter examines three datasets with a specific shape: circle, line, and left-skewed.
 The adversary advantages (privacy) and AMI (utility) are compared between the mechanisms for all three datasets.
 We compare kd-Laplace/grid/optimal (green) and Piecewise (yellow).

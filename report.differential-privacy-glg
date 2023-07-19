@@ -1,2 +1,7 @@
-Warning: File 'report.differential-privacy-glo' is empty.
-Have you used any entries defined in glossary 'differential-privacy'?
+This is makeindex, version 2.16 [TeX Live 2022] (kpathsea + Thai support).
+Scanning style file ./report.ist.............................done (29 attributes redefined, 0 ignored).
+Scanning input file report.differential-privacy-glo....done (10 entries accepted, 0 rejected).
+Sorting entries....done (37 comparisons).
+Generating output file report.differential-privacy-gls....done (14 lines written, 0 warnings).
+Output written in report.differential-privacy-gls.
+Transcript written in report.differential-privacy-glg.

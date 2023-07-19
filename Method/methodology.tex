@@ -67,9 +67,8 @@ The packages for Python are:
 This section explains what methods/ algorithms we used and how we evaluate them.
 
 \subsection{Privacy mechanisms}
-
 We will evaluate two different privacy frameworks called kd-Laplace (our method) and piecewise (\ref{fig:piecewise-C}).
-For the first one, we test three configurations:
+For the first one, we test three configurations/variants:
 \begin{enumerate}
   \item kd-Laplace: Plain mechanism without any additions for truncation.
   \item kd-Laplace/grid: Mechanism with truncation using grid-remapping (See Equation: \ref{alg:grid-remapping-laplace}).
@@ -189,12 +188,12 @@ To measure cluster utility, both internal and external validation methods are us
   \item \textbf{External validation: }
         The external validation is measured by comparing the labels of non-private trained cluster algorithms with those trained using a privacy mechanism.
         The outcome is between 0 and 1, where 1 indicates the highest similarity (thus the best result).
-        AMI (Adjusted Mutual Information) and ARI (Adjusted Rand Index) are used to assess the external validity of the cluster algorithms (See section \ref{theory:evaluate}).
+        AMI (Adjusted Mutual Information) and ARI (Adjusted Rand Index) are used to assess the external validity of the cluster algorithms (See Section \ref{theory:evaluate}).
   \item \textbf{Internal validation: }
         The internal validation measures the intrinsic properties of the clustering algorithms.
         The outcome is a value between -1 and 1 for the SC evaluation.
         Where -1 indicates incorrect clustering and 1 dense clustering.
-        Another metric we use is the CH metric, where a higher value suggests good clustering.
+        Another metric we use is the CH metric, where a higher value suggests good clustering (See Section \ref{theory:evaluate}).
 \end{enumerate}
 Because the cluster algorithms rely on Euclidean distance, we need to apply some data standardization.
 For this purpose, we use standard scaling provided by the Scikit-learn package \footnote{https://scikit-learn.org/stable/modules/preprocessing.html}.
@@ -293,12 +292,13 @@ To do this, we have formulated several hypotheses.
         Since the noise is updated based on the density of the data points, the clusters stay preserved (\ref{alg:optimal-remapping-laplace}).
         As a result, the utility increases while the data points remain indistinguishable.
         Therefore, we have extended our mechanism with optimal remapping and named it kd-Laplace/grid/optimal.
+        This variant is included in the next three sections and further research using the next two hypotheses.
   \item \textit{The privacy leakage (adversary advantage) increases for a higher number of dimensions:}
         The hypothesis arose from our observation while investigating/implementing kd-laplace/grid/optimal (\ref{theory:privacy-utility-nd}).
         Adding more dimensions (5 >) decreases the added noise gradually.
-        The study is conducted for the kd-Laplace/grid/optimal mechanism and compared with the Piecewise mechanism.
-  \item \textit{The shape of the data negatively impacts the kd-Laplace mechanism in terms of privacy:}
-        Because the mechanism heavily relies on Euclidean distance, the shape (distance between the data points) can ultimately harm utility.
+        The study is conducted for the kd-Laplace/grid/optimal mechanism to analyze its behavior.
+  \item \textit{The shape of the data negatively impacts the kd-Laplace mechanism in terms of privacy and utility:}
+        Because the mechanism heavily relies on Euclidean distance, the shape (distance between the data points) can ultimately harm utility and privacy.
         We have already observed this difference when comparing the heart and seed datasets in research questions 1 and 2.
         But, to rule out the potential impact of the number of data points (the heart dataset has 2126 samples and the seed-dataset 210), we generate three synthetic datasets, each with 1000 samples (See section \ref{datasets-section}).
 
