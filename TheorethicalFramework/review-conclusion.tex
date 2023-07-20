@@ -1,26 +1,27 @@
 \subsection{Evaluation}
+It is important to compare our nd-Laplace method with other studies for this research.
+When looking at cluster methods that use an LDP (Local Differential Privacy) mechanism, it is common to see K-Means' application.
+Studies that are similar to ours mainly involve interactive LDP methods \citep{xia_distributed_2020, yuan_privacypreserving_2021, 9679364}.
+Among these methods, one is non-interactive but requires adjustments to the clustering algorithm \citep{sun_distributed_2019}.
 
-For this research, it is important to compare our nd-Laplace method with that of other studies.
-When looking at cluster methods that use an LDP (Local Differential Privacy) mechanism, it is common to see the application of K-Means.
-In terms of studies that are similar to ours, they mostly involve interactive LDP methods \citep{xia_distributed_2020, yuan_privacypreserving_2021, 9679364}.
-Among these methods, there is one that is non-interactive, but it requires adjustments to the cluster algorithm \citep{sun_distributed_2019}.
-
-For this reason, we mainly focus on general-purpose LDP methods.
-This category includes mechanisms that are not dependent on a sensitivity property, as it needs to be adjusted based on the function being calibrated (e.g., average).
-The LDP method's from this category can be used to add noise to the input data of a cluster algorithm, similar to what we are doing in this research with the nd-Laplace mechanism.
+Due to this reason, we mainly focus on general-purpose LDP methods for input perturbation.
+\todo[inline]{Add link to section I still have to add.}
+This way, we can utilize multiple cluster algorithms without modifying them.
+This category includes mechanisms not dependent on a sensitivity property, which must be adjusted based on the calibrated function (e.g., average).
+The LDP methods from this category can be used to add noise to the input data of a clustering algorithm, similar to what we are doing in this research with the nd-Laplace mechanism.
 
 Based on the literature study, two LDP mechanisms fall into this category: Harmony and Piecewise \citep{nguyen_collecting_2016, wang_collecting_2019}.
-The source code has been published for Piecewise, but no source code is available for Harmony.
-Therefore, we will only focus on comparing with the Piecewise mechanism.
-The following sections will be focused on investigating the Piecewise mechanism.
+Published open-source code is available for Piecewise but, unfortunately, not for Harmony.
+Therefore, we will only focus on the Piecewise mechanism as means of comparison material.
+The following sections focus on investigating the Piecewise mechanism.
 
 \subsubsection{Duchi et al.'s mechanism}
-As mentioned earlier, the Piecewise mechanism is based on Duchi et al.'s mechanism for one-dimensional data.
+The Piecewise mechanism is based on Duchi et al.'s mechanism for one-dimensional data.
 Therefore, we start by explaining this mechanism first.
-The latter is a relatively simple method based on the Bernoulli distribution \citep{duchi_minimax_2017}.
+Duchi et al.'s mechanism is a relatively simple method based on the Bernoulli distribution \citep{duchi_minimax_2017}.
 This distribution yields either a 0 (negative) or a 1 (false) based on specified probabilities \footnote{https://mathworld.wolfram.com/BernoulliDistribution.html}.
-The mechansim works on a tuple of the domain [-1, 1] and therefore returns either -1 or 1.
-Hence, the probability density function (PDF) for this function is as follows \footnote{https://mathworld.wolfram.com/BernoulliDistribution.html}:
+The mechanism works on a domain tuple [-1, 1] and returns -1 or 1.
+Hence, the \gls{pdf} of this function is as follows \footnote{https://mathworld.wolfram.com/BernoulliDistribution.html}:
 \begin{equation}
     P(n) =
     \begin{cases}
@@ -28,34 +29,32 @@ Hence, the probability density function (PDF) for this function is as follows \f
         p     & \text{if } n = 1
     \end{cases}
 \end{equation}
-The probabilities are calculated based on the input value, and can then be used to determine the estimate a mean value.
-In comparison to Laplace, Duchi et al's performs better in terms of variance for epsilons smaller than 2 \citep{wang_collecting_2019}.
-However, it performs worse when the epsilon value is higher because the algorithm does not take into account the privacy budget for values that are 0.
-The multidimensional varaint looks much a like the one-dimensional variant, but samples the noise each data-point independently.
+The probabilities are calculated based on the input value and can then be used to estimate a mean value.
+Compared to Laplace, Duchi et al. solution performs better in variance for epsilons smaller than 2 \citep{wang_collecting_2019}.
+However, it performs worse when the epsilon value is higher because the algorithm does not consider the privacy budget for values that are 0.
+The multidimensional variant looks like the one-dimensional version but samples each data point's noise independently.
 
-\subsubsection*{Piecewise mechanism} \ref{theory:piecewise}
+\subsubsection*{Piecewise mechanism} \label{theory:piecewise}
 The authors aim to create a method that combines the advantages of the Laplace mechanism and Duchi et al.'s methods \citep{wang_collecting_2019}.
-The goal is to reduce the variance for a wider range of privacy budgets.
-Similar to the aforementioned mechanism, the Piecewise mechanism also only accepts data within the range of -1 to 1.
-We first explain the one-dimensional variant, and then the multidimensional variant.
+The goal is to reduce the variance for a broader range of privacy budgets.
+Like the mechanism above, the Piecewise mechanism only accepts data from -1 to 1.
+We first explain the one-dimensional variant and then the multidimensional variant.
 
-The mechansim for one-dimensional has an output of $c \in [-C, C]$.
+The mechanism for one-dimensional has an output of $c \in [-C, C]$.
 Which is defined based on the privacy budget:
 \begin{equation}
     C = \frac{exp(\epsilon/2)+1}{exp(\epsilon/2) - 1} \\
     \label{fig:piecewise-C}
 \end{equation}
-The noise is sampled from this distribution, by conditionally executing one of two algorithms (see for reference the Wang et al.'s paper) \citep{wang_collecting_2019}.
-Due to the symmetric nature of the probability density function (PDF) of their mechanism, the authors can handle the value of 0.
+The noise is sampled from this distribution by conditionally executing one of two algorithms (see for reference Wang et al.'s paper) \citep{wang_collecting_2019}.
+Due to the symmetric nature of their mechanism's \gls{pdf}, the authors can handle the value of 0.
 Imagine it as a histogram with the distribution centered around 0.
 The histogram consists of three "parts" on the left, right, and center (0).
-This allows for the determination of the probability of 0 based on a certain likelihood, unlike in Duchi et al.'s solution.
+This approach allows for determining the probability of 0 based on a certain likelihood, unlike Duchi et al.'s solution.
 
-For the multidimensional approach, the authors generate a randomly sampled set of values $k$.
+The authors generate a randomly sampled set of values $k$ for the multidimensional approach.
 Next, for each value from $k$, the value is sampled using the one-dimensional Piecewise mechanism.
-One important factor in the overall calculation is the scale factor $C_d$, which, in addition to $C$ (referring to Equation \ref{fig:piecewise-C}), also takes into account the number of dimensions d.
+A critical factor in the overall calculation is the scale factor $C_d$, which, in addition to $C$ (referring to Equation \ref{fig:piecewise-C}), also considers the number of dimensions $d$.
 Finally, the authors also provide an extension to support categorical data.
-This is beyond the scope of this thesis for us.
-
 
 

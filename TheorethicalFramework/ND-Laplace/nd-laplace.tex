@@ -1,23 +1,24 @@
 \chapter{nD-Laplace}
 In this chapter, we delve deeper into geo-indistinguishability and the various mechanisms that work with it.
-This is done in the order of the number of dimensions supported by the mechanism:
+We also explain the theory behind the nD-Laplace mechanism and how we modify it and apply it for clustering.
+This explanation is build-up out of several sections, each dedicated 2, 3, and n-dimensional data:
 \begin{enumerate}
   \item 2D-Laplace
   \item 3D-Laplace
   \item nD-Laplace
 \end{enumerate}
-For each mechanism, we explain the equation for \gls{gi}, the mechanism, and the truncation of data.
+For each mechanism, we explain the equation for \gls{gi}, the mechanism, and the data truncation.
 
 \input{TheorethicalFramework/ND-Laplace/2d-laplace.tex}
 \input{TheorethicalFramework/ND-Laplace/3d-laplace.tex}
 \newpage
 \section{nD-Laplace}
-As mentioned in the previous chapter, the paper that was introduced by Min et al. is be-able to handle 3-dimensional data.
+As mentioned in the previous chapter, the paper introduced by Min et al. can handle 3-dimensional data.
 A small recap: a point $(r, \theta, \psi)$ gives us the spherical coordinates of a given 3-dimensional sphere.
-An important property for this is the fact that each of these coordinates can be generated separately \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
+An important property is that these coordinates can be generated separately \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
 The $r$ gives us the radius or distance from $(\theta, \psi)$ to the center of the sphere \footnote{https://mathworld.wolfram.com/SphericalCoordinates.html}.
-So, instead of having just these two coordinates, we are be-able to extend this to n-dimensions by considering an n-hypersphere \citep{fernandes_generalised_2019, 9646489}.
-To this end, besides points $\theta$ and $\psi$ we also consider $\theta \in S^n$, where S is a unit hypersphere.
+So, instead of having just these two coordinates, we can extend this to n-dimensions by considering an n-hypersphere \citep{fernandes_generalised_2019, 9646489}.
+To this end, in addition to points $\theta$ and $\psi$, we consider $\theta \in S^n$, where $S$ is a unit hypersphere.
 
 The first step to generate the noise is first to select the $r$.
 This method is almost identical to the one for 3-dimensional (\ref{eq:3d-laplace-r}).
@@ -27,13 +28,13 @@ But, instead of applying a scale of 3, the scale will be $n$ for the number of d
   \label{eq:nd-laplace-r}
 \end{equation}
 For the other dimensions, we consider a vector $U = (\theta_1, \theta_2, \theta_n)$ which is uniformly selected based on a unit $n$-hypersphere $S^n$ \citep{fernandes_generalised_2019}.
-We consider the work that was proposed by Marsaglia et al. for 4-sphere that can be used for selecting points from an n-hypersphere \citep{marsaglia_choosing_1972}.
+We consider the work that was proposed by Marsaglia et al. for a 4d-sphere that can be used for selecting points from an n-hypersphere \citep{marsaglia_choosing_1972}.
 This method resolves around selecting points from a hypersphere by using a uniform distribution for the domain [0, 1].
-We adopted the approach that uses the Gaussian distribution \footnote{https://mathworld.wolfram.com/SpherePointPicking.html}.
+For this purpose, an approach to draw data points from a Gaussian distribution is adopted \footnote{https://mathworld.wolfram.com/SpherePointPicking.html}.
 
 \subsection{Cartesian coordinates}
 As with the 2/3D-Laplace, the spherical coordinates need to be converted to Cartesian to be able to cluster.
-It is comparable to the way it was done in the previous chapters, however, as there are an $n$-amount of angles the equation is repeated and slightly different:
+It is comparable to the way it was done in the previous chapters; however, as there are an $n$-amount of angles, the equation is repeated and slightly different:
 \begin{align}
   x_1 = r * cos (\theta_1)                                          \\
   x_2 = r * sin (\theta_1) * cos (\theta_2)                         \\
@@ -41,7 +42,7 @@ It is comparable to the way it was done in the previous chapters, however, as th
   x_n = r * sin(\theta_{n-1}) * sin(\theta_{n-2}) * sin(\theta_{n-1})
   \label{eq:nd-laplace-cartesian}
 \end{align}
-If we combine sections 1 and 2 of this chapter, we are being able to give a good overview of the solution using a similar image as for the 2D and 3D variants (figure \ref{fig:nd-laplace-overview}).
+The combination of sections 1 and 2 of this chapter provides a good overview of the solution using a similar image as the 2D and 3D variants (figure \ref{fig:nd-laplace-overview}).
 \begin{figure}[H]
   \includesvg[width=0.6\textwidth]{TheorethicalFramework/ND-Laplace/Images/nd_laplace}
   \caption{Overview of the nD-Laplace mechanism}
@@ -49,14 +50,14 @@ If we combine sections 1 and 2 of this chapter, we are being able to give a good
 \end{figure}
 \subsection{Privacy versus utility} \label{theory:privacy-utility-nd}
 If we continue adding dimensions, we notice the noise is shrinking proportionally.
-To understand this behavior, we first have to examine the formula for a hypersphere’s volume.
+We must first examine the formula for a hypersphere’s volume to understand this behavior.
 \begin{equation}
   S_n = \frac{2 \pi^{n/2}}{\gamma(\frac{1}{2}n)}
 \end{equation}
-Where $\gamma$ is the gamma distribution that is determined based on the number of dimensions $n$ \footnote{https://mathworld.wolfram.com/Hypersphere.html}.
+$\gamma$ is the Gamma distribution determined based on the number of dimensions $n$ \footnote{https://mathworld.wolfram.com/Hypersphere.html}.
 As the amount of dimensions increases, the most volume is located on the hypersphere surface.
 When we convert the points to Cartesian coordinates, some will be located at the center (e.g., 0.5), while others will be close to the surface (e.g., 0.0).
-However, as the number of dimensions increases, the majority will be close to the surface (e.g., 0.99).
+However, as the number of dimensions increases, most will be close to the surface (e.g., 0.99).
 The decreasing amount of volume is illustrated using this figure:
 \begin{figure}[H]
   \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/volume.png}
@@ -65,21 +66,21 @@ The decreasing amount of volume is illustrated using this figure:
 \end{figure}
 
 The noise decreases as the dimensions increase, increasing utility.
-Hence, it is intriguing to observe the behavior of privacy relative to utility.
+Hence, observing the behavior of privacy relative to utility is intriguing.
 This behavior will be further emphasized in a later stage of this research.
 \newpage
 \subsection{Truncation}
-For 2D/3D Laplace, a grid and cuboid were respectively introduced to truncate noise mechanisms \citep{DBLP:journals/corr/abs-1212-1984,9646489}.
-This section extends the work done for 2D and 3D Laplace (\ref{theory:truncation}, \ref{2d:optimizing}) \newline
-This section introduces an extension for handling any number of dimensions, which can also substitute for 2D/3D.
-We want to note that this section focuses on improving utility with remapping.
-Any remap function preserves geo-indistinguishability \cite{chatzikokolakis_efficient_2017}, so the required privacy is still preserved.
+In section \ref{2d:optimizing}, we introduced a method to optimize the 2D Laplace mechanism based on crowdedness (point density).
+This method is extended with the help of a more recent paper provided by Chatzikokolakis et al. \citep{chatzikokolakis_efficient_2017}.
+We use this work to extend and optimize the grid-remapping method for 2D/3D Laplace (Sections \ref{theory:truncation} and \ref{2d:optimizing}) and introduce optimal grid-remapping to improve the utility further.
+We want to emphasize that this section focuses on improving utility with remapping.
+Any remap method preserves geo-indistinguishability \cite{chatzikokolakis_efficient_2017}, so the required privacy is still preserved. \newline
 
 Recalling both mechanisms, the 2D version operates on a plane and approximates on a grid $G$, while the 3D version works in a 3D space using a cuboid grid.
 Given a set of input points $X \subset R^2$, we can truncate points that are outside the domain by remapping them to points within $G$ ($Z = X \cap G$) \citep{DBLP:journals/corr/abs-1212-1984}.
 Here, $X$ represents other data points reported locally by the same user.
 To extend this approach to n-dimensional data, we need an efficient way to search points in an n-dimensional hypersphere.
-To do this, we adopt the idea proposed by Chatzikokolakis et al. of using a kd-tree for efficient searching of the grid \citep{chatzikokolakis_efficient_2017}.
+To do this, we adopt the idea proposed by Chatzikokolakis et al. of using a kd-tree to search the grid efficiently \citep{chatzikokolakis_efficient_2017}.
 In their research, they describe the utilization of a kd-tree for searching nearby points for a given point.
 For this reason, we also use a kd-tree for the following tasks:
 \begin{enumerate}
@@ -87,16 +88,17 @@ For this reason, we also use a kd-tree for the following tasks:
   \item Finding nearby points for $x \in X$ and $z \in Z$ (section \hyperref[theory:optimal-remapping]{Optimal remapping}).
 \end{enumerate}
 For visualization purposes, this section will primarily focus on 2D data.
-However, it is important to emphasize that the same algorithm will also be applied to 3D and nD data. The underlying principles and steps of the algorithm remain the same.
+However, it is essential to emphasize that the same algorithm will also be applied to 3D and nD data.
+The underlying principles and steps of the algorithm remain the same.
 
-We first give an introduction to kd-trees on the next page and then explain how we apply them for the two tasks.
+We first introduce kd-trees on the next page and then explain how we apply them for the two tasks.
 
 \newpage
 \subsubsection*{Kd-trees} \label{theory:kd-trees}
-A kd-tree is a algorithm that can be used to search a grid for nearby points \citep{bentley_multidimensional_1975}.
-It is capable of doing so, by recursively splitting the grid into a binary tree to search for grid coordinates \citep{washington_k-d_2002}.
-In addition to this, it preserves spatial information of the data so it can be utilised to find nearby points using Euclidean distance (nearest neighbor search).
-The following example provides an idea on how this works (Figure \ref{fig:kd-tree-theory}):
+A kd-tree algorithm can search a grid for nearby points \citep{bentley_multidimensional_1975}.
+It can do so by recursively splitting the grid into a binary tree to search for grid coordinates \citep{washington_k-d_2002}.
+In addition, it preserves spatial information of the data so it can be utilized to find nearby points using Euclidean distance (nearest neighbor search).
+The following example provides an idea of how this works (Figure \ref{fig:kd-tree-theory}):
 \begin{figure}[H]
   \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/kd-tree-part1.png}
   \caption{Representation of constructing a kd-tree with 2 dimensions \citep{washington_k-d_2002}.}
@@ -105,21 +107,22 @@ The following example provides an idea on how this works (Figure \ref{fig:kd-tre
 Take, for example, the 2D Laplace algorithm that utilizes a plane (left side).
 The data points can be divided based on their x and y coordinates.
 Each coordinate becomes a node in the binary tree, and the grid is divided based on these splits.
-The binary tree allows us to efficiently search the grid. An expample of this is provided in the following image (Figure \ref{fig:kd-tree-searching-theory}):
+The binary tree allows us to search the grid efficiently.
+An example of this is provided in the following image (Figure \ref{fig:kd-tree-searching-theory}):
 \begin{figure}[H]
   \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/kd-tree-part2.png}
   \caption{Representation of a searching a kd-tree with 2 dimensions \citep{washington_k-d_2002}.}
   \label{fig:kd-tree-searching-theory}
 \end{figure}
 In the example, we are searching for all points that fall within the radius of a random query point.
-Thanks to the grid being divided into a binary tree, a portion of the grid can be efficiently searched, evaluated and referenced.
-The biggest advantage is that this greatly reduces the complexity of searching.
-Constructing the kd-tree only costs $O(kn)$, where $k$ is the number of dimensions and $n$ is the dataset size.
-Searching for a nearest neighbor is a little less efficient, with a time complexity of $O(\log n)$ \citep{washington_k-d_2002}.
+Thanks to the grid being divided into a binary tree, a portion can be efficiently searched, evaluated, and referenced.
+The most significant advantage is that this greatly reduces the complexity of searching.
+Constructing the kd-tree costs $O(kn)$, where $k$ is the number of dimensions and $n$ is the dataset size.
+Searching for the nearest neighbor is a little less efficient, with a time complexity of $O(\log n)$ \citep{washington_k-d_2002}.
 A reference to the Big O notation can be found in the attachment \todo{add reference}.
 \subsubsection{Grid with kd-tree remapping} \label{theory:grid-remapping}
 As explained in the previous paragraph, a kd-tree can be used to perform a nearest neighbor search.
-This is highly relevant to our research as it proves to be beneficial for the optimizations we are striving for.
+This search-method is highly relevant to our research as it proves to be beneficial for the optimizations we are striving for.
 To this end, we adopt this approach for remapping the perturbed datapoints $z \in Z$ to a grid $G$. \newline
 We have illustrated the three steps required for this below:
 \begin{figure}[H]
@@ -131,58 +134,58 @@ We have illustrated the three steps required for this below:
 %The root is split by the x-axis, and since 4.5 is greater than 3.5, we go to the right.
 %This means that we no longer need to consider the left (greyed out) part of the grid.
 %We continue traversing the tree until we find the nearest point based on Euclidean distance.
-The above illustration presents the grid-remapping algoritm.
+The above illustration presents the grid-remapping algorithm.
 Firstly, a grid is generated, where each (blue) point represents the center of a grid cell.
 Together, these centroids form the grid dataset, denoted as $G$.
 The yellow points and $x_i$ are part of the original collection, denoted as $X$.
 Here, $r$ represents the radius used to generate a private version of the data point $x_i$, named $z_i$, based on 2D-Laplace (in this case).
-In the illustration, you can observe that $z_i$ falls outside the original domain of $X$, and for this reason, it needs to be remapped.
+In the illustration, you can observe that $z_i$ falls outside the original domain of $X$, so it needs to be remapped.
 We accomplish this by utilizing the nearest-neighbor search from the kd-tree algorithm, allowing us to search in $X \cup G$.
 Using this algorithm, we can effectively remap point $z \in Z$ to either $X$ or $G$ based on the closest Euclidean distance (Algorithm \ref{alg:grid-remapping-laplace} and Algorithm \ref{alg:find-outside-domain-laplace}).
 
-The utility of this method depends on the number of grid cells in $G$, since a smaller distance will result in more frequent mapping to the surface of the grid.
+The utility of this method depends on the number of grid cells in $G$ since a smaller distance will result in more frequent mapping to the surface of the grid.
 When $\epsilon$ is very low (and thus farther away), the data points are more likely to map to the grid surface (\ref{fig:3d-laplace-noise}, \ref{fig:3d-laplace-example}).
 Increasing the number of grid cells can improve the utility, but this comes at the cost of significantly increased space complexity for $k$ dimensions.
-This is because a grid of $n*m$ dimensions has a complexity of $O(n^2)$.
-Therefore, we also explore the optimal remapping algorithm proposed by Chatzikokolakis et al \citep{chatzikokolakis_efficient_2017}.
+This is because a grid of $n*m$ dimensions has a $O(n^2)$ complexity.
+Therefore, we also explore the optimal remapping algorithm proposed by Chatzikokolakis et al. \citep{chatzikokolakis_efficient_2017}.
 \todo[inline]{Clarify algorithms / rewrite algorithms}
 \input{TheorethicalFramework/ND-Laplace/algorithms/outside-domain.tex}
 \input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}
 \newpage
 \subsubsection{Optimal remapping} \label{theory:optimal-remapping}
-As we discussed, the remapping will be performance intensive to be-able to provide good utility and that is why we adopt the optimal remapping \citep{chatzikokolakis_efficient_2017}.
-Consider the grid that was proposed in \ref{fig:kd-tree}.
+As discussed, the remapping will be performance intensive to provide good utility, so we adopt the optimal remapping \citep{chatzikokolakis_efficient_2017}.
+Consider the grid proposed in \ref{fig:kd-tree}.
 After remapping point $z_i$, it is mapped to the center for the grid cell.
 Based on the cell width, the distance to the original point $x_i$ and $ z_i$ could be really large.
-Our goal is to remap the center of the grid cell (now $z_i$) to a point that is closer to $x_i$ (if applicable). \newline
-This is visualized by zooming into the last step of the grid-remapping (Figure \ref{fig:kd-tree}).
+We aim to remap the center of the grid cell (now $z_i$) to a point closer to $x_i$ (if applicable). \newline
+This remapping is visualized by zooming into the last step of the grid-remapping (Figure \ref{fig:kd-tree}).
 \begin{figure}[H]
   %\includegraphics[width=0.7\textwidth]{TheorethicalFramework/ND-Laplace/Images/optimal-remapping.png}
   \includesvg[width=1\textwidth]{TheorethicalFramework/ND-Laplace/Images/optimal-remapping}
   \caption{Representation of optimal remapping \citep{chatzikokolakis_efficient_2017}, where $z_i$ is remapped to $x_i$ using $\sigma(x)$ instead of the center of the grid cell.}
   \label{fig:optimal-remapping}
 \end{figure}
-In Figure \ref{fig:optimal-remapping} we can observe that $z_i$ is remapped to the center of the grid cell as a consequence of the grid-remapping.
+In Figure \ref{fig:optimal-remapping}, we can observe that $z_i$ is remapped to the center of the grid cell as a consequence of the grid-remapping.
 For the reasons mentioned earlier, this is not optimal, and we can further optimize it by utilizing the other data points.
 The remapping algorithm works on the idea of crowded places \ref{2d:optimizing}, with the intuition that a crowded place leverages indistinguishability by crowdedness \citep{chatzikokolakis_efficient_2017}.
 For the remainder of this thesis, we will use the term "density" instead of "crowdedness" because it better aligns with the clustering of data.
 
-The first step is to calculate $B_r(z)$, which refers to all the data points that fall within the original radius $r$ around the data point $z_i$.
-The next step in the algorithm is to collect the data points around $x_i$, in order to calculate how closely it can be remapped to $z_i$ while preserving distinguishability.
-This is the collection (convex hull) of all original data points $x \in X$ that are close to $x_i$, determined based on the radius $r$ around $x_i$.
+The first step is to calculate $B_r(z)$, which refers to all the data points within the original radius $r$ around the data point $z_i$.
+The next step in the algorithm is to collect the data points around $x_i$ to calculate how closely it can be remapped to $z_i$ while preserving distinguishability.
+This variable is the collection (convex hull) of all original data points $x \in X$ close to $x_i$, determined based on the radius $r$ around $x_i$.
 Finally, we combine both sets to obtain $Q_r = B_r \cap X$.
 Now that we have the sets of points around $x_i$ and $z_i$, we can calculate the density for each point $q \in Q_r$ \citep{chatzikokolakis_efficient_2017}:
 \begin{equation}
   \forall x \in Q_r \quad \sigma(x) = \frac{w(x)e^{-\epsilon d(x, z)}}{\sum{_{q\in Q_r} w(q)e^{-\epsilon d(q, z)}}}
   \label{eq:optimal-remapping-formula-1}
 \end{equation}
-Where $w(q)$ is the weight of a point $q in Q_r$, and can be seen as points that are visited earlier by the user or other users (e.g. point of interests).
+Where $w(q)$ is the weight of a point $q in Q_r$ and can be seen as points visited earlier by the user or other users (e.g., point of interest).
 We will revisit this topic in the next paragraph when discussing the practical implementation of the nd-Laplace algorithm.
-The same applies to $w(x)$, but for an individual point $q \in Q_r$ instead of the summation.
-The outcome of the formula is a collection of values that indicate the degree of density. Which we call $\sigma \in S$.
-With this data, we are be-able to calculate a new $z'$ that is closer to $x_i$ to minimize the expected loss of utility \citep{chatzikokolakis_efficient_2017}.
+The same applies to $w(x)$ but for an individual point $q \in Q_r$ instead of the summation.
+The outcome of the formula is a collection of values that indicate the degree of density, which we call $\sigma \in S$.
+With this data, we can calculate a new $z'$ closer to $x_i$ to minimize the expected loss of utility \citep{chatzikokolakis_efficient_2017}.
 
-The collection $S$ can be seen as the coefficient for each point $x \in X$, that can be used as a scale to apply for each point $X$ \citep{chatzikokolakis_efficient_2017}:
+The collection $S$ can be seen as the coefficient for each point $x \in X$, which can be used as a scale to apply for each point $X$ \citep{chatzikokolakis_efficient_2017}:
 \begin{equation}
   \bar{\sigma} = \sum_{\sigma \in S} \sigma(x) * x
   \label{eq:optimal-remapping-formula-2}
@@ -213,22 +216,29 @@ Finally, the $z'$ is calculated by calculating the average with the probabilitie
 %Unfortunately, optimal remapping is not possible for users that do not have sufficient data (e.g. new users).
 %The remapping is not applied for these users and is also not applied for $z$ if it is within the domain of $X$.
 \subsubsection{Practical implementation}
-It is difficult to interpret $w(q) \in Q_r$ beforehand based on other users, as we do not have this information (there is a way, but we explain this at the end of this section).
+It is challenging to interpret $w(q) \in Q_r$ beforehand based on other users, as we do not have this information (there is a way, but we explain this at the end of this section).
 To this end, we will interpret $w(x)$ as the number of points within the radius $r$ around a point $x \in Q_r$.
-Afterwards, it is possible to divide the outcome of this value by the sum of these points (as done in Algorithm \ref{eq:optimal-remapping-formula-1}).
-We therefore remain to the same algoritm as proposed by Chatzikokolakis et al. but interpret the weight differently.
+Afterward, it is possible to divide the outcome of this value by the sum of these points (as done in Algorithm \ref{eq:optimal-remapping-formula-1}).
+We, therefore, remain with the same algorithm as proposed by Chatzikokolakis et al. but interpret the weight differently.
 
-It is however still possible to interpret $w(q)$ as the weight based on other user's datapoints.
+It is, however, still possible to interpret $w(q)$ as the weight based on other users' data points.
 This requires us to implement the mechanism interactively.
-In this approach, all clients perturb their data and sent it to the server.
-The server clusters the private data and calculates weight based on cluster information (e.g., crowdedness/density) and shares it with the clients.
+In this approach, all clients perturb their data and send it to the server.
+The server clusters the private data, calculates weight based on cluster information (e.g., crowdedness/density), and shares it with the clients.
 The clients then use the optimal remap and share their private information with the server again.
 Although this system requires only a single round-trip between server and clients, it reveals cluster information, so we prefer the non-interactive setup.
 
 \input{TheorethicalFramework/ND-Laplace/algorithms/optimal-remapping.tex}
-
-\subsection{Putting it together}
+\newpage
+\subsection{Putting it together: kd-Laplace}
+Now that we have defined everything, we can write the algorithm in a step-by-step manner:
 \input{TheorethicalFramework/ND-Laplace/algorithms/nd-laplace.tex}
+
+It is important to note that with the introduction of this algorithm, it is no longer a non-interactive method, as the data points now interact with each other.
+Therefore, we expect the introduction of optimal grid remapping with kd-tree will bring more utility \citep{wang_comprehensive_2020, xiongComprehensiveSurveyLocal2020}.
+The introduction of the kd-tree is also why we present our method as \textit{kd-Laplace}, where $k$ is the number of dimensions.
+
+
 %\subsection{Extending to $d_x$-privacy}
 %\todo[inline]{Find if this is possible}
 
