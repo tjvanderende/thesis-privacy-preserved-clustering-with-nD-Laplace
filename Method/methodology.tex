@@ -20,7 +20,7 @@ The datasets are sourced from the UCI Machine Learning Repository \citep{noautho
         We conducted experiments with 2, 3, and 7 dimensions and decided to use the following features (based on the correlation between the features):
         \begin{enumerate}
           \item 2-dimensional data: area and perimeter.
-          \item 3-dimensional data: area, perimeter, and length of the kernel.
+          \item 3-dimensional data: the kernel's area, perimeter, and length.
           \item 7-dimensional data: All numerical features.
         \end{enumerate}
   \item \textbf{Heart dataset} \footnote{https://archive.ics.uci.edu/ml/datasets/cardiotocography}: This dataset is selected because of the mixed data and amount of instances.
@@ -138,10 +138,10 @@ And iteratively calculated while considering the damping factor.
   \caption{Affinity Propagation hyperparameters for the datasets}
   \label{tab:ap-formula-sklearn}
 \end{table}
+\newpage
 \subsubsection{OPTICS}
-As previously explained in section \ref{theory:clustering-dbscan}, we use OPTICS to automatically implement DBSCAN to determine the epsilon/radius.
-Instead of referring to \gls{dbscan}, we will now refer to OPTICS in the remaining parts of this thesis.
-\todo[inline]{Provide algorithm implementation}
+As previously explained in section \ref{theory:clustering-dbscan}, we use \gls{optics} to automatically implement \gls{dbscan} to determine the epsilon/radius.
+
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline

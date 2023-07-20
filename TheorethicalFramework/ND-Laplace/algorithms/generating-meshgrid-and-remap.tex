@@ -6,11 +6,11 @@
     \Require $grid$ \Comment grid structure ($n * m$)
     %\State $tree \gets KDTree(X)$ \Comment construct a KDTree from the original data.
     %\State $X_{domain} \gets$ \Call{KDTree::query}{$Z$} \Comment find the closest points.
-    \State $d_{X} = dist(Z, X)$ \Comment euclidean distances
-    \State $d_{grid} = dist(Z, grid)$ 
-    \State $Z_{out-domain} \gets FindPointsOutsideDomainX(X, Z)$ \Comment Algorithm \ref{alg:find-outside-domain-laplace}
-    \State $grid_{tree} \gets KDTree(grid)$ 
-    \State $grid_{mask} \gets KDTree::query(Z)$ \Comment find indices of $z \in Z$ that are closeby grid cells.
+    \State $d_{X} = \Call{Z::dist}{X}$ \Comment euclidean distances between $X$ and $Z$.
+    \State $d_{grid} = \Call{Z::dist}{grid}$
+    \State $Z_{out-domain} \gets \Call{X::FindPointsOutsideDomain}{Z}$ \Comment Algorithm \ref{alg:find-outside-domain-laplace}
+    \State $grid_{tree} \gets \Call{KDTree::BuildTree}{grid}$  \Comment create kd-tree
+    \State $grid_{mask} \gets \Call{KDTree::query}{Z}$ \Comment find indices of $z \in Z$ that are closeby grid cells.
     \State $Z_{grid-mask} \gets Z_{out-domain} \cup d_{grid} < d_{X}$ \Comment All points $z \in Z$ that are closeby grid cells and are outside domain.
     \State $Z` \gets Z[grid[grid_{mask}][Z_{grid-mask}]]$ \Comment combinate masks to set appropiate indexes to $g \in grid$.
     \State \Return $Z`$

@@ -118,12 +118,12 @@ In the example, we are searching for all points that fall within the radius of a
 Thanks to the grid being divided into a binary tree, a portion can be efficiently searched, evaluated, and referenced.
 The most significant advantage is that this greatly reduces the complexity of searching.
 Constructing the kd-tree costs $O(kn)$, where $k$ is the number of dimensions and $n$ is the dataset size.
-Searching for the nearest neighbor is a little less efficient, with a time complexity of $O(\log n)$ \citep{washington_k-d_2002}.
-A reference to the Big O notation can be found in the attachment \todo{add reference}.
+Searching for the nearest neighbor is a little less efficient, with a time complexity of $O(\log n)$ \citep{washington_k-d_2002} (See Figure \ref{theory:big-o-graph} for an overview of the Big-O notation).
+A reference to the Big O notation can be found in the appendix \todo{add reference}.
 \subsubsection{Grid with kd-tree remapping} \label{theory:grid-remapping}
 As explained in the previous paragraph, a kd-tree can be used to perform a nearest neighbor search.
-This search-method is highly relevant to our research as it proves to be beneficial for the optimizations we are striving for.
-To this end, we adopt this approach for remapping the perturbed datapoints $z \in Z$ to a grid $G$. \newline
+This search method is highly relevant to our research as it proves to be beneficial for the optimizations we are striving for.
+To this end, we adopt this approach for remapping the perturbed data points $z \in Z$ to a grid $G$. \newline
 We have illustrated the three steps required for this below:
 \begin{figure}[H]
   \includegraphics[width=1\textwidth]{TheorethicalFramework/ND-Laplace/Images/KD-tree.png}
@@ -148,7 +148,7 @@ When $\epsilon$ is very low (and thus farther away), the data points are more li
 Increasing the number of grid cells can improve the utility, but this comes at the cost of significantly increased space complexity for $k$ dimensions.
 This is because a grid of $n*m$ dimensions has a $O(n^2)$ complexity.
 Therefore, we also explore the optimal remapping algorithm proposed by Chatzikokolakis et al. \citep{chatzikokolakis_efficient_2017}.
-\todo[inline]{Clarify algorithms / rewrite algorithms}
+
 \input{TheorethicalFramework/ND-Laplace/algorithms/outside-domain.tex}
 \input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}
 \newpage
