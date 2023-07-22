@@ -1,14 +1,44 @@
 \section{Literature review} \label{theory:literature-review}
+\todo[inline]{Not sure if this is the right place for this section}
 In the search for related literature, we focused mainly on (L)DP mechanisms that can be used for general purposes (e.g. not only mean estimation), which is the most comparable to our mechanism.
 The related literature is divided into two parts:
 \begin{enumerate}
+  \item Differential privacy and clustering
   \item Differential privacy methods
   \item Cluster methods with (L)DP
 \end{enumerate}
 Afterward, we provide a summary for both in a table.
 This table includes components such as the type (LDP or DP) and whether a public code is available.
 
+\subsection{Differential privacy and clustering}
+There are different ways how to combine differential privacy with clustering \citep{baraheem_survey_2022}:
+\begin{enumerate}
+  \item Input perturbation: This method adds noise to the input data, so the cluster algorithms are trained on perturbed data.
+  \item Gradient perturbation: The term gradient is used in machine learning algorithms that solve an optimization problem like deep learning \citep{hassan_differential_2019}.
+        Perturbing the gradients ensures the optimization algorithm is private \citep{ji_differential_2014}.
+  \item Output/label perturbation: This method adds noise to the output of the clustering algorithm.
+        The noise is added to the cluster labels, so the results are perturbed.
+  \item Objective perturbation: This method slightly differs from output/label perturbation but also adds noise to the output.
+        The difference is it is added to the output of a loss function instead of the labels (for example, logistic regression) \citep{baraheem_survey_2022}.
+\end{enumerate}
+This research aims to create a differential privacy framework training clustering on distributed data (See Section \ref{chapter:introduction}).
+%The introduction explains that most differential privacy and clustering literature focuses on K-Means.
+Many approaches targeting local differential privacy mechanisms must adapt the clustering algorithm (for example, k-Cluster).
+For this reason, we concentrate on input perturbation in this study, as it allows the dataset to be used multiple times to train various clustering algorithms.
+\begin{figure}[ht]
+  \includegraphics[width=0.6\textwidth]{./TheorethicalFramework/ND-Laplace/Images/overview-clustering&dp.png}
+  \caption{Example on how our approach of private training works for clustering and \gls{dp}}
+  \label{fig:overview-clustering-and-dp}
+\end{figure}
+\begin{enumerate}
+  \item Left, each local dataset is perturbed using our method (locally).
+  \item All data is collected and used to train a clustering algorithm (on the server).
+  \item A cluster model is privately trained because we train the algorithm on private data.
+  \item Because we use input perturbation, a third party like a "data analyst" can also directly access the data privately.
+\end{enumerate}
+The following section focuses on the differential privacy algorithms that are of interest to this research.
 
+\newpage
 \subsection{Differential privacy methods}
 As discussed earlier, the Laplace method was the first to establish \gls{dp} \citep{dwork_differential_2006}.
 The first paper we discuss is provided by Soria-Comas et al. and considers the distribution of the dataset for generating noise \citep{soria-comas_optimal_2013}.
