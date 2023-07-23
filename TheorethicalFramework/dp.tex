@@ -18,7 +18,7 @@ For this reason, a few sections will be devoted to outlining the mathematical ba
 We will examine which factors influence this calibration and whether other methods contribute.
 Afterward, we will further explain other types of differential privacy (local and geo-indistinguishable) similarly.
 \begin{figure}[h!]
-  \includegraphics[width=0.2\textwidth]{TheorethicalFramework/Differential privacy/central-dp.png}
+  \includesvg[width=1\textwidth]{TheorethicalFramework/Differential privacy/central-dp}
   \caption{General approach for setting up (central) differential privacy.}
   \label{fig:central-dp}
 \end{figure}
@@ -77,7 +77,7 @@ As the name suggests, \gls{ldp} is executed on the client side instead of on the
 Local differential privacy removes the "trusted" curator (See Figure \ref{fig:local-dp}), preventing sensitive data leakage even if an attacker gains access to the dataset \citep{del_rey_comprehensive_2020}.
 The definition for \gls{ldp} is the as for equation \ref{approxiate-dp} with $\delta = 0$ being equal to equation \ref{pure-dp}.
 \begin{figure}[ht]
-  \includegraphics[width=0.4\textwidth]{TheorethicalFramework/Differential privacy/master-thesis-Pagina-8.png}
+  \includesvg[width=1\textwidth]{TheorethicalFramework/Differential privacy/local-dp}
   \caption{Local differential privacy, which moves the noise-adding step to the client-side.}
   \label{fig:local-dp}
 \end{figure}
@@ -109,10 +109,10 @@ The last and most important type of differential privacy for this study is \gls{
 \gls{gi} can be applied to preserve privacy using a differential privacy method specific to spatial data \citep{DBLP:journals/corr/abs-1212-1984}.
 Consider a local-based system (LBS) that provides a map service to its users (e.g., Google Maps).
 The users can query the LBS for a route from their current location to a destination.
-This information is strictly personal, and the LBS should not be able to track the user's location.
-Instead, the LBS should only receive an approximate location enough to provide the service at an adequate level.
+%This information is private, and the LBS should not be able to track the user's location.
+Instead of the exact (private) location, the LBS should only receive an approximate location enough to provide the service at an adequate level.
 This approximation happens entirely locally, so no central server exists.
-\newpage
+
 Users can define a privacy radius $r$ around their location $x$.
 A fake location $z$ is generated within this radius based on the Euclidean distance $d$. \newline
 The amount of noise within $r$ depends on the privacy budget $\epsilon$.

@@ -1,28 +1,77 @@
 \section{Clustering}
 This section explains the various cluster algorithms used in the research.
 Subsequently, we will explain and indicate how the hyperparameters are handled in the research for each algorithm.
-
 \subsection{Types of cluster algorithms}
-This sub-section describes the various types of cluster algorithms.
-Subsequently, we will investigate the cluster algorithms and select a few suitable for this study.
+Multiple cluster types can be utilized for clustering data \citep{xu_comprehensive_2015}.
+For this study, we selected the types that use some form of distance for clustering.
+We explain each cluster type with corresponding cluster algorithms.
+\subsubsection{Partition based clustering}
+With this type, the data is partitioned and allocated into a fixed amount of clusters.
+A well-known and popular cluster algorithm is K-means.
+Based on Loyd et al.'s original method, this algorithm randomly selects $k$ points as cluster centroids \citep{1056489}.
+Iteratively each data point is assigned to its nearest centroid.
+It keeps proceeding until the distance between the cluster centroids is optimal.
+%The algorithm can also be used in a distributed manner.
+%Instead of calculating the centroids locally, each party receives the centroids and calculates their nearest centroids [Xia et al., 2020].
+Although K-means serves its purpose well, it requires pre-defining the number of clusters and is sensitive to outliers \citep{keller_balancing_2021}.
+Therefore, a parameterless alternative to K-means is \gls{ap} \citep{frey_clustering_2007}.
 
-\todo[inline]{Explain why these three algorithms}
+\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
+Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
+
+\subsubsection{Density based clustering}
+The data points are partitioned for this clustering type based on nearest neighbors \citep{fahad_survey_2014}.
+A region with a high data density is considered a cluster \citep{xu_comprehensive_2015}.
+A popular density-based cluster algorithm is \gls{dbscan}.
+The method was introduced by Ester et al. and worked by drawing a radius ($radius(\epsilon)$, not to be confused with the privacy budget $\epsilon$) around data points \citep{ester_density-based_nodate}.
+It then groups all points within this radius as clusters.
+The main advantage is its ability to find arbitrarily shaped clusters and detect outliers \citep{liu_privacy_2012}.
+
+Another density-based algorithm is \gls{optics}, an extension of \gls{dbscan}.
+This algorithm attempts different $radius(\epsilon)$ values to achieve the best result \citep{ankerst_optics_nodate}.
+Instead of directly assigning data points to clusters, specific distance calculations are stored in a list.
+For each data point, it tracks two values: core distance and reachability distance.
+These values represent the shortest distance to make a data point, $p$, a core point, and the shortest distance from $p$ to another core point, $p'$, respectively.
+A specific ordering is maintained to ensure that clusters with higher density values are processed first.
+Based on this ordering, the \gls{dbscan} algorithm is constructed hierarchically \citep{schubert_dbscan_2017}.
+
+
+\subsubsection{Hierarchical clustering}
+The name originates from the way hierarchical clustering works.
+A hierarchy of clusters is generated and merged according to the closeness of data points \citep{meng_private_2021}.
+One of the best known Hierarchical cluster algorithms is \gls{birch}.
+This algorithm works by constructing a tree with nodes (so-called clustering feature) \citep{zhang_birch_1996}.
+The algorithm does this iteratively until a cluster becomes too large or diverse.
+The algorithm will split again into similar clusters until all data is processed \citep{zhang_birch_1996}.
+
+\subsubsection{Research direction}
+Based on the different types of clustering algorithms, we have chosen to apply both partition-based clustering algorithms in this research.
+K-Means, widely used in the literature, will be utilized alongside the parameterless alternative, \gls{ap}.
+
+For density-based clustering, we will solely focus on OPTICS in this study.
+The parameter $radius (\epsilon)$ in \gls{dbscan} is influenced by the data shape, which is further affected by our privacy mechanism.
+However, as \gls{optics} automatically determines the $radius(\epsilon)$, the impact of this parameter is less significant, enabling us to emphasize the evaluation of the privacy mechanism itself.
+
+As for hierarchical clustering, we have decided to exclude it from the initial scope of the research.
+This type of clustering presents substantial differences in its approach compared to the other clustering algorithms.
+Consequently, we will concentrate on partition-based and density-based clustering methods for the current investigation, ensuring a more cohesive and manageable research scope.
+
+%Because the \gls{dbscan}'s $epsilon'$ algorithm is sensitive to the shape $epsilon'$ value, we utilize \gls{optics} for this research instead of \gls{dbscan}.
+
+%Another density-based cluster method is Density Peak Clustering (DPC). 
+%The algorithm calculates the local density of each data point and identifies density peaks for points with the highest density [Rodriguez and Laio, 2014].
+
 \subsection{Parameter selection}
-\todo[inline]{Gets refactoring based on previous section}
-This chapter briefly describes each clustering algorithm and how it works. The different parameters for the algorithm are also highlighted.
+A list of important hyperparameters that can influence the results is provided for each clustering algorithm.
+Subsequently, we briefly discuss the methods for determining these hyperparameters for the algorithms. \newline
+We use the same distance function for all algorithms to have all the algorithms in the same setting.
+This function will be Euclidean distance, as used for \gls{gi}.
 \subsubsection{K-Means} \label{theory:kmeans}
-The K-Means algorithm uses Loyd et al.'s original algorithm for the clustering of data \citep{1056489}.
-The starting point is determined randomly by choosing k number of centroids.
-Each point assigns to a centroid based on the Euclidean distance.
-A new centroid is then determined based on the cluster average.
-This algorithm repeats until it reaches the given number of iterations or the results are stable.
-
-\textbf{Choosing K:} The most crucial parameter of the K-Means algorithm is the value of $k$.
+The most crucial parameter of the K-Means algorithm is the value of $k$.
 This value determines the number of clusters to consider and influences the results by a lot \citep{ahmed_k-means_2020}.
 %These methods require a manual way of selecting the best $k$ by visual inspection of a plot.
 The first method is called an "elbow" plot \citep{kodinariya_review_2013}.
 This method finds the best $k$ by applying the K-Means algorithm multiple times and estimating the best $k$.
-\todo[inline]{Replace with own image}
 \begin{figure}[H]
   \includegraphics{TheorethicalFramework/dentification-of-Elbow-point.png}
   \caption{Illustration of determining $k$ using the "elbow" method \citep{kodinariya_review_2013}}
@@ -42,10 +91,10 @@ The elbow method is standard in the existing literature and is very popular due 
 However, one disadvantage is that it can be challenging to determine the "elbow" point, as it is not always present \citep{kodinariya_review_2013}.
 In that case, the silhouette or gap statistic method is a good alternative, where the silhouette score is the simpler method.
 \subsubsection{Affinity Propagation} \label{theory:clustering-ap}
-\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
-Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
-The method was introduced by Frey et al. and does not require any hyperparameters \citep{frey_clustering_2007}.
-Still, important properties could potentially impact the clustering \citep{wang_adaptive_2007}. \newline
+%\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
+%Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
+%The method was introduced by Frey et al. and does not require any hyperparameters \citep{frey_clustering_2007}.
+Although the algorithm is parameterless, important properties could potentially impact the clustering \citep{wang_adaptive_2007}. \newline
 \textbf{Choosing preference($p$): }
 Indicates the preference for selecting a data point as cluster center \citep{wang_adaptive_2007}.
 It highly influences the number of clusters; a high one would lead to more clusters and a small one to less \citep{moiane_evaluation_2018}.
@@ -63,49 +112,44 @@ To conclude on this, damping is important if big datasets are considered.
 %However, this research does not use large datasets or consider time complexity as a metric.
 On the other hand, the preference could influence the results a lot.
 In general, it should be sufficient to take the median.
-\subsubsection{DBSCAN} \label{theory:clustering-dbscan}
-\todo[inline]{Use OPTICS instead of DBSCAN}
-\gls{dbscan} is introduced by \citep{ester_density-based_nodate} and draws a radius (neighborhood) around data points.
-It then groups all points within this radius as clusters. The main advantage is its ability to find arbitrarily shaped clusters and detect outliers \citep{liu_privacy_2012}.
-
-The \gls{dbscan} algorithm uses the inputs $minPts$, $radius(\epsilon)$ (not to be confused with the privacy budget $\epsilon$), and the Euclidean distance \citep{schubert_dbscan_2017}.
-The $\epsilon$ is used to draw a neighborhood, and the $minPts$ is used as a weight to evaluate which points should be inside the neighborhood.
+\subsubsection{OPTICS} \label{theory:clustering-dbscan}
+With the introduction of \gls{optics}, we no longer need to worry about the $radius(\epsilon)$ value.
+Therefore, only $minPts$ remains an important parameter to consider. \newline
+%\todo[inline]{Use OPTICS instead of DBSCAN}
+%\gls{dbscan} is introduced by \citep{ester_density-based_nodate} and draws a radius (neighborhood) around data points.
+%It then groups all points within this radius as clusters. The main advantage is its ability to find arbitrarily shaped clusters and detect outliers \citep{liu_privacy_2012}.
+%The \gls{dbscan} algorithm uses the inputs $minPts$, $radius(\epsilon)$ (not to be confused with the privacy budget $\epsilon$), and the Euclidean distance \citep{schubert_dbscan_2017}.
+%This $\epsilon'$ is used to draw a neighborhood, and the $minPts$ is used as a weight to evaluate which points should be inside the neighborhood.
 %The Euclidean distance is used for the distance function to be consistent with the other algorithms. \newline
-\textbf{Choosing minimum points ($minPts$):} This hyperparameter is analyzed by a paper by Sander et al.
+The $minPts$ is the minimum amount of points that have to be within the $radius(\epsilon)$ to mark it a cluster.
+This hyperparameter is analyzed in a paper by Sander et al.
 The work describes calculating this parameter by applying two times the feature amount \citep{sander_density-based_1998}.
 So, using this approach, a dataset with two features will have an $minPts$ of four \citep{schubert_dbscan_2017}.
 \newpage
 
-\textbf{Choosing radius($\epsilon'$):} The desired $\epsilon'$ can be calculated using the K-NearestNeighbours algorithm \citep{ester_density-based_nodate,schubert_dbscan_2017}.
-The general approach is to choose a $K = 2*N - 1$ (where N is the number of features) and plot the distance for each point.
-This can then be plotted using a k-dist plot and the best "elbow" can be chosen for deciding the $\epsilon$ (similar to choosing the $k$ for K-means) \citep{elbatta_dynamic_2013}.
-\begin{figure}[H]
-  \includegraphics{TheorethicalFramework/K-dist-elbow.png}
-  \caption{K-dist plot example for $minPts = 4$ based on a 2-dimensional dataset \citep{ester_density-based_nodate}}
-  \label{k-dist-plot}
-\end{figure}
+\mycomment{\textbf{Choosing radius($\epsilon'$):} The desired $\epsilon'$ can be calculated using the K-NearestNeighbours algorithm \citep{ester_density-based_nodate,schubert_dbscan_2017}.
+  The general approach is to choose a $K = 2*N - 1$ (where N is the number of features) and plot the distance for each point.
+  This can then be plotted using a k-dist plot and the best "elbow" can be chosen for deciding the $\epsilon$ (similar to choosing the $k$ for K-means) \citep{elbatta_dynamic_2013}.
+  \begin{figure}[H]
+    \includegraphics{TheorethicalFramework/K-dist-elbow.png}
+    \caption{K-dist plot example for $minPts = 4$ based on a 2-dimensional dataset \citep{ester_density-based_nodate}}
+    \label{k-dist-plot}
+  \end{figure}
 
-%The epsilon value is crucial for the DBSCAN algorithm and highly dependent on the dataset \todo{Source}.
-Since we employ various types of datasets and algorithms, it is desirable to have an automated method for determining the epsilon (radius) value.
-The epsilon could influence the results as the radius determines the clusters.
-For this reason, research has also been conducted on an extension of DBSCAN called OPTICS.
+  %The epsilon value is crucial for the DBSCAN algorithm and highly dependent on the dataset \todo{Source}.
+  Since we employ various types of datasets and algorithms, it is desirable to have an automated method for determining the epsilon (radius) value.
+  The epsilon could influence the results as the radius determines the clusters.
+  For this reason, research has also been conducted on an extension of DBSCAN called OPTICS.}
 
-This algorithm attempts different epsilon values to achieve the best result \citep{ankerst_optics_nodate}.
-Instead of directly assigning data points to clusters, specific distance calculations are stored in a list.
-For each data point, it tracks two values: core distance and reachability distance.
-These values represent the shortest distance to make a data point, $p$, a core point, and the shortest distance from $p$ to another core point, $p'$, respectively.
-A specific ordering is maintained to ensure that clusters with higher density values are processed first.
-Using this ordering, along with the $minPts$ parameter and the two data point attributes, the DBSCAN algorithm is constructed hierarchically \citep{schubert_dbscan_2017}. \newline
-
-In conclusion, K-Means and Affinity Propagation have straightforward methods for determining hyperparameters.
-For K-Means, the elbow method is the most common, and for Affinity Propagation, the median is used for the preference.
-DBSCAN is a little more complicated due to the variety of datasets and noise-altering mechanisms we experiment with.
-This complexity is why we use OPTICS to determine the best $\epsilon$ and choose $minPts$ based on the number of features times two.
+%In conclusion, K-Means and \gls{ap} have straightforward methods for determining hyperparameters.
+%For K-Means, the elbow method is the most common, and for \gls{ap}, the median is used for the preference.
+\gls{dbscan} is a little more complicated due to the variety of datasets and noise-altering mechanisms we experiment with.
+This complexity is why we use \gls{optics} to determine the best value for $radius(\epsilon)$ and choose $minPts$ based on the number of features times two.
 
 \mycomment{\subsection{Overfitting}
   Overfitting is dangerous for machine learning models and one of the biggest mistakes with training machine learning models \citep{demsar_hands-training_2021}.
   It occurs when a machine learning model is trained on samples that are not representative of future test data \citep{bashir_information-theoretic_2020}.
-  A common mistake is to evaluate a model, using the same data as it is trained on \citep{demsar_hands-training_2021}.
+  A common mistake is to evaluate a model using the same data as it is trained on \citep{demsar_hands-training_2021}.
   The model appears to have high accuracy but just memorized the properties of a training dataset.
   Another cause of overfitting can be the size of the training data \citep{valdenegro-toro_machine_2022}.
 
@@ -177,4 +221,29 @@ Another study for evaluating \gls{dp} with \gls{ap} uses both \gls{ari} and \gls
 In addition to mutual information and rand index scores, it is also not uncommon to calculate the error between the two cluster algorithm's centroids \citep{xia_distributed_2020, 9679364}.
 These two studies used Relative Error (RE) for this.
 
-\todo[inline]{Add and explain algorithms for the scores we use inside the thesis}
+\subsubsection{Research direction}
+This chapter outlines the evaluation methods used and provides a definition and brief explanation for each method.
+
+In the literature, both internal and external evaluation methods are commonly used.
+While some studies choose one over the other, this thesis will perform both validations.
+This approach is crucial to measure how well the data shape is preserved (internal validation) and how the algorithm performs in real-world scenarios (external validation).
+
+Since certain cluster algorithms may score higher or lower on specific metrics, it is essential to choose two metrics for each type of validation.
+Based on existing studies and the literature, we have selected metrics adjusted to compensate for the data distribution characteristics.
+Hence, we will focus on these metrics' "adjusted" variants:
+\begin{enumerate}
+  \item Internal validation:
+        \begin{enumerate}
+          \item \textbf{Calinski Harabasz Index:}
+          \item \textbf{Silhouette coefficient:}
+        \end{enumerate}
+  \item External validation:
+        \begin{enumerate}
+          \item \textbf{Adjusted Rand Index:}
+          \item \textbf{Adjusted Mutual Information:}
+        \end{enumerate}
+\end{enumerate}
+%\textbf{Calinski Harabasz Index:} \newline
+%\textbf{Silhouette coefficient:} \newline
+%\textbf{Adjusted Rand Index:} \newline
+%\textbf{Adjusted Mutual Information:} \newline
