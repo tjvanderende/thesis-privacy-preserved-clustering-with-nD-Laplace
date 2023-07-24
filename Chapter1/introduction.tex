@@ -3,7 +3,7 @@ Data has become an increasingly important part of our daily lives, and its appli
 Personal and sensitive information, such as scrolling through Facebook or Instagram, is often sourced from various structured and unstructured data origins.
 As many businesses see the potential of data \citep{noauthor_global_nodate}, the urgency of protecting sensitive information also increases.
 This development is why there have been several regulations regarding data and privacy. Therefore, the European Union created the GDPR \citep{noauthor_eur-lex_nodate}, and the United States created the privacy act \citep{division_privacy_2007}.
-For instance, the GPDR describes in article 34 that data should always be stored in an " incomprehensible way for unauthorized people.".
+For instance, the GDPR describes in Article 34 that data should always be stored in an "incomprehensible way for unauthorized people".
 Due to these regulations, it is challenging for companies to store and analyze data to gain insights.
 
 A method for gaining insights into data is using unsupervised machine learning.
@@ -17,47 +17,29 @@ The data is unreadable for examination, and it adds communication overhead \cite
 For this reason, researchers have explored methods for anonymizing data to protect the privacy of individuals \citep{sweeney_k-anonymity_2002}.
 But, this can still reveal much information about a person, as the range of possible values is limited.
 A more effective way to preserve privacy is by using differential privacy.
-This method controls the amount of noise using a privacy budget \citep{dwork_differential_2006}.
-Due to the configurability of this mechanism, it is a popular method for privacy-preserving clustering \todo{source}.
+This mechanism adds noise to the original data to hide the actual value, controlled by a privacy budget \citep{dwork_differential_2006}.
+Due to the configurability of this mechanism, it is possible to trade off privacy and utility in such a way it is possible to preserve data patterns.
 %The noise is added after saving all the data, making it vulnerable to data breaches. \newline
 In recent years, the method was extended to add noise locally before sending it to a central server and called \gls{ldp} \citep{kasiviswanathan_what_2010}.
 Although this method reduces privacy leakage risks because no plain data is stored on the server, the amount of data is limited in the local view.
 This makes the noise more significant, impacting the data utility \citep{yang_local_2020}.
 
-%\gls{dp} is a well-established method for preserving privacy in centralized data.
-%But, it still requires the data to be sent and stored in a centralized location.
-%This mechanism was done by adding (Laplace) noise drawn from the Laplace distribution.
-%The benefit of this method is that the amount of noise added and configured according to the \gls{pdf} of the Laplace distribution \citep{dwork_differential_2006}.
-% be configured to preserve patterns for clustering while maintaining privacy.
-%However, this method requires a central server to be trusted with the original data, making it vulnerable to data breaches.
 \newpage
 
-% \textit{This thesis provides a privacy framework for training multiple cluster algorithms on distributed n-dimensional data.}
-%% ================= RELATED WORK ================ %%
 \subsection*{Related work}
 \todo[inline]{Tell something about other mechanisms}
 The difficulty in preserving utility for clustering while preserving privacy is a well-known problem in the literature.
 A study that focuses on preserving the cluster shapes sends the feature’s distance information to the server instead of the feature value \citep{sun_distributed_2019}.
 Their method works on multiple cluster algorithms, compared to other studies focusing on a single cluster algorithm.
-But, their method leaks distance information, another study aimed to improve this by using a distance-aware randomization algorithm \cite{xia_distributed_2020}.
-An extension of this study aimed at reducing the difference between actual and perturbed values \citep{9679364}.
+However, their method leaks distance information. Another study aimed to improve this using a distance-aware randomization algorithm \cite{xia_distributed_2020}.
+This study was extended by Huang et al. to reduce the difference between actual and perturbed values \citep{9679364}.
 Both studies focus on K-means and \gls{ldp} but do not have direct support for other algorithms. \newline
 
 Due to the inflexibility and lack of practical testing in the current literature, developing a solution closer to practical applicability becomes essential.
 Our research incorporates realistic attacks and datasets to test privacy and utility to bridge this gap and move towards a practically deployable \gls{ldp} mechanism.
 Therefore, the overarching goal of this thesis is to develop a privacy framework that facilitates secure training of cluster algorithms on distributed n-dimensional data.
 
-%\section{Problem statement}
-%This issue is solved by introducing \gls{ldp} because the noise is added before it is sent to a central server \citep{kasiviswanathan_what_2010}.
-%However, due to the limited amount of data in the distributed/ local view, the noise has a much higher impact on the data patterns \citep{yang_local_2020}.
-%Thus impacting the clustering performance of the data when aggregated.
-%Current literature focusing on local differential privacy has some shortcomings.
-%They focus on only supporting the K-Means algorithm or do not support more than two-dimensional data. \newline
-
-% This also impacts accuracy, which is a trade-off between privacy and utility.
-%\todo[inline]{Include nd-laplace}
 \subsection*{Research objective}
-%Privacy for location-based systems (LBS) is a different but related topic.
 Another take on \gls{dp} is called \gls{gi} and is specifically used for geographical data  \citep{DBLP:journals/corr/abs-1212-1984}.
 The 2D-Laplace mechanism adds noise to two data points (latitude/longitude) by generating random locations based on the amount of distance.
 The mechanism is configurable by a privacy budget and holds within a radius of the original location.
@@ -77,16 +59,6 @@ Our contribution to the current literature is as follows:
   \item We introduce different optimization techniques to improve the utility of kd-Laplace using kd-tree.
   \item We demonstrate the privacy of kd-Laplace using real-world datasets and attacks.
 \end{enumerate}
-%While \gls{gi} works by adding noise locally, to our knowledge, this method has not yet been applied to train cluster algorithms privately.
-% Additionally, since this method also considers the distance in the dosing of the noise, it can ensure that patterns in the data are preserved.
-%As a result, the utility for cluster algorithms can be very high.
-%This research aims to extend the \gls{gi} mechanisms to introduce a differential privacy framework for training cluster algorithms on distributed n-dimensional data. \newline
-
-%For this purpose, we investigate the appliance of 2D/3D-Laplace.
-
-\mycomment{
-  \todo[inline]{Extend with more contributions}
-  \todo[inline]{Extend with an explanation of the chapters (roadmap)}}
 
 \subsection*{Research question and methods}
 To reach our goals and objectives, we have formulated the following main question: \newline \newline
