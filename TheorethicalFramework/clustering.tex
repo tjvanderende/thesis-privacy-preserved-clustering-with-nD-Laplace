@@ -235,12 +235,76 @@ Hence, we will focus on these metrics' "adjusted" variants:
   \item Internal validation:
         \begin{enumerate}
           \item \textbf{Calinski Harabasz Index:}
-          \item \textbf{Silhouette coefficient:}
+                The definition of \gls{chi} is defined in several steps \citep{liu_understanding_2010}:
+                The first definition is the between cluster sum of squares.
+                \begin{equation}
+                  B = \sum_{i=1} n_i \cdot (C_k - C)^2
+                \end{equation}
+                \begin{enumerate}
+                  \item $n_k$ is the number of data points in cluster $k$.
+                  \item $C_k$ is the centroid of cluster $k$.
+                  \item $C$ is the dataset centroid
+                \end{enumerate}
+                The second part of the definition is defined as follows:
+                \begin{equation}
+                  W_k = \sum_{i=1}n_i \cdot (x_i - C_k)^2
+                \end{equation}
+                $W_k$ is the within-cluster sum of squares and $x_i$ is the $i$th data point.
+                Finally, the \gls{chi} is calculated by combining the between and within-cluster calculations:
+                \begin{equation}
+                  CH = \frac{B}{\sum_{k=1}^{K}} \cdot \frac{N - k}{k - 1}
+                \end{equation}
+                \begin{enumerate}
+                  \item $K$ is the number of clusters.
+                  \item $N$ is the number of data points.
+                \end{enumerate}
+
+          \item \textbf{Silhouette coefficient:} This metric is defined as follows \citep{liu_understanding_2010,rousseeuw_silhouettes_1987}:
+                \begin{equation}
+                  s(i) = \frac{b(i) - a(i)}{max(b(i) - a(i))}
+                \end{equation}
+                \begin{enumerate}
+                  \item $s(i)$ is the silhouette coefficient for a single datapoint $i$.
+                  \item $a(i)$ is the mean distance of $i$ and all the other points in the same cluster.
+                  \item $b(i)$ is the mean distance of $i$ and all the other points in the next nearest cluster.
+                \end{enumerate}
+                Finally, the final silhouette score is the mean of all datapoint coefficients $s(i)$.
         \end{enumerate}
   \item External validation:
         \begin{enumerate}
           \item \textbf{Adjusted Rand Index:}
+                The \gls{ari} is defined in two steps, one to calculate the actual Rand Index and the other to adjust it for chance.
+                The Rand Index formula is defined as follows \citep{hubert_comparing_1985}\footnote{Explaination is part of Sklearn: \url{https://scikit-learn.org/stable/modules/clustering.html}}:
+                \begin{equation}
+                  RI = \frac{a + b}{C_2^N}
+                \end{equation}
+                \begin{enumerate}
+                  \item $C$ the ground truth elements (So the actual correct predictions/ classes).
+                  \item $a$ is the number of pairs of elements part of the ground truth $C$ and part of the predicted class.
+                  \item $b$ is the number of pairs of elements in different sets of $C$ and different sets of the predicted class.
+                  \item $C_2^N$ is the total number of pairs of elements in the dataset.
+                \end{enumerate}
+                To compensate for the amount of clusters, the adjusted formula is defined as follows \citep{sinnott_chapter_2016}:
+                \begin{equation}
+                  ARI = \frac{RI - Expected(RI)}{max(RI) - Expected(RI)}
+                \end{equation}
           \item \textbf{Adjusted Mutual Information:}
+                As was the case for the \gls{ari}, the \gls{ami} is also defined in two steps.
+                The first step is to calculate the actual \gls{mi}, and the second is to adjust it for chance.
+                The \gls{mi} is defined as follows \citep{vinh_information_nodate}:
+                \begin{equation}
+                  H = - \sum_{i=1}^{U} p(i) \cdot log p(i)
+                \end{equation}
+                $H$ is the uncertainty for one variable given another variable.
+                So it can be used to measure the (dis)similarity between two variables.
+                \begin{enumerate}
+                  \item $U$ is a label to calculate the uncertainty for.
+                  \item $p(i)$ is the probability of a random point $i$ falling into class/labe $U$.
+                \end{enumerate}
+                This same calculation is executed for the second label $V$ and divided by each other.
+                \begin{equation}
+                  MI = \frac{MI - Expected(MI)}{mean(H(U), H(V)) - Expected(MI)}
+                \end{equation}
         \end{enumerate}
 \end{enumerate}
 %\textbf{Calinski Harabasz Index:} \newline
