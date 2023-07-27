@@ -172,27 +172,25 @@ To evaluate the performance of ppDBSCAN, the study compares its Adjusted Rand In
 \begin{landscape}
   \begin{table}[ht]
     \centering
-    \begin{adjustbox}{width=1.6\textwidth}
-      \begin{tabular}{rlllllllll}
-        \toprule
-        year                                            & Name                                               & Data type                         & Dataset                                            & Code implementations                               & Preserving               & Type                & Interactive     & Methods                          \\
-        \midrule
-        2022 \citep{sun_privbv_2022}                    & PrivBV: Distance-aware encoding for distributed... & -                                 & Synthetic dataset                                  & -                                                  & ($\epsilon, \delta$)-LDP & K-Means             & Non interactive & -                                \\
-        2021 \citep{9679364}                            & Private distributed K-means clustering on inter... & -                                 & -                                                  & -                                                  & LDP                      & K-Means             & Interactive     & -                                \\
-        2021 \citep{stemmer_locally_2021}               & Locally Private k-Means Clustering                 & numerical                         & -                                                  & -                                                  & LDP                      & K-Means             & Interactive     & -                                \\
-        2021 \citep{yuan_privacypreserving_2021}        & Privacy‐preserving mechanism for mixed data clu... & \shortstack{n-dimensional numeric                                                                                                                                                                                                                 \\ \& categorical} & Adult dataset, US Census dataset                   & -                                                  & LDP                      & K-Prototypes        & Interactive     & LDPK and ELDPK                            \\
-        2021 \citep{bozdemir_privacy-preserving_nodate} & Privacy-preserving Density-based Clustering        & -                                 & Deer dataset, Lsun dataset, S1                     & -                                                  & DP                       & DBSCAN              & -               & ppDBSCAN                         \\
-        2020 \citep{cai_dp-ap_2020}                     & DP-AP: Differential Privacy-Preserving Affinity... & -                                 & Iris dataset, Seeds dataset                        & -                                                  & DP                       & AffinityPropagation & -               & DP-AP                            \\
-        2020 \citep{xia_distributed_2020}               & Distributed K-Means clustering guaranteeing loc... & n-dimensional numerical data      & 3D Road Network, CarGPS                            & -                                                  & LDP                      & K-Means             & Interactive     & LDPKmeans                        \\
-        2019 \citep{sun_distributed_2019}               & Distributed Clustering in the Anonymized Space...  & n-dimensional numerical data      & Aggregation dataset, Digit dataset, Pathbased d... & -                                                  & LDP                      & DBSCAN, K-Means     & Non interactive & Distance Aware Bit Vector (DPBV) \\
-        2018 \citep{nissim_clustering_2018}             & Clustering algorithms for the centralized and l... & n-dimensional numerical data      & -                                                  & -                                                  & ($\epsilon, \delta$)-LDP & K-Means             & Interactive     & LDP-GOODCenter                   \\
-        2018 \citep{nissim_clustering_2018}             & Differentially private K-means with constant mu... & -                                 & -                                                  & -                                                  & -                        & K-Means             & Interactive     & LSH-Procedure \& Private-Centers \\
-        2015 \citep{su_differentially_2015}             & Differentially Private k-Means Clustering          & 2 - 10-dimensional numerical data & Adult dataset, Gowalla dataset, Image dataset, ... & \footnote{https://github.com/DongSuIBM/PrivKmeans} & DP                       & K-Means             & Both            & EUGkM and hybrid EUGkM + DPLloyd \\
-        %2011              & Differential privacy for location pattern mining                                                              & 2-dimensional geographical data      & Synthetic dataset with GPS trajectories            & -                                       & Differential privacy       & DBSCAN              & -               & DPQuadTree                                & -                                                                                                             \\
-        2007 \citep{nissim_smooth_2007}                 & Smooth sensitivity and sampling in private data... & n-dimensional numeric             & -                                                  & -                                                  & ($\epsilon, \delta$)-LDP & K-Means             & Non interactive & Smooth sensitivity               \\
-        \bottomrule
-      \end{tabular}
-    \end{adjustbox}
+    \begin{tabular}{rlllllllll}
+      \toprule
+      year                                            & Name                                               & Data type                         & Dataset                                            & Code implementations                               & Preserving               & Type                & Interactive     & Methods                          \\
+      \midrule
+      2022 \citep{sun_privbv_2022}                    & PrivBV: Distance-aware encoding for distributed... & -                                 & Synthetic dataset                                  & -                                                  & ($\epsilon, \delta$)-LDP & K-Means             & Non interactive & -                                \\
+      2021 \citep{9679364}                            & Private distributed K-means clustering on inter... & -                                 & -                                                  & -                                                  & LDP                      & K-Means             & Interactive     & -                                \\
+      2021 \citep{stemmer_locally_2021}               & Locally Private k-Means Clustering                 & numerical                         & -                                                  & -                                                  & LDP                      & K-Means             & Interactive     & -                                \\
+      2021 \citep{yuan_privacypreserving_2021}        & Privacy‐preserving mechanism for mixed data clu... & \shortstack{n-dimensional numeric                                                                                                                                                                                                                 \\ \& categorical} & Adult dataset, US Census dataset                   & -                                                  & LDP                      & K-Prototypes        & Interactive     & LDPK and ELDPK                            \\
+      2021 \citep{bozdemir_privacy-preserving_nodate} & Privacy-preserving Density-based Clustering        & -                                 & Deer dataset, Lsun dataset, S1                     & -                                                  & DP                       & DBSCAN              & -               & ppDBSCAN                         \\
+      2020 \citep{cai_dp-ap_2020}                     & DP-AP: Differential Privacy-Preserving Affinity... & -                                 & Iris dataset, Seeds dataset                        & -                                                  & DP                       & AffinityPropagation & -               & DP-AP                            \\
+      2020 \citep{xia_distributed_2020}               & Distributed K-Means clustering guaranteeing loc... & n-dimensional numerical data      & 3D Road Network, CarGPS                            & -                                                  & LDP                      & K-Means             & Interactive     & LDPKmeans                        \\
+      2019 \citep{sun_distributed_2019}               & Distributed Clustering in the Anonymized Space...  & n-dimensional numerical data      & Aggregation dataset, Digit dataset, Pathbased d... & -                                                  & LDP                      & DBSCAN, K-Means     & Non interactive & Distance Aware Bit Vector (DPBV) \\
+      2018 \citep{nissim_clustering_2018}             & Clustering algorithms for the centralized and l... & n-dimensional numerical data      & -                                                  & -                                                  & ($\epsilon, \delta$)-LDP & K-Means             & Interactive     & LDP-GOODCenter                   \\
+      2018 \citep{nissim_clustering_2018}             & Differentially private K-means with constant mu... & -                                 & -                                                  & -                                                  & -                        & K-Means             & Interactive     & LSH-Procedure \& Private-Centers \\
+      2015 \citep{su_differentially_2015}             & Differentially Private k-Means Clustering          & 2 - 10-dimensional numerical data & Adult dataset, Gowalla dataset, Image dataset, ... & \footnote{https://github.com/DongSuIBM/PrivKmeans} & DP                       & K-Means             & Both            & EUGkM and hybrid EUGkM + DPLloyd \\
+      %2011              & Differential privacy for location pattern mining                                                              & 2-dimensional geographical data      & Synthetic dataset with GPS trajectories            & -                                       & Differential privacy       & DBSCAN              & -               & DPQuadTree                                & -                                                                                                             \\
+      2007 \citep{nissim_smooth_2007}                 & Smooth sensitivity and sampling in private data... & n-dimensional numeric             & -                                                  & -                                                  & ($\epsilon, \delta$)-LDP & K-Means             & Non interactive & Smooth sensitivity               \\
+      \bottomrule
+    \end{tabular}
     \caption{Summary table of the literature review for (L)DP clustering algorithms.}
     \label{tab:summary_table_kmeans}
   \end{table}
@@ -200,23 +198,21 @@ To evaluate the performance of ppDBSCAN, the study compares its Adjusted Rand In
 
   \begin{table}[ht]
     \centering
-    \begin{adjustbox}{width=1.6\textwidth}
 
-      \begin{tabular}{rllllllll}
-        \toprule
-        year                                & Name                                               & Data type                                          & Dataset & Code implementations                               & Preserving     & Interactive                 & Methods                                \\
-        \midrule
-        %2022                    & 3D Geo-Indistinguishability for Indoor Location... & 3-dimensional geographical data                    & -                                                  & -                                                  & Geo-indistinguishability   & Differential privacy method & -               & 3-dimensional Laplace mechanism & -                               \\
-        %2019                    & Generalised Differential Privacy for Text Docum... & n-dimensional (?? data)                            & -                                                  & -                                                  & Differential privacy       & Differential privacy method & -               & n-dimensional Laplace mechanism & -                               \\
-        2019 \citep{wang_collecting_2019}   & Collecting and Analyzing Multidimensional Data ... & n-dimensional (PM), but HM is 1-dimensional and... & BR, MR  & https://github.com/forestneo/sunPytools/blob/m...  & LDP            & -                           & \shortstack{- Piecewise Mechanism (PM) \\- Hybrid Mechanism (HM)}                         \\
-        2017 \citep{duchi_minimax_2017}     & Minimax optimal procedures for locally private ... & 1-dimensional numerical data                       & -       & https://github.com/forestneo/sunPytools/blob/ma... & LDP            & -                           & -                                      \\
-        2016 \citep{nguyen_collecting_2016} & Collecting and analyzing data from smart device... & numerical, binary and categorical data. Domain ... & BR      & -                                                  & $\epsilon$-LDP &                             & Harmony                                \\
-        2015 \citep{geng_staircase_2015}    & The staircase mechanism in differential privacy    & n-dimensional numerical data                       & -       & https://github.com/IBM/differential-privacy-lib... & DP             & Differential privacy method & Staircase mechanism (SM)               \\
-        2013 \citep{geng_optimal_2013}      & Optimal data-independent noise for differential... & n-dimensional                                      & -       & -                                                  & $\epsilon$-DP  & Non interactive             & -                                      \\
-        %2012                    & Geo-indistinguishability: Differential privacy ... & 2-dimensional geographical data                    & -                                                  & -                                                  & Geo-indistinguishability   & Differential privacy method & -               & 2-dimensional Laplace mechanism & -                               \\
-        \bottomrule
-      \end{tabular}
-    \end{adjustbox}
+    \begin{tabular}{rllllllll}
+      \toprule
+      year                                & Name                                               & Data type                                          & Dataset & Code implementations                               & Preserving     & Interactive                 & Methods                                \\
+      \midrule
+      %2022                    & 3D Geo-Indistinguishability for Indoor Location... & 3-dimensional geographical data                    & -                                                  & -                                                  & Geo-indistinguishability   & Differential privacy method & -               & 3-dimensional Laplace mechanism & -                               \\
+      %2019                    & Generalised Differential Privacy for Text Docum... & n-dimensional (?? data)                            & -                                                  & -                                                  & Differential privacy       & Differential privacy method & -               & n-dimensional Laplace mechanism & -                               \\
+      2019 \citep{wang_collecting_2019}   & Collecting and Analyzing Multidimensional Data ... & n-dimensional (PM), but HM is 1-dimensional and... & BR, MR  & https://github.com/forestneo/sunPytools/blob/m...  & LDP            & -                           & \shortstack{- Piecewise Mechanism (PM) \\- Hybrid Mechanism (HM)}                         \\
+      2017 \citep{duchi_minimax_2017}     & Minimax optimal procedures for locally private ... & 1-dimensional numerical data                       & -       & https://github.com/forestneo/sunPytools/blob/ma... & LDP            & -                           & -                                      \\
+      2016 \citep{nguyen_collecting_2016} & Collecting and analyzing data from smart device... & numerical, binary and categorical data. Domain ... & BR      & -                                                  & $\epsilon$-LDP &                             & Harmony                                \\
+      2015 \citep{geng_staircase_2015}    & The staircase mechanism in differential privacy    & n-dimensional numerical data                       & -       & https://github.com/IBM/differential-privacy-lib... & DP             & Differential privacy method & Staircase mechanism (SM)               \\
+      2013 \citep{geng_optimal_2013}      & Optimal data-independent noise for differential... & n-dimensional                                      & -       & -                                                  & $\epsilon$-DP  & Non interactive             & -                                      \\
+      %2012                    & Geo-indistinguishability: Differential privacy ... & 2-dimensional geographical data                    & -                                                  & -                                                  & Geo-indistinguishability   & Differential privacy method & -               & 2-dimensional Laplace mechanism & -                               \\
+      \bottomrule
+    \end{tabular}
     \caption{Summary table of the literature review for (L)DP algorithms.}
     \label{tab:summary_table_dp}
   \end{table}
@@ -224,27 +220,25 @@ To evaluate the performance of ppDBSCAN, the study compares its Adjusted Rand In
 
 \begin{table}
   \centering
-  \begin{adjustbox}{width=1\textwidth}
 
-    \begin{tabular}{rllllll}
-      \toprule
-      number & name            & samples    & features                            & target                & Source                                          & Realworld data? \\
-      \midrule
-      1      & Adult           & 48,842     & 14 numerical/categorical/boolean    & income (>50k, <= 50k) & UCI                                             & Yes             \\
-      2      & Seeds           & 210        & 7 numerical                         & type                  & UCI                                             & Yes             \\
-      3      & Iris            & 150        & 4 numerical                         & class (type of iris)  & UCI                                             & Yes             \\
-      4      & CarGPS          & 17,785,500 & 3 geographical data                 & -                     & -                                               & Yes             \\
-      5      & 3D Road Network & 434,874    & 3 geographical data                 & -                     & -                                               & Yes             \\
-      6      & Pathbased       & 300        & 2 numerical                         & ground truth clusters & PapersWithCode                                  & No              \\
-      7      & Aggregation     & 788        & 2 numerical                         & -                     & -                                               & Unknown         \\
-      8      & Digit           & 1797       & 8x8 numerical                       & number                & Scikit-learn                                    & Yes             \\
-      9      & Lsun            & 400        & 2 numerical                         & ground truth clusters & -                                               & No              \\
-      10     & S1              & 1500       & 2 numerical                         & ground truth clusters & -                                               & No              \\
-      11     & Deer            & 20,033     & 2 numerical                         & -                     & -                                               & Yes             \\
-      13     & Gowalla         & 6,442,890  & 5 (geographical data, ids and time) & -                     & https://snap.stanford.edu/data/loc-gowalla.html & Yes             \\
-      \bottomrule
-    \end{tabular}
-  \end{adjustbox}
+  \begin{tabular}{rllllll}
+    \toprule
+    number & name            & samples    & features                            & target                & Source                                          & Realworld data? \\
+    \midrule
+    1      & Adult           & 48,842     & 14 numerical/categorical/boolean    & income (>50k, <= 50k) & UCI                                             & Yes             \\
+    2      & Seeds           & 210        & 7 numerical                         & type                  & UCI                                             & Yes             \\
+    3      & Iris            & 150        & 4 numerical                         & class (type of iris)  & UCI                                             & Yes             \\
+    4      & CarGPS          & 17,785,500 & 3 geographical data                 & -                     & -                                               & Yes             \\
+    5      & 3D Road Network & 434,874    & 3 geographical data                 & -                     & -                                               & Yes             \\
+    6      & Pathbased       & 300        & 2 numerical                         & ground truth clusters & PapersWithCode                                  & No              \\
+    7      & Aggregation     & 788        & 2 numerical                         & -                     & -                                               & Unknown         \\
+    8      & Digit           & 1797       & 8x8 numerical                       & number                & Scikit-learn                                    & Yes             \\
+    9      & Lsun            & 400        & 2 numerical                         & ground truth clusters & -                                               & No              \\
+    10     & S1              & 1500       & 2 numerical                         & ground truth clusters & -                                               & No              \\
+    11     & Deer            & 20,033     & 2 numerical                         & -                     & -                                               & Yes             \\
+    13     & Gowalla         & 6,442,890  & 5 (geographical data, ids and time) & -                     & https://snap.stanford.edu/data/loc-gowalla.html & Yes             \\
+    \bottomrule
+  \end{tabular}
   \caption{The different datasets used in the related literature.}
   \label{tab:datasets}
 \end{table}

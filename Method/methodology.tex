@@ -1,6 +1,6 @@
 \chapter{Methodology}
 
-We conducted experiments to gain insights into the proposed methods for researching the appliance of (ND)-Laplace for cluster algorithms.
+We conducted experiments to gain insights into the proposed methods for researching the appliance of kD-Laplace for cluster algorithms.
 The experiment results are used to evaluate our method against other literature.
 In this chapter, we explain:
 \begin{enumerate}
@@ -20,48 +20,60 @@ To achieve this, the data is trained on large datasets.
 However, storing such data is unsafe, as unauthorized access could lead to breaches.
 
 Local Differential Privacy (LDP) has been introduced to safeguard user privacy while preserving data patterns.
-Adding local noise means flat data is never stored on a central server.
-Nevertheless, the limited available data in the local view distorts the patterns excessively in each noise addition.
+Adding local noise means the plain data is never stored on a central server.
+But, the limited available data in the local view distorts the patterns excessively in each noise addition.
 
-Current literature has attempted to address these challenges, but the solutions fall short.
+Current literature has attempted to address this challenge, but the solutions fall short.
 They either require modifications to the clustering algorithm or lack practical applicability due to the use of synthetic data.
+Existing literature focuses mainly on 2-dimensional data with K-Means as the clustering algorithm.
+In addition, there is a lack of practical applicability due to the use of synthetic data.
 
-To address these limitations, we propose a new LDP method called kd-Laplace, utilizing the concept of \gls{gi}.
+To address these limitations, we propose a new \gls{ldp} method called kd-Laplace, utilizing distance to preserve data patterns using the concept of \gls{gi}. \newline
 Our method enables secure training of cluster algorithms based on input-perturbation.
 We will test three variants of the kd-Laplace mechanism to assess their utility and privacy characteristics.
 Also, we will compare the kd-Laplace mechanism to Piecewise, which is another \gls{ldp} mechanism (See Section \ref{theory:literature-review}).
+\begin{enumerate}
+  \item kd-Laplace: Plain mechanism without any additions for truncation.
+  \item grid-kd-Laplace: Mechanism with truncation using grid-remapping (See Equation: \ref{alg:grid-remapping-laplace}).
+  \item density-kd-Laplace: Mechanism with truncation using grid-remapping in combination with density-remapping (See Equation: \ref{alg:optimal-remapping-laplace}).
+\end{enumerate}
 
 The research combines real-world and synthetic data to demonstrate practical applicability.
 Extensive external and internal validation experiments will be conducted to establish the method's practical relevance and effectiveness.
 
+
 \subsection{Research questions}
 The main question of the research is as follows: \newline \newline
 \textit{"How can the kD-Laplace algorithm be applied in training privacy-preserving clustering algorithms on distributed k-dimensional data?"} \newline
-The main question is divided into three smaller sub-questions:
+This question is divided into three smaller sub-questions:
 \begin{enumerate}
-  \item RQ1: How can 2D-Laplace be used to protect the privacy of 2-dimensional data employed for training clustering algorithms? \newline
+  \item \textit{RQ1: How can 2D-Laplace be used to protect the privacy of 2-dimensional data employed for training clustering algorithms?} \newline
         This research question investigates the utility and privacy differences among the three kd-Laplace variants and compares the mechanism with the Piecewise Mechanism.
         We focus on the implementation of kd-Laplace on n-dimensional data.
-  \item RQ2: How can 3D-Laplace be extended to protect the privacy of n-dimensional data employed for training clustering algorithms? \newline
+  \item \textit{RQ2: How can 3D-Laplace be extended to protect the privacy of n-dimensional data employed for training clustering algorithms?} \newline
         The setup for this research question is the same as for research question 1, but instead of 2D data, we focus on 3D and n-dimensional data.
-  \item RQ3: What is the impact of different privacy budgets, dataset properties, and other clustering algorithms on the research conducted for research question 2? \newline
-        In this research question, we compare the behavior of our mechanism with what we have observed in the literature for similar mechanisms.
-        To do this, we have formulated several hypotheses. \label{method:research-question-3}
+  \item \textit{RQ3: What is the impact of dataset characteristics on the research conducted for kD-Laplace?} \newline
+        In this research question, we evaluate the dataset characteristics and the influence on kD-Laplace.
+        Also, we investigate if we can improve the utility and privacy of kd-Laplace by adopting grid-kD-Laplace and density-kD-Laplace (\ref{fig:optimal-remapping}).
+        We use several hypotheses questions to answer research question 3.
+
+        In the last two hypotheses, we specifically focus on the K-Means clustering algorithm to test our hypotheses.
+        The choice of K-Means is due to its simplicity, making it suitable for our hypothesis tests.
+        Also, we assume that the K-Means results are representative of the other clustering algorithms.
         \begin{enumerate}
-          \item \textit{Adding optimal remapping improves utility without sacrificing privacy:}
+          \item \textit{Adding remapping based on density improves utility without sacrificing privacy:}
                 Since the noise is updated based on the density of the data points, the clusters stay preserved (\ref{alg:optimal-remapping-laplace}).
                 As a result, the utility increases while the data points remain indistinguishable.
-                Therefore, we have extended our mechanism with optimal remapping and named it kd-Laplace/grid/optimal.
+                Therefore, we have extended our mechanism with density remapping and named it density-kD-Laplace.
                 This variant is included in the next three sections and further research using the next two hypotheses.
-          \item \textit{The privacy leakage (adversary advantage) increases for more dimensions:}
-                The hypothesis arose from our observation while investigating/implementing kd-laplace/grid/optimal (\ref{theory:privacy-utility-nd}).
-                Adding more dimensions (5 >) decreases the added noise gradually.
-                The study is conducted for the kd-Laplace/grid/optimal mechanism to analyze its behavior.
+          \item \textit{The privacy leakage (adversary advantage) and utility increases for more dimensions:}
+                The hypothesis arose from our observation while investigating/implementing kD-laplace(\ref{theory:privacy-utility-nd}).
+                Adding more dimensions (5 >) decreases the added noise gradually, increasing utility.
+                On the other hand, privacy is expected to decrease because the noise is less.
           \item \textit{The shape of the data negatively impacts the kd-Laplace mechanism in terms of privacy and utility:}
                 Because the mechanism heavily relies on Euclidean distance, the shape (distance between the data points) can ultimately harm utility and privacy.
                 We have already observed this difference when comparing the heart and seed datasets in research questions 1 and 2.
                 But, to rule out the potential impact of the number of data points (the heart dataset has 2126 samples and the seed-dataset 210), we generate three synthetic datasets, each with 1000 samples (See section \ref{datasets-section}).
-
         \end{enumerate}
 \end{enumerate}
 
@@ -95,31 +107,19 @@ Further detail is provided in Section: \ref{method:research-question-3}.
   \label{rq3:synthetic-datasets}
 \end{figure}
 \begin{enumerate}
-  \item \textbf{circle dataset:} Dataset with a circle shape.
-  \item \textbf{line dataset:} Dataset is a line (shape is much like the seeds dataset).
-  \item \textbf{skewed dataset:} Dataset samples are skewed/concentrated to one side (shape is much like the heart dataset).
+  \item \textbf{Circle dataset:} Dataset with a circle shape.
+  \item \textbf{Line dataset:} Dataset is a line (shape is much like the seeds dataset).
+  \item \textbf{Skewed dataset:} Dataset samples are skewed/concentrated to one side (shape is much like the heart dataset).
 \end{enumerate}
 
-\subsection{Privacy mechanisms}
-We will evaluate two different privacy frameworks called kd-Laplace (our method) and piecewise (\ref{fig:piecewise-C}).
-For the first one, we test three configurations/variants:
-\begin{enumerate}
-  \item kd-Laplace: Plain mechanism without any additions for truncation.
-  \item kd-Laplace/grid: Mechanism with truncation using grid-remapping (See Equation: \ref{alg:grid-remapping-laplace}).
-  \item kd-Laplace/grid/optimal: Mechanism with truncation using grid-remapping in combination with optimal-remapping (See Equation: \ref{alg:optimal-remapping-laplace}).
-\end{enumerate}
-The kd-Laplace variants differ on the implementation level for 2, 3, and n-dimensional data (See figure \ref{fig:final-mechanism-design}).
-Piecewise, however, will be the same for any data dimension.
-
+\subsection{Experiment setup}
 We evaluate all privacy mechanisms by comparing them in utility and privacy.
 To reduce the measurement bias of results, we executed them ten times for multiple privacy budgets and reported the average for each \citep{9679364}.
 \begin{enumerate}
   \item The experiments run ten times, and we report the mean.
   \item All experiments run for multiple epsilons: ${0.1, 0.5, 1, 2, 3, 5, 7, 9}$.
 \end{enumerate}
-Firstly, we primarily focus on evaluating the utility in terms of clustering.
-Then, we shift our focus to comparing the privacy mechanisms themselves.
-Lastly, we compare the four mechanisms in terms of privacy.
+
 
 \subsection{Environmental setup}
 For running the experiments, we use 16GB RAM and an i7-10750H 2.6Ghz processor.
@@ -141,82 +141,79 @@ The packages for Python are:
 
 \section{Data collection}
 This section explains what methods/ algorithms we use to collect the data necessary to answer the research questions.
-\subsection{Clustering methods}
-For the three different algorithms: K-Means, \gls{ap}, and OPTICS, we analyzed the most important decisions regarding parameter selection (See section \ref{paragraph:choosing-r}).
+\subsection{Hyperparameter selection}
+For the three different algorithms: K-Means, \gls{ap}, and OPTICS, we analyzed the most important decisions regarding hyperparameter selection (See section \ref{paragraph:choosing-r}).
 This section gives a short list and explanation of the parameters we used throughout the experiments.
-In addition to this, we also provide the corresponding algorithms as implemented by the Scikit-learn package.
 \subsubsection{K-Means}
-\begin{equation}
-  \sum_{i=0}^{n}\min_{\mu_j \in C}(||x_i - \mu_j||^2)
-\end{equation}
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter & Description                          & Value                                                       & Dataset        \\ \hline
-    K-value   & Calculated based on an "elbow" plot. & 4 (see Figure \ref{hyperparameters:k-means-seeds-dataset})  & Seeds dataset  \\ \hline
-    K-value   & ""                                   & \textbf{TODO}                                               & Heart dataset  \\ \hline
-    K-value   & ""                                   & 5 (see Figure \ref{hyperparameters:k-means-circle-dataset}) & circle dataset \\ \hline
-    K-value   & ""                                   & 4 (see Figure \ref{hyperparameters:k-means-line-dataset})   & line dataset   \\ \hline
-    K-value   & ""                                   & 4 (see Figure \ref{hyperparameters:k-means-skewed-dataset}) & skewed dataset \\ \hline
+    Parameter & Description                          & Value                                                         & Dataset        \\ \hline
+    K-value   & Calculated based on an "elbow" plot. & k=4 (see Figure \ref{hyperparameters:k-means-seeds-dataset})  & Seeds dataset  \\ \hline
+    K-value   & ""                                   & \textbf{TODO}                                                 & Heart dataset  \\ \hline
+    K-value   & ""                                   & k=5 (see Figure \ref{hyperparameters:k-means-circle-dataset}) & circle dataset \\ \hline
+    K-value   & ""                                   & k=4 (see Figure \ref{hyperparameters:k-means-line-dataset})   & line dataset   \\ \hline
+    K-value   & ""                                   & k=4 (see Figure \ref{hyperparameters:k-means-skewed-dataset}) & skewed dataset \\ \hline
   \end{tabular}
   \caption{K-Means hyperparameters for dataset 1 - 3}
   \label{tab:kmeans-formula-dataset-2}
 \end{table}
-
+The above table shows the relevant hyperparameters for the K-Means clustering algorithm.
+The hyperparameter differs for each dataset, so we must display it for each.
+This hyperparameter is the k-value used to determine the number of clusters.
+The "value" column shows the value we used for the experiments, with the corresponding "elbow" plot in the referenced figure.
 \subsubsection{Affinity Propagation}
-As specified in section \ref{theory:clustering-ap}, the clustering algorithm has two types of similarity.
-The following formula calculates the responsibility:
-\begin{equation}
-  r(i, k) \leftarrow s(i, k) - max [ a(i, k') + s(i, k') \forall k' \neq k ]
-\end{equation}
-Then the availability is given using this formula:
-\begin{equation}
-  a(i, k) \leftarrow min [0, r(k, k) + \sum_{i'~s.t.~i' \notin \{i, k\}}{r(i', k)}]
-\end{equation}
-And iteratively calculated while considering the damping factor.
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter      & Description                                                                                & Value  & Dataset       \\
+    Parameter      & Description                                                                                & Value       & Dataset       \\
     \hline
-    Preference     & We decided to use the median similarity as described in section \ref{theory:clustering-ap} & Median & Seeds dataset \\
+    Preference     & We decided to use the median similarity as described in section \ref{theory:clustering-ap} & p=Median    & Seeds dataset \\
     \hline
-    Preference     & ""                                                                                         & Median & Heart dataset \\
+    Preference     & ""                                                                                         & p=Median    & Heart dataset \\
     \hline
 
-    Damping factor & Default value as specified in section \ref{theory:clustering-ap}                           & 0.5    & Seeds dataset \\
+    Damping factor & Default value as specified in section \ref{theory:clustering-ap}                           & damping=0.5 & Seeds dataset \\
     \hline
-    Damping factor & ""                                                                                         & 0.5    & Heart dataset \\
+    Damping factor & ""                                                                                         & damping=0.5 & Heart dataset \\
     \hline
   \end{tabular}
   \caption{Affinity Propagation hyperparameters for the datasets}
   \label{tab:ap-formula-sklearn}
 \end{table}
-\newpage
+The above plot shows the relevant hyperparameters for the \gls{ap} clustering algorithm per dataset.
+As discussed for research question 3 \todo{Reference}, we omitted the synthetic datasets because they are only used with K-Means.
+There are two hyperparameters: "preference" and "damping factor."
+For the "preference," we selected the median of the dataset.
+We also left the "damping factor" at the default value specified in the theory chapter (See Section: \ref{theory:clustering-ap}).
 \subsubsection{OPTICS}
-As previously explained in section \ref{theory:clustering-dbscan}, we use \gls{optics} to automatically implement \gls{dbscan} to determine the epsilon/radius.
 
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter      & Description                                                                                                    & Value & Dataset                       \\
+    Parameter      & Description                                                                                                    & Value       & Dataset                    \\
     \hline
-    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & 4     & Seeds dataset (2-dimensions)  \\
+    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & $minPts=4$  & \makecell[l]{Seeds dataset \\ (2-dimensions)}  \\
     \hline
-    Minimum points & ""                                                                                                             & 6     & Seeds dataset (3-dimensions)  \\
+    Minimum points & ""                                                                                                             & $minPts=6$  & \makecell[l]{Seeds dataset \\ (3-dimensions)} \\
     \hline
-    Minimum points & ""                                                                                                             & 14    & Seeds dataset (7-dimensions)  \\
+    Minimum points & ""                                                                                                             & $minPts=14$ & \makecell[l]{Seeds dataset \\ (7-dimensions)}  \\
     \hline
-    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & 4     & Heart dataset (2-dimensions)  \\
+    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & $minPts=4$  & \makecell[l]{Heart dataset \\ (2-dimensions)}  \\
     \hline
-    Minimum points & ""                                                                                                             & 6     & Heart dataset (3-dimensions)  \\
+    Minimum points & ""                                                                                                             & $minPts=6$  & \makecell[l]{Heart dataset \\ (3-dimensions)}  \\
     \hline
-    Minimum points & ""                                                                                                             & 20    & Heart dataset (10-dimensions) \\
+    Minimum points & ""                                                                                                             & $minPts=20$ & \makecell[l]{Heart dataset \\ (10-dimensions)} \\
     \hline
   \end{tabular}
   \caption{DBSCAN  hyperparameters for datasets 1 - 3}
   \label{tab:dbscan-formula-sklearn}
 \end{table}
+The above table shows the relevant hyperparameters for the \gls{optics} clustering algorithm for each dataset.
+Because the minimum points depend on the number of dimensions, we must display them for each dataset.
+We omitted the synthetic datasets for the same reason specified for \gls{ap}.
+
+The "minimum points" hyperparameter is calculated using the formula $minPts = n * 2$, where $n$ is the number of dimensions (See Section: \ref{theory:clustering-dbscan}).
 
 \newpage
 \subsection{Utility and privacy evaluation}
@@ -276,10 +273,31 @@ In addition, we evaluate privacy by simulating a membership inference attack and
           \caption{Member inference attack using shadow models. The green swim lane illustrates the normal setup, and the red swim lane projects the adversary steps.}
           \label{figure:mi-attack}
         \end{figure}
-        Unlike the other utility metrics, the lower the adversary score and TPR, the better.
+        The figure above visually represents the \gls{mia} attack we set up using semi-supervised learning.
+        The green swim lane illustrates the setup of an honest person, and the red swim lane projects the attacker's steps.
+        This green lane is a standard system usage where the actor (e.g., data analyst) trains a model with the perturbed data.
+        Because the model in the green lane was trained using perturbed data, the labels are slightly different from the original labels.
+
+        The attacks use shadow models to train a classifier to predict the labels.
+        So, because the original model was trained using perturbed data, the labels are slightly different, and the shadow models cannot infer the original labels. \newline
+
+        The attacker could infer many original labels if the adversary advantage or \gls{tpr} is high.
+        In this case, a lower score is better than a lower score.
 \end{enumerate}
 %\input{Method/algorithms/shokri-setup-mi.tex}
+\subsection{Research roadmap}
+This section explains the experiments' setup and the result reporting order.
+\begin{enumerate}
+  \item Cluster utility: The mechanisms kD-Laplace and Piecewise are compared using the external and internal validation methods.
+        We report the \gls{ami} and SC in the results for both mechanisms and each dataset.
+        For this experiment, we only consider real-world datasets.
+  \item Mechanism utility: Both mechanisms are compared against each other by evaluating the \gls{ami} and sc.
+        In this research, we also conduct experiments to assess the impact of the number of dimensions on the utility of each dataset.
+  \item Mechanism privacy: We do the same for utility, but now with privacy.
+        For this purpose, we evaluate the adversary advantage and privacy distance.
+  \item Mechanism comparison: Now we established the performance of kD-Laplace and Piecewise, we compare the different variants of kD-Laplace.
 
+\end{enumerate}
 %Therefore, we analyze our method according to a popular attack: Membership inference attack.
 %For this purpose, we make use of a black-box Member inference attack, called "HopSkipJump" \citep{chen_hopskipjumpattack_2020,li_membership_2021}.
 %This attack is evaluated using a semi-supervised setup, as proposed in this figure: \ref{fig:unsupervised-mia-attack}.
@@ -335,7 +353,7 @@ In addition, we evaluate privacy by simulating a membership inference attack and
 %The full algorithm for the perturbation:
 %\input{Method/algorithms/rq1.tex}
 %% We apply the theory for planar laplace proposed by \citep{DBLP:journals/corr/abs-1212-1984}
-
+\newpage
 \section{Data analysis}
 For the data analysis, we utilize visualization libraries in Python, primarily Matplotlib, in combination with Seaborn.
 \begin{itemize}

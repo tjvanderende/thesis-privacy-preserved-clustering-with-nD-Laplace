@@ -41,7 +41,6 @@
 \RequirePackage{listings}
 \RequirePackage[titletoc]{appendix}
 \RequirePackage[T1]{fontenc}    % Necessary for pipe symbol  | |  |
-\RequirePackage{subfigure}
 \RequirePackage{graphics}
 \RequirePackage{geometry}
 \ifxetex
