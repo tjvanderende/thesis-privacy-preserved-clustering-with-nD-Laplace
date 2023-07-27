@@ -13,6 +13,8 @@ For each mechanism, we explain the equation for \gls{gi}, the mechanism, and the
 \input{TheorethicalFramework/ND-Laplace/3d-laplace.tex}
 \newpage
 \section{nD-Laplace}
+\todo[inline]{Include reference to kD-Laplace}
+\todo[inline]{Rename optimal-remapping to density-remapping}
 As mentioned in the previous chapter, the paper introduced by Min et al. can handle 3-dimensional data.
 A small recap: a point $(r, \theta, \psi)$ gives us the spherical coordinates of a given 3-dimensional sphere.
 An important property is that these coordinates can be generated separately \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
@@ -119,7 +121,7 @@ Thanks to the grid being divided into a binary tree, a portion can be efficientl
 The most significant advantage is that this greatly reduces the complexity of searching.
 Constructing the kd-tree costs $O(kn)$, where $k$ is the number of dimensions and $n$ is the dataset size.
 Searching for the nearest neighbor is a little less efficient, with a time complexity of $O(\log n)$ \citep{washington_k-d_2002} (See Figure \ref{theory:big-o-graph} for an overview of the Big-O notation).
-A reference to the Big O notation can be found in the appendix \todo{add reference}.
+A reference to the Big O notation can be found in the appendix (See Figure \ref{theory:big-o-graph}).
 \subsubsection{Grid with kd-tree remapping} \label{theory:grid-remapping}
 As explained in the previous paragraph, a kd-tree can be used to perform a nearest neighbor search.
 This search method is highly relevant to our research as it proves to be beneficial for the optimizations we are striving for.

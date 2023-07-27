@@ -61,16 +61,16 @@ This question is divided into three smaller sub-questions:
         The choice of K-Means is due to its simplicity, making it suitable for our hypothesis tests.
         Also, we assume that the K-Means results are representative of the other clustering algorithms.
         \begin{enumerate}
-          \item \textit{Adding remapping based on density improves utility without sacrificing privacy:}
+          \item \textit{H1: Adding remapping based on density improves utility without sacrificing privacy:}
                 Since the noise is updated based on the density of the data points, the clusters stay preserved (\ref{alg:optimal-remapping-laplace}).
                 As a result, the utility increases while the data points remain indistinguishable.
                 Therefore, we have extended our mechanism with density remapping and named it density-kD-Laplace.
                 This variant is included in the next three sections and further research using the next two hypotheses.
-          \item \textit{The privacy leakage (adversary advantage) and utility increases for more dimensions:}
+          \item \textit{H2: The privacy leakage (adversary advantage) and utility increases for more dimensions:}
                 The hypothesis arose from our observation while investigating/implementing kD-laplace(\ref{theory:privacy-utility-nd}).
                 Adding more dimensions (5 >) decreases the added noise gradually, increasing utility.
                 On the other hand, privacy is expected to decrease because the noise is less.
-          \item \textit{The shape of the data negatively impacts the kd-Laplace mechanism in terms of privacy and utility:}
+          \item \textit{H3: The shape of the data negatively impacts the kd-Laplace mechanism in terms of privacy and utility:}
                 Because the mechanism heavily relies on Euclidean distance, the shape (distance between the data points) can ultimately harm utility and privacy.
                 We have already observed this difference when comparing the heart and seed datasets in research questions 1 and 2.
                 But, to rule out the potential impact of the number of data points (the heart dataset has 2126 samples and the seed-dataset 210), we generate three synthetic datasets, each with 1000 samples (See section \ref{datasets-section}).
@@ -99,13 +99,19 @@ The datasets are sourced from the UCI Machine Learning Repository \citep{noautho
           \item 10-dimensional data: All numerical features.
         \end{enumerate}
 \end{enumerate}
-The following datasets are for a component investigated in research question 3.
-Further detail is provided in Section: \ref{method:research-question-3}.
+The following datasets are for the H3 (shape) hypothesis investigated in research question 3.
+For this purpose, we generated a 2-dimensional and 3-dimensional dataset with 1000 samples.
 \begin{figure}[H]
   \includegraphics[width=1.0\textwidth]{Method/images/rq3.png}
   \caption{Synthetic datasets with 1000 samples and 2-dimensions}
   \label{rq3:synthetic-datasets}
 \end{figure}
+\begin{figure}[H]
+  \includegraphics[width=1.0\textwidth]{Method/images/rq3-3d-synth.png}
+  \caption{Synthetic datasets with 1000 samples and 3-dimensions}
+  \label{rq3:synthetic-datasets-3d}
+\end{figure}
+
 \begin{enumerate}
   \item \textbf{Circle dataset:} Dataset with a circle shape.
   \item \textbf{Line dataset:} Dataset is a line (shape is much like the seeds dataset).
@@ -117,9 +123,9 @@ We evaluate all privacy mechanisms by comparing them in utility and privacy.
 To reduce the measurement bias of results, we executed them ten times for multiple privacy budgets and reported the average for each \citep{9679364}.
 \begin{enumerate}
   \item The experiments run ten times, and we report the mean.
-  \item All experiments run for multiple epsilons: ${0.1, 0.5, 1, 2, 3, 5, 7, 9}$.
+  \item All experiments run for multiple epsilons: ${0.5, 0.7, 1, 1.5, 2, 3.5, 5, 7, 9}$.
 \end{enumerate}
-
+\newpage
 
 \subsection{Environmental setup}
 For running the experiments, we use 16GB RAM and an i7-10750H 2.6Ghz processor.
