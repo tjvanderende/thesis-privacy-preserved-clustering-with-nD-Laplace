@@ -4,7 +4,6 @@ We conducted experiments to gain insights into the proposed methods for research
 The experiment results are used to evaluate our method against other literature.
 In this chapter, we explain:
 \begin{enumerate}
-
   \item Research design: The background and research questions are explained.
         Furthermore, we explain the datasets and privacy mechanisms used in the experiments.
   \item Data collection: The methods used to collect the data necessary to answer the research questions.
@@ -13,32 +12,33 @@ In this chapter, we explain:
 \end{enumerate}
 
 \section{Research design}
-This section explains the research background, questions, datasets, and environmental setup.
+This section describes the overall setup of the research.
 \subsection{Research background}
 Clustering data is a crucial part of machine learning, aiming to discover patterns in the data that may not be immediately visible to the human eye.
 To achieve this, the data is trained on large datasets.
 However, storing such data is unsafe, as unauthorized access could lead to breaches.
 
-Local Differential Privacy (LDP) has been introduced to safeguard user privacy while preserving data patterns.
+\gls{ldp} has been introduced to safeguard user privacy while preserving data patterns.
 Adding local noise means the plain data is never stored on a central server.
 But, the limited available data in the local view distorts the patterns excessively in each noise addition.
 
 Current literature has attempted to address this challenge, but the solutions fall short.
 They either require modifications to the clustering algorithm or lack practical applicability due to the use of synthetic data.
 Existing literature focuses mainly on 2-dimensional data with K-Means as the clustering algorithm.
-In addition, there is a lack of practical applicability due to the use of synthetic data.
 
-To address these limitations, we propose a new \gls{ldp} method called kd-Laplace, utilizing distance to preserve data patterns using the concept of \gls{gi}. \newline
+To address these limitations, we propose a new \gls{ldp} method called kD-Laplace, utilizing distance to preserve data patterns using the concept of \gls{gi}. \newline
 Our method enables secure training of cluster algorithms based on input-perturbation.
-We will test three variants of the kd-Laplace mechanism to assess their utility and privacy characteristics.
-Also, we will compare the kd-Laplace mechanism to Piecewise, which is another \gls{ldp} mechanism (See Section \ref{theory:literature-review}).
+Due to this approach, we can train multiple cluster algorithms without modifications and extend them to n-dimensional data.
+We will test three variants of the kD-Laplace mechanism to assess their utility and privacy characteristics.
 \begin{enumerate}
-  \item kd-Laplace: Plain mechanism without any additions for truncation.
-  \item grid-kd-Laplace: Mechanism with truncation using grid-remapping (See Equation: \ref{alg:grid-remapping-laplace}).
-  \item density-kd-Laplace: Mechanism with truncation using grid-remapping in combination with density-remapping (See Equation: \ref{alg:optimal-remapping-laplace}).
+  \item kD-Laplace: Plain mechanism without any additions for truncation.
+  \item grid-kD-Laplace: Mechanism with truncation using grid-remapping (See Equation: \ref{alg:grid-remapping-laplace}).
+  \item density-kD-Laplace: Mechanism with truncation using density-remapping (See Equation: \ref{alg:optimal-remapping-laplace}).
 \end{enumerate}
+We will compare the kD-Laplace mechanism to Piecewise, which is another \gls{ldp} mechanism (See Section \ref{theory:literature-review}).
+And assess the effectiveness of the proposed kd-Laplace variants.
 
-The research combines real-world and synthetic data to demonstrate practical applicability.
+This research combines real-world and synthetic data to demonstrate practical applicability.
 Extensive external and internal validation experiments will be conducted to establish the method's practical relevance and effectiveness.
 
 
@@ -52,8 +52,8 @@ This question is divided into three smaller sub-questions:
         We focus on the implementation of kd-Laplace on n-dimensional data.
   \item \textit{RQ2: How can 3D-Laplace be extended to protect the privacy of n-dimensional data employed for training clustering algorithms?} \newline
         The setup for this research question is the same as for research question 1, but instead of 2D data, we focus on 3D and n-dimensional data.
-  \item \textit{RQ3: What is the impact of dataset characteristics on the research conducted for kD-Laplace?} \newline
-        In this research question, we evaluate the dataset characteristics and the influence on kD-Laplace.
+  \item \textit{RQ3: How do dataset characteristics impact the kD-Laplace mechanism for utility and privacy?} \newline
+        In this research question, we evaluate the dataset characteristics and their influence on kD-Laplace.
         Also, we investigate if we can improve the utility and privacy of kd-Laplace by adopting grid-kD-Laplace and density-kD-Laplace (\ref{fig:optimal-remapping}).
         We use several hypotheses questions to answer research question 3.
 
@@ -65,7 +65,6 @@ This question is divided into three smaller sub-questions:
                 Since the noise is updated based on the density of the data points, the clusters stay preserved (\ref{alg:optimal-remapping-laplace}).
                 As a result, the utility increases while the data points remain indistinguishable.
                 Therefore, we have extended our mechanism with density remapping and named it density-kD-Laplace.
-                This variant is included in the next three sections and further research using the next two hypotheses.
           \item \textit{H2: The privacy leakage (adversary advantage) and utility increases for more dimensions:}
                 The hypothesis arose from our observation while investigating/implementing kD-laplace(\ref{theory:privacy-utility-nd}).
                 Adding more dimensions (5 >) decreases the added noise gradually, increasing utility.
@@ -78,7 +77,7 @@ This question is divided into three smaller sub-questions:
 \end{enumerate}
 
 \subsection{Datasets} \label{datasets-section}
-For this research, we selected datasets based on the related papers (\ref{theory:literature-review}).
+For this research, we selected two real-world datasets based on the related papers (\ref{theory:literature-review}).
 The datasets are sourced from the UCI Machine Learning Repository \citep{noauthor_uci_nodate}.
 \begin{enumerate}
   \item \textbf{Seeds dataset} \footnote{http://archive.ics.uci.edu/ml/datasets/seeds}: This dataset was used in several related works and contains 210 samples with 7 (numerical) attributes.
@@ -172,26 +171,20 @@ The "value" column shows the value we used for the experiments, with the corresp
 \begin{table}[h]
   \begin{tabular}{|l|p{6cm}|l|l|}
     \hline
-    Parameter      & Description                                                                                & Value       & Dataset       \\
+    Parameter      & Description                                                                                & Value       & Dataset(s)              \\
     \hline
-    Preference     & We decided to use the median similarity as described in section \ref{theory:clustering-ap} & p=Median    & Seeds dataset \\
+    Preference     & We decided to use the median similarity as described in section \ref{theory:clustering-ap} & p=Median    & \makecell{Seeds dataset \\ Heart dataset \\ Circle dataset \\ Line dataset \\ Skewed dataset} \\
     \hline
-    Preference     & ""                                                                                         & p=Median    & Heart dataset \\
-    \hline
-
-    Damping factor & Default value as specified in section \ref{theory:clustering-ap}                           & damping=0.5 & Seeds dataset \\
-    \hline
-    Damping factor & ""                                                                                         & damping=0.5 & Heart dataset \\
+    Damping factor & Default value as specified in section \ref{theory:clustering-ap}                           & damping=0.5 & \makecell{Seeds dataset \\ Heart dataset \\ Circle dataset \\ Line dataset \\ Skewed dataset}       \\
     \hline
   \end{tabular}
   \caption{Affinity Propagation hyperparameters for the datasets}
   \label{tab:ap-formula-sklearn}
 \end{table}
 The above plot shows the relevant hyperparameters for the \gls{ap} clustering algorithm per dataset.
-As discussed for research question 3 \todo{Reference}, we omitted the synthetic datasets because they are only used with K-Means.
-There are two hyperparameters: "preference" and "damping factor."
 For the "preference," we selected the median of the dataset.
 We also left the "damping factor" at the default value specified in the theory chapter (See Section: \ref{theory:clustering-ap}).
+\newpage
 \subsubsection{OPTICS}
 
 \begin{table}[h]
@@ -199,15 +192,11 @@ We also left the "damping factor" at the default value specified in the theory c
     \hline
     Parameter      & Description                                                                                                    & Value       & Dataset                    \\
     \hline
-    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & $minPts=4$  & \makecell[l]{Seeds dataset \\ (2-dimensions)}  \\
+    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & $minPts=4$  & \makecell[l]{Seeds dataset \\ Heart dataset \\ Circle dataset \\ Line dataset \\ Skewed dataset \\ (2-dimensions)}  \\
     \hline
-    Minimum points & ""                                                                                                             & $minPts=6$  & \makecell[l]{Seeds dataset \\ (3-dimensions)} \\
+    Minimum points & ""                                                                                                             & $minPts=6$  & \makecell[l]{Seeds dataset \\ Heart dataset \\ Circle dataset \\ Line dataset \\ Skewed dataset \\ (3-dimensions)} \\
     \hline
     Minimum points & ""                                                                                                             & $minPts=14$ & \makecell[l]{Seeds dataset \\ (7-dimensions)}  \\
-    \hline
-    Minimum points & Decided using the formula $minPts = n * 2$, where n is the number of features (\ref{theory:clustering-dbscan}) & $minPts=4$  & \makecell[l]{Heart dataset \\ (2-dimensions)}  \\
-    \hline
-    Minimum points & ""                                                                                                             & $minPts=6$  & \makecell[l]{Heart dataset \\ (3-dimensions)}  \\
     \hline
     Minimum points & ""                                                                                                             & $minPts=20$ & \makecell[l]{Heart dataset \\ (10-dimensions)} \\
     \hline
@@ -216,11 +205,10 @@ We also left the "damping factor" at the default value specified in the theory c
   \label{tab:dbscan-formula-sklearn}
 \end{table}
 The above table shows the relevant hyperparameters for the \gls{optics} clustering algorithm for each dataset.
-Because the minimum points depend on the number of dimensions, we must display them for each dataset.
+Because the minimum points depend on the number of dimensions, we must display them for each dataset (See Section: \ref{theory:clustering-dbscan}).
 We omitted the synthetic datasets for the same reason specified for \gls{ap}.
-
-The "minimum points" hyperparameter is calculated using the formula $minPts = n * 2$, where $n$ is the number of dimensions (See Section: \ref{theory:clustering-dbscan}).
-
+The first two rows display the minimum points for the datasets that have 2 and 3-dimensional data.
+The last two rows display the minimum points for the datasets that have 7 and 10-dimensional data.
 \newpage
 \subsection{Utility and privacy evaluation}
 \subsubsection*{Utility}
@@ -262,6 +250,7 @@ In addition, we evaluate privacy by simulating a membership inference attack and
   \item \textbf{Privacy distance: }
         The first measurement we evaluate is the distance between the dataset's non-private and private variants.
         This metric gives us a sense of how much extra distance (and privacy) the privacy mechanisms offer compared to the non-private variant.
+        %We call this "disclosure risk" because it measures how much noise is added.
         To this end, the average Euclidean distance is measured and reported per epsilon. A higher distance indicates more privacy.
   \item \textbf{Adversarial advantage: }
         We used the Membership Inference Attack (MIA) that Shokri et al. proposed with the implementation that was provided by Adversarial Robustness Toolkit (ART) \citep{nicolae_adversarial_2019}.
@@ -291,7 +280,7 @@ In addition, we evaluate privacy by simulating a membership inference attack and
         In this case, a lower score is better than a lower score.
 \end{enumerate}
 %\input{Method/algorithms/shokri-setup-mi.tex}
-\subsection{Research roadmap}
+\subsection{Research roadmap} \label{research-roadmap}
 This section explains the experiments' setup and the result reporting order.
 \begin{enumerate}
   \item Cluster utility: The mechanisms kD-Laplace and Piecewise are compared using the external and internal validation methods.

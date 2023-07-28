@@ -1,26 +1,22 @@
 \chapter{Results}
 This chapter aims to present the results to the reader.
 As indicated in the methodology, we tested four mechanisms (three variants of kd-Laplace and Piecewise) for their utility and privacy.
-\todo[inline]{A lot of stuff can be removed here}
-The results are presented in the following order:
 \begin{enumerate}
-    \item Cluster utility: We use external validation (AMI/ARI) to compare the results between the three different cluster algorithms when trained privately with kd-laplace (\ref{fig:final-mechanism-design}) and piecewise.
-    \item Mechanism utility: We compare the three variants of kd-Laplace and Piecewise using external validation. For the comparison, we use K-Means as a clustering algorithm.
-    \item Privacy: We compare the three variants of kd-Laplace and Piecewise by evaluating the membership inference attack (MIA).
-    \item Dimensionality: We evaluate the number of dimensions' influence on privacy.
-    \item Shape: We are investigating the shape of the data to measure its impact on the utility and privacy of the kd-Laplace mechanism.
-          For the comparison, we use K-Means as a clustering algorithm.
+    \item Cluster utility: Visualise the utility of kD-Laplace and Piecewise for 2/3/n-dimensional data.
+          The results are displayed using a line diagram, using \gls{ami} and \gls{sc}.
+    \item Mechanism utility: Visualise the utility of kD-Laplace and Piecewise using a heatmap plot.
+          The results for each dimension and privacy budget are provided for only the \gls{ami} score.
+    \item Mechanism privacy: Visualise the privacy of kD-Laplace and Piecewise using a heatmap plot.
+          The results for each dimension and privacy budget are provided for only the adversary advantage and privacy distance.
+    \item Mechanism comparison: Visualise the comparison between the variants of kD-Laplace and Piecewise.
+          The results for each mechanism \& variant are provided using a bar-plot for the \gls{ami} score (utility) and the adversary advantage (privacy).
 \end{enumerate}
 All results are reported for each dataset (See methodology: \ref{datasets-section}) separately.
-\newpage
 \section{Cluster utility}
-The results below display the difference between the three cluster algorithms for Piecewise and kd-Laplace/grid/optimal for 2/3/n-dimensional data.
-The first figure shows the seeds dataset, and the second shows the heart dataset. \newline
-Displaying the different cluster algorithms and their corresponding hyperparameters is done using the legend.
-The x-axis shows the privacy budget, and the y-axis shows the adjusted mutual information (AMI) and the adjusted rand index (ARI).
-Please refer to the plots in the appendix for internal validation and the other variants (Laplace / Laplace-truncated): \ref{appendix:results-cluster-utility}.
+The results below display the difference in external and internal utility for the three cluster algorithms using the kd-Laplace and Piecewise mechanisms.
+The x-axis shows the privacy budget, and the y-axis shows the \gls{ami}.
+Please refer to the plots in the appendix for the same scores for the variants of kD-Laplace. \todo{add the other results to the appendix}.
 \newpage
-% For research question 1 the results are 2-dimensional plotted using a line diagram.
 \subsection{2-dimensional data}
 \begin{figure}[H]
     \centering
@@ -41,7 +37,7 @@ Please refer to the plots in the appendix for internal validation and the other 
     \label{fig:validation-seeds-dataset_comparison_2d-laplace}
 \end{figure}
 %The above plots show the AMI and ARI scores for the seeds-dataset with kd-laplace/grid/optimal (left-side) and piecewise (right-side).
-Piecewise shows a higher AMI / ARI for epsilons 7 and 9. In contrast, the kd-Laplace mechanism scores higher for all the other epsilons (0.1 onward 7).
+Piecewise shows a higher \gls{ami} for privacy budgets (epsilon) 7 and 9. In contrast, the kd-Laplace mechanism scores higher for all the other epsilons (0.1 onward 7).
 K-Means achieves the best score for kd-Laplace with a slight margin compared to AP.
 However, for the Piecewise mechanism, K-Means performs better.
 For both the mechanisms, OPTICS underperforms heavily but still scores the same as AP for Piecewise.
@@ -340,16 +336,24 @@ For the heart dataset, the difference is slightly smaller, but Piecewise spikes 
 \newpage
 \begin{figure}[H]
     \centering
-    \begin{minipage}[c]{\textwidth}
-        %        \includegraphics[width=\textwidth]{Results/RQ1/seeds-dataset/privacy_distance_plot.png}
-        \caption{Privacy distance for each mechanism for seeds-dataset.}
-        \label{fig:privacy_seeds-dataset_comparison_2d_privacy_distance_plot}
-    \end{minipage}
-    \begin{minipage}[c]{\textwidth}
-        %        \includegraphics[width=\textwidth]{Results/RQ1/heart-dataset/privacy_distance_plot.png}
-        \caption{Privacy distance for each mechanism for heart-dataset.}
-        \label{fig:privacy_heart-dataset_comparison_2d_privacy_distance_plot}
-    \end{minipage}
+    \begin{subfigure}[b]{0.85\textwidth}
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap showing disclosure risk for the kD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/seeds-dataset/distance.png}
+            \label{fig:privacy_dist_seeds-dataset_adversial_advantage_kd-laplace}
+        \end{subfigure}
+        \vfill % vertical space
+
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap showing disclosure risk for the Piecewise mechanism, per privacy budget \& dimension for seeds-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/piecewise/seeds-dataset/distance.png}
+            \label{fig:privacy_dist_seeds-dataset_adversial_advantage_piecewise}
+        \end{subfigure}
+    \end{subfigure}
+    \hfill % horizontal space
+    \begin{subfigure}[b]{0.075\textwidth}
+        \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/seeds-dataset/heatmap_legend_distance.png}
+    \end{subfigure}
 \end{figure}
 The above graph represents the average Euclidean distance added by each privacy mechanism compared to the two datasets. We use a logarithmic scale for the Euclidean distance to better visualize the results.
 For both datasets, the Piecewise mechanism adds the most privacy. When considering the kd-Laplace variants on the seeds dataset, kd-Laplace without optimizations adds the most distance, followed by kd-Laplace/grid and kd-Laplace/grid/optimal. For the heart dataset, all variants of kd-Laplace are nearly equal.
@@ -378,7 +382,27 @@ For both datasets, the Piecewise mechanism adds the most privacy. When consideri
     \end{subfigure}
 \end{figure}
 \newpage
-\todo[inline]{Add distance plot}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.85\textwidth}
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap showing disclosure risk for the kD-Laplace mechanism, per privacy budget \& dimension for heart-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/heart-dataset/distance.png}
+            \label{fig:privacy_risk_heart-dataset_adversial_advantage_kd-laplace}
+        \end{subfigure}
+        \vfill % vertical space
+
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap showing disclosure risk for the Piecewise mechanism, per privacy budget \& dimension for heart-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/piecewise/heart-dataset/distance.png}
+            \label{fig:privacy_risk_heart-dataset_adversial_advantage_piecewise}
+        \end{subfigure}
+    \end{subfigure}
+    \hfill % horizontal space
+    \begin{subfigure}[b]{0.075\textwidth}
+        \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/heart-dataset/heatmap_legend_distance.png}
+    \end{subfigure}
+\end{figure}
 \newpage
 \subsection{Circle dataset}
 \begin{figure}[H]
@@ -401,9 +425,32 @@ For both datasets, the Piecewise mechanism adds the most privacy. When consideri
     \begin{subfigure}[b]{0.075\textwidth}
         \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/circle-dataset/heatmap_legend_shokri_mi_adv.png}
     \end{subfigure}
+
+
 \end{figure}
 \newpage
-\todo[inline]{Add distance plot}
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.85\textwidth}
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap showing disclosure risk for the kD-Laplace mechanism, per privacy budget \& dimension for circle-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/circle-dataset/distance.png}
+            \label{fig:privacy-risk_circle-dataset_adversial_advantage_kd-laplace}
+        \end{subfigure}
+        \vfill % vertical space
+
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap showing disclosure risk for the Piecewise mechanism, per privacy budget \& dimension for circle-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/piecewise/circle-dataset/distance.png}
+            \label{fig:privacy-risk_circle-dataset_adversial_advantage_piecewise}
+        \end{subfigure}
+    \end{subfigure}
+    \hfill % horizontal space
+    \begin{subfigure}[b]{0.075\textwidth}
+        \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/circle-dataset/heatmap_legend_distance.png}
+    \end{subfigure}
+\end{figure}
+\newpage
 \subsection{Line dataset}
 \begin{figure}[H]
     \centering
@@ -427,7 +474,27 @@ For both datasets, the Piecewise mechanism adds the most privacy. When consideri
     \end{subfigure}
 \end{figure}
 \newpage
-\todo[inline]{Add distance plot}
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.85\textwidth}
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap showing disclosure risk for the kD-Laplace mechanism, per privacy budget \& dimension for line-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/line-dataset/distance.png}
+            \label{fig:privacy-risk_line-dataset_adversial_advantage_kd-laplace}
+        \end{subfigure}
+        \vfill % vertical space
+
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap showing disclosure risk for the Piecewise mechanism, per privacy budget \& dimension for line-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/piecewise/line-dataset/distance.png}
+            \label{fig:privacy-risk_line-dataset_adversial_advantage_piecewise}
+        \end{subfigure}
+    \end{subfigure}
+    \hfill % horizontal space
+    \begin{subfigure}[b]{0.075\textwidth}
+        \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/line-dataset/heatmap_legend_distance.png}
+    \end{subfigure}
+\end{figure}
 \newpage
 \subsection{Skewed dataset}
 \begin{figure}[H]
@@ -452,19 +519,34 @@ For both datasets, the Piecewise mechanism adds the most privacy. When consideri
     \end{subfigure}
 \end{figure}
 \newpage
-\todo[inline]{Add distance plot}
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.85\textwidth}
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap showing disclosure risk for the kD-Laplace mechanism, per privacy budget \& dimension for skewed-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/skewed-dataset/distance.png}
+            \label{fig:privacy-risk_skewed-dataset_adversial_advantage_kd-laplace}
+        \end{subfigure}
+        \vfill % vertical space
 
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap showing disclosure risk for the Piecewise mechanism, per privacy budget \& dimension for skewed-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/piecewise/skewed-dataset/distance.png}
+            \label{fig:privacy-risk_skewed-dataset_adversial_advantage_piecewise}
+        \end{subfigure}
+    \end{subfigure}
+    \hfill % horizontal space
+    \begin{subfigure}[b]{0.075\textwidth}
+        \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/skewed-dataset/heatmap_legend_distance.png}
+    \end{subfigure}
+\end{figure}
 \newpage
 \subsection{Mechanism comparison}
 In this section, we compare the different mechanisms for each dataset.
 For this purpose, we also include all the different variants of kd-Laplace to see if there is a difference between them.
 So, instead of comparing the mechanisms based on the number of dimensions, we compare them on the average scores for all dimensions per mechanism.
-We are most interested in the utility and performance, and to compare them, we only show the AMI and adversary advantage scores.
-The other plots are included in the appendix: \todo{add appendix reference}.
-
-\begin{figure}[H]
-
-\end{figure}
+We are most interested in the utility and performance, and to compare them, we only show the \gls{ami} and adversary advantage scores.
+The privacy distance comparison plots are included in the appendix: \todo{add appendix reference}.
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.30\textwidth}
