@@ -12,7 +12,7 @@ For each mechanism, we explain the equation for \gls{gi}, the mechanism, and the
 \input{TheorethicalFramework/ND-Laplace/2d-laplace.tex}
 \input{TheorethicalFramework/ND-Laplace/3d-laplace.tex}
 \newpage
-\section{nD-Laplace}
+\section{kD-Laplace}
 \todo[inline]{Include reference to kD-Laplace}
 \todo[inline]{Rename optimal-remapping to density-remapping}
 As mentioned in the previous chapter, the paper introduced by Min et al. can handle 3-dimensional data.
@@ -154,11 +154,12 @@ Therefore, we also explore the optimal remapping algorithm proposed by Chatzikok
 \input{TheorethicalFramework/ND-Laplace/algorithms/outside-domain.tex}
 \input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}
 \newpage
-\subsubsection{Optimal remapping} \label{theory:optimal-remapping}
+\subsubsection{Density remapping} \label{theory:optimal-remapping}
 As discussed, the remapping will be performance intensive to provide good utility, so we adopt the optimal remapping \citep{chatzikokolakis_efficient_2017}.
 Consider the grid proposed in \ref{fig:kd-tree}.
+
 After remapping point $z_i$, it is mapped to the center for the grid cell.
-Based on the cell width, the distance to the original point $x_i$ and $ z_i$ could be really large.
+The distance to the original point $x_i$ and $ z_i$ could be considerable based on the cell width.
 We aim to remap the center of the grid cell (now $z_i$) to a point closer to $x_i$ (if applicable). \newline
 This remapping is visualized by zooming into the last step of the grid-remapping (Figure \ref{fig:kd-tree}).
 \begin{figure}[H]
@@ -172,6 +173,7 @@ In Figure \ref{fig:optimal-remapping}, we can observe that $z_i$ is remapped to 
 For the reasons mentioned earlier, this is not optimal, and we can further optimize it by utilizing the other data points.
 The remapping algorithm works on the idea of crowded places \ref{2d:optimizing}, with the intuition that a crowded place leverages indistinguishability by crowdedness \citep{chatzikokolakis_efficient_2017}.
 For the remainder of this thesis, we will use the term "density" instead of "crowdedness" because it better aligns with the clustering of data.
+In addition, we refer to the term "density remapping" instead of "optimal remapping" to be more descriptive from now on.
 
 The first step is to calculate $B_r(z)$, which refers to all the data points within the original radius $r$ around the data point $z_i$.
 The next step in the algorithm is to collect the data points around $x_i$ to calculate how closely it can be remapped to $z_i$ while preserving distinguishability.
@@ -183,7 +185,7 @@ Now that we have the sets of points around $x_i$ and $z_i$, we can calculate the
   \label{eq:optimal-remapping-formula-1}
 \end{equation}
 Where $w(q)$ is the weight of a point $q in Q_r$ and can be seen as points visited earlier by the user or other users (e.g., point of interest).
-We will revisit this topic in the next paragraph when discussing the practical implementation of the nd-Laplace algorithm.
+We will revisit this topic in the next paragraph when discussing the practical implementation of the kD-Laplace algorithm.
 The same applies to $w(x)$ but for an individual point $q \in Q_r$ instead of the summation.
 The outcome of the formula is a collection of values that indicate the degree of density, which we call $\sigma \in S$.
 With this data, we can calculate a new $z'$ closer to $x_i$ to minimize the expected loss of utility \citep{chatzikokolakis_efficient_2017}.
@@ -218,19 +220,6 @@ Finally, the $z'$ is calculated by calculating the average with the probabilitie
 %The last step is to take the mean value of $\sigma(x)$.
 %Unfortunately, optimal remapping is not possible for users that do not have sufficient data (e.g. new users).
 %The remapping is not applied for these users and is also not applied for $z$ if it is within the domain of $X$.
-\subsubsection{Practical implementation}
-It is challenging to interpret $w(q) \in Q_r$ beforehand based on other users, as we do not have this information (there is a way, but we explain this at the end of this section).
-To this end, we will interpret $w(x)$ as the number of points within the radius $r$ around a point $x \in Q_r$.
-Afterward, it is possible to divide the outcome of this value by the sum of these points (as done in Algorithm \ref{eq:optimal-remapping-formula-1}).
-We, therefore, remain with the same algorithm as proposed by Chatzikokolakis et al. but interpret the weight differently.
-
-It is, however, still possible to interpret $w(q)$ as the weight based on other users' data points.
-This requires us to implement the mechanism interactively.
-In this approach, all clients perturb their data and send it to the server.
-The server clusters the private data, calculates weight based on cluster information (e.g., crowdedness/density), and shares it with the clients.
-The clients then use the optimal remap and share their private information with the server again.
-Although this system requires only a single round-trip between server and clients, it reveals cluster information, so we prefer the non-interactive setup.
-
 \input{TheorethicalFramework/ND-Laplace/algorithms/optimal-remapping.tex}
 \newpage
 \subsection{Putting it together: kd-Laplace}

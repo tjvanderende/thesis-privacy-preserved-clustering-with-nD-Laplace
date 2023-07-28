@@ -167,23 +167,28 @@ The above table shows the relevant hyperparameters for the K-Means clustering al
 The hyperparameter differs for each dataset, so we must display it for each.
 This hyperparameter is the k-value used to determine the number of clusters.
 The "value" column shows the value we used for the experiments, with the corresponding "elbow" plot in the referenced figure.
-\subsubsection{Affinity Propagation}
+\subsubsection{Agglomerative clustering}
 \begin{table}[h]
-  \begin{tabular}{|l|p{6cm}|l|l|}
+  \begin{tabular}{|l|p{6cm}|l|l|l|}
     \hline
-    Parameter      & Description                                                                                & Value       & Dataset(s)              \\
+    Parameter          & Description                                                                                   & Value         & Dataset(s)                                  \\
     \hline
-    Preference     & We decided to use the median similarity as described in section \ref{theory:clustering-ap} & p=Median    & \makecell{Seeds dataset \\ Heart dataset \\ Circle dataset \\ Line dataset \\ Skewed dataset} \\
+    Number of clusters & This is decided based on elbow plots with the SC metric \ref{theory:clustering-agglomerative} & n\_clusters=2 & \makecell{Heart-dataset (2 \& 3 dimensions) \\ Seeds-dataset (7 dimensions) \\ Circle-dataset (3 dimensions) \\ Line-dataset (2 dimensions) } \\
     \hline
-    Damping factor & Default value as specified in section \ref{theory:clustering-ap}                           & damping=0.5 & \makecell{Seeds dataset \\ Heart dataset \\ Circle dataset \\ Line dataset \\ Skewed dataset}       \\
+    Number of clusters & ""                                                                                            & n\_clusters=3 & \makecell{Heart-dataset (9 dimensions)      \\ Seeds-dataset (2 \& 3 dimensions) \\ Skewed dataset (2 dimensions)}          \\
+    \hline
+    Number of clusters & ""                                                                                            & n\_clusters=4 & \makecell{Skewed dataset (2 dimensions)}    \\
+    \hline
+    Number of clusters & ""                                                                                            & n\_clusters=5 & \makecell{Circle dataset (2 dimensions)     \\ Line-dataset (3 dimensions)}              \\
     \hline
   \end{tabular}
-  \caption{Affinity Propagation hyperparameters for the datasets}
+  \caption{Agglomerative clustering hyperparameters for the datasets}
   \label{tab:ap-formula-sklearn}
 \end{table}
-The above plot shows the relevant hyperparameters for the \gls{ap} clustering algorithm per dataset.
-For the "preference," we selected the median of the dataset.
-We also left the "damping factor" at the default value specified in the theory chapter (See Section: \ref{theory:clustering-ap}).
+The above plot shows the relevant hyperparameters for the \gls{ag} clustering algorithm per dataset.
+Because the hyperparameters "n\_clusters" rely heavily on the number of dimensions, each dataset's dimensions were provided.
+For the "n\_clusters," we used the \gls{sc} in corporation with the elbow method to determine the number of clusters.
+In addition, there is the "linkage," which is "ward" for all configurations (See Section \ref{theory:clustering-agglomerative}).
 \newpage
 \subsubsection{OPTICS}
 

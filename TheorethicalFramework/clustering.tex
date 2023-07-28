@@ -37,25 +37,31 @@ Based on this ordering, the \gls{dbscan} algorithm is constructed hierarchically
 
 
 \subsubsection{Hierarchical clustering}
-The name originates from the way hierarchical clustering works.
+%The name originates from the way hierarchical clustering works.
 A hierarchy of clusters is generated and merged according to the closeness of data points \citep{meng_private_2021}.
-One of the best known Hierarchical cluster algorithms is \gls{birch}.
+Hierarchical clustering can be divided into agglomerative and divisive \citep{meng_private_2021}.
+This approach means the clustering occurs from the bottom-up or top-down.
+Of the two approaches, agglomerative is the most common one \citep{meng_private_2021}.
+For the implementation, there are four popular methods: Single link, Average link, Complete link, and Ward's method \citep{roux_comparative_2015}.
+These methods are used to calculate (dis)similarities between objects.
+
+Another Hierarchical cluster algorithm is \gls{birch}.
 This algorithm works by constructing a tree with nodes (so-called clustering feature) \citep{zhang_birch_1996}.
 The algorithm does this iteratively until a cluster becomes too large or diverse.
 The algorithm will split again into similar clusters until all data is processed \citep{zhang_birch_1996}.
-
 \subsubsection{Research direction}
-Based on the different types of clustering algorithms, we have chosen to apply both partition-based clustering algorithms in this research.
-K-Means, widely used in the literature, will be utilized alongside the parameterless alternative, \gls{ap}.
+There are three different types of cluster algorithms that we have considered for this research.
+Therefore, we will choose one algorithm for each type to ensure a representative selection.
 
-For density-based clustering, we will solely focus on OPTICS in this study.
+Based on the different types of clustering algorithms, we have chosen to use K-Means for this research.
+K-Mean clustering is widely used in the literature and, therefore, easily compared with other studies.
+
+For density-based clustering, we will solely focus on \gls{optics} in this study.
 The parameter $radius (\epsilon)$ in \gls{dbscan} is influenced by the data shape, which is further affected by our privacy mechanism.
 However, as \gls{optics} automatically determines the $radius(\epsilon)$, the impact of this parameter is less significant, enabling us to emphasize the evaluation of the privacy mechanism itself.
 
-As for hierarchical clustering, we have decided to exclude it from the initial scope of the research.
-This type of clustering presents substantial differences in its approach compared to the other clustering algorithms.
-Consequently, we will concentrate on partition-based and density-based clustering methods for the current investigation, ensuring a more cohesive and manageable research scope.
-
+As for hierarchical clustering, we have decided to go for the agglomerative approach.
+This approach is the most common and more straightforward compared to \gls{birch}.
 %Because the \gls{dbscan}'s $epsilon'$ algorithm is sensitive to the shape $epsilon'$ value, we utilize \gls{optics} for this research instead of \gls{dbscan}.
 
 %Another density-based cluster method is Density Peak Clustering (DPC). 
@@ -90,28 +96,40 @@ In summary, no fixed method exists to choose a good $k$ for K-Means.
 The elbow method is standard in the existing literature and is very popular due to its simplicity.
 However, one disadvantage is that it can be challenging to determine the "elbow" point, as it is not always present \citep{kodinariya_review_2013}.
 In that case, the silhouette or gap statistic method is a good alternative, where the silhouette score is the simpler method.
-\subsubsection{Affinity Propagation} \label{theory:clustering-ap}
-%\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
-%Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
-%The method was introduced by Frey et al. and does not require any hyperparameters \citep{frey_clustering_2007}.
-Although the algorithm is parameterless, important properties could potentially impact the clustering \citep{wang_adaptive_2007}. \newline
-\textbf{Choosing preference($p$): }
-Indicates the preference for selecting a data point as cluster center \citep{wang_adaptive_2007}.
-It highly influences the number of clusters; a high one would lead to more clusters and a small one to less \citep{moiane_evaluation_2018}.
-Depending on the data, a good choice is to set the $p$ to the median of all data similarities \citep{wang_adaptive_2007}.
-But, the effectiveness of this could be highly influenced based on the dataset.
-Analyzing the silhouette coefficient \citep{moiane_evaluation_2018} to validate if the preference is correctly set is possible.
-\newline
-\textbf{Choosing damping factor($lam \in [0,1] $):}
-The damping factor improves the stability (convergence) of the algorithm \citep{wang_adaptive_2007}.
-By default, this value is 0.5 and can be increased to 1 to reduce the impact of numerical oscillations.
-This value can be found manually by re-running the algorithm to find the optimal value.
-However, the approach takes a lot of time, especially for bigger datasets \citep{wang_adaptive_2007}. \newline
+\subsubsection{Agglomerative Clustering} \label{theory:clustering-agglomerative}
+The agglomerative clustering algorithm has two essential hyperparameters: the linkage method and the number of clusters. \newline
+\textbf{Choosing linkage:}
+This decision is crucial for the algorithm as it determines the similarity measurement.
+Choosing a linkage method that uses Euclidean distance is important for our research.
+From the four different types of linkage methods, we have chosen the Ward method because this method uses Euclidean distance \citep{roux_comparative_2015,seetharaman_brief_2019}.
+\textbf{Choosing number of clusters:}
+There are not many methods for determining the initial number of clusters.
+Therefore, the approach is similar to K-Means.
+The amount of clusters is selected based on the "elbow" with the highest silhouette score.
 
-To conclude on this, damping is important if big datasets are considered.
-%However, this research does not use large datasets or consider time complexity as a metric.
-On the other hand, the preference could influence the results a lot.
-In general, it should be sufficient to take the median.
+\mycomment{\subsubsection{Affinity Propagation} \label{theory:clustering-ap}
+  %\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
+  %Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
+  %The method was introduced by Frey et al. and does not require any hyperparameters \citep{frey_clustering_2007}.
+  Although the algorithm is parameterless, important properties could potentially impact the clustering \citep{wang_adaptive_2007}. \newline
+  \textbf{Choosing preference($p$): }
+  Indicates the preference for selecting a data point as cluster center \citep{wang_adaptive_2007}.
+  It highly influences the number of clusters; a high one would lead to more clusters and a small one to less \citep{moiane_evaluation_2018}.
+  Depending on the data, a good choice is to set the $p$ to the median of all data similarities \citep{wang_adaptive_2007}.
+  But, the effectiveness of this could be highly influenced based on the dataset.
+  Analyzing the silhouette coefficient \citep{moiane_evaluation_2018} to validate if the preference is correctly set is possible.
+  \newline
+  \textbf{Choosing damping factor($lam \in [0,1] $):}
+  The damping factor improves the stability (convergence) of the algorithm \citep{wang_adaptive_2007}.
+  By default, this value is 0.5 and can be increased to 1 to reduce the impact of numerical oscillations.
+  This value can be found manually by re-running the algorithm to find the optimal value.
+  However, the approach takes a lot of time, especially for bigger datasets \citep{wang_adaptive_2007}. \newline
+
+  To conclude on this, damping is important if big datasets are considered.
+  %However, this research does not use large datasets or consider time complexity as a metric.
+  On the other hand, the preference could influence the results a lot.
+  In general, it should be sufficient to take the median.
+}
 \subsubsection{OPTICS} \label{theory:clustering-dbscan}
 With the introduction of \gls{optics}, we no longer need to worry about the $radius(\epsilon)$ value.
 Therefore, only $minPts$ remains an important parameter to consider. \newline
@@ -125,7 +143,6 @@ The $minPts$ is the minimum amount of points that have to be within the $radius(
 This hyperparameter is analyzed in a paper by Sander et al.
 The work describes calculating this parameter by applying two times the feature amount \citep{sander_density-based_1998}.
 So, using this approach, a dataset with two features will have an $minPts$ of four \citep{schubert_dbscan_2017}.
-\newpage
 
 \mycomment{\textbf{Choosing radius($\epsilon'$):} The desired $\epsilon'$ can be calculated using the K-NearestNeighbours algorithm \citep{ester_density-based_nodate,schubert_dbscan_2017}.
   The general approach is to choose a $K = 2*N - 1$ (where N is the number of features) and plot the distance for each point.
@@ -198,14 +215,14 @@ They are assessing two essential concepts of clustering: compactness and separat
 Both studies consider three different metrics and measure both concepts at the same time \citep{hassani_using_2017}:
 \begin{enumerate}
   \item \gls{chi} \citep{calinski_dendrite_1974} is used to measure the cluster variance (well-separated clusters) and low variance within the clusters (tightly coupled data). A high score indicates better clustering.
-  \item Silhouette Index \citep{rousseeuw_silhouettes_1987} This metric is similar in measuring cohesion within and separating clusters.
+  \item \gls{sc} \citep{rousseeuw_silhouettes_1987} This metric is similar in measuring cohesion within and separating clusters.
         However, this metric uses the pairwise distance \cite{hassani_using_2017}.
         A score of -1 indicates incorrect clustering and +1 for dense clusters \cite{rousseeuw_silhouettes_1987}.
-  \item Davies-Bouldin \citep{davies_cluster_1979} uses the average distance between centroids. A lower score indicates good clustering.
+  \item Davies-Bouldin (DB) \citep{davies_cluster_1979} uses the average distance between centroids. A lower score indicates good clustering.
 \end{enumerate}
 
-K-Means scores relatively high for \gls{chi} \citep{craenendonck_using_nodate,hassani_using_2017} and SI \citep{craenendonck_using_nodate}.
-The same applies to DBSCAN, which scores relatively high on SI and DB due to noise sensitivity \citep{craenendonck_using_nodate}.
+K-Means scores relatively high for \gls{chi} \citep{craenendonck_using_nodate,hassani_using_2017} and \gls{sc} \citep{craenendonck_using_nodate}.
+The same applies to \gls{optics}/\gls{dbscan}, which scores relatively high on \gls{sc} and DB due to noise sensitivity \citep{craenendonck_using_nodate}.
 
 % Thus, these metrics are difficult to use for very different cluster algorithms \cite{craenendonck_using_nodate}.
 \subsubsection{Existing literature}
@@ -228,7 +245,7 @@ In the literature, both internal and external evaluation methods are commonly us
 While some studies choose one over the other, this thesis will perform both validations.
 This approach is crucial to measure how well the data shape is preserved (internal validation) and how the algorithm performs in real-world scenarios (external validation).
 
-Since certain cluster algorithms may score higher or lower on specific metrics, it is essential to choose two metrics for each type of validation.
+%Since certain cluster algorithms may score higher or lower on specific metrics, it is essential to choose two metrics for each type of validation.
 Based on existing studies and the literature, we have selected metrics adjusted to compensate for the data distribution characteristics.
 Hence, we will focus on these metrics' "adjusted" variants:
 \begin{enumerate}

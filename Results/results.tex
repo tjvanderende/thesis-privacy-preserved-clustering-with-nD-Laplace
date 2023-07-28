@@ -21,7 +21,7 @@ Please refer to the plots in the appendix for the same scores for the variants o
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\textwidth]{Results/2d-laplace/seeds-dataset/legend.png}
+        \includegraphics[width=\textwidth]{Results/kd-laplace/kd-Laplace/seeds-dataset/legend_2.png}
     \end{subfigure}
     \begin{subfigure}{1\textwidth}
         \centering
@@ -38,8 +38,7 @@ Please refer to the plots in the appendix for the same scores for the variants o
 \end{figure}
 %The above plots show the AMI and ARI scores for the seeds-dataset with kd-laplace/grid/optimal (left-side) and piecewise (right-side).
 Piecewise shows a higher \gls{ami} for privacy budgets (epsilon) 7 and 9. In contrast, the kd-Laplace mechanism scores higher for all the other epsilons (0.1 onward 7).
-K-Means achieves the best score for kd-Laplace with a slight margin compared to AP.
-However, for the Piecewise mechanism, K-Means performs better.
+K-Means achieves the best score for both mechanisms with a slight margin compared to \gls{ag}, but they score equal for \gls{sc}
 For both the mechanisms, OPTICS underperforms heavily but still scores the same as AP for Piecewise.
 \newpage
 \begin{figure}[H]
@@ -60,14 +59,73 @@ For both the mechanisms, OPTICS underperforms heavily but still scores the same 
     \end{subfigure}
     \label{fig:validation-heart-dataset_comparison_2d-laplace}
 \end{figure}
+\todo[inline]{Add if results are available}
 The kd-Laplace mechanism performs better (0.8 - 1.0 from epsilon 1.0 to 9) for all epsilons for K-Means.
 \gls{ap} and OPTICS show the same trend, reaching their peaks around epsilon 7 and 9.
-Both underperform by delivering maximum results for these epsilons below 0.3-0.4 AMI/ARI.\newline
+Both underperform by delivering maximum results for these epsilons below 0.3-0.4 AMI/ARI.
+\newpage
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Results/kd-laplace/kd-Laplace/circle-dataset/legend_2.png}
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace mechanism for the 2-dimensional data circle-dataset}}
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/kd-Laplace/circle-dataset/ami-and-sc_2_dimensions.png}
+        \centering
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \caption{\textbf{AMI (top) and SC (bottom) for the Piecewise mechanism for the 2-dimensional data circle-dataset}}
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/piecewise/circle-dataset/ami-and-sc_2_dimensions.png}
+    \end{subfigure}
+    \label{fig:validation-circle-dataset_comparison_2d-laplace}
+\end{figure}
+\newpage
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Results/kd-laplace/kd-Laplace/circle-dataset/legend_2.png}
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace mechanism for the 2-dimensional data line-dataset}}
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/kd-Laplace/line-dataset/ami-and-sc_2_dimensions.png}
+        \centering
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \caption{\textbf{AMI (top) and SC (bottom) for the Piecewise mechanism for the 2-dimensional data line-dataset}}
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/piecewise/line-dataset/ami-and-sc_2_dimensions.png}
+    \end{subfigure}
+    \label{fig:validation-line-dataset_comparison_2d-laplace}
+\end{figure}
+\newpage
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Results/kd-laplace/kd-Laplace/skewed-dataset/legend_2.png}
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace mechanism for the 2-dimensional data skewed-dataset}}
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/kd-Laplace/skewed-dataset/ami-and-sc_2_dimensions.png}
+        \centering
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \caption{\textbf{AMI (top) and SC (bottom) for the Piecewise mechanism for the 2-dimensional data skewed-dataset}}
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/piecewise/skewed-dataset/ami-and-sc_2_dimensions.png}
+    \end{subfigure}
+    \label{fig:validation-skewed-dataset_comparison_2d-laplace}
+\end{figure}
+\newpage
 \subsection{3-dimensional data}
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.30\textwidth}
-        \includegraphics[width=\textwidth]{Results/2d-laplace/seeds-dataset/legend.png}
+        \includegraphics[width=\textwidth]{Results/kd-laplace/kd-Laplace/seeds-dataset/legend_3.png}
     \end{subfigure}
     \begin{subfigure}{1\textwidth}
         \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace mechanism for the 3-dimensional data seeds-dataset}}
@@ -82,11 +140,10 @@ Both underperform by delivering maximum results for these epsilons below 0.3-0.4
     \end{subfigure}
     \label{fig:validation-seeds-dataset_comparison_3d-laplace}
 \end{figure}
-
-Piecewise performs better for epsilon 9 but worse for the lower epsilons (0.1 - 5).
-K-Means scores 0.7 - 0.8 AMI/ARI, followed by \gls{ap}, which is 0.6.
-The kd-Laplace mechanism, on the other hand, shows more difference (K-Means 0.65 - 0.7 and AP 0.3 - 0.2).
-OPTICS scores are again low but show a slight upwards trend when the epsilon increases.
+Piecewise performs better for the \gls{ami} for privacy budgets 3.5 to 9 but worse for the lower epsilons (0.1 - 3.5).
+K-Means scores 0.5 from epsilon 2 to 9 for kD-Laplace.
+For both mechanisms, \gls{ag} scores the same as K-Means for both \gls{ami} and \gls{sc}.
+\gls{optics} scores low (< 0.1) for kD-Laplace, but for Piecewise, it scores 0.4 and 0.6 for epsilon 7 and 9, respectively.
 \newpage
 \begin{figure}[H]
     \centering
@@ -106,7 +163,7 @@ OPTICS scores are again low but show a slight upwards trend when the epsilon inc
     \end{subfigure}
     \label{fig:validation-heart-dataset_comparison_3d-laplace}
 \end{figure}
-
+\todo[inline]{Add if results are available}
 Piecewise for K-Means performs well (0.78 and 0.93 ARI) for epsilon 7 and 9, respectively.
 However, from epsilon 1 onwards kd-Laplace scores 0.77 to 0.93 ARI for K-Means.
 On the other hand, OPTICS scores low for kd-Laplace.
@@ -114,32 +171,87 @@ It shows an upward trend for Piecewise as the algorithm scores 0.45 ARI and 0.6 
 While kd-Laplace scores 0.22 ARI and 0.36 AMI for epsilon 9.
 OPTICS scores below 0.4 ARI/AMI for both mechanisms if the epsilon is < 9.
 \newpage
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Results/kd-laplace/kd-Laplace/circle-dataset/legend_3.png}
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace mechanism for the 3-dimensional data circle-dataset}}
+        \centering
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/kd-Laplace/circle-dataset/ami-and-sc_3_dimensions.png}
+        \centering
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \caption{\textbf{AMI (top) and SC (bottom) for the Piecewise mechanism for the 3-dimensional data circle-dataset}}
+        \centering
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/piecewise/circle-dataset/ami-and-sc_3_dimensions.png}
+    \end{subfigure}
+    \label{fig:validation-circle-dataset_comparison_3d-laplace}
+\end{figure}
+\newpage
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Results/kd-laplace/kd-Laplace/line-dataset/legend_3.png}
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace mechanism for the 3-dimensional data line-dataset}}
+        \centering
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/kd-Laplace/line-dataset/ami-and-sc_3_dimensions.png}
+        \centering
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \caption{\textbf{AMI (top) and SC (bottom) for the Piecewise mechanism for the 3-dimensional data line-dataset}}
+        \centering
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/piecewise/line-dataset/ami-and-sc_3_dimensions.png}
+    \end{subfigure}
+    \label{fig:validation-line-dataset_comparison_3d-laplace}
+\end{figure}
+\newpage
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Results/kd-laplace/kd-Laplace/skewed-dataset/legend_3.png}
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace mechanism for the 3-dimensional data skewed-dataset}}
+        \centering
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/kd-Laplace/skewed-dataset/ami-and-sc_3_dimensions.png}
+        \centering
+    \end{subfigure}
+    \begin{subfigure}{1\textwidth}
+        \caption{\textbf{AMI (top) and SC (bottom) for the Piecewise mechanism for the 3-dimensional data skewed-dataset}}
+        \centering
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/piecewise/skewed-dataset/ami-and-sc_3_dimensions.png}
+    \end{subfigure}
+    \label{fig:validation-skewed-dataset_comparison_3d-laplace}
+\end{figure}
+\newpage
 \subsection{n-dimensional data}
 \begin{figure}[H]
     \centering
     \begin{subfigure}{0.30\textwidth}
-        \includegraphics[width=\textwidth]{Results/2d-laplace/seeds-dataset/legend.png}
+        \includegraphics[width=\textwidth]{Results/kd-laplace/kd-Laplace/seeds-dataset/legend_7.png}
     \end{subfigure}
     \begin{subfigure}{1\textwidth}
         \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace mechanism for the n-dimensional data seeds-dataset}}
         \centering
-        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/kd-Laplace/seeds-dataset/ami-and-sc_8_dimensions.png}
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/kd-Laplace/seeds-dataset/ami-and-sc_7_dimensions.png}
         \centering
     \end{subfigure}
     \begin{subfigure}{1\textwidth}
         \caption{\textbf{AMI (top) and SC (bottom) for the Piecewise mechanism for the n-dimensional data seeds-dataset}}
         \centering
-        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/piecewise/seeds-dataset/ami-and-sc_8_dimensions.png}
+        \includegraphics[width=0.65\textwidth]{Results/kd-laplace/piecewise/seeds-dataset/ami-and-sc_7_dimensions.png}
     \end{subfigure}
     \label{fig:validation-seeds-dataset_comparison_nd-laplace}
 \end{figure}
-
-The above plots show the ARI and AMI scores for the heart dataset with kd-laplace/grid/optimal (left-side) and piecewise (right-side).
-Piecewise performs well (0.89 and 0.87 ARI) for epsilon 9 and 7 for K-Means, respectively.
-In comparison, kd-Laplace scores worse for the same epsilon values (0.56 and 0.51 ARI); on the other hand, kd-Laplace scores better for all the other epsilons.
-After K-Means, the best scoring cluster algorithm is OPTICS for Piecewise, with a score of 0.62 ARI for 9 epsilon.
-However, the other epsilons \gls{ap} scores better. For kd-Laplace, \gls{ap} is second after K-Means, and OPTICS scores much worse for AMI.
-But, for ARI, the scores for OPTICS and \gls{ap} lay close together for epsilon 9.
+kD-Laplace scores high for \gls{ag} for \gls{ami}, with a peak of 0.83 for epsilon 9.
+In contrast, K-Means scores 0.5 to 0.6 \gls{ami} for all privacy budgets.
+Piecewise shows a similar trend, but all clustering algorithms score around equal for epsilon 9.
+The \gls{sc} shows a similar trend as with \gls{ami} but has a peak for epsilon 3 and 3.5 for kD-Laplace for \gls{optics}.
+Overall, \gls{optics} scores lower for both mechanisms. However, it shows an upward trend for Piecewise but not for kD-Laplace.
 \newpage
 \begin{figure}[H]
     \centering
