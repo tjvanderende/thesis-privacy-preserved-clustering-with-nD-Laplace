@@ -40,7 +40,7 @@ Based on this ordering, the \gls{dbscan} algorithm is constructed hierarchically
 %The name originates from the way hierarchical clustering works.
 A hierarchy of clusters is generated and merged according to the closeness of data points \citep{meng_private_2021}.
 Hierarchical clustering can be divided into agglomerative and divisive \citep{meng_private_2021}.
-This approach means the clustering occurs from the bottom-up or top-down.
+This approach means the clustering occurs from the bottom-up or top-down, respectively.
 Of the two approaches, agglomerative is the most common one \citep{meng_private_2021}.
 For the implementation, there are four popular methods: Single link, Average link, Complete link, and Ward's method \citep{roux_comparative_2015}.
 These methods are used to calculate (dis)similarities between objects.
@@ -60,8 +60,8 @@ For density-based clustering, we will solely focus on \gls{optics} in this study
 The parameter $radius (\epsilon)$ in \gls{dbscan} is influenced by the data shape, which is further affected by our privacy mechanism.
 However, as \gls{optics} automatically determines the $radius(\epsilon)$, the impact of this parameter is less significant, enabling us to emphasize the evaluation of the privacy mechanism itself.
 
-As for hierarchical clustering, we have decided to go for the agglomerative approach.
-This approach is the most common and more straightforward compared to \gls{birch}.
+As for hierarchical clustering, we have decided to go for agglomerative clustering.
+This approach is the most common and straightforward compared to \gls{birch}.
 %Because the \gls{dbscan}'s $epsilon'$ algorithm is sensitive to the shape $epsilon'$ value, we utilize \gls{optics} for this research instead of \gls{dbscan}.
 
 %Another density-based cluster method is Density Peak Clustering (DPC). 
@@ -78,9 +78,10 @@ This value determines the number of clusters to consider and influences the resu
 %These methods require a manual way of selecting the best $k$ by visual inspection of a plot.
 The first method is called an "elbow" plot \citep{kodinariya_review_2013}.
 This method finds the best $k$ by applying the K-Means algorithm multiple times and estimating the best $k$.
-\begin{figure}[H]
+\begin{figure}
   \includegraphics{TheorethicalFramework/dentification-of-Elbow-point.png}
   \caption{Illustration of determining $k$ using the "elbow" method \citep{kodinariya_review_2013}}
+  \label{elbow-method}
 \end{figure}
 In this situation, a Silhouette plot can be used to determine the $k$.
 This method uses the Silhouette coefficient for each cluster \citep{saputra_effect_2020}.
@@ -90,7 +91,7 @@ By visualizing the silhouette scores, the K with the highest coefficient has the
 Another method is the Gap statistic method \citep{yuan_research_2019}.
 It compares the total within-cluster variation for different values of k with their expected values under a null reference distribution of the data \citep{tibshirani_estimating_2001}.
 A practical appliance of this method uses a line plot for comparing the $k$-value and gap value \citep{yuan_research_2019}.
-Based on the line's visual change, someone can select the best $k$ (the "elbow").
+Based on the line's visual change, someone can select the best $k$ (see Figure \ref{elbow-method}).
 
 In summary, no fixed method exists to choose a good $k$ for K-Means.
 The elbow method is standard in the existing literature and is very popular due to its simplicity.
@@ -101,7 +102,7 @@ The agglomerative clustering algorithm has two essential hyperparameters: the li
 \textbf{Choosing linkage:}
 This decision is crucial for the algorithm as it determines the similarity measurement.
 Choosing a linkage method that uses Euclidean distance is important for our research.
-From the four different types of linkage methods, we have chosen the Ward method because this method uses Euclidean distance \citep{roux_comparative_2015,seetharaman_brief_2019}.
+From the four different types of linkage methods, we have chosen the Ward method because this method uses Euclidean distance \citep{roux_comparative_2015,seetharaman_brief_2019}. \newline
 \textbf{Choosing number of clusters:}
 There are not many methods for determining the initial number of clusters.
 Therefore, the approach is similar to K-Means.
@@ -244,6 +245,8 @@ This chapter outlines the evaluation methods used and provides a definition and 
 In the literature, both internal and external evaluation methods are commonly used.
 While some studies choose one over the other, this thesis will perform both validations.
 This approach is crucial to measure how well the data shape is preserved (internal validation) and how the algorithm performs in real-world scenarios (external validation).
+Our research will focus on \gls{ami} for external validation. Because it holds the same value as \gls{ari}, but it is better explainable.
+The second metric we use is for external validation. We use \gls{sc} because this metric returns a bounded value between -1 and 1.
 
 %Since certain cluster algorithms may score higher or lower on specific metrics, it is essential to choose two metrics for each type of validation.
 Based on existing studies and the literature, we have selected metrics adjusted to compensate for the data distribution characteristics.
@@ -251,7 +254,7 @@ Hence, we will focus on these metrics' "adjusted" variants:
 \begin{enumerate}
   \item Internal validation:
         \begin{enumerate}
-          \item \textbf{Calinski Harabasz Index:}
+          \mycomment{\item \textbf{Calinski Harabasz Index:}
                 The definition of \gls{chi} is defined in several steps \citep{liu_understanding_2010}:
                 The first definition is the between cluster sum of squares.
                 \begin{equation}
@@ -274,7 +277,7 @@ Hence, we will focus on these metrics' "adjusted" variants:
                 \begin{enumerate}
                   \item $K$ is the number of clusters.
                   \item $N$ is the number of data points.
-                \end{enumerate}
+                \end{enumerate}}
 
           \item \textbf{Silhouette coefficient:} This metric is defined as follows \citep{liu_understanding_2010,rousseeuw_silhouettes_1987}:
                 \begin{equation}
@@ -289,7 +292,7 @@ Hence, we will focus on these metrics' "adjusted" variants:
         \end{enumerate}
   \item External validation:
         \begin{enumerate}
-          \item \textbf{Adjusted Rand Index:}
+          \mycomment{\item \textbf{Adjusted Rand Index:}
                 The \gls{ari} is defined in two steps, one to calculate the actual Rand Index and the other to adjust it for chance.
                 The Rand Index formula is defined as follows \citep{hubert_comparing_1985}\footnote{Explaination is part of Sklearn: \url{https://scikit-learn.org/stable/modules/clustering.html}}:
                 \begin{equation}
@@ -305,6 +308,7 @@ Hence, we will focus on these metrics' "adjusted" variants:
                 \begin{equation}
                   ARI = \frac{RI - Expected(RI)}{max(RI) - Expected(RI)}
                 \end{equation}
+                }
           \item \textbf{Adjusted Mutual Information:}
                 As was the case for the \gls{ari}, the \gls{ami} is also defined in two steps.
                 The first step is to calculate the actual \gls{mi}, and the second is to adjust it for chance.

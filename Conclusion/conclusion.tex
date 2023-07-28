@@ -3,29 +3,43 @@ This thesis has explored the application of the kD-Laplace algorithm in training
 The research was guided by three research questions, which have been addressed as follows: \newline
 \textbf{RQ1: How can 2D-Laplace be used to protect the privacy of 2-dimensional data employed for training clustering algorithms?} \newline
 Implementing kD-Laplace on n-dimensional data has shown promising results, with the mechanism balancing data utility and privacy protection.
-Between the three variants of kd-Laplace, the variant without any optimization scores the best in data utility, together with the Piecewise mechanism.
-But, if we consider the privacy of the mechanisms, Piecewise scores worse than kd-Laplace.
-Between the cluster algorithms, K-means scores the highest \gls{ami} in data utility for both mechanisms.
+For the Heart and Seeds datasets, the kD-Laplace mechanism scores better in \gls{ami} and adversary advantage for lower privacy budgets (0.1 - 3/5) between kD-Laplace and Piecewise.
+The Piecewise mechanism scores better in data utility for higher privacy budgets (5 - 9).
+
+%Between the three variants of kD-Laplace, the variant without any optimization scores the best in data utility, together with the Piecewise mechanism.
+%But, if we consider the privacy of the mechanisms, Piecewise scores worse than kd-Laplace.
+%Between the cluster algorithms, K-means scores the highest \gls{ami} in data utility for both mechanisms.
 
 \textbf{RQ2: How can 3D-Laplace be used to protect the privacy of 3-dimensional data employed for training clustering algorithms?} \newline
 \todo[inline]{Results}
 \textbf{RQ3: How can nD-Laplace be used to protect the privacy of n-dimensional data employed for training clustering algorithms?} \newline
 This research question consists of three hypotheses, which are addressed as follows: \newline
 \begin{itemize}
-    \item H1: Adding optimal remapping improves utility without sacrificing privacy.
+      \item H1: Adding remapping based on density improves utility without sacrificing privacy:
+            \todo[inline]{In progress}
 
-    \item H2: The privacy leakage (adversary advantage) increases for more dimensions.
-          We evaluated only the kd-Laplace/grid/optimal variant of the kD-Laplace mechanism.
-          The heart-dataset's \gls{tpr} increases with more dimensions for the lower privacy budgets.
-          The seeds dataset shows a different trend, with the \gls{tpr} decreasing slightly with more dimensions.
-          But especially for the higher privacy budgets.
-    \item H3: The shape of the data negatively impacts the kd-Laplace mechanism in terms of privacy and utility.
-          We evaluated three shapes: Circle, line, and skewed, and compared the kD-Laplace/optimal/grid mechanism to Piecewise.
-          For the circle, the Piecewise mechanism's utility is best, but privacy-wise worse.
-          The kd-Laplace mechanism scores better in utility and privacy in the line dataset.
-          Also, the kd-Laplace mechanism scores better in utility for the skewed dataset.
-          However, the kD-Laplace shows a higher \gls{tpr} than the Piecewise mechanism for the skewed dataset.
+      \item H2: The privacy leakage (adversary advantage) and utility increases for more dimensions.
+            \todo[inline]{In progress}
+            %We evaluated only the kd-Laplace/grid/optimal variant of the kD-Laplace mechanism.
+
+            %The heart-dataset's \gls{tpr} increases with more dimensions for the lower privacy budgets.
+            %The seeds dataset shows a different trend, with the \gls{tpr} decreasing slightly with more dimensions.
+            But especially for the higher privacy budgets.
+      \item H3: The shape of the data negatively impacts the kd-Laplace mechanism in terms of privacy and utility.
+            The kD-Laplace mechanism scores worse for \gls{ami} for the shape datasets in comparison to the real-world datasets (Heart and Seeds).
+            Piecewise, conversely, scored more consistently and better in \gls{ami} for the shape datasets.
+            Regarding the adversary advantage, kD-Laplace scores higher than Piecewise.
+            Upon closer examination, we observe that the True Positive Rate (TPR) is also higher for kD-Laplace. For both the Circle and Line datasets,
+            kD-Laplace significantly outperforms Piecewise.
+            Therefore, the shape of the data negatively impacts the kd-Laplace mechanism in terms of privacy and utility.
+            %We evaluated three shapes: Circle, line, and skewed, and compared the kD-Laplace/optimal/grid mechanism to Piecewise.
+            %For the circle, the Piecewise mechanism's utility is best, but privacy-wise worse.
+            %The kd-Laplace mechanism scores better in utility and privacy in the line dataset.
+            %Also, the kd-Laplace mechanism scores better in utility for the skewed dataset.
+            %However, the kD-Laplace shows a higher \gls{tpr} than the Piecewise mechanism for the skewed dataset.
 \end{itemize}
+
+\todo[inline]{Still in progress}
 
 Our investigation into the utility and privacy differences among the three kd-Laplace variants and the Piecewise mechanism has revealed that the kd-Laplace mechanism can effectively protect the privacy of n-dimensional data.
 The kd-Laplace mechanism generally scores better in data utility and privacy than the Piecewise mechanism for lower privacy budgets (0.1 - 3/5).

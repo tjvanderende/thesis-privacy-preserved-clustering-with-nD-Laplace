@@ -142,10 +142,19 @@ Therefore, they propose to use a ROC curve to show the effectiveness of a member
 % Final remark
 In conclusion, the attacks that use \gls{mia} are all (mis)using supervised machine learning.
 However, in this study, we use cluster algorithms.
-Therefore, a semi-supervised approach can be used, as illustrated in this figure:
-
+Therefore, a semi-supervised approach can be used, as illustrated in figure \ref{figure:MIA-semi-supervised}.
+\newpage
 \begin{figure}[h]
   \includegraphics[width=1\textwidth]{TheorethicalFramework/Differential privacy/master-thesis-MIA.png}
   \caption{Semi-supervised black-box approach to execute a member inference attack.}
   \label{figure:MIA-semi-supervised}
 \end{figure}
+
+\begin{enumerate}
+  \item On the left side of the figure, there are users providing data. Because this approach uses local noise, the noise added and sent to the server.
+  \item The private data is collected and saved on the server, where the clustering algorithm is trained.
+  \item From the output of the clustering algorithm, the cluster labels are extracted and used to train a classifier (semi-supervised setup).
+  \item The attacker (green user) uses an attack model (e.g., HopSkipJump) to exploit the classifier's confidence in predicting training or test data.
+  \item The attacker can then use the classifier to predict if the data is a member or not.
+        However, this will be less accurate if the cluster/classifier models are trained on private data.
+\end{enumerate}
