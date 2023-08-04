@@ -2,14 +2,15 @@
 Data has become an increasingly important part of our daily lives, and its applications are continuously growing.
 Personal and sensitive information, such as scrolling through Facebook or Instagram, is often sourced from various structured and unstructured data origins.
 As many businesses see the potential of data \citep{noauthor_global_nodate}, the urgency of protecting sensitive information also increases.
-This development is why there have been several regulations regarding data and privacy. Therefore, the European Union created the GDPR \citep{noauthor_eur-lex_nodate}, and the United States created the privacy act \citep{division_privacy_2007}.
+This development is why there have been several regulations regarding data and privacy.
+Therefore, the European Union created the GDPR \citep{noauthor_eur-lex_nodate}, and the United States created the privacy act \citep{division_privacy_2007}.
 For instance, the GDPR describes in Article 34 that data should always be stored in an "incomprehensible way for unauthorized people".
 Due to these regulations, it is challenging for companies to store and analyze data to gain insights.
 
 A method for gaining insights into data is using unsupervised machine learning.
 It can be used to find a structure or pattern in uncategorized data \citep{dridi_unsupervised_2021}.
 Clustering is a type of unsupervised learning commonly applied to group similar data points and reveal patterns and structures \citep{dridi_unsupervised_2021}.
-Cluster algorithms need to be trained on an adequate amount of historical data, so the data needs to be stored and processed in an accessible location.
+Clustering algorithms need to be trained on an adequate amount of historical data, so the data needs to be stored and processed in an accessible location.
 
 A common solution for hiding data from unauthorized access is encryption.
 Although this method is widely used for databases, it is unsuitable for data analysis.
@@ -30,16 +31,16 @@ This makes the noise more significant, impacting the data utility \citep{yang_lo
 %\todo[inline]{Tell something about other mechanisms}
 The difficulty in preserving utility for clustering while preserving privacy is a well-known problem in the literature.
 A study that focuses on preserving the cluster shapes sends the feature’s distance information to the server instead of the feature value \citep{sun_distributed_2019}.
-Their method works on multiple cluster algorithms, compared to other studies focusing on a single cluster algorithm.
+Their method works on multiple clustering algorithms, compared to other studies focusing on a single clustering algorithm.
 However, their method leaks distance information. Another study aimed to improve this using a distance-aware randomization algorithm \cite{xia_distributed_2020}.
 This study was extended by Huang et al. to reduce the difference between actual and perturbed values \citep{9679364}.
 Both studies focus on K-means and \gls{ldp} but do not have direct support for other algorithms. \newline
 
-Existing literature focuses primarily on K-Means, without considering different cluster algorithms.
+Existing literature focuses primarily on K-Means, without considering different clustering algorithms.
 Also, most of the work uses 2-dimensional synthetic, which is not representative of real-world data.
 Due to this inflexibility and lack of practical testing in the current literature, developing a solution closer to practical applicability becomes essential.
 Our research incorporates realistic attacks and datasets to test privacy and utility to bridge this gap and move towards a practically deployable \gls{ldp} mechanism.
-Therefore, the overarching goal of this thesis is to develop a privacy framework that facilitates secure training of cluster algorithms on distributed n-dimensional data.
+Therefore, the overarching goal of this thesis is to develop a privacy framework that facilitates secure training of clustering algorithms on distributed n-dimensional data.
 
 \subsection*{Research objective}
 Another take on \gls{dp} is called \gls{gi} and is specifically used for geographical data  \citep{DBLP:journals/corr/abs-1212-1984}.
@@ -52,14 +53,14 @@ Consequently, we expect this algorithm to perform well for data clustering tasks
 To our knowledge, \gls{gi} has never been previously applied for data clustering.
 Therefore, the primary research objective of this study is to extend the use of \gls{gi} to optimize specifically the clustering of data. \newline
 
-This thesis aims at developing a new privacy framework for training cluster algorithms on distributed n-dimensional data.
-It does so by extending and optimizing the three variants of nD-Laplace to support cluster algorithms.
+This thesis aims at developing a new privacy framework for training clustering algorithms on distributed n-dimensional data.
+It does so by extending and optimizing the three variants of nD-Laplace to support clustering algorithms.
 Our contribution to the current literature is as follows:
 \begin{enumerate}
-  \item We aim to create a new privacy framework named kd-Laplace using the three variants of Laplace to train privacy-preserving cluster algorithms on distributed n-dimensional data.
-  \item In addition to K-means, we also demonstrate the working of our method on multiple other cluster algorithms.
-  \item We introduce different optimization techniques to improve the utility of kd-Laplace using kd-tree.
-  \item We demonstrate the privacy of kd-Laplace using real-world datasets and attacks.
+      \item We aim to create a new privacy framework named kd-Laplace using the three variants of Laplace to train privacy-preserving clustering algorithms on distributed n-dimensional data.
+      \item In addition to K-means, we also demonstrate the working of our method on multiple other clustering algorithms.
+      \item We introduce different optimization techniques to improve the utility of kd-Laplace using kd-tree.
+      \item We demonstrate the privacy of kd-Laplace using real-world datasets and attacks.
 \end{enumerate}
 
 \subsection*{Research question and methods}

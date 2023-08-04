@@ -27,8 +27,8 @@ They either require modifications to the clustering algorithm or lack practical 
 Existing literature focuses mainly on 2-dimensional data with K-Means as the clustering algorithm.
 
 To address these limitations, we propose a new \gls{ldp} method called kD-Laplace, utilizing distance to preserve data patterns using the concept of \gls{gi}. \newline
-Our method enables secure training of cluster algorithms based on input-perturbation.
-Due to this approach, we can train multiple cluster algorithms without modifications and extend them to n-dimensional data.
+Our method enables secure training of clustering algorithms based on input-perturbation.
+Due to this approach, we can train multiple clustering algorithms without modifications and extend them to n-dimensional data.
 We will test three variants of the kD-Laplace mechanism to assess their utility and privacy characteristics.
 \begin{enumerate}
       \item kD-Laplace: Plain mechanism without any additions for truncation.
@@ -236,15 +236,15 @@ To measure cluster utility, both internal and external validation methods are us
 }
 \begin{enumerate}
       \item \textbf{External validation: }
-            The external validation is measured by comparing the labels of non-private trained cluster algorithms with those trained using a privacy mechanism.
+            The external validation is measured by comparing the labels of non-private trained clustering algorithms with those trained using a privacy mechanism.
             The outcome is between 0 and 1, where 1 indicates the highest similarity (thus the best result).
-            AMI (Adjusted Mutual Information) is used to assess the external validity of the cluster algorithms (See Section \ref{theory:evaluate}).
+            AMI (Adjusted Mutual Information) is used to assess the external validity of the clustering algorithms (See Section \ref{theory:evaluate}).
       \item \textbf{Internal validation: }
             The internal validation measures the intrinsic properties of the clustering algorithms.
             The outcome is a value between -1 and 1 for the SC evaluation.
             Where -1 indicates incorrect and 1 dense clustering (See Section \ref{theory:evaluate}).
 \end{enumerate}
-Because the cluster algorithms rely on Euclidean distance, we need to apply some data standardization.
+Because the clustering algorithms rely on Euclidean distance, we need to apply some data standardization.
 For this purpose, we use standard scaling provided by the Scikit-learn package \footnote{https://scikit-learn.org/stable/modules/preprocessing.html}.
 
 \subsubsection{Privacy}
@@ -365,7 +365,7 @@ For the data analysis, we utilize visualization libraries in Python, primarily M
 
 %In addition to testing the hypotheses, we also want to investigate the behavior of our mechanism in more detail.
 %\begin{enumerate}
-%\item Research the applicability of the mechanism for other cluster algorithms, like hierarchical clustering.
+%\item Research the applicability of the mechanism for other clustering algorithms, like hierarchical clustering.
 %  \item Research the impact of the data shape on privacy leakage.
 %\item Explore options to extend the method to support categorical data.
 %\item Explore options to extend the method to support binary data.

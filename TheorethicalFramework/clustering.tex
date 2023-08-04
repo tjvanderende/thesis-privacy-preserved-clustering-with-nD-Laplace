@@ -1,13 +1,13 @@
 \section{Clustering}
-This section explains the various cluster algorithms used in the research.
+This section explains the various clustering algorithms used in the research.
 Subsequently, we will explain and indicate how the hyperparameters are handled in the research for each algorithm.
-\subsection{Types of cluster algorithms}
+\subsection{Types of clustering algorithms}
 Multiple cluster types can be utilized for clustering data \citep{xu_comprehensive_2015}.
 For this study, we selected the types that use some form of distance for clustering.
-We explain each cluster type with corresponding cluster algorithms.
+We explain each cluster type with corresponding clustering algorithms.
 \subsubsection{Partition based clustering}
 With this type, the data is partitioned and allocated into a fixed amount of clusters.
-A well-known and popular cluster algorithm is K-means.
+A well-known and popular clustering algorithm is K-means.
 Based on Loyd et al.'s original method, this algorithm randomly selects $k$ points as cluster centroids \citep{1056489}.
 Iteratively each data point is assigned to its nearest centroid.
 It keeps proceeding until the distance between the cluster centroids is optimal.
@@ -22,7 +22,7 @@ Each point sends and receives messages about the attractiveness of other points 
 \subsubsection{Density based clustering}
 The data points are partitioned for this clustering type based on nearest neighbors \citep{fahad_survey_2014}.
 A region with a high data density is considered a cluster \citep{xu_comprehensive_2015}.
-A popular density-based cluster algorithm is \gls{dbscan}.
+A popular density-based clustering algorithm is \gls{dbscan}.
 The method was introduced by Ester et al. and worked by drawing a radius ($radius(\epsilon)$, not to be confused with the privacy budget $\epsilon$) around data points \citep{ester_density-based_nodate}.
 It then groups all points within this radius as clusters.
 The main advantage is its ability to find arbitrarily shaped clusters and detect outliers \citep{liu_privacy_2012}.
@@ -45,12 +45,12 @@ Of the two approaches, agglomerative is the most common one \citep{meng_private_
 For the implementation, there are four popular methods: Single link, Average link, Complete link, and Ward's method \citep{roux_comparative_2015}.
 These methods are used to calculate (dis)similarities between objects.
 
-Another Hierarchical cluster algorithm is \gls{birch}.
+Another Hierarchical clustering algorithm is \gls{birch}.
 This algorithm works by constructing a tree with nodes (so-called clustering feature) \citep{zhang_birch_1996}.
 The algorithm does this iteratively until a cluster becomes too large or diverse.
 The algorithm will split again into similar clusters until all data is processed \citep{zhang_birch_1996}.
 \subsubsection{Research direction}
-There are three different types of cluster algorithms that we have considered for this research.
+There are three different types of clustering algorithms that we have considered for this research.
 Therefore, we will choose one algorithm for each type to ensure a representative selection.
 
 Based on the different types of clustering algorithms, we have chosen to use K-Means for this research.
@@ -79,9 +79,9 @@ This value determines the number of clusters to consider and influences the resu
 The first method is called an "elbow" plot \citep{kodinariya_review_2013}.
 This method finds the best $k$ by applying the K-Means algorithm multiple times and estimating the best $k$.
 \begin{figure}
-  \includegraphics{TheorethicalFramework/dentification-of-Elbow-point.png}
-  \caption{Illustration of determining $k$ using the "elbow" method \citep{kodinariya_review_2013}}
-  \label{elbow-method}
+    \includegraphics{TheorethicalFramework/dentification-of-Elbow-point.png}
+    \caption{Illustration of determining $k$ using the "elbow" method \citep{kodinariya_review_2013}}
+    \label{elbow-method}
 \end{figure}
 In this situation, a Silhouette plot can be used to determine the $k$.
 This method uses the Silhouette coefficient for each cluster \citep{saputra_effect_2020}.
@@ -109,27 +109,27 @@ Therefore, the approach is similar to K-Means.
 The amount of clusters is selected based on the "elbow" with the highest silhouette score.
 
 \mycomment{\subsubsection{Affinity Propagation} \label{theory:clustering-ap}
-  %\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
-  %Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
-  %The method was introduced by Frey et al. and does not require any hyperparameters \citep{frey_clustering_2007}.
-  Although the algorithm is parameterless, important properties could potentially impact the clustering \citep{wang_adaptive_2007}. \newline
-  \textbf{Choosing preference($p$): }
-  Indicates the preference for selecting a data point as cluster center \citep{wang_adaptive_2007}.
-  It highly influences the number of clusters; a high one would lead to more clusters and a small one to less \citep{moiane_evaluation_2018}.
-  Depending on the data, a good choice is to set the $p$ to the median of all data similarities \citep{wang_adaptive_2007}.
-  But, the effectiveness of this could be highly influenced based on the dataset.
-  Analyzing the silhouette coefficient \citep{moiane_evaluation_2018} to validate if the preference is correctly set is possible.
-  \newline
-  \textbf{Choosing damping factor($lam \in [0,1] $):}
-  The damping factor improves the stability (convergence) of the algorithm \citep{wang_adaptive_2007}.
-  By default, this value is 0.5 and can be increased to 1 to reduce the impact of numerical oscillations.
-  This value can be found manually by re-running the algorithm to find the optimal value.
-  However, the approach takes a lot of time, especially for bigger datasets \citep{wang_adaptive_2007}. \newline
+    %\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
+    %Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
+    %The method was introduced by Frey et al. and does not require any hyperparameters \citep{frey_clustering_2007}.
+    Although the algorithm is parameterless, important properties could potentially impact the clustering \citep{wang_adaptive_2007}. \newline
+    \textbf{Choosing preference($p$): }
+    Indicates the preference for selecting a data point as cluster center \citep{wang_adaptive_2007}.
+    It highly influences the number of clusters; a high one would lead to more clusters and a small one to less \citep{moiane_evaluation_2018}.
+    Depending on the data, a good choice is to set the $p$ to the median of all data similarities \citep{wang_adaptive_2007}.
+    But, the effectiveness of this could be highly influenced based on the dataset.
+    Analyzing the silhouette coefficient \citep{moiane_evaluation_2018} to validate if the preference is correctly set is possible.
+    \newline
+    \textbf{Choosing damping factor($lam \in [0,1] $):}
+    The damping factor improves the stability (convergence) of the algorithm \citep{wang_adaptive_2007}.
+    By default, this value is 0.5 and can be increased to 1 to reduce the impact of numerical oscillations.
+    This value can be found manually by re-running the algorithm to find the optimal value.
+    However, the approach takes a lot of time, especially for bigger datasets \citep{wang_adaptive_2007}. \newline
 
-  To conclude on this, damping is important if big datasets are considered.
-  %However, this research does not use large datasets or consider time complexity as a metric.
-  On the other hand, the preference could influence the results a lot.
-  In general, it should be sufficient to take the median.
+    To conclude on this, damping is important if big datasets are considered.
+    %However, this research does not use large datasets or consider time complexity as a metric.
+    On the other hand, the preference could influence the results a lot.
+    In general, it should be sufficient to take the median.
 }
 \subsubsection{OPTICS} \label{theory:clustering-dbscan}
 With the introduction of \gls{optics}, we no longer need to worry about the $radius(\epsilon)$ value.
@@ -146,18 +146,18 @@ The work describes calculating this parameter by applying two times the feature 
 So, using this approach, a dataset with two features will have an $minPts$ of four \citep{schubert_dbscan_2017}.
 
 \mycomment{\textbf{Choosing radius($\epsilon'$):} The desired $\epsilon'$ can be calculated using the K-NearestNeighbours algorithm \citep{ester_density-based_nodate,schubert_dbscan_2017}.
-  The general approach is to choose a $K = 2*N - 1$ (where N is the number of features) and plot the distance for each point.
-  This can then be plotted using a k-dist plot and the best "elbow" can be chosen for deciding the $\epsilon$ (similar to choosing the $k$ for K-means) \citep{elbatta_dynamic_2013}.
-  \begin{figure}[H]
-    \includegraphics{TheorethicalFramework/K-dist-elbow.png}
-    \caption{K-dist plot example for $minPts = 4$ based on a 2-dimensional dataset \citep{ester_density-based_nodate}}
-    \label{k-dist-plot}
-  \end{figure}
+    The general approach is to choose a $K = 2*N - 1$ (where N is the number of features) and plot the distance for each point.
+    This can then be plotted using a k-dist plot and the best "elbow" can be chosen for deciding the $\epsilon$ (similar to choosing the $k$ for K-means) \citep{elbatta_dynamic_2013}.
+    \begin{figure}[H]
+        \includegraphics{TheorethicalFramework/K-dist-elbow.png}
+        \caption{K-dist plot example for $minPts = 4$ based on a 2-dimensional dataset \citep{ester_density-based_nodate}}
+        \label{k-dist-plot}
+    \end{figure}
 
-  %The epsilon value is crucial for the DBSCAN algorithm and highly dependent on the dataset \todo{Source}.
-  Since we employ various types of datasets and algorithms, it is desirable to have an automated method for determining the epsilon (radius) value.
-  The epsilon could influence the results as the radius determines the clusters.
-  For this reason, research has also been conducted on an extension of DBSCAN called OPTICS.}
+    %The epsilon value is crucial for the DBSCAN algorithm and highly dependent on the dataset \todo{Source}.
+    Since we employ various types of datasets and algorithms, it is desirable to have an automated method for determining the epsilon (radius) value.
+    The epsilon could influence the results as the radius determines the clusters.
+    For this reason, research has also been conducted on an extension of DBSCAN called OPTICS.}
 
 %In conclusion, K-Means and \gls{ap} have straightforward methods for determining hyperparameters.
 %For K-Means, the elbow method is the most common, and for \gls{ap}, the median is used for the preference.
@@ -165,35 +165,35 @@ So, using this approach, a dataset with two features will have an $minPts$ of fo
 This complexity is why we use \gls{optics} to determine the best value for $radius(\epsilon)$ and choose $minPts$ based on the number of features times two.
 
 \mycomment{\subsection{Overfitting}
-  Overfitting is dangerous for machine learning models and one of the biggest mistakes with training machine learning models \citep{demsar_hands-training_2021}.
-  It occurs when a machine learning model is trained on samples that are not representative of future test data \citep{bashir_information-theoretic_2020}.
-  A common mistake is to evaluate a model using the same data as it is trained on \citep{demsar_hands-training_2021}.
-  The model appears to have high accuracy but just memorized the properties of a training dataset.
-  Another cause of overfitting can be the size of the training data \citep{valdenegro-toro_machine_2022}.
+    Overfitting is dangerous for machine learning models and one of the biggest mistakes with training machine learning models \citep{demsar_hands-training_2021}.
+    It occurs when a machine learning model is trained on samples that are not representative of future test data \citep{bashir_information-theoretic_2020}.
+    A common mistake is to evaluate a model using the same data as it is trained on \citep{demsar_hands-training_2021}.
+    The model appears to have high accuracy but just memorized the properties of a training dataset.
+    Another cause of overfitting can be the size of the training data \citep{valdenegro-toro_machine_2022}.
 
-  To measure if a model overfits, it is necessary to compute the generalization gap \citep{valdenegro-toro_machine_2022}.
-  \begin{equation}
-    L_{gap} = L_{val} - L_{train}
-  \end{equation}
-  Where $L{val}$ and $L_{train}$ are the validation and training splits of the dataset.
-  For splitting a dataset, a common approach is to have 50\% training data, 30\% for validation and 20\% test \citep{chicco_ten_2017}.
-  In addition to this, if a dataset is too small cross-validation can be considered.
+    To measure if a model overfits, it is necessary to compute the generalization gap \citep{valdenegro-toro_machine_2022}.
+    \begin{equation}
+        L_{gap} = L_{val} - L_{train}
+    \end{equation}
+    Where $L{val}$ and $L_{train}$ are the validation and training splits of the dataset.
+    For splitting a dataset, a common approach is to have 50\% training data, 30\% for validation and 20\% test \citep{chicco_ten_2017}.
+    In addition to this, if a dataset is too small cross-validation can be considered.
 
-  \todo[inline]{Needs more work for unsupervised / cluster problems}
+    \todo[inline]{Needs more work for unsupervised / cluster problems}
 
-  In summary:
-  \begin{enumerate}
-    \item It is necessary to evaluate a machine learning model on a dataset that was not used to train the model.
-    \item Use a representative training dataset, to work well on unseen data.
-    \item To reduce the chance of overfitting for supervised learning, it is a good practice to validate using a 30\% subset.
-  \end{enumerate}
+    In summary:
+    \begin{enumerate}
+        \item It is necessary to evaluate a machine learning model on a dataset that was not used to train the model.
+        \item Use a representative training dataset, to work well on unseen data.
+        \item To reduce the chance of overfitting for supervised learning, it is a good practice to validate using a 30\% subset.
+    \end{enumerate}
 }
 
 \subsection{Evaluation methods} \label{theory:evaluate}
 Clustering comparison measures are important in cluster analysis for external validation by comparing clustering solutions to a "ground truth" clustering \citep{vinh_information_nodate}.
 These external validity indices are a common way to assess the quality of unsupervised machine learning methods like clustering \citep{warrens_understanding_2022}.
 A method that could be used for this is the Rand Index \citep{rand_objective_1971}.
-It is a commonly applied method for comparing two cluster algorithms \citep{wagner_comparing_nodate}.
+It is a commonly applied method for comparing two clustering algorithms \citep{wagner_comparing_nodate}.
 An improvement of this method is adjusted for chance by considering the similarity of pairwise cluster comparisons \citep{vinh_information_nodate}.
 Both the Rand Index (RI) and Adjusted Rand Index (ARI) \citep{hubert_comparing_1985} report a value between 0 and 1.
 Where 0 is for no-similarity and 1 for identical clusters.
@@ -211,32 +211,32 @@ The metric also exists in an adjusted version as \gls{ami}.
 This metric works in the same way as for the \gls{ari} and is mainly needed if the number of data items is small in comparison to the number of clusters \citep{vinh_information_nodate}. \newline
 
 Besides the external validity measurements for clustering, it is also possible to use internal validation methods.
-These metrics focus entirely on the intrinsic dataset properties instead of relying on an external baseline cluster algorithm \citep{craenendonck_using_nodate}.
+These metrics focus entirely on the intrinsic dataset properties instead of relying on an external baseline clustering algorithm \citep{craenendonck_using_nodate}.
 They are assessing two essential concepts of clustering: compactness and separation \citep{hassani_using_2017}.
 Both studies consider three different metrics and measure both concepts at the same time \citep{hassani_using_2017}:
 \begin{enumerate}
-  \item \gls{chi} \citep{calinski_dendrite_1974} is used to measure the cluster variance (well-separated clusters) and low variance within the clusters (tightly coupled data). A high score indicates better clustering.
-  \item \gls{sc} \citep{rousseeuw_silhouettes_1987} This metric is similar in measuring cohesion within and separating clusters.
-        However, this metric uses the pairwise distance \cite{hassani_using_2017}.
-        A score of -1 indicates incorrect clustering and +1 for dense clusters \cite{rousseeuw_silhouettes_1987}.
-  \item Davies-Bouldin (DB) \citep{davies_cluster_1979} uses the average distance between centroids. A lower score indicates good clustering.
+    \item \gls{chi} \citep{calinski_dendrite_1974} is used to measure the cluster variance (well-separated clusters) and low variance within the clusters (tightly coupled data). A high score indicates better clustering.
+    \item \gls{sc} \citep{rousseeuw_silhouettes_1987} This metric is similar in measuring cohesion within and separating clusters.
+          However, this metric uses the pairwise distance \cite{hassani_using_2017}.
+          A score of -1 indicates incorrect clustering and +1 for dense clusters \cite{rousseeuw_silhouettes_1987}.
+    \item Davies-Bouldin (DB) \citep{davies_cluster_1979} uses the average distance between centroids. A lower score indicates good clustering.
 \end{enumerate}
 
 K-Means scores relatively high for \gls{chi} \citep{craenendonck_using_nodate,hassani_using_2017} and \gls{sc} \citep{craenendonck_using_nodate}.
 The same applies to \gls{optics}/\gls{dbscan}, which scores relatively high on \gls{sc} and DB due to noise sensitivity \citep{craenendonck_using_nodate}.
 
-% Thus, these metrics are difficult to use for very different cluster algorithms \cite{craenendonck_using_nodate}.
+% Thus, these metrics are difficult to use for very different clustering algorithms \cite{craenendonck_using_nodate}.
 \subsubsection{Existing literature}
 %A recent and much-cited study uses \gls{ari} and accuracy as metrics for evaluating K-Means \cite{ahmed_k-means_2020}.
 %The accuracy is measured by calculating the percentage of the correct predicted labels and their truth labels.
 Comparable studies with differential privacy use external validation \citep{xia_distributed_2020, sun_privbv_2022}.
-Their experiment setup uses a so-called non-private cluster algorithm as external validation.
-This cluster algorithm is trained without the perturbed data and compared with the same clustering algorithm trained with perturbed data.
+Their experiment setup uses a so-called non-private clustering algorithm as external validation.
+This clustering algorithm is trained without the perturbed data and compared with the same clustering algorithm trained with perturbed data.
 Thus, the non-private variant provides the ground truth as an external validation.
 
-They compare the mutual information between a baseline cluster algorithm using \gls{ami} \citep{9679364} or \gls{nmi} \citep{xia_distributed_2020,sun_privbv_2022}.
+They compare the mutual information between a baseline clustering algorithm using \gls{ami} \citep{9679364} or \gls{nmi} \citep{xia_distributed_2020,sun_privbv_2022}.
 Another study for evaluating \gls{dp} with \gls{ap} uses both \gls{ari} and \gls{ami}.
-In addition to mutual information and rand index scores, it is also not uncommon to calculate the error between the two cluster algorithm's centroids \citep{xia_distributed_2020, 9679364}.
+In addition to mutual information and rand index scores, it is also not uncommon to calculate the error between the two clustering algorithm's centroids \citep{xia_distributed_2020, 9679364}.
 These two studies used Relative Error (RE) for this.
 
 \subsubsection{Research direction}
@@ -248,85 +248,85 @@ This approach is crucial to measure how well the data shape is preserved (intern
 Our research will focus on \gls{ami} for external validation. Because it holds the same value as \gls{ari}, but it is better explainable.
 The second metric we use is for external validation. We use \gls{sc} because this metric returns a bounded value between -1 and 1.
 
-%Since certain cluster algorithms may score higher or lower on specific metrics, it is essential to choose two metrics for each type of validation.
+%Since certain clustering algorithms may score higher or lower on specific metrics, it is essential to choose two metrics for each type of validation.
 Based on existing studies and the literature, we have selected metrics adjusted to compensate for the data distribution characteristics.
 Hence, we will focus on these metrics' "adjusted" variants:
 \begin{enumerate}
-  \item Internal validation:
-        \begin{enumerate}
-          \mycomment{\item \textbf{Calinski Harabasz Index:}
-                The definition of \gls{chi} is defined in several steps \citep{liu_understanding_2010}:
-                The first definition is the between cluster sum of squares.
-                \begin{equation}
-                  B = \sum_{i=1} n_i \cdot (C_k - C)^2
-                \end{equation}
-                \begin{enumerate}
-                  \item $n_k$ is the number of data points in cluster $k$.
-                  \item $C_k$ is the centroid of cluster $k$.
-                  \item $C$ is the dataset centroid
-                \end{enumerate}
-                The second part of the definition is defined as follows:
-                \begin{equation}
-                  W_k = \sum_{i=1}n_i \cdot (x_i - C_k)^2
-                \end{equation}
-                $W_k$ is the within-cluster sum of squares and $x_i$ is the $i$th data point.
-                Finally, the \gls{chi} is calculated by combining the between and within-cluster calculations:
-                \begin{equation}
-                  CH = \frac{B}{\sum_{k=1}^{K}} \cdot \frac{N - k}{k - 1}
-                \end{equation}
-                \begin{enumerate}
-                  \item $K$ is the number of clusters.
-                  \item $N$ is the number of data points.
-                \end{enumerate}}
+    \item Internal validation:
+          \begin{enumerate}
+              \mycomment{\item \textbf{Calinski Harabasz Index:}
+                    The definition of \gls{chi} is defined in several steps \citep{liu_understanding_2010}:
+                    The first definition is the between cluster sum of squares.
+                    \begin{equation}
+                        B = \sum_{i=1} n_i \cdot (C_k - C)^2
+                    \end{equation}
+                    \begin{enumerate}
+                        \item $n_k$ is the number of data points in cluster $k$.
+                        \item $C_k$ is the centroid of cluster $k$.
+                        \item $C$ is the dataset centroid
+                    \end{enumerate}
+                    The second part of the definition is defined as follows:
+                    \begin{equation}
+                        W_k = \sum_{i=1}n_i \cdot (x_i - C_k)^2
+                    \end{equation}
+                    $W_k$ is the within-cluster sum of squares and $x_i$ is the $i$th data point.
+                    Finally, the \gls{chi} is calculated by combining the between and within-cluster calculations:
+                    \begin{equation}
+                        CH = \frac{B}{\sum_{k=1}^{K}} \cdot \frac{N - k}{k - 1}
+                    \end{equation}
+                    \begin{enumerate}
+                        \item $K$ is the number of clusters.
+                        \item $N$ is the number of data points.
+                    \end{enumerate}}
 
-          \item \textbf{Silhouette coefficient:} This metric is defined as follows \citep{liu_understanding_2010,rousseeuw_silhouettes_1987}:
-                \begin{equation}
-                  s(i) = \frac{b(i) - a(i)}{max(b(i) - a(i))}
-                \end{equation}
-                \begin{enumerate}
-                  \item $s(i)$ is the silhouette coefficient for a single datapoint $i$.
-                  \item $a(i)$ is the mean distance of $i$ and all the other points in the same cluster.
-                  \item $b(i)$ is the mean distance of $i$ and all the other points in the next nearest cluster.
-                \end{enumerate}
-                Finally, the final silhouette score is the mean of all datapoint coefficients $s(i)$.
-        \end{enumerate}
-  \item External validation:
-        \begin{enumerate}
-          \mycomment{\item \textbf{Adjusted Rand Index:}
-                The \gls{ari} is defined in two steps, one to calculate the actual Rand Index and the other to adjust it for chance.
-                The Rand Index formula is defined as follows \citep{hubert_comparing_1985}\footnote{Explaination is part of Sklearn: \url{https://scikit-learn.org/stable/modules/clustering.html}}:
-                \begin{equation}
-                  RI = \frac{a + b}{C_2^N}
-                \end{equation}
-                \begin{enumerate}
-                  \item $C$ the ground truth elements (So the actual correct predictions/ classes).
-                  \item $a$ is the number of pairs of elements part of the ground truth $C$ and part of the predicted class.
-                  \item $b$ is the number of pairs of elements in different sets of $C$ and different sets of the predicted class.
-                  \item $C_2^N$ is the total number of pairs of elements in the dataset.
-                \end{enumerate}
-                To compensate for the amount of clusters, the adjusted formula is defined as follows \citep{sinnott_chapter_2016}:
-                \begin{equation}
-                  ARI = \frac{RI - Expected(RI)}{max(RI) - Expected(RI)}
-                \end{equation}
-                }
-          \item \textbf{Adjusted Mutual Information:}
-                As was the case for the \gls{ari}, the \gls{ami} is also defined in two steps.
-                The first step is to calculate the actual \gls{mi}, and the second is to adjust it for chance.
-                The \gls{mi} is defined as follows \citep{vinh_information_nodate}:
-                \begin{equation}
-                  H = - \sum_{i=1}^{U} p(i) \cdot log p(i)
-                \end{equation}
-                $H$ is the uncertainty for one variable given another variable.
-                So it can be used to measure the (dis)similarity between two variables.
-                \begin{enumerate}
-                  \item $U$ is a label to calculate the uncertainty for.
-                  \item $p(i)$ is the probability of a random point $i$ falling into class/labe $U$.
-                \end{enumerate}
-                This same calculation is executed for the second label $V$ and divided by each other.
-                \begin{equation}
-                  MI = \frac{MI - Expected(MI)}{mean(H(U), H(V)) - Expected(MI)}
-                \end{equation}
-        \end{enumerate}
+              \item \textbf{Silhouette coefficient:} This metric is defined as follows \citep{liu_understanding_2010,rousseeuw_silhouettes_1987}:
+                    \begin{equation}
+                        s(i) = \frac{b(i) - a(i)}{max(b(i) - a(i))}
+                    \end{equation}
+                    \begin{enumerate}
+                        \item $s(i)$ is the silhouette coefficient for a single datapoint $i$.
+                        \item $a(i)$ is the mean distance of $i$ and all the other points in the same cluster.
+                        \item $b(i)$ is the mean distance of $i$ and all the other points in the next nearest cluster.
+                    \end{enumerate}
+                    Finally, the final silhouette score is the mean of all datapoint coefficients $s(i)$.
+          \end{enumerate}
+    \item External validation:
+          \begin{enumerate}
+              \mycomment{\item \textbf{Adjusted Rand Index:}
+                    The \gls{ari} is defined in two steps, one to calculate the actual Rand Index and the other to adjust it for chance.
+                    The Rand Index formula is defined as follows \citep{hubert_comparing_1985}\footnote{Explaination is part of Sklearn: \url{https://scikit-learn.org/stable/modules/clustering.html}}:
+                    \begin{equation}
+                        RI = \frac{a + b}{C_2^N}
+                    \end{equation}
+                    \begin{enumerate}
+                        \item $C$ the ground truth elements (So the actual correct predictions/ classes).
+                        \item $a$ is the number of pairs of elements part of the ground truth $C$ and part of the predicted class.
+                        \item $b$ is the number of pairs of elements in different sets of $C$ and different sets of the predicted class.
+                        \item $C_2^N$ is the total number of pairs of elements in the dataset.
+                    \end{enumerate}
+                    To compensate for the amount of clusters, the adjusted formula is defined as follows \citep{sinnott_chapter_2016}:
+                    \begin{equation}
+                        ARI = \frac{RI - Expected(RI)}{max(RI) - Expected(RI)}
+                    \end{equation}
+                    }
+              \item \textbf{Adjusted Mutual Information:}
+                    As was the case for the \gls{ari}, the \gls{ami} is also defined in two steps.
+                    The first step is to calculate the actual \gls{mi}, and the second is to adjust it for chance.
+                    The \gls{mi} is defined as follows \citep{vinh_information_nodate}:
+                    \begin{equation}
+                        H = - \sum_{i=1}^{U} p(i) \cdot log p(i)
+                    \end{equation}
+                    $H$ is the uncertainty for one variable given another variable.
+                    So it can be used to measure the (dis)similarity between two variables.
+                    \begin{enumerate}
+                        \item $U$ is a label to calculate the uncertainty for.
+                        \item $p(i)$ is the probability of a random point $i$ falling into class/labe $U$.
+                    \end{enumerate}
+                    This same calculation is executed for the second label $V$ and divided by each other.
+                    \begin{equation}
+                        MI = \frac{MI - Expected(MI)}{mean(H(U), H(V)) - Expected(MI)}
+                    \end{equation}
+          \end{enumerate}
 \end{enumerate}
 %\textbf{Calinski Harabasz Index:} \newline
 %\textbf{Silhouette coefficient:} \newline
