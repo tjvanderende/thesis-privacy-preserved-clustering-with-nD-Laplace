@@ -14,25 +14,29 @@ For each mechanism, we explain the equation for \gls{gi}, the mechanism, and the
 \newpage
 \section{kD-Laplace}
 As mentioned in the previous chapter, the paper introduced by Min et al. can handle 3-dimensional data.
-A small recap: a point $(r, \theta, \psi)$ gives us the spherical coordinates of a given 3-dimensional sphere.
+A small recap: a point $(r, \theta, \psi)$ gives us the three coordinates of a location on the 3-dimensional sphere.
 An important property is that these coordinates can be generated separately \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
 The $r$ gives us the radius or distance from $(\theta, \psi)$ to the center of the sphere \footnote{https://mathworld.wolfram.com/SphericalCoordinates.html}.
 So, instead of having just these two coordinates, we can extend this to n-dimensions by considering an n-hypersphere \citep{fernandes_generalised_2019, 9646489}.
 To this end, in addition to points $\theta$ and $\psi$, we consider $\theta \in S^n$, where $S$ is a unit hypersphere.
 
-The first step to generate the noise is first to select the $r$.
+The first step to generate the noise is selecting the $r$.
 This method is almost identical to the one for 3-dimensional (\ref{eq:3d-laplace-r}).
 But, instead of applying a scale of 3, the scale will be $n$ for the number of dimensions in the data \citep{fernandes_generalised_2019}:
 \begin{equation}
   \gamma(n, 1/\epsilon)
   \label{eq:nd-laplace-r}
 \end{equation}
+\todo[inline]{What gamma here}
 For the other dimensions, we consider a vector $U = (\theta_1, \theta_2, \theta_n)$ which is uniformly selected based on a unit $n$-hypersphere $S^n$ \citep{fernandes_generalised_2019}.
 We consider the work that was proposed by Marsaglia et al. for a 4d-sphere that can be used for selecting points from an n-hypersphere \citep{marsaglia_choosing_1972}.
 This method resolves around selecting points from a hypersphere by using a uniform distribution for the domain [0, 1].
 For this purpose, an approach to draw data points from a Gaussian distribution is adopted \footnote{https://mathworld.wolfram.com/SpherePointPicking.html}.
 
 \subsection{Cartesian coordinates}
+\todo[inline]{it is difficult to understand how it is computed,
+  doesn't the main paper provide more detailed formalized explanation?
+}
 As with the 2/3D-Laplace, the spherical coordinates need to be converted to Cartesian to be able to cluster.
 It is comparable to the way it was done in the previous chapters; however, as there are an $n$-amount of angles, the equation is repeated and slightly different:
 \begin{align}
@@ -45,7 +49,7 @@ It is comparable to the way it was done in the previous chapters; however, as th
 The combination of sections 1 and 2 of this chapter provides a good overview of the solution using a similar image as the 2D and 3D variants (figure \ref{fig:nd-laplace-overview}).
 \begin{figure}[H]
   \includesvg[width=0.6\textwidth]{TheorethicalFramework/ND-Laplace/Images/nd_laplace}
-  \caption{Overview of the nD-Laplace mechanism}
+  \caption{Overview of the kD-Laplace mechanism}
   \label{fig:nd-laplace-overview}
 \end{figure}
 \subsection{Privacy versus utility} \label{theory:privacy-utility-nd}
@@ -55,6 +59,7 @@ We must first examine the formula for a hypersphere’s volume to understand thi
   S_n = \frac{2 \pi^{n/2}}{\gamma(\frac{1}{2}n)}
 \end{equation}
 $\gamma$ is the Gamma distribution determined based on the number of dimensions $n$ \footnote{https://mathworld.wolfram.com/Hypersphere.html}.
+\todo[inline]{What are these numbers?}
 As the amount of dimensions increases, the most volume is located on the hypersphere surface.
 When we convert the points to Cartesian coordinates, some will be located at the center (e.g., 0.5), while others will be close to the surface (e.g., 0.0).
 However, as the number of dimensions increases, most will be close to the surface (e.g., 0.99).
@@ -74,7 +79,7 @@ In section \ref{2d:optimizing}, we introduced a method to optimize the 2D Laplac
 This method is extended with the help of a more recent paper provided by Chatzikokolakis et al. \citep{chatzikokolakis_efficient_2017}.
 We use this work to extend and optimize the grid-remapping method for 2D/3D Laplace (Sections \ref{theory:truncation} and \ref{2d:optimizing}) and introduce optimal grid-remapping to improve the utility further.
 We want to emphasize that this section focuses on improving utility with remapping.
-Any remap method preserves geo-indistinguishability \cite{chatzikokolakis_efficient_2017}, so the required privacy is still preserved. \newline
+Any remap method preserves geo-indistinguishability \citep{chatzikokolakis_efficient_2017}, so the required privacy is still preserved. \newline
 
 Recalling both mechanisms, the 2D version operates on a plane and approximates on a grid $G$, while the 3D version works in a 3D space using a cuboid grid.
 Given a set of input points $X \subset R^2$, we can truncate points that are outside the domain by remapping them to points within $G$ ($Z = X \cap G$) \citep{DBLP:journals/corr/abs-1212-1984}.
@@ -84,14 +89,14 @@ To do this, we adopt the idea proposed by Chatzikokolakis et al. of using a kd-t
 In their research, they describe the utilization of a kd-tree for searching nearby points for a given point.
 For this reason, we also use a kd-tree for the following tasks:
 \begin{enumerate}
-  \item Finding nearby points for $z \in G$ (section: \hyperref[theory:grid-remapping]{Grid with kd-tree remapping}).
-  \item Finding nearby points for $x \in X$ and $z \in Z$ (section \hyperref[theory:optimal-remapping]{Optimal remapping}).
+  \item Finding nearby points for $z \in G$ (Section: \ref{theory:grid-remapping}).
+  \item Finding nearby points for $x \in X$ and $z \in Z$ (Section: \ref{theory:optimal-remapping}).
 \end{enumerate}
 For visualization purposes, this section will primarily focus on 2D data.
 However, it is essential to emphasize that the same algorithm will also be applied to 3D and nD data.
 The underlying principles and steps of the algorithm remain the same.
 
-We first introduce kd-trees on the next page and then explain how we apply them for the two tasks.
+We first introduce kd-trees on the next page and then explain how we apply them to the two tasks.
 
 \newpage
 \subsubsection*{Kd-trees} \label{theory:kd-trees}
@@ -111,14 +116,15 @@ The binary tree allows us to search the grid efficiently.
 An example of this is provided in the following image (Figure \ref{fig:kd-tree-searching-theory}):
 \begin{figure}[H]
   \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/kd-tree-part2.png}
-  \caption{Representation of a searching a kd-tree with 2 dimensions \citep{washington_k-d_2002}.}
+  \caption{Representation of searching a kd-tree with 2 dimensions \citep{washington_k-d_2002}.}
   \label{fig:kd-tree-searching-theory}
 \end{figure}
+\todo[inline]{Also include year for figure reference}
 In the example, we are searching for all points that fall within the radius of a random query point.
 Thanks to the grid being divided into a binary tree, a portion can be efficiently searched, evaluated, and referenced.
 The most significant advantage is that this greatly reduces the complexity of searching.
 Constructing the kd-tree costs $O(kn)$, where $k$ is the number of dimensions and $n$ is the dataset size.
-Searching for the nearest neighbor is a little less efficient, with a time complexity of $O(\log n)$ \citep{washington_k-d_2002} (See Figure \ref{theory:big-o-graph} for an overview of the Big-O notation).
+Searching for the nearest neighbor is a little less efficient, with time complexity of $O(\log n)$ \citep{washington_k-d_2002} (See Figure \ref{theory:big-o-graph} for an overview of the Big-O notation).
 A reference to the Big O notation can be found in the appendix (See Figure \ref{theory:big-o-graph}).
 \subsubsection{Grid with kd-tree remapping} \label{theory:grid-remapping}
 As explained in the previous paragraph, a kd-tree can be used to perform a nearest neighbor search.

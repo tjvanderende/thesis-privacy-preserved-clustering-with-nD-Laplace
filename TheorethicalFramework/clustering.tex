@@ -2,7 +2,7 @@
 This section explains the various clustering algorithms used in the research.
 Subsequently, we will explain and indicate how the hyperparameters are handled in the research for each algorithm.
 \subsection{Types of clustering algorithms}
-Multiple cluster types can be utilized for clustering data \citep{xu_comprehensive_2015}.
+Multiple clustering types can be utilized for clustering data \citep{xu_comprehensive_2015}.
 For this study, we selected the types that use some form of distance for clustering.
 We explain each cluster type with corresponding clustering algorithms.
 \subsubsection{Partition based clustering}
@@ -16,13 +16,14 @@ It keeps proceeding until the distance between the cluster centroids is optimal.
 Although K-means serves its purpose well, it requires pre-defining the number of clusters and is sensitive to outliers \citep{keller_balancing_2021}.
 Therefore, a parameterless alternative to K-means is \gls{ap} \citep{frey_clustering_2007}.
 
-\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
-Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
+%\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
+%Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
 
 \subsubsection{Density based clustering}
 The data points are partitioned for this clustering type based on nearest neighbors \citep{fahad_survey_2014}.
 A region with a high data density is considered a cluster \citep{xu_comprehensive_2015}.
 A popular density-based clustering algorithm is \gls{dbscan}.
+\todo[inline]{Replace radius($\epsilon$) with different symbol}
 The method was introduced by Ester et al. and worked by drawing a radius ($radius(\epsilon)$, not to be confused with the privacy budget $\epsilon$) around data points \citep{ester_density-based_nodate}.
 It then groups all points within this radius as clusters.
 The main advantage is its ability to find arbitrarily shaped clusters and detect outliers \citep{liu_privacy_2012}.
@@ -33,8 +34,8 @@ Instead of directly assigning data points to clusters, specific distance calcula
 For each data point, it tracks two values: core distance and reachability distance.
 These values represent the shortest distance to make a data point, $p$, a core point, and the shortest distance from $p$ to another core point, $p'$, respectively.
 A specific ordering is maintained to ensure that clusters with higher density values are processed first.
-Based on this ordering, the \gls{dbscan} algorithm is constructed hierarchically \citep{schubert_dbscan_2017}.
-
+Based on this ordering, \gls{optics} constructs the \gls{dbscan} algorithm hierarchically \citep{schubert_dbscan_2017}.
+\todo[inline]{better to bring formal definition rather than text for all clustering algorithms that are used in your text}
 
 \subsubsection{Hierarchical clustering}
 %The name originates from the way hierarchical clustering works.
@@ -217,16 +218,20 @@ Both studies consider three different metrics and measure both concepts at the s
 \begin{enumerate}
     \item \gls{chi} \citep{calinski_dendrite_1974} is used to measure the cluster variance (well-separated clusters) and low variance within the clusters (tightly coupled data). A high score indicates better clustering.
     \item \gls{sc} \citep{rousseeuw_silhouettes_1987} This metric is similar in measuring cohesion within and separating clusters.
-          However, this metric uses the pairwise distance \cite{hassani_using_2017}.
-          A score of -1 indicates incorrect clustering and +1 for dense clusters \cite{rousseeuw_silhouettes_1987}.
+          However, this metric uses the pairwise distance \citep{hassani_using_2017}.
+          A score of -1 indicates incorrect clustering and +1 for dense clusters \citep{rousseeuw_silhouettes_1987}.
+          \todo[inline]{Research correct terminology for dense clusters}
     \item Davies-Bouldin (DB) \citep{davies_cluster_1979} uses the average distance between centroids. A lower score indicates good clustering.
+          \todo[inline]{Centroids are for K-Means, also add for other algorithms}
 \end{enumerate}
 
-K-Means scores relatively high for \gls{chi} \citep{craenendonck_using_nodate,hassani_using_2017} and \gls{sc} \citep{craenendonck_using_nodate}.
-The same applies to \gls{optics}/\gls{dbscan}, which scores relatively high on \gls{sc} and DB due to noise sensitivity \citep{craenendonck_using_nodate}.
+%K-Means scores relatively high for \gls{chi} \citep{craenendonck_using_nodate,hassani_using_2017} and \gls{sc} \citep{craenendonck_using_nodate}.
+%The same applies to \gls{optics}/\gls{dbscan}, which scores relatively high on \gls{sc} and DB due to noise sensitivity \citep{craenendonck_using_nodate}.
 
 % Thus, these metrics are difficult to use for very different clustering algorithms \cite{craenendonck_using_nodate}.
 \subsubsection{Existing literature}
+\todo[inline]{What to do with this? it seems he beginning of this section you already presented some literature studies,
+    it is a bit confusing to bring the literature two times}
 %A recent and much-cited study uses \gls{ari} and accuracy as metrics for evaluating K-Means \cite{ahmed_k-means_2020}.
 %The accuracy is measured by calculating the percentage of the correct predicted labels and their truth labels.
 Comparable studies with differential privacy use external validation \citep{xia_distributed_2020, sun_privbv_2022}.
@@ -252,81 +257,79 @@ The second metric we use is for external validation. We use \gls{sc} because thi
 Based on existing studies and the literature, we have selected metrics adjusted to compensate for the data distribution characteristics.
 Hence, we will focus on these metrics' "adjusted" variants:
 \begin{enumerate}
-    \item Internal validation:
+    \item \textbf{Silhouette coefficient (Internal validation):}
+          \mycomment{\item \textbf{Calinski Harabasz Index:}
+          The definition of \gls{chi} is defined in several steps \citep{liu_understanding_2010}:
+          The first definition is the between cluster sum of squares.
+          \begin{equation}
+              B = \sum_{i=1} n_i \cdot (C_k - C)^2
+          \end{equation}
           \begin{enumerate}
-              \mycomment{\item \textbf{Calinski Harabasz Index:}
-                    The definition of \gls{chi} is defined in several steps \citep{liu_understanding_2010}:
-                    The first definition is the between cluster sum of squares.
-                    \begin{equation}
-                        B = \sum_{i=1} n_i \cdot (C_k - C)^2
-                    \end{equation}
-                    \begin{enumerate}
-                        \item $n_k$ is the number of data points in cluster $k$.
-                        \item $C_k$ is the centroid of cluster $k$.
-                        \item $C$ is the dataset centroid
-                    \end{enumerate}
-                    The second part of the definition is defined as follows:
-                    \begin{equation}
-                        W_k = \sum_{i=1}n_i \cdot (x_i - C_k)^2
-                    \end{equation}
-                    $W_k$ is the within-cluster sum of squares and $x_i$ is the $i$th data point.
-                    Finally, the \gls{chi} is calculated by combining the between and within-cluster calculations:
-                    \begin{equation}
-                        CH = \frac{B}{\sum_{k=1}^{K}} \cdot \frac{N - k}{k - 1}
-                    \end{equation}
-                    \begin{enumerate}
-                        \item $K$ is the number of clusters.
-                        \item $N$ is the number of data points.
-                    \end{enumerate}}
+              \item $n_k$ is the number of data points in cluster $k$.
+              \item $C_k$ is the centroid of cluster $k$.
+              \item $C$ is the dataset centroid
+          \end{enumerate}
+          The second part of the definition is defined as follows:
+          \begin{equation}
+              W_k = \sum_{i=1}n_i \cdot (x_i - C_k)^2
+          \end{equation}
+          $W_k$ is the within-cluster sum of squares and $x_i$ is the $i$th data point.
+          Finally, the \gls{chi} is calculated by combining the between and within-cluster calculations:
+          \begin{equation}
+              CH = \frac{B}{\sum_{k=1}^{K}} \cdot \frac{N - k}{k - 1}
+          \end{equation}
+          \begin{enumerate}
+              \item $K$ is the number of clusters.
+              \item $N$ is the number of data points.
+          \end{enumerate}}
 
-              \item \textbf{Silhouette coefficient:} This metric is defined as follows \citep{liu_understanding_2010,rousseeuw_silhouettes_1987}:
-                    \begin{equation}
-                        s(i) = \frac{b(i) - a(i)}{max(b(i) - a(i))}
-                    \end{equation}
-                    \begin{enumerate}
-                        \item $s(i)$ is the silhouette coefficient for a single datapoint $i$.
-                        \item $a(i)$ is the mean distance of $i$ and all the other points in the same cluster.
-                        \item $b(i)$ is the mean distance of $i$ and all the other points in the next nearest cluster.
-                    \end{enumerate}
-                    Finally, the final silhouette score is the mean of all datapoint coefficients $s(i)$.
-          \end{enumerate}
-    \item External validation:
+          This metric is defined as follows \citep{liu_understanding_2010,rousseeuw_silhouettes_1987}:
+          \begin{equation}
+              s(i) = \frac{b(i) - a(i)}{max(b(i) - a(i))}
+          \end{equation}
           \begin{enumerate}
-              \mycomment{\item \textbf{Adjusted Rand Index:}
-                    The \gls{ari} is defined in two steps, one to calculate the actual Rand Index and the other to adjust it for chance.
-                    The Rand Index formula is defined as follows \citep{hubert_comparing_1985}\footnote{Explaination is part of Sklearn: \url{https://scikit-learn.org/stable/modules/clustering.html}}:
-                    \begin{equation}
-                        RI = \frac{a + b}{C_2^N}
-                    \end{equation}
-                    \begin{enumerate}
-                        \item $C$ the ground truth elements (So the actual correct predictions/ classes).
-                        \item $a$ is the number of pairs of elements part of the ground truth $C$ and part of the predicted class.
-                        \item $b$ is the number of pairs of elements in different sets of $C$ and different sets of the predicted class.
-                        \item $C_2^N$ is the total number of pairs of elements in the dataset.
-                    \end{enumerate}
-                    To compensate for the amount of clusters, the adjusted formula is defined as follows \citep{sinnott_chapter_2016}:
-                    \begin{equation}
-                        ARI = \frac{RI - Expected(RI)}{max(RI) - Expected(RI)}
-                    \end{equation}
-                    }
-              \item \textbf{Adjusted Mutual Information:}
-                    As was the case for the \gls{ari}, the \gls{ami} is also defined in two steps.
-                    The first step is to calculate the actual \gls{mi}, and the second is to adjust it for chance.
-                    The \gls{mi} is defined as follows \citep{vinh_information_nodate}:
-                    \begin{equation}
-                        H = - \sum_{i=1}^{U} p(i) \cdot log p(i)
-                    \end{equation}
-                    $H$ is the uncertainty for one variable given another variable.
-                    So it can be used to measure the (dis)similarity between two variables.
-                    \begin{enumerate}
-                        \item $U$ is a label to calculate the uncertainty for.
-                        \item $p(i)$ is the probability of a random point $i$ falling into class/labe $U$.
-                    \end{enumerate}
-                    This same calculation is executed for the second label $V$ and divided by each other.
-                    \begin{equation}
-                        MI = \frac{MI - Expected(MI)}{mean(H(U), H(V)) - Expected(MI)}
-                    \end{equation}
+              \item $s(i)$ is the silhouette coefficient for a single datapoint $i$.
+              \item $a(i)$ is the mean distance of $i$ and all the other points in the same cluster.
+              \item $b(i)$ is the mean distance of $i$ and all the other points in the next nearest cluster.
           \end{enumerate}
+          Finally, the final silhouette score is the mean of all datapoint coefficients $s(i)$.
+    \item \textbf{Adjusted Mutual Information (External validation)}:
+          \mycomment{\item \textbf{Adjusted Rand Index:}
+          The \gls{ari} is defined in two steps, one to calculate the actual Rand Index and the other to adjust it for chance.
+          The Rand Index formula is defined as follows \citep{hubert_comparing_1985}\footnote{Explaination is part of Sklearn: \url{https://scikit-learn.org/stable/modules/clustering.html}}:
+          \begin{equation}
+              RI = \frac{a + b}{C_2^N}
+          \end{equation}
+          \begin{enumerate}
+              \item $C$ the ground truth elements (So the actual correct predictions/ classes).
+              \item $a$ is the number of pairs of elements part of the ground truth $C$ and part of the predicted class.
+              \item $b$ is the number of pairs of elements in different sets of $C$ and different sets of the predicted class.
+              \item $C_2^N$ is the total number of pairs of elements in the dataset.
+          \end{enumerate}
+          To compensate for the amount of clusters, the adjusted formula is defined as follows \citep{sinnott_chapter_2016}:
+          \begin{equation}
+              ARI = \frac{RI - Expected(RI)}{max(RI) - Expected(RI)}
+          \end{equation}
+          }
+          As was the case for the \gls{ari}, the \gls{ami} is also defined in two steps.
+          The first step is to calculate the actual \gls{mi}, and the second is to adjust it for chance.
+          The \gls{mi} is defined as follows \citep{vinh_information_nodate}:
+          \begin{equation}
+              H = - \sum_{i=1}^{U} p(i) \cdot log p(i)
+          \end{equation}
+          \todo[inline]{What is the input?}
+          $H$ is the uncertainty for one variable given another variable.
+          So it can be used to measure the (dis)similarity between two variables.
+          \begin{enumerate}
+              \item $U$ is a label to calculate the uncertainty for.
+              \item $p(i)$ is the probability of a random point $i$ falling into class/labe $U$.
+          \end{enumerate}
+          This same calculation is executed for the second label $V$ and divided by each other.
+          \begin{equation}
+              MI = \frac{MI - Expected(MI)}{mean(H(U), H(V)) - Expected(MI)}
+          \end{equation}
+          \todo[inline]{What is the input?}
+          \todo[inline]{Formula needs explaination}
 \end{enumerate}
 %\textbf{Calinski Harabasz Index:} \newline
 %\textbf{Silhouette coefficient:} \newline

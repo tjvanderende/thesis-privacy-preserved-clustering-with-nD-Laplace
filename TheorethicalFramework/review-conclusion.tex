@@ -4,10 +4,13 @@ Studies that are similar to ours mainly utilize \gls{ldp} for clustering and add
 Or, require modifications of the K-Means algorithm \citep{sun_distributed_2019}.
 
 As explained earlier, we aim to create a general-purpose \gls{ldp} mechanism that can be used with multiple clustering algorithms \ref{theory:literature-review:dp-clustering}.
+\todo[inline]{a better clarification is needed,
+  something like "Our methodology remains independent of the specific clustering algorithm chosen."}
 Based on the literature study, two LDP mechanisms fall into this category: Harmony and Piecewise \citep{nguyen_collecting_2016, wang_collecting_2019}.
 Published open-source code is available for Piecewise but, unfortunately, not for Harmony.
 Therefore, we will only focus on the Piecewise mechanism as means of comparison material.
 The following sections focus on investigating the Piecewise mechanism.
+\todo[inline]{Last part, is not a good reason}
 
 \subsubsection{Duchi et al.'s mechanism}
 The Piecewise mechanism is based on Duchi et al.'s mechanism for one-dimensional data.
@@ -42,7 +45,7 @@ Which is defined based on the privacy budget:
 \end{equation}
 The noise is sampled from this distribution by conditionally executing one of two algorithms (see for reference Wang et al.'s paper) \citep{wang_collecting_2019}.
 Due to the symmetric nature of their mechanism's \gls{pdf}, the authors can handle the value of 0.
-Imagine it as a histogram with the distribution centered around 0.
+Imagine it as a histogram with the distribution centered around 0. \todo[inline]{mathematical formula?}
 The histogram consists of three "parts" on the left, right, and center (0).
 This approach allows for determining the probability of 0 based on a certain likelihood, unlike Duchi et al.'s solution.
 

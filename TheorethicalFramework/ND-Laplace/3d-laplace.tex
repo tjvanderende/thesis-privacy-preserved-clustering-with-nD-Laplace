@@ -15,6 +15,7 @@ Where $x_1$ and $x_2$ are two real data points in the same dataset $X$.
 The implementation of Min et al. projects the dimensions onto a sphere instead of a circle \citep{9646489}.
 This sphere is a unit sphere calculated with a radius of 1.
 The polar angle $\theta$ and azimuth angle $\psi$ are randomly calculated based on this sphere. \newline
+\todo[inline]{Recheck formulation (should be constants?)}
 \textbf{Calculating $\theta$ and $\psi$}: The tuple $U = (\theta, \psi)$ is randomly drawn from the unit sphere using the following equations \citep{9646489}:
 \begin{equation}
   \theta = \frac{1}{\pi}
@@ -47,13 +48,14 @@ The complete overview is visualized in figure \ref{fig:3d-laplace}.
   \caption{3D-Laplace noise distribution according to the method proposed by Min et al. \citep{9646489}}
   \label{fig:3d-laplace}
 \end{figure}
+\todo[inline]{Low quality image, replace with higher quality}
 \newpage
 \subsection{Truncation}
 As with the 2D-Laplace method, the 3D-Laplace method also needs a truncation method.
 This truncation method is also based on the same method as the 2D-Laplace method.
 Instead of a plane grid, a cuboid grid is used for 3-dimensional space.
 This cuboid remaps the noise to the closest grid cell $g \in G$ or existing point in $X$.
-We plotted example data points on a 3-dimensional grid in figure \ref{fig:3d-laplace-example} to demonstrate this:
+We plotted example data points on a 3-dimensional grid in Figure \ref{fig:3d-laplace-example} to demonstrate this:
 \begin{figure} [H]
   \includegraphics[width=\textwidth]{TheorethicalFramework/ND-Laplace/Images/example_3d_laplace.png}
   \caption{Applying 3-dimensional noise with $\epsilon = 1$ (red dots) to a dataset $X$ (green dots). Demonstrating remapping to the closest grid point (blue) or $X$.}

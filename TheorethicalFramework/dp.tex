@@ -120,6 +120,7 @@ This approximation happens entirely locally, so no central server exists.
 Users can define a privacy radius $r$ around their location $x$.
 A fake location $z$ is generated within this radius based on the Euclidean distance $d$. \newline
 The amount of noise within $r$ depends on the privacy budget $\epsilon$.
+\todo[inline]{It is not clear what it is}
 The privacy budget is based on the privacy level $l$, combined with $r$ to obtain $\epsilon$ using the formula $\epsilon = \frac{l}{r}$. \newline
 Calculating the privacy budget is illustrated in the figure below:
 \begin{figure}[H]
@@ -140,6 +141,7 @@ An extension of this is called $d_x$-privacy, a more general notation of distanc
 Therefore, their definition for \gls{gi} is $d_2$-privacy, but is essentially the same as the proof provided for \gls{gi}.
 \newpage
 \subsection{Mechanisms}
+\todo[inline]{Split LDP and DP specific methods}
 This section explains the various mechanisms used to achieve differential privacy.
 The different mechanisms are not limited to the type of \gls{dp}; some can be applied to multiple types.
 %The mechanisms are divided into three categories: \gls{dp}, \gls{ldp} and \gls{gi}.
@@ -158,6 +160,7 @@ Therefore, the method configures the $\epsilon$ and $\delta$. A shorthand defini
 \begin{equation}
   M\left(f\left(x\right),\varepsilon\right)=f\left(x\right)+\left(Z_{1},\ldots,Z_{d}\right)
 \end{equation}
+\todo[inline]{Formulate better, its unclear now}
 The mechanism is based on the Laplace distribution with scale $\lambda f/\epsilon$, where $\lambda f$ is the same as in equation \ref{sensitivity-dp}.
 Therefore, the Laplace mechanism is tightly linked to the definition of \gls{dp} \citep{dwork_differential_2006}.
 In addition to this, it is also suitable for preserving \gls{ldp} \citep{del_rey_comprehensive_2020}.
