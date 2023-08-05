@@ -30,20 +30,20 @@ This makes the noise more significant, impacting the data utility \citep{yang_lo
 
 \subsection*{Related work}
 %\todo[inline]{Tell something about other mechanisms}
-The difficulty in preserving utility for clustering while preserving privacy is a well-known problem in the literature.
-A study that focuses on preserving the cluster shapes sends the feature’s distance information to the server instead of the feature value \citep{sun_distributed_2019}.
-Their method works on multiple clustering algorithms, compared to other studies focusing on a single clustering algorithm.
-However, their method leaks distance information. Another study aimed to improve this using a distance-aware randomization algorithm \citep{xia_distributed_2020}.
-This study was extended by Huang et al. to reduce the difference between actual and perturbed values \citep{9679364}.
-Both studies focus on K-means and \gls{ldp} but do not have direct support for other algorithms. \newline
+Preserving utility in clustering while ensuring privacy is a well-known challenge in the existing literature.
+Previous studies have attempted to address this issue, with some focusing on preserving cluster shapes by sending feature distance information to the server rather than the feature values \citep{sun_distributed_2019}.
+However, this method was found to leak distance information, compromising privacy.
 
-Existing literature focuses primarily on K-Means, without considering different clustering algorithms.
-Also, most of the work uses 2-dimensional synthetic, which is not representative of real-world data.
-Due to this inflexibility and lack of practical testing in the current literature, developing a solution closer to practical applicability becomes essential.
-Our research incorporates realistic attacks and datasets to test privacy and utility to bridge this gap and move towards a practically deployable \gls{ldp} mechanism.
-Therefore, the overarching goal of this thesis is to develop a privacy framework that facilitates secure training of clustering algorithms on distributed n-dimensional data.
+Another line of research focused on improving privacy preservation using a distance-aware randomization algorithm proposed \citep{xia_distributed_2020}.
+This approach was later extended by Huang et al. to minimize the difference between actual and perturbed values \citep{9679364}.
+Nevertheless, these studies have a limited scope, mainly focusing on K-means and \gls{ldp} algorithms without directly supporting other clustering algorithms.
 
+Moreover, the existing literature concentrates on using 2-dimensional synthetic datasets, which may not fully capture the complexity and diversity of real-world data.
+This inflexibility and lack of practical testing in the current literature highlight the need for a more comprehensive solution with broader applicability.
 
+Our research incorporates realistic attacks and datasets to assess privacy and utility to bridge this gap and move towards a practically deployable \gls{ldp} mechanism.
+By doing so, we aim to develop a privacy framework that enables secure training of various clustering algorithms on distributed n-dimensional data.
+By addressing the shortcomings of previous studies and considering the challenges posed by real-world datasets, our goal is to advance the field and facilitate the adoption of privacy-preserving clustering techniques in practical settings.
 
 \subsection*{Research objective}
 Another take on \gls{dp} is called \gls{gi} and is specifically used for geographical data  \citep{DBLP:journals/corr/abs-1212-1984}.

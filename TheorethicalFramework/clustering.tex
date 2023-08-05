@@ -9,12 +9,23 @@ We explain each cluster type with corresponding clustering algorithms.
 With this type, the data is partitioned and allocated into a fixed amount of clusters.
 A well-known and popular clustering algorithm is K-means.
 Based on Loyd et al.'s original method, this algorithm randomly selects $k$ points as cluster centroids \citep{1056489}.
-Iteratively each data point is assigned to its nearest centroid.
-It keeps proceeding until the distance between the cluster centroids is optimal.
+The first step of the algorithm is to assign each datapoint $x_i$ to the nearest centroid.
+Then the mean is calculated by calculating the mean of all points in the cluster \citep{yuan_research_2019}:
+\begin{equation}
+    c_i = \frac{1}{|C_i|} \sum_{x_i \in C_i} x_i
+\end{equation}
+Finally, the K-Means algorithm aims to minimize the within-cluster sum of squares (WCSS) \citep{yuan_research_2019}:
+\begin{equation}
+    WCSS = \sum_{i=1}^{k} \sum_{c_i \in C_i} || x_i, c_i ||^2
+\end{equation}
+The algorithm runs multiple times until the center point no longer changes or reaches the maximum iterations \citep{yuan_research_2019}.
+
+%Iteratively each data point is assigned to its nearest centroid.
+%It keeps proceeding until the distance between the cluster centroids is optimal.
 %The algorithm can also be used in a distributed manner.
 %Instead of calculating the centroids locally, each party receives the centroids and calculates their nearest centroids [Xia et al., 2020].
-Although K-means serves its purpose well, it requires pre-defining the number of clusters and is sensitive to outliers \citep{keller_balancing_2021}.
-Therefore, a parameterless alternative to K-means is \gls{ap} \citep{frey_clustering_2007}.
+%Although K-means serves its purpose well, it requires pre-defining the number of clusters and is sensitive to outliers \citep{keller_balancing_2021}.
+%Therefore, a parameterless alternative to K-means is \gls{ap} \citep{frey_clustering_2007}.
 
 %\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
 %Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
@@ -23,19 +34,39 @@ Therefore, a parameterless alternative to K-means is \gls{ap} \citep{frey_cluste
 The data points are partitioned for this clustering type based on nearest neighbors \citep{fahad_survey_2014}.
 A region with a high data density is considered a cluster \citep{xu_comprehensive_2015}.
 A popular density-based clustering algorithm is \gls{dbscan}.
-\todo[inline]{Replace radius($\epsilon$) with different symbol}
-The method was introduced by Ester et al. and worked by drawing a radius ($radius(\epsilon)$, not to be confused with the privacy budget $\epsilon$) around data points \citep{ester_density-based_nodate}.
+The method was introduced by Ester et al. and worked by drawing a radius around data points \citep{ester_density-based_nodate}.
+For this thesis, the $\Pi$-symbol is used not to confuse it with the privacy budget $\epsilon$.
 It then groups all points within this radius as clusters.
 The main advantage is its ability to find arbitrarily shaped clusters and detect outliers \citep{liu_privacy_2012}.
 
 Another density-based algorithm is \gls{optics}, an extension of \gls{dbscan}.
-This algorithm attempts different $radius(\epsilon)$ values to achieve the best result \citep{ankerst_optics_nodate}.
-Instead of directly assigning data points to clusters, specific distance calculations are stored in a list.
-For each data point, it tracks two values: core distance and reachability distance.
-These values represent the shortest distance to make a data point, $p$, a core point, and the shortest distance from $p$ to another core point, $p'$, respectively.
-A specific ordering is maintained to ensure that clusters with higher density values are processed first.
-Based on this ordering, \gls{optics} constructs the \gls{dbscan} algorithm hierarchically \citep{schubert_dbscan_2017}.
-\todo[inline]{better to bring formal definition rather than text for all clustering algorithms that are used in your text}
+The algorithm attempts different $\Pi$ values to achieve the best result \citep{ankerst_optics_nodate}.
+The algorithm uses \gls{dbscan}, so we explain this algorithm first in detail.
+It calculates the "density-reachable" property of each data point first \citep{ankerst_optics_nodate}:
+\begin{equation}
+    N_Pi(x_i) = {x_i \in X : d(x_i, x_j) \leq \Pi}
+\end{equation}
+If $N_Pi(x_i) \geq minPts$ then $x_i$ is a "core-object" \citep{ankerst_optics_nodate}.
+These core objects are used for identifying dense regions to grow clusters.
+Second is the "density-connected" property, where two points can be linked through a series of points close to each other (within distance $\Pi$).
+And, each has a sufficient number of neighbors ($minPts$) \citep{ankerst_optics_nodate}.
+The final step is to build clusters based on these two properties.
+A cluster $C$ is build up using the following rules \citep{ankerst_optics_nodate}:
+\begin{enumerate}
+    \item If a core-object in $C$ is density-reachable from $x_i$, $\Pi$ and $minPts$. Then $x_i$ is added to $C$.
+    \item If a core-object is density-connected to $x_i$, $\Pi$ and $minPts$. Then $x_i$ is added to $C$.
+\end{enumerate}
+Finally, \gls{optics} comes into play, which makes the radius $\Pi$ obsolete.
+Instead of constructing clusters, the \gls{optics} algorithm produces an ordered list.
+In the next step, they create a reachability plot that shows valleys (clusters) and peaks (cluster transitions).
+The algorithm then uses an automatic approach to determining the characteristics of the reachability plot to determine clusters.
+\mycomment{
+    Instead of directly assigning data points to clusters, specific distance calculations are stored in a list.
+    For each data point, it tracks two values: core distance and reachability distance.
+    These values represent the shortest distance to make a data point, $p$, a core point, and the shortest distance from $p$ to another core point, $p'$, respectively.
+    A specific ordering is maintained to ensure that clusters with higher density values are processed first.
+    Based on this ordering, \gls{optics} constructs the \gls{dbscan} algorithm hierarchically \citep{schubert_dbscan_2017}.
+    \todo[inline]{better to bring formal definition rather than text for all clustering algorithms that are used in your text}}
 
 \subsubsection{Hierarchical clustering}
 %The name originates from the way hierarchical clustering works.
@@ -45,11 +76,8 @@ This approach means the clustering occurs from the bottom-up or top-down, respec
 Of the two approaches, agglomerative is the most common one \citep{meng_private_2021}.
 For the implementation, there are four popular methods: Single link, Average link, Complete link, and Ward's method \citep{roux_comparative_2015}.
 These methods are used to calculate (dis)similarities between objects.
+\todo[inline]{Provide formal definition}
 
-Another Hierarchical clustering algorithm is \gls{birch}.
-This algorithm works by constructing a tree with nodes (so-called clustering feature) \citep{zhang_birch_1996}.
-The algorithm does this iteratively until a cluster becomes too large or diverse.
-The algorithm will split again into similar clusters until all data is processed \citep{zhang_birch_1996}.
 \subsubsection{Research direction}
 There are three different types of clustering algorithms that we have considered for this research.
 Therefore, we will choose one algorithm for each type to ensure a representative selection.
@@ -58,11 +86,10 @@ Based on the different types of clustering algorithms, we have chosen to use K-M
 K-Mean clustering is widely used in the literature and, therefore, easily compared with other studies.
 
 For density-based clustering, we will solely focus on \gls{optics} in this study.
-The parameter $radius (\epsilon)$ in \gls{dbscan} is influenced by the data shape, which is further affected by our privacy mechanism.
-However, as \gls{optics} automatically determines the $radius(\epsilon)$, the impact of this parameter is less significant, enabling us to emphasize the evaluation of the privacy mechanism itself.
+The parameter $\Pi$ in \gls{dbscan} is influenced by the data shape, which is further affected by our privacy mechanism.
+However, as \gls{optics} automatically determines the $\Pi$, the impact of this parameter is less significant, enabling us to emphasize the evaluation of the privacy mechanism itself.
 
 As for hierarchical clustering, we have decided to go for agglomerative clustering.
-This approach is the most common and straightforward compared to \gls{birch}.
 %Because the \gls{dbscan}'s $epsilon'$ algorithm is sensitive to the shape $epsilon'$ value, we utilize \gls{optics} for this research instead of \gls{dbscan}.
 
 %Another density-based cluster method is Density Peak Clustering (DPC). 
@@ -148,7 +175,7 @@ So, using this approach, a dataset with two features will have an $minPts$ of fo
 
 \mycomment{\textbf{Choosing radius($\epsilon'$):} The desired $\epsilon'$ can be calculated using the K-NearestNeighbours algorithm \citep{ester_density-based_nodate,schubert_dbscan_2017}.
     The general approach is to choose a $K = 2*N - 1$ (where N is the number of features) and plot the distance for each point.
-    This can then be plotted using a k-dist plot and the best "elbow" can be chosen for deciding the $\epsilon$ (similar to choosing the $k$ for K-means) \citep{elbatta_dynamic_2013}.
+    This can then be plotted using a k-dist plot, and the best "elbow" can be chosen for deciding the $\epsilon$ (similar to choosing the $k$ for K-means) \citep{elbatta_dynamic_2013}.
     \begin{figure}[H]
         \includegraphics{TheorethicalFramework/K-dist-elbow.png}
         \caption{K-dist plot example for $minPts = 4$ based on a 2-dimensional dataset \citep{ester_density-based_nodate}}
@@ -219,30 +246,27 @@ Both studies consider three different metrics and measure both concepts at the s
     \item \gls{chi} \citep{calinski_dendrite_1974} is used to measure the cluster variance (well-separated clusters) and low variance within the clusters (tightly coupled data). A high score indicates better clustering.
     \item \gls{sc} \citep{rousseeuw_silhouettes_1987} This metric is similar in measuring cohesion within and separating clusters.
           However, this metric uses the pairwise distance \citep{hassani_using_2017}.
-          A score of -1 indicates incorrect clustering and +1 for dense clusters \citep{rousseeuw_silhouettes_1987}.
-          \todo[inline]{Research correct terminology for dense clusters}
-    \item Davies-Bouldin (DB) \citep{davies_cluster_1979} uses the average distance between centroids. A lower score indicates good clustering.
-          \todo[inline]{Centroids are for K-Means, also add for other algorithms}
+          A score of -1 indicates incorrect clustering and +1 for correct clustering \citep{rousseeuw_silhouettes_1987}.
+    \item Davies-Bouldin (DB) \citep{davies_cluster_1979} uses the average distance between clusters. A lower score indicates good clustering.
 \end{enumerate}
 
 %K-Means scores relatively high for \gls{chi} \citep{craenendonck_using_nodate,hassani_using_2017} and \gls{sc} \citep{craenendonck_using_nodate}.
 %The same applies to \gls{optics}/\gls{dbscan}, which scores relatively high on \gls{sc} and DB due to noise sensitivity \citep{craenendonck_using_nodate}.
 
 % Thus, these metrics are difficult to use for very different clustering algorithms \cite{craenendonck_using_nodate}.
-\subsubsection{Existing literature}
-\todo[inline]{What to do with this? it seems he beginning of this section you already presented some literature studies,
-    it is a bit confusing to bring the literature two times}
-%A recent and much-cited study uses \gls{ari} and accuracy as metrics for evaluating K-Means \cite{ahmed_k-means_2020}.
-%The accuracy is measured by calculating the percentage of the correct predicted labels and their truth labels.
-Comparable studies with differential privacy use external validation \citep{xia_distributed_2020, sun_privbv_2022}.
-Their experiment setup uses a so-called non-private clustering algorithm as external validation.
-This clustering algorithm is trained without the perturbed data and compared with the same clustering algorithm trained with perturbed data.
-Thus, the non-private variant provides the ground truth as an external validation.
+\mycomment{\subsubsection{Existing literature}
+    \todo[inline]{What to do with this? it seems he beginning of this section you already presented some literature studies; it is a bit confusing to bring the literature two times}
+    %A recent and much-cited study uses \gls{ari} and accuracy as metrics for evaluating K-Means \cite{ahmed_k-means_2020}.
+    %The accuracy is measured by calculating the percentage of the correct predicted labels and their truth labels.
+    Comparable studies with differential privacy use external validation \citep{xia_distributed_2020, sun_privbv_2022}.
+    Their experiment setup uses a so-called non-private clustering algorithm as external validation.
+    This clustering algorithm is trained without the perturbed data and compared with the same clustering algorithm trained with perturbed data.
+    Thus, the non-private variant provides the ground truth as an external validation.
 
-They compare the mutual information between a baseline clustering algorithm using \gls{ami} \citep{9679364} or \gls{nmi} \citep{xia_distributed_2020,sun_privbv_2022}.
-Another study for evaluating \gls{dp} with \gls{ap} uses both \gls{ari} and \gls{ami}.
-In addition to mutual information and rand index scores, it is also not uncommon to calculate the error between the two clustering algorithm's centroids \citep{xia_distributed_2020, 9679364}.
-These two studies used Relative Error (RE) for this.
+    They compare the mutual information between a baseline clustering algorithm using \gls{ami} \citep{9679364} or \gls{nmi} \citep{xia_distributed_2020,sun_privbv_2022}.
+    Another study for evaluating \gls{dp} with \gls{ap} uses both \gls{ari} and \gls{ami}.
+    In addition to mutual information and rand index scores, it is also not uncommon to calculate the error between the two clustering algorithm's centroids \citep{xia_distributed_2020, 9679364}.
+    These two studies used Relative Error (RE) for this.}
 
 \subsubsection{Research direction}
 This chapter outlines the evaluation methods used and provides a definition and brief explanation for each method.

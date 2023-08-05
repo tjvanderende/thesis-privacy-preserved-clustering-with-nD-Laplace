@@ -115,69 +115,76 @@ Consider a local-based system (LBS) that provides a map service to its users (e.
 The users can query the LBS for a route from their current location to a destination.
 %This information is private, and the LBS should not be able to track the user's location.
 Instead of the exact (private) location, the LBS should only receive an approximate location enough to provide the service at an adequate level.
-This approximation happens entirely locally, so no central server exists.
-
-Users can define a privacy radius $r$ around their location $x$.
-A fake location $z$ is generated within this radius based on the Euclidean distance $d$. \newline
-The amount of noise within $r$ depends on the privacy budget $\epsilon$.
-\todo[inline]{It is not clear what it is}
-The privacy budget is based on the privacy level $l$, combined with $r$ to obtain $\epsilon$ using the formula $\epsilon = \frac{l}{r}$. \newline
-Calculating the privacy budget is illustrated in the figure below:
+This approximation happens entirely locally, so no central server exists. \newline
+In addition to this, the mechanism provides an initiative way of calibrating the desired privacy, which is illustrated in the following figure:
 \begin{figure}[H]
   \includegraphics[width=0.5\textwidth]{TheorethicalFramework/geo-indistinguishability.png}
   \caption{Visualisation of radius $r$ with $l$ to provide Geo-indistinguishability mechanism \citep{DBLP:journals/corr/abs-1212-1984}}
   \label{fig:geo-indistinguishability}
 \end{figure}
-
-The formula for \gls{gi} to measure if an algorithm preserves $\epsilon$-geo-indistinguishability can be expressed as:
+The figure shows two variables to configure the amount of noise: $r$ and $l$.
+Users provide a privacy radius $r$, and the noise is added and preserved within this radius.
+A fake location $z$ is generated within this radius based on the Euclidean distance $d$.
+The amount of noise can be configured using the privacy level $l$.
+Thus, a higher $r$ or/and $l$ provides a higher privacy guarantee. \newline
+In a practical scenario, the $r$ and $l$ variables are combined to obtain the privacy budget $\epsilon$.
+The privacy budget is obtained by using the formula $\epsilon = \frac{l}{r}$, and the $\epsilon$ is used as input for the \gls{gi} mechanism to calibrate the noise. \newline
+The formal definition of \gls{gi} is the following \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{equation}
   K(x)(y) \le e^{\epsilon * d(x,x')} K(x')(y)
   \label{algo:2d-geo-indistinguishability}
 \end{equation}
 $K$ is a probability method reporting $x, x' \in X$ as $z \in Z$.
-%The intuition of this algorithm looks a lot like that of differential privacy using the La Place method; but includes distance.
-The intuition for this definition is that it displays the distinguishability level between two secret locations/points $x$ and $x'$ \citep{chatzikokolakis_constructing_2015}.
-An extension of this is called $d_x$-privacy, a more general notation of distance-aware differential privacy.
-Therefore, their definition for \gls{gi} is $d_2$-privacy, but is essentially the same as the proof provided for \gls{gi}.
-\newpage
-\subsection{Mechanisms}
-\todo[inline]{Split LDP and DP specific methods}
-This section explains the various mechanisms used to achieve differential privacy.
-The different mechanisms are not limited to the type of \gls{dp}; some can be applied to multiple types.
-%The mechanisms are divided into three categories: \gls{dp}, \gls{ldp} and \gls{gi}.
-\subsubsection{Randomized response mechanism}
-The random response method is relatively simple and was first applied in 1965 by Warner et al.
-It was originally used to mask individuals' answers by randomly switching them with predictable randomness \citep{warner_randomized_1965}.
-Therefore, the method is mainly used for categorical data.
-This method satisfies its own set of requirements for LDP \citep{del_rey_comprehensive_2020}, which differs from the formal definition that was mentioned earlier
+According to the Andres et al., the mechanism provides ($\epsilon$)-Geo-indistinguishability for any $z$ that is generated within the radius $r$ \citep{DBLP:journals/corr/abs-1212-1984}.
 
-Since then, it is still one of the better-known methods, and larger organizations such as Google have used it \citep{erlingsson_rappor_2014}.
-They have named their extension RAPPOR and expanded it with bloom filters to be able to collect numerical data as well.
-It is possible to ensure $\epsilon$-differential privacy, and it is also possible to preserve \gls{ldp} \citep{del_rey_comprehensive_2020}.
-\subsubsection{Laplace mechanism} \label{laplace}
-The method that was initially proposed in the differential privacy paper by Dwork et al. is the Laplace algorithm \citep{dwork_differential_2006}.
-Therefore, the method configures the $\epsilon$ and $\delta$. A shorthand definition is provided by Rey et al. \citep{del_rey_comprehensive_2020}:
+The intuition of the \gls{gi} definition is that it displays the distinguishability level between two secret locations/points $x$ and $x'$ \citep{chatzikokolakis_constructing_2015}.
+An extension of this is called $d_x$-privacy, a more general notation of distance-aware differential privacy.
+Therefore, the definition for \gls{gi} is $d_2$-privacy, but it is essentially the same as the proof provided for \gls{gi}.
+\subsection{Laplace mechanism} \label{theory:laplace}
+The previous sections have explained the different privacy frameworks that exist for differential privacy.
+\mycomment{This section explains the various mechanisms used to achieve differential privacy.
+  The different mechanisms are not limited to the type of \gls{dp}; some can be applied to multiple types.
+  %The mechanisms are divided into three categories: \gls{dp}, \gls{ldp} and \gls{gi}.
+  \subsubsection{Randomized response mechanism}
+  The random response method is relatively simple and was first applied in 1965 by Warner et al.
+  It was originally used to mask individuals' answers by randomly switching them with predictable randomness \citep{warner_randomized_1965}.
+  Therefore, the method is mainly used for categorical data.
+  This method satisfies its own set of requirements for LDP \citep{del_rey_comprehensive_2020}, which differs from the formal definition that was mentioned earlier
+
+  Since then, it is still one of the better-known methods, and larger organizations such as Google have used it \citep{erlingsson_rappor_2014}.
+  They have named their extension RAPPOR and expanded it with bloom filters to be able to collect numerical data as well.
+  It is possible to ensure $\epsilon$-differential privacy, and it is also possible to preserve \gls{ldp} \citep{del_rey_comprehensive_2020}.}
+In the current section, we explain an important (L)DP mechanism on which the mechanism of \gls{gi} is based.
+We provide the definition, laying the groundwork for the mechanisms of \gls{gi}.
+
+The Laplace mechanism, initially proposed in the same paper as a foundational concept for differential privacy \citep{dwork_differential_2006},
+introduces noise to the data based on a privacy budget ($\epsilon$).
+Additionally, it incorporates a sensitivity parameter ($\delta$).
+While the privacy budget determines the amount of noise to be added, sensitivity is used to calibrate the output based on the input \citep{del_rey_comprehensive_2020}.
+
+The definition of the Laplace mechanism is as follows \citep{del_rey_comprehensive_2020}:
 \begin{equation}
   M\left(f\left(x\right),\varepsilon\right)=f\left(x\right)+\left(Z_{1},\ldots,Z_{d}\right)
 \end{equation}
-\todo[inline]{Formulate better, its unclear now}
-The mechanism is based on the Laplace distribution with scale $\lambda f/\epsilon$, where $\lambda f$ is the same as in equation \ref{sensitivity-dp}.
-Therefore, the Laplace mechanism is tightly linked to the definition of \gls{dp} \citep{dwork_differential_2006}.
-In addition to this, it is also suitable for preserving \gls{ldp} \citep{del_rey_comprehensive_2020}.
-One disadvantage is that sensitivity is always required, and this parameter can sometimes be difficult to configure.
-Especially when there is no clear function and the entire dataset is perturbed.
-This can make finding the right balance between ensuring privacy and utility challenging.
+Here, $Z$ is an independent collection of random variables drawn from the Laplace distribution.
+The distribution scale is determined by the sensitivity of the function $f$ and the privacy budget $\epsilon$ \citep{del_rey_comprehensive_2020}.
+Hence, the definition of the Laplace distribution is $Lap(\delta f/\epsilon)$, where $\delta f$ is the sensitivity of the function $f$. \newline
 
-To this end, the sensitivity can be calculated in two forms: global and local.
+The sensitivity of $f$ can be calculated globally and locally.
 Global sensitivity is independently calculated over two different datasets and is part of the original definition of \gls{dp} \citep{dwork_differential_2006}.
 Usually, this is not the desired situation since local sensitivity always has more context of the dataset in question \citep{nissim_smooth_2007}.
 As a result, the trade-off for noise is much more precise, and the balance between utility and privacy is much better.
-The definition of local sensitivity is the following \citep{nissim_smooth_2007}.
+The definition of sensitivity is the following \citep{nissim_smooth_2007}.
 \begin{equation}
   LS(f,x)=\operatorname*{max}_{x^{\prime}\cdot d(x,x^{\prime})\leq1}|f(x)-f(x^{\prime})|
   \label{local-sensitivity}
 \end{equation}
-A methodology to calculate the local sensitivity is using the smooth sensitivity method, proposed by the same authors \citep{nissim_smooth_2007}.
+Here, $d$ is the distance between two datasets $x$ and $x'$.
+The equation calculates the maximum difference between the output of $f(x)$ and $f(x')$, which should be at most $LS(f)$.
+Because the sensitivity is the maximum difference between output and input, it looks a lot like the definition of \gls{dp} (Equation \ref{sensitivity-dp}).
+
+In a practical scenario, it can be hard to calculate the local sensitivity.
+To this end, the smooth sensitivity method was introduced by Nissim et al.  \citep{nissim_smooth_2007}.
 This method aims at smoothing out the local sensitivity by focusing on reducing the noise without the risk of revealing more information.
 Because it calculates many different configurations, a disadvantage of this method is that it can be computationally expensive.
 Also, the introduction of this method makes Laplace preserve $(\epsilon, \delta)$-\gls{dp} instead of pure $\epsilon$-\gls{dp}.
