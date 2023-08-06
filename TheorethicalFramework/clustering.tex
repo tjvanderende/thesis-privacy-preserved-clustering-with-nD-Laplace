@@ -335,25 +335,30 @@ Hence, we will focus on these metrics' "adjusted" variants:
               ARI = \frac{RI - Expected(RI)}{max(RI) - Expected(RI)}
           \end{equation}
           }
-          As was the case for the \gls{ari}, the \gls{ami} is also defined in two steps.
-          The first step is to calculate the actual \gls{mi}, and the second is to adjust it for chance.
-          The \gls{mi} is defined as follows \citep{vinh_information_nodate}:
+          The first step is calculating a function $H$, and the second is using $H$ to calculate \gls{mi}.
+          Finally, the \gls{ami} is calculated by adjusting \gls{mi} for chance. \newline
+          The $H$ function is defined as follows \citep{vinh_information_nodate}:
           \begin{equation}
-              H = - \sum_{i=1}^{U} p(i) \cdot log p(i)
+              H(U) = - \sum_{i=1}^{U} p(i) \cdot log (p(i))
           \end{equation}
-          \todo[inline]{What is the input?}
-          $H$ is the uncertainty for one variable given another variable.
-          So it can be used to measure the (dis)similarity between two variables.
-          \begin{enumerate}
-              \item $U$ is a label to calculate the uncertainty for.
-              \item $p(i)$ is the probability of a random point $i$ falling into class/labe $U$.
-          \end{enumerate}
+          Here, $p(i)$ is the probability of a random point falling into cluster $U$.
+          The $H$ function measures the information by calculating the probability of a random point falling into cluster $U$.
+          If the outcome is certain (probability 1), it carries no information.
+          But, if the outcome has a lower probability, it carries more information.
+          The \gls{mi} uses this property and is defined as follows \citep{vinh_information_nodate}:
+          \begin{equation}
+              MI(U, V) = - \sum_{i=1}^{U} \sum_{j=1}^{V} p(i,j) \cdot log \frac{p(i,j)}{p(i)p(j)}
+          \end{equation}
+          It re-uses the properties of $H$ to measure the (dis)similarity between two clusterings $U$ and $V$.
+          The $p(i,j)$ is the joint probability of a random point falling into both cluster $U$ and $V$.
           This same calculation is executed for the second label $V$ and divided by each other.
+          The \gls{ami} is formulated as follows \citep{vinh_information_nodate}:
           \begin{equation}
-              MI = \frac{MI - Expected(MI)}{mean(H(U), H(V)) - Expected(MI)}
+              AMI (U, V)  = \frac{MI - E(MI)}{max(H(U), H(V)) - E(MI)}
           \end{equation}
-          \todo[inline]{What is the input?}
-          \todo[inline]{Formula needs explaination}
+          The $E(MI)$ is the expected value of the \gls{mi} and serves as an upper bound for the \gls{mi}.
+          For the details of this calculation, we refer to the original paper \citep{vinh_information_nodate}.
+          The outcome of this formula is a value between 0 and 1, where 0 is no similarity, and 1 is identical clusters.
 \end{enumerate}
 %\textbf{Calinski Harabasz Index:} \newline
 %\textbf{Silhouette coefficient:} \newline

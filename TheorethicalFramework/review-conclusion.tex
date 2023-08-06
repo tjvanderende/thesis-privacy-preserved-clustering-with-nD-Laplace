@@ -1,16 +1,15 @@
 \subsection{Evaluation}
 It is important to compare our kD-Laplace method with other studies for this research.
-Studies that are similar to ours mainly utilize \gls{ldp} for clustering and add noise to cluster centroids \citep{xia_distributed_2020, yuan_privacypreserving_2021, 9679364}.
-Or, require modifications of the K-Means algorithm \citep{sun_distributed_2019}.
+Studies that are similar to ours utilize \gls{ldp} for clustering and add noise to cluster centroids \citep{xia_distributed_2020, yuan_privacypreserving_2021, 9679364} or require modifications of the K-Means algorithm \citep{sun_distributed_2019}.
 
-As explained earlier, we aim to create a general-purpose \gls{ldp} mechanism that can be used with multiple clustering algorithms \ref{theory:literature-review:dp-clustering}.
-\todo[inline]{a better clarification is needed,
-  something like "Our methodology remains independent of the specific clustering algorithm chosen."}
-Based on the literature study, two LDP mechanisms fall into this category: Harmony and Piecewise \citep{nguyen_collecting_2016, wang_collecting_2019}.
-Published open-source code is available for Piecewise but, unfortunately, not for Harmony.
-Therefore, we will only focus on the Piecewise mechanism as means of comparison material.
-The following sections focus on investigating the Piecewise mechanism.
-\todo[inline]{Last part, is not a good reason}
+As explained in Section \ref{theory:literature-review:dp-clustering}, we will use input-perturbation.
+So, our methodology remains independent of the specific clustering algorithm chosen.
+Based on the literature study, two privacy mechanisms are comparable for this approach: Harmony \citep{nguyen_collecting_2016} and Piecewise \citep{wang_collecting_2019}.
+
+Both mechanisms focus on solving the problem in Duchi et al.'s paper.
+However, the Harmony mechanism focuses on solving a paper from 2013 \citep{duchi_privacy_2013} and the Piecewise mechanism on Duchi et al.'s paper from 2017 \citep{duchi_minimax_2017}.
+The Piecewise mechanism is newer, and given the similarities, Wang et al.'s paper appears much like a more recent version of Nguyen et al.'s paper.
+Therefore, we only selected Piecewise to compare with our mechanism.
 
 \subsubsection{Duchi et al.'s mechanism}
 The Piecewise mechanism is based on Duchi et al.'s mechanism for one-dimensional data.
@@ -18,8 +17,8 @@ Therefore, we start by explaining this mechanism first.
 Duchi et al.'s mechanism is a relatively simple method based on the Bernoulli distribution \citep{duchi_minimax_2017}.
 This distribution yields either a 0 (negative) or a 1 (false) based on specified probabilities \footnote{https://mathworld.wolfram.com/BernoulliDistribution.html}.
 The mechanism works on a domain tuple [-1, 1] and returns -1 or 1.
-Hence, the \gls{pdf} of this function is as follows \footnote{https://mathworld.wolfram.com/BernoulliDistribution.html}:
-\begin{equation}
+So, the \gls{pdf} of this function is as follows \footnote{https://mathworld.wolfram.com/BernoulliDistribution.html}:
+\begin{equation}[H]
   P(n) =
   \begin{cases}
     1 - p & \text{if } n = 0 \\
@@ -35,19 +34,38 @@ The multidimensional variant looks like the one-dimensional version but samples 
 The authors aim to create a method that combines the advantages of the Laplace mechanism and Duchi et al.'s methods \citep{wang_collecting_2019}.
 The goal is to reduce the variance for a broader range of privacy budgets.
 Like the mechanism above, the Piecewise mechanism only accepts data from -1 to 1.
-We first explain the one-dimensional variant and then the multidimensional variant.
+We first explain the one-dimensional variant and then the multidimensional variant. \newpage
 
-The mechanism for one-dimensional has an output of $c \in [-C, C]$.
-Which is defined based on the privacy budget:
+The mechanism takes an input of the range $[-1, 1]$ and returns a perturbed value in the same range.
+It uses a piecewise function (hence the name), which is a function that is defined by multiple sub-functions.
+The Piecewise mechanism starts with randomly selecting a value $x$ between 0 and 1 and a value $t \in R^1$.
+Then, based on this value the mechanism re-assigns a random value to $x$, but with a modified domain (based on the initial value of $x$) \citep{wang_collecting_2019}:
 \begin{equation}
-  C = \frac{exp(\epsilon/2)+1}{exp(\epsilon/2) - 1} \\
-  \label{fig:piecewise-C}
+  t = \begin{cases}
+    [l(t), r(t)] & \text{if } x < \frac{e^{\epsilon/2}}{e^{\epsilon/2}+1} \\
+    [-C, l(t) \cup r(t), C]
+  \end{cases}
 \end{equation}
-The noise is sampled from this distribution by conditionally executing one of two algorithms (see for reference Wang et al.'s paper) \citep{wang_collecting_2019}.
-Due to the symmetric nature of their mechanism's \gls{pdf}, the authors can handle the value of 0.
-Imagine it as a histogram with the distribution centered around 0. \todo[inline]{mathematical formula?}
-The histogram consists of three "parts" on the left, right, and center (0).
-This approach allows for determining the probability of 0 based on a certain likelihood, unlike Duchi et al.'s solution.
+%According to this formula, the outcome domain shifts depending on the value of $t$.
+\begin{enumerate}
+  \item Calculated using the privacy budget $\epsilon$, the $C$ determines the amount of noise by bounding the lower/ upper limit of the domain.
+  \item $l(t)$ and $r(t)$ are the left and right boundaries of the domain. These are calculated based on the value of $t$ and the privacy budget.
+\end{enumerate}
+Depending on the value of $t$, the domain is shifted to the left or right on a domain of three "pieces": $[-1, 0, 1]$ \citep{wang_collecting_2019}.
+According to Wang et al., when $t = 0$, the probability of $t \in [l(t), r(t)]$ is higher.
+In this case, the mechanism generates a perturbed value close to $0$ (depending on the privacy budget).
+This phenomenon is the same for $t = 1$ and $t = -1$. \newline
+%Where $C$ is defined according to the following mathematical formula:
+%\begin{equation}
+%  C = \frac{exp(\epsilon/2)+1}{exp(\epsilon/2) - 1} \\
+%  \label{fig:piecewise-C}
+%\end{equation}
+%The noise is sampled from this distribution by conditionally executing one of two algorithms (see for reference Wang et al.'s paper) \citep{wang_collecting_2019}.
+
+%Due to the symmetric nature of their mechanism's \gls{pdf}, the authors can handle the value of 0.
+%Imagine it as a histogram with the distribution centered around 0. \todo[inline]{mathematical formula?}
+%The histogram consists of three "parts" on the left, right, and center (0).
+%This approach allows for determining the probability of 0 based on a certain likelihood, unlike Duchi et al.'s solution.
 
 The authors generate a randomly sampled set of values $k$ for the multidimensional approach.
 Next, for each value from $k$, the value is sampled using the one-dimensional Piecewise mechanism.
