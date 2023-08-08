@@ -9,46 +9,64 @@ To establish the same privacy guarantees for 3-dimensional data as for 2-dimensi
   K(x_1)(z) \le e^{\epsilon * d_3(x_1, x_2)} K(x_2)(z)
   \label{algo:3d-geo-indistinguishability}
 \end{equation}
-Where $x_1$ and $x_2$ are two real data points in the same dataset $X$.
+Where $x_1$ and $x_2$ are two real data points in the same dataset $X$, and $K$ is the probability.
 %The more $x_1$ and $x_2$ are similar, the more the perturbed location distributions $K(x_1)(z)$ and $K(x_2)(z)$ need to be similar.
 \subsection{Spherical Laplace}
-The implementation of Min et al. projects the dimensions onto a sphere instead of a circle \citep{9646489}.
-This sphere is a unit sphere calculated with a radius of 1.
-The polar angle $\theta$ and azimuth angle $\psi$ are randomly calculated based on this sphere. \newline
-\todo[inline]{Recheck formulation (should be constants?)}
-\textbf{Calculating $\theta$ and $\psi$}: The tuple $U = (\theta, \psi)$ is randomly drawn from the unit sphere using the following equations \citep{9646489}:
+Implementing the 3D-Laplace is based on the same method as the 2D-Laplace mechanism.
+Therefore, the \gls{pdf} where the noise is drawn from is almost identical \citep{9646489}:
 \begin{equation}
-  \theta = \frac{1}{\pi}
+  D_{\epsilon}(x_i)(x_0) = A \cdot e^{-\epsilon \cdot d_3(x_i, x_0)}
+  \label{eq:3d-laplace-pdf}
 \end{equation}
+Where $A$ is the normalization factor, and $d_3$ is the Euclidean distance in a 3-dimensional space.
+Instead of only consisting of a polar angle $\theta$ and radial distance $r$, the third dimension (altitude) is the azimuth angle $psi$ \citep{9646489}:
 \begin{equation}
-  \psi = \frac{1}{2\pi}
+  D_{\epsilon}(x_i)(x_0) = \frac{1}{4 \cdot \pi^2} \cdot \epsilon^3 \cdot r^2 \cdot e^{-\epsilon \cdot r}
+  \label{eq:3d-laplace-with-normalization}
 \end{equation}
-\textbf{Calculating $r$}: The radial distance $r$ is calculated using the following equation:
-\begin{equation}
-  r = \frac{1}{2}\epsilon^3 * r^2 * e^{-\epsilon * r}
-  \label{eq:3d-laplace-r}
-\end{equation}
-The gamma scale is the same as for 2D-Laplace but with a shape of 3 instead of 2.
-The noise is added to the original location $x$ to obtain the perturbed location $z = x + U*r$.
-A clear example of the generated noise by this method is shown in figure \ref{fig:3d-laplace-noise}.
-\begin{figure}
-  \includegraphics[width=0.6\textwidth]{TheorethicalFramework/ND-Laplace/Images/3d_laplace_noise.png}
-  \caption{50 random noise samples generated around point $x_0$ (green dot) using the 3D-Laplace noise method \citep{9646489} plotted on a sphere.}
-  \label{fig:3d-laplace-noise}
-\end{figure}
-Finally, the spherical coordinates are converted to the Cartesian coordinate system to obtain the perturbed location $z$:
+The distance between $x_i$ and $x_0$ is replaced by $r$, leaving us with the normalization factor.
+As with the 2D-Laplace, we are most interested in the normalization factor, which uses the three coordinates \citep{9646489}.
+Because these can be sampled independently, Min et al. formulate three marginal distributions $D$ for each coordinate: $R$, $\Theta$ and $\Psi$ \citep{9646489}:
+%The implementation of Min et al. projects the dimensions onto a sphere instead of a circle \citep{9646489}.
+%This sphere is a unit sphere calculated with a radius of 1. \newline
+%\textbf{Calculating $\theta$ and $\psi$}: The tuple $U = (\theta, \psi)$ is randomly drawn from the unit sphere using the following equations \citep{9646489}:
+\begin{subequations}
+
+  \begin{align}
+     & D_\epsilon, R(r) = \frac{1}{2} \epsilon^3 \cdot r^2 \cdot e^{-\epsilon \cdot r} \label{eq:3d-laplace-1} \\
+     & D_\epsilon, \Theta(\theta) = \frac{1}{\pi}                                      \label{eq:3d-laplace-2} \\
+     & D_\epsilon, \Psi(\psi) = \frac{1}{2 \cdot \pi} \label{eq:3d-laplace-3}
+  \end{align}
+\end{subequations}
+\begin{itemize}
+  \item The radius $r$ is sampled randomly from the Gamma distribution (Equation \ref{eq:3d-laplace-1}) with a shape of 3 and a scale of $1/\epsilon$ \citep{9646489}.
+  \item The $\theta$ and $psi$ are also random sampled from the uniform distribution with the range given in Equations \ref{eq:3d-laplace-2} and \ref{eq:3d-laplace-3} \citep{9646489}.
+\end{itemize}
+Finally, the noise is added to the original location $x$ to obtain the perturbed location $z = x + U*r$ (See Figure \ref{fig:3d-laplace-noise}).
+The spherical coordinates $(r, \theta, \psi)$ are converted to the Cartesian coordinates $(x, y, z)$ to obtain the perturbed location $z$:
 \begin{align*}
   z_x = r * \sin(\theta) * \sin(\psi) \\
   z_y = r * \sin(\theta) * \cos(\psi) \\
   z_z = r * \cos(\theta)
 \end{align*}
 The complete overview is visualized in figure \ref{fig:3d-laplace}.
-\begin{figure}
-  \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/3d_laplace.png}
+\begin{figure}[H]
+  \includesvg[width=1\textwidth]{TheorethicalFramework/ND-Laplace/Images/3d_laplace.svg}
   \caption{3D-Laplace noise distribution according to the method proposed by Min et al. \citep{9646489}}
   \label{fig:3d-laplace}
 \end{figure}
-\todo[inline]{Low quality image, replace with higher quality}
+The above figure shows the whole process of generating noise for a single point $x_0$ (left) to a new point $z$ (right).
+As observed, the noise is generated using a sphere and converted to a cartesian coordinate system.
+\newpage
+\begin{figure}[H]
+  \includegraphics[width=0.6\textwidth]{TheorethicalFramework/ND-Laplace/Images/3d_laplace_noise.png}
+  \caption{50 random noise samples generated around point $x_0$ (green dot) using the 3D-Laplace noise method \citep{9646489} plotted on a sphere.}
+  \label{fig:3d-laplace-noise}
+\end{figure}
+This figure shows an example of the noise generated around a point $x_0$ (green dot).
+For this purpose, 50 random samples were generated using the 3D-Laplace noise method.
+As is visible, most points are plotted close to $x_0$ and fewer at the sphere's surface, according to the Gaussian distribution.
+
 \newpage
 \subsection{Truncation}
 As with the 2D-Laplace method, the 3D-Laplace method also needs a truncation method.

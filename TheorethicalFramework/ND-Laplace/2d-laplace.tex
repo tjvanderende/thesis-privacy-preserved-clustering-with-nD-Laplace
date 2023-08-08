@@ -1,8 +1,6 @@
 %\input{TheorethicalFramework/ND-Laplace/general-math-symbols.tex}
 \section{2D-Laplace}
-The idea of \gls{gi} was introduced to solve the issue of privacy and location data \citep{DBLP:journals/corr/abs-1212-1984}.
-To recall what was explained earlier (Equation \ref{algo:2d-geo-indistinguishability}).
-\todo[inline]{these sentences are not complete, they need to verb}
+The idea of \gls{gi} was introduced to address the issue of privacy and location data \citep{DBLP:journals/corr/abs-1212-1984} (See Equation \ref{algo:2d-geo-indistinguishability}).
 It offers an alternative approach for achieving (local) differential privacy for geographical data (latitude/longitude).
 The mechanism achieves this by locally adding noise to the location before sending it to a location-based system (LBS).
 This section starts with an introduction to mathematics, and for each of the different subsections, we visualize and explain open challenges and theoretic for applying them for clustering.
@@ -13,15 +11,16 @@ This section starts with an introduction to mathematics, and for each of the dif
 \subsection{Planar and polar Laplace}
 In section \ref{theory:geo-indistinguishability}, an explanation of the concept of \gls{gi} has been given.
 As indicated, the method works on 2-dimensional data, and when visualized, this can be done with a so-called plane \citep{DBLP:journals/corr/abs-1212-1984}.
-From there, the term "Planar" Laplace originated and was used thoughtfully by Andres et al.
+From there, the term "Planar" Laplace (2D-Laplace) originated and was used thoughtfully by Andres et al.
 
-The idea of Planar Laplace is to generate an area around $x0 \in X$ according to the multivariate Laplace distribution.
-The mechanism of planar Laplace is a modification of the Laplace algorithm to support distance \citep{DBLP:journals/corr/abs-1212-1984}.
+The idea of 2D-Laplace is to generate an area around $x0 \in X$ according to the multivariate Laplace distribution.
+The mechanism of 2D-Laplace is a modification of the Laplace algorithm to support distance \citep{DBLP:journals/corr/abs-1212-1984}.
 This distance method $dist(x, x')$ is a method to calculate the Euclidean distance between two points $x$ and $x'$.
 Recalling the definition of Laplace, this method $|x-x'|$ is replaced by the distance metric.
 Hence, the definition of the \gls{pdf}) by Andrés et al. is:
 \begin{equation}
   \frac{\epsilon^2}{2*\pi}e(-\epsilon d(x_0, x))
+  \label{eq:polar-laplace-pdf}
 \end{equation}
 Which is the likelihood a generated point $z \in Z$ is close to $x0$.
 The method works for Cartesian coordinates but was modified to support polar coordinates by including $\theta$.
@@ -50,13 +49,11 @@ The other variable ($\theta$) is defined as a random number $[0, 2\pi]$. \newlin
 To visualize the data, it is necessary to convert the polar coordinates for $z = (r, \theta)$ back to planar coordinates $z = (x, y)$.
 This conversion is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals/corr/abs-1212-1984} and visualized using figure \ref{figure:geo}.
 \begin{figure}[h]
-  \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/polar-laplace-to-planar.png}
+  \includesvg[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/polar-laplace-to-planar.svg}
   \centering
   \caption{Representation of converting the perturbed point $z = (r, \theta)$ to a point ${z_x, z_y}$}
   \label{figure:geo}
 \end{figure}
-\todo[inline]{Replace figure with higher quality}
-
 
 \newpage
 \subsection{Truncation} \label{theory:truncation}

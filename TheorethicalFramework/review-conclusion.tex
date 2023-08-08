@@ -40,7 +40,7 @@ The mechanism takes an input of the range $[-1, 1]$ and returns a perturbed valu
 It uses a piecewise function (hence the name), which is a function that is defined by multiple sub-functions.
 The Piecewise mechanism starts with randomly selecting a value $x$ between 0 and 1 and a value $t \in R^1$.
 Then, based on this value the mechanism re-assigns a random value to $x$, but with a modified domain (based on the initial value of $x$) \citep{wang_collecting_2019}:
-\begin{equation}
+\begin{equation} \label{eq:piecewise-domain}
   t = \begin{cases}
     [l(t), r(t)] & \text{if } x < \frac{e^{\epsilon/2}}{e^{\epsilon/2}+1} \\
     [-C, l(t) \cup r(t), C]
@@ -67,9 +67,12 @@ This phenomenon is the same for $t = 1$ and $t = -1$. \newline
 %The histogram consists of three "parts" on the left, right, and center (0).
 %This approach allows for determining the probability of 0 based on a certain likelihood, unlike Duchi et al.'s solution.
 
-The authors generate a randomly sampled set of values $k$ for the multidimensional approach.
-Next, for each value from $k$, the value is sampled using the one-dimensional Piecewise mechanism.
-A critical factor in the overall calculation is the scale factor $C_d$, which, in addition to $C$ (referring to Equation \ref{fig:piecewise-C}), also considers the number of dimensions $d$.
-Finally, the authors also provide an extension to support categorical data.
-
+For multidimensional data, the authors use the one-dimensional version multiple times.
+However, they compensate for the number of dimensions by generating a $k$ based on the following formula \citep{wang_collecting_2019}:
+\begin{equation}
+  k = max (1, min (d, \lfloor \frac{\epsilon}{2.5} \rfloor))
+\end{equation}
+Here, $d$ is the number of dimensions, and $k$ is used to sample a $d$ number of random samples.
+Finally, the Piecewise mechanism (see Equation \ref{eq:piecewise-domain}) is executed for each sample.
+\todo[inline]{Might need to recheck}
 
