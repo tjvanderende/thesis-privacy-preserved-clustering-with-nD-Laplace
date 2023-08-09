@@ -35,16 +35,16 @@ We will test three variants of the kD-Laplace mechanism to assess their utility 
       \item grid-kD-Laplace: Mechanism with truncation using grid-remapping (See Equation: \ref{alg:grid-remapping-laplace}).
       \item density-kD-Laplace: Mechanism with truncation using density-remapping (See Equation: \ref{alg:optimal-remapping-laplace}).
 \end{enumerate}
-We will compare the kD-Laplace mechanism to Piecewise, which is another \gls{ldp} mechanism (See Section \ref{theory:literature-review}).
-And assess the effectiveness of the proposed kd-Laplace variants.
+We will compare the kD-Laplace mechanism to Piecewise, which is another \gls{ldp} mechanism (See Section \ref{theory:literature-review}) and assess the effectiveness of the proposed kd-Laplace variants.
 
 This research combines real-world and synthetic data to demonstrate practical applicability.
 Extensive external and internal validation experiments will be conducted to establish the method's practical relevance and effectiveness.
 
 
 \subsection{Research questions}
+\todo[inline]{Refactor}
 The main question of the research is as follows: \newline \newline
-\textit{"How can the kD-Laplace algorithm be applied in training privacy-preserving clustering algorithms on distributed k-dimensional data?"} \newline
+\textit{"How can the kD-Laplace mechanism be applied in training privacy-preserving clustering algorithms on distributed k-dimensional data?"} \newline
 This question is divided into three smaller sub-questions:
 \begin{enumerate}
       \item \textit{RQ1: How can 2D-Laplace be used to protect the privacy of 2-dimensional data employed for training clustering algorithms?} \newline
@@ -100,6 +100,8 @@ The datasets are sourced from the UCI Machine Learning Repository \citep{noautho
 \end{enumerate}
 The following datasets are for the H3 (shape) hypothesis investigated in research question 3.
 For this purpose, we generated a 2-dimensional and 3-dimensional dataset with 1000 samples.
+\todo[inline]{Skewed looks like circle}
+\todo[inline]{Extend to n-dimensions}
 \begin{figure}[H]
       \includegraphics[width=1.0\textwidth]{Method/images/rq3.png}
       \caption{Synthetic datasets with 1000 samples and 2-dimensions}
@@ -171,15 +173,15 @@ The "value" column shows the value we used for the experiments, with the corresp
 \begin{table}[h]
       \begin{tabular}{|l|p{6cm}|l|l|l|}
             \hline
-            Parameter          & Description                                                                                   & Value         & Dataset(s)                                  \\
+            Parameter & Description & Value & Dataset(s) \\
             \hline
-            Number of clusters & This is decided based on elbow plots with the SC metric \ref{theory:clustering-agglomerative} & n\_clusters=2 & \makecell{Heart-dataset (2 \& 3 dimensions) \\ Seeds-dataset (7 dimensions) \\ Circle-dataset (3 dimensions) \\ Line-dataset (2 dimensions) } \\
+            \makecell{Number of                          \\ clusters} & This is decided based on elbow plots with the SC metric \ref{theory:clustering-agglomerative} & n\_clusters=2 & \makecell{Heart-dataset (2 \& 3 dimensions) \\ Seeds-dataset (7 dimensions) \\ Circle-dataset (3 dimensions) \\ Line-dataset (2 dimensions) } \\
             \hline
-            Number of clusters & ""                                                                                            & n\_clusters=3 & \makecell{Heart-dataset (9 dimensions)      \\ Seeds-dataset (2 \& 3 dimensions) \\ Skewed dataset (2 dimensions)}          \\
+            \makecell{Number of                          \\ clusters} & ""          & n\_clusters=3 & \makecell{Heart-dataset (9 dimensions)   \\ Seeds-dataset (2 \& 3 dimensions) \\ Skewed dataset (2 dimensions)}          \\
             \hline
-            Number of clusters & ""                                                                                            & n\_clusters=4 & \makecell{Skewed dataset (2 dimensions)}    \\
+            \makecell{Number of                          \\ clusters} & ""          & n\_clusters=4 & \makecell{Skewed dataset (2 dimensions)} \\
             \hline
-            Number of clusters & ""                                                                                            & n\_clusters=5 & \makecell{Circle dataset (2 dimensions)     \\ Line-dataset (3 dimensions)}              \\
+            \makecell{Number of                          \\ clusters} & ""          & n\_clusters=5 & \makecell{Circle dataset (2 dimensions)  \\ Line-dataset (3 dimensions)}              \\
             \hline
       \end{tabular}
       \caption{Agglomerative clustering hyperparameters for the datasets}
@@ -206,7 +208,7 @@ In addition, there is the "linkage," which is "ward" for all configurations (See
             Minimum points & ""                                                                                                             & $minPts=20$ & \makecell[l]{Heart dataset \\ (10-dimensions)} \\
             \hline
       \end{tabular}
-      \caption{DBSCAN  hyperparameters for datasets 1 - 3}
+      \caption{OPTICS  hyperparameters for datasets 1 - 3}
       \label{tab:dbscan-formula-sklearn}
 \end{table}
 The above table shows the relevant hyperparameters for the \gls{optics} clustering algorithm for each dataset.
