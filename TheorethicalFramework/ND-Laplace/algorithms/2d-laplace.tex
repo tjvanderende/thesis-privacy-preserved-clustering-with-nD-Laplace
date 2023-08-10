@@ -1,12 +1,11 @@
 \begin{algorithm}[H]
-  \caption{Full algorithm for perturbing training data for 2D-clustering using planar/2D-Laplace \citep{DBLP:journals/corr/abs-1212-1984}}\label{alg:rq1}
+  \caption{Full mechanism for perturbing training data for 2D-clustering using planar/2D-Laplace \citep{DBLP:journals/corr/abs-1212-1984}}\label{alg:rq1}
   \begin{algorithmic}
-    \Require $x \in X$  \Comment 2D array of points
-    \Require $l \in R^ +$
-    \Require $r \in R^ +$ \Comment sensitivity
+    \Require $x \in X$  \Comment 2D array of points \\
+    $\epsilon$ \Comment should satisfy Theorem \ref{theorem:discretization}
     \Ensure $z \in Z$ \Comment 2D array of perturbed points
     %\State $r = \frac{\sigma}{2}$ \Comment formula 4.1
-    \State $\epsilon = \frac{l}{r}$ \Comment Calculating privacy budget \citep{DBLP:journals/corr/abs-1212-1984}
+    %\State $\epsilon = \frac{l}{r}$ \Comment Calculating privacy budget \citep{DBLP:journals/corr/abs-1212-1984}
     \State $x_{min} \gets min(X)$
     \State $x_{max} \gets max(X)$
     \State $Z \gets []$

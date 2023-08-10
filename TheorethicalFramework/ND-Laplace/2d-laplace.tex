@@ -61,24 +61,59 @@ After adding the noise to the data, it cannot be ensured the data is within the 
 If this is not the case, the data is easily distinguished by an unwanted adversary \citep{DBLP:journals/corr/abs-1212-1984,9646489}.
 The truncation is an essential part of the mechanism to ensure the data is contained within the domain of the original data $X$.
 %We assume a user has a set of data points with a range of [-1, 1].
-\begin{figure}[ht]
+\begin{figure}[H]
   \includegraphics[width=0.7\textwidth]{TheorethicalFramework/ND-Laplace/Images/remapping.png}
   \caption{Representation of truncation of data points for 2-dimensional Laplace mechanism.}
   \label{figure:truncation-2d}
 \end{figure}
 %A solution was described by Andres et al. in step 5 of the Laplacian mechanism for 2D space \citep{DBLP:journals/corr/abs-1212-1984}.
-A viable solution is to create a grid around the diameter of the set of points $X = R^2$ that belong to the user \citep{DBLP:journals/corr/abs-1212-1984}.
-This grid is defined as $G = \{g_1, g_2, ..., g_n\}$ where $g_i$ is a grid point.
-So, a point generated outside the given domain is remapped to the closest in $X \subset G$.
+%A viable solution is to create a grid around the diameter of the set of points $X = R^2$ that belong to the user \citep{DBLP:journals/corr/abs-1212-1984}.
+The approach Andres et al. introduces is to remap a perturbed point $z$ to the closest point $x'$ in $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
+Here, $G$ is a grid generated using constant cell width.
+Although this approach remaps data within the original domain of $X$, it is not guaranteed it preserves $G$ anymore.
+Let the below equation be the collection of probabilities for a point being remapped to a grid cell $x'$ \citep{DBLP:journals/corr/abs-1212-1984}:
+\begin{equation}
+  R(x) = { y \in R^2 | \forall x' \in G \cdot d(y, x') \leq d(y, x')}
+\end{equation}
+The original \gls{gi} definition contains $K$, which is the probability of $z$ being reported as $x$ (See Equation: \ref{theory:geo-indistinguishability}).
+However, this probability is no longer guaranteed because $z$ can also be part of $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
+Hence the probability is now $R_X(x) = R(x) \cup X$.
+So, the $R_X(x)$ has a different shape depending on the distance $x_0$ and $x'$ (ergo, it depends on the grid cell width).
+The probability may be 0, and \gls{gi} cannot be satisfied.
+\newpage
+To overcome this issue, Andres et al. propose a way of calculating $\epsilon'$, depending on the grid-cell width $u \cdot w$. \citep{DBLP:journals/corr/abs-1212-1984}.
+They proved this in theorem 4.1 \citep{DBLP:journals/corr/abs-1212-1984}:
+\begin{theorem}[Discretization 2D-Laplace]
+  Assume $r_{max} < \frac{u}{\delta_{\theta}}$, and let $q = \frac{u}{r_{max}}\delta_{\theta}$. Let $\epsilon$, $\epsilon' \in R^+$ such that \\
+  $\epsilon' + \frac{1}{u}ln \frac{q + 2 e^{\epsilon'u}}{q - 2 e^{\epsilon'u}} \leq \epsilon$ \\
+  Then $K_{\epsilon'}$ provides $\epsilon$-geo-indistinguishability within the range of $r_{max}$. Namely, if ${d(x_0, x), d(x'_0, x) \leq r_{max}}$ then: \\
+  $K_{\epsilon'}(x_0)(x) \leq e^{\epsilon d(x_0, x'_{0})} K_{\epsilon'}(x'_{0})(x)$.
+  \label{theorem:discretization}
+\end{theorem}
+Here, $\delta_{\theta}$ is the machine's precision. \todo[inline]{Do we need to do something with this still?}
+The $u$ is the smallest grid-cell width; this could differ from $w$, but we assume $u = w$.
+The theorem states that $\epsilon'$ is the additional noise needed to satisfy \gls{gi} with the introduction of discretization.
+Then, the final step is truncation based, which is based on the discretization \citep{DBLP:journals/corr/abs-1212-1984}.
+It is sufficient to take $r_{max}$ as $diam(X)$, which is the diameter of the set of points $X$ if it satisfies theorem \ref{theorem:discretization} \citep{DBLP:journals/corr/abs-1212-1984}:
+So, $r_{max}$ is the maximum distance between points in $X$.
 
-This idea was later improved by Chatzikokolakis et al., introducing an optimized way of remapping \citep{chatzikokolakis_efficient_2017}.
-The algorithm uses the Bayesian rule to minimize the loss of utility while remapping the data.
-Instead of remapping to the closest point, it remaps to a location where the loss is minimal.
-To decrease the performance impact of this algorithm, it is possible only to consider a specific region around the perturbed point $z$.
-The disadvantage of this method is the need for a prior set of data points to calculate the optimal remapping.
+In the context of our research, it is more convenient to find the $u$ based on a given $\epsilon$.
+So the challenge is to find the $u$ that satisfies \gls{gi}.
+This can be solved by finding the root of the function:
+\begin{equation}
+  \epsilon' + \frac{1}{u}ln (\frac{\frac{u}{r_{max}} + 2 e^{\epsilon'u}}{\frac{u}{r_{max}} - 2 e^{\epsilon'u}}) - \epsilon = 0
+  \label{eq:find-u-with-epsilon}
+\end{equation}
+The idea of finding the root of a function is to try different values of $u$ until $f(u) = 0$. \todo{Have some proof}
+\todo[inline]{Maybe extend this with some more explanation?}
+%This idea was later improved by Chatzikokolakis et al., introducing an optimized way of remapping \citep{chatzikokolakis_efficient_2017}.
+%The algorithm uses the Bayesian rule to minimize the loss of utility while remapping the data.
+%Instead of remapping to the closest point, it remaps to a location where the loss is minimal.
+%To decrease the performance impact of this algorithm, it is possible only to consider a specific region around the perturbed point $z$.
+%The disadvantage of this method is the need for a prior set of data points to calculate the optimal remapping.
 %It does not work for new users and extends the training period.
 
-\subsection{Optimizing for clustering} \label{2d:optimizing}
+\mycomment{\subsection{Optimizing for clustering} \label{2d:optimizing}
 The decision of the parameters for the algorithm is straightforward as it depends on the $\epsilon$. \label{paragraph:choosing-r}
 This constant is calculated by defining the radius $r$, and the desired level of privacy $l$ and $\epsilon$ is calculated using $l/r$.
 The $l$ is a predefined constant $l \in R^+$ but usually will be below 10.
@@ -86,7 +121,6 @@ For geographical data, the $r$ can be configured using meters as a unit of measu
 So, for example, $r = 200$ corresponds to a radius of 200m around point $x_0$.
 Without a unit, it is a challenge to define a reasonable radius.
 %The $\epsilon$ can be considered the inverse unit of $r$ \citep{DBLP:journals/corr/abs-1212-1984}.
-
 In that regard, the radius can also be a flexible value defined based on the crowdedness of a region \citep{chatzikokolakis_constructing_2015}.
 Suppose a user's location is within a crowded area.
 In that case, the radius can be smaller than if the user is located in a rural area (because the user's location is indistinguishable due to the overlap of other users' locations).
@@ -110,7 +144,7 @@ Although the method is an interesting approach to increasing utility while not r
 For applying it for \gls{ldp}, it is required to supply each user with prior knowledge of the dataset.
 This approach would require interaction between data points, hence an interactive setup of the mechanism instead of a non-interactive one. \newline
 Nonetheless, the idea of using crowded locations is an exciting approach that is researched further in section \ref{theory:privacy-utility-nd}
-
+}
 \mycomment{A drawn area, as shown in \ref{figure:parea}, can be expressed as a perturbation area $P_{area}$ \citep{yan_perturb_2022}.
   This metric was formulated as follows:
   \begin{equation}
