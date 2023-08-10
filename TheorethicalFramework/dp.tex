@@ -3,29 +3,28 @@
 In practice, data is often sent to a central storage point.
 This requires trust, and because all data is collected in one place, the risk of private data leakage becomes very high.
 By applying \gls{dp}, noise can be added to the data to protect it.
-This principle is illustrated in figure \ref{fig:central-dp} with the following actors:
+This principle is illustrated in the following figure:
+\begin{figure}[H]
+  \includegraphics[width=1\textwidth]{TheorethicalFramework/Differential privacy/central-dp.png}
+  \caption{General approach for setting up (central) differential privacy.}
+  \label{fig:central-dp}
+\end{figure}
+
 \begin{enumerate}
-  \item Trusted curator: The system that receives data from users. It is assumed in this setting that the system is trustworthy and that the data is securely stored.
-  \item Adversary: An adversary is someone who uses the data. This could be, for example, a data scientist who wants accurate results or an attacker who wants to obtain as much data as possible.
-  \item The users are clients (for example, websites or mobile apps) who entrust their data to a central server.
+  \item The system that receives data from users. It is assumed in this setting that the system is trustworthy and that the data is securely stored.
+  \item The data is collected and stored in a database, and the noise is added by a differential privacy mechanism.
+  \item Someone interested in the data, such as a data scientist, can access and analyze the private data.
 \end{enumerate}
 To a certain extent, a user's privacy would be ensured with differential privacy. \newline
 
 Although differential privacy solves privacy problems, it remains challenging to calibrate the mechanism.
 There is an important trade-off between utility and privacy for the adversary.
 For example, a data scientist wants accurate data. At the same time, the noise must be sufficient to prevent an attacker from obtaining too much information.
+
 For this reason, a few sections will be devoted to outlining the mathematical background of differential privacy.
 We will examine which factors influence this calibration and whether other methods contribute.
 Afterward, we will further explain other types of differential privacy (local and geo-indistinguishable) similarly.
-\begin{figure}[h!]
-  \includesvg[width=1\textwidth]{TheorethicalFramework/Differential privacy/central-dp}
-  \caption{General approach for setting up (central) differential privacy.}
-  \label{fig:central-dp}
-\end{figure}
 
-On the left side are the users, who send their data to the trusted curator.
-The trusted curator collects all the data (e.g., a database) and adds noise to the data.
-The adversary (right) can access the private data but should not be able to access the non-private data.
 %\glsaddall
 %\leading{10pt}
 %\printglossary[type=differential-privacy, nonumberlist]
@@ -78,16 +77,22 @@ However, with $(\epsilon, \delta)$-differential privacy, the information can lea
 \subsubsection{$\epsilon$-local differential privacy}
 As the name suggests, \gls{ldp} is executed on the client side instead of on the server (See Figure \ref{fig:central-dp}).
 %The principle of \gls{ldp} is illustrated in figure \ref{fig:local-dp}.
-Local differential privacy removes the "trusted" curator (See Figure \ref{fig:local-dp}), preventing sensitive data leakage even if an attacker gains access to the dataset \citep{del_rey_comprehensive_2020}.
-The definition for \gls{ldp} is the as for equation \ref{approxiate-dp} with $\delta = 0$ being equal to equation \ref{pure-dp}.
-\begin{figure}[ht]
-  \includesvg[width=1\textwidth]{TheorethicalFramework/Differential privacy/local-dp}
-  \caption{Local differential privacy, which moves the noise-adding step to the client-side.}
+Local differential privacy removes the "trusted" curator/ server, preventing sensitive data leakage even if an attacker gains access to the dataset \citep{del_rey_comprehensive_2020}.
+The principle of \gls{ldp} is illustrated in the following figure:
+\begin{figure}[H]
+  \includegraphics[width=1\textwidth]{TheorethicalFramework/Differential privacy/local-dp.png}
+  \caption{Local differential privacy, which moves the noise-adding step to the client side.}
   \label{fig:local-dp}
 \end{figure}
-
+\begin{enumerate}
+  \item The clients have their data record(s) locally (client-sided) and add noise to them directly. This way, the server never receives plain data.
+  \item The data is sent to the server and can just be stored securely.
+  \item As with \gls{dp}, a stakeholder interested in the data receives it and can analyze it.
+\end{enumerate}
+%The definition for \gls{ldp} is the as for equation \ref{approxiate-dp} with $\delta = 0$ being equal to equation \ref{pure-dp}.
 Local differential privacy has two different frameworks.
 It can be set up as interactive or non-interactive \citep{del_rey_comprehensive_2020}.
+\newline
 Where interactive can be distinguished as either sequentially interactive or fully interactive \footnote{Image source: \url{https://www.majos.net/focs_19_talk.pdf}}:
 \begin{figure}[H]
   \includegraphics[width=\textwidth]{TheorethicalFramework/nont-interactive-versus-interactive.png}

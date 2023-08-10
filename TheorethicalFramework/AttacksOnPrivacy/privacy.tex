@@ -145,7 +145,6 @@ In conclusion, the attacks that use \gls{mia} are all (mis)using supervised mach
 However, in this study, we use clustering algorithms.
 Therefore, a semi-supervised approach can be used, as illustrated in Figure \ref{figure:MIA-semi-supervised}.
 \newpage
-\todo[inline]{Has to be refactored}.
 \begin{figure}[h]
   \includegraphics[width=1\textwidth]{TheorethicalFramework/Differential privacy/master-thesis-MIA.png}
   \caption{Semi-supervised black-box approach to execute a member inference attack.}
@@ -153,10 +152,11 @@ Therefore, a semi-supervised approach can be used, as illustrated in Figure \ref
 \end{figure}
 
 \begin{enumerate}
-  \item On the left side of the figure, there are users providing data. Because this approach uses local noise, the noise added and sent to the server.
-  \item The private data is collected and saved on the server, where the clustering algorithm is trained.
-  \item From the output of the clustering algorithm, the cluster labels are extracted and used to train a classifier (semi-supervised setup).
-  \item The attacker (green user) uses an attack model (e.g., HopSkipJump) to exploit the classifier's confidence in predicting training or test data.
-  \item The attacker can then use the classifier to predict if the data is a member or not.
-        However, this will be less accurate if the cluster/classifier models are trained on private data.
+  \item The user uses a client (e.g., mobile app), where the nD-Laplace noise is added locally to the data.
+  \item A data scientist trains the clustering algorithm with the privatized data.
+        Therefore, the clustering algorithm's input and output (labels) are private.
+        These labels are used to train a classifier (semi-supervised setup).
+  \item The attacker wants access to the private data on the server.
+        In this approach, the attacker has access to the classifier on the server (black-box setting).
+        So, the attacker can use the classifier's output to conduct a \gls{mia}.
 \end{enumerate}

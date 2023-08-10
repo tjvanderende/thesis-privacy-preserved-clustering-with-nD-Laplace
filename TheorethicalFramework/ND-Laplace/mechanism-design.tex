@@ -1,20 +1,22 @@
 \subsection{Mechanism flowchart}
-All formulas and theories are established for 2D, 3D, and kD-Laplace, so the mechanism design applies to all three variants:
-\begin{figure}[H]
-  \includesvg[width=1.1\textwidth]{TheorethicalFramework/ND-Laplace/Images/final_mechanism_design}
+All formulas and theories are established for 2D, 3D, and nD-Laplace, so the mechanism design applies to all three variants:
+\begin{figure}[h]
+  \includegraphics[width=1.1\textwidth]{TheorethicalFramework/ND-Laplace/Images/final-mechanism-design.png}
   \caption{Non-interactive mechanism design for kD-Laplace.}
   \label{fig:final-mechanism-design}
 \end{figure}
-\todo[inline]{Improve image}
 %\todo[inline]{Modify to density-kD-Laplace \& kD-Laplace for image reporting}
 For easy navigation, we provide a list of all algorithms:
 \begin{enumerate}
-  \item 2D-Laplace:  \ref{alg:2d-laplace}
-  \item 3D-Laplace: \ref{alg:3d-laplace}
-  \item kD-Laplace: \ref{alg:nd-laplace}
+  \item Based on the number of dimensions, the algorithm decides the correct Laplace mechanism to use:
+        \begin{itemize}
+          \item 2D-Laplace:  \ref{alg:2d-laplace}
+          \item 3D-Laplace: \ref{alg:3d-laplace}
+          \item nD-Laplace: \ref{alg:nd-laplace}
+        \end{itemize}
   \item Find points outside domain: \ref{alg:find-outside-domain-laplace}
   \item Grid remapping: \ref{alg:grid-remapping-laplace}
-  \item Distance remapping: \ref{alg:optimal-remapping-laplace}
+  \item Density remapping: \ref{alg:optimal-remapping-laplace}
 \end{enumerate}
 \subsubsection{Practical example}
 The shape of the dataset is necessary for the usefulness of clustering.
