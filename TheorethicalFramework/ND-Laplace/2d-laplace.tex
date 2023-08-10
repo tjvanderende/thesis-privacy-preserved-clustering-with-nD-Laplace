@@ -70,14 +70,15 @@ The truncation is an essential part of the mechanism to ensure the data is conta
 %A viable solution is to create a grid around the diameter of the set of points $X = R^2$ that belong to the user \citep{DBLP:journals/corr/abs-1212-1984}.
 The approach Andres et al. introduces is to remap a perturbed point $z$ to the closest point $x'$ in $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
 Here, $G$ is a grid generated using constant cell width.
-Although this approach remaps data within the original domain of $X$, it is not guaranteed it preserves $G$ anymore.
+%Although this approach remaps data within the original domain of $X$, it is not guaranteed it preserves \gls{gi} anymore.
 Let the below equation be the collection of probabilities for a point being remapped to a grid cell $x'$ \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{equation}
   R(x) = { y \in R^2 | \forall x' \in G \cdot d(y, x') \leq d(y, x')}
+  \label{eq:grid-probability}
 \end{equation}
 The original \gls{gi} definition contains $K$, which is the probability of $z$ being reported as $x$ (See Equation: \ref{theory:geo-indistinguishability}).
 However, this probability is no longer guaranteed because $z$ can also be part of $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
-Hence the probability is now $R_X(x) = R(x) \cup X$.
+Hence the probability is now $R_X(x) = R(x) \cup X$. \newline
 So, the $R_X(x)$ has a different shape depending on the distance $x_0$ and $x'$ (ergo, it depends on the grid cell width).
 The probability may be 0, and \gls{gi} cannot be satisfied.
 \newpage
@@ -91,9 +92,8 @@ They proved this in theorem 4.1 \citep{DBLP:journals/corr/abs-1212-1984}:
   \label{theorem:discretization}
 \end{theorem}
 Here, $\delta_{\theta}$ is the machine's precision. \todo[inline]{Do we need to do something with this still?}
-The $u$ is the smallest grid-cell width; this could differ from $w$, but we assume $u = w$.
 The theorem states that $\epsilon'$ is the additional noise needed to satisfy \gls{gi} with the introduction of discretization.
-Then, the final step is truncation based, which is based on the discretization \citep{DBLP:journals/corr/abs-1212-1984}.
+%Then, the final step is truncation based, which is based on the discretization \citep{DBLP:journals/corr/abs-1212-1984}.
 It is sufficient to take $r_{max}$ as $diam(X)$, which is the diameter of the set of points $X$ if it satisfies theorem \ref{theorem:discretization} \citep{DBLP:journals/corr/abs-1212-1984}:
 So, $r_{max}$ is the maximum distance between points in $X$.
 

@@ -15,32 +15,34 @@ For each mechanism, we explain the equation for \gls{gi}, the mechanism, and the
 \input{TheorethicalFramework/ND-Laplace/3d-laplace.tex}
 \newpage
 \section{kD-Laplace}
-\todo[inline]{Formalize this}
+\todo[inline]{Introduce $d_x$ privacy}
 As mentioned in the previous chapter, the paper introduced by Min et al. can handle 3-dimensional data.
 A small recap: a point $(r, \theta, \psi)$ gives us the three coordinates of a location on the 3-dimensional sphere.
 An important property is that these coordinates can be generated separately \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
 The $r$ gives us the radius or distance from $(\theta, \psi)$ to the center of the sphere \footnote{https://mathworld.wolfram.com/SphericalCoordinates.html}.
 So, instead of having just these two coordinates, we can extend this to n-dimensions by considering an n-hypersphere \citep{fernandes_generalised_2019, 9646489}.
 To this end, in addition to points $\theta$ and $\psi$, we consider $\theta \in S^n$, where $S$ is a unit hypersphere.
-
-The first step to generate the noise is selecting the $r$.
-This method is almost identical to the one for 3-dimensional (\ref{eq:3d-laplace-r}).
-But, instead of applying a scale of 3, the scale will be $n$ for the number of dimensions in the data \citep{fernandes_generalised_2019}:
+The theorem on extending $\epsilon$-geo-indistinguishability to $\epsilon-d_x$-privacy is as follows \citep{fernandes_generalised_2019}:
+\begin{theorem}
+  Let $d_x$ be a pseudo-metric on $X$ and let $K: X \rightarrow Z$ be a mechanism satisfying $\epsilon-d_x-privacy$. \\
+  $K(x)(Z) \leq e^{\epsilon \cdot d_x (x, x')} \cdot K(x')(Z), \forall x, x' \in X, Z \subseteq X$.
+\end{theorem}
+Because $d_x$ is a pseudo metric, we can also provide $d_E$ to denote the Euclidean distance.
+The 2D-Laplace mechanism is referenced as a plane, and the coordinates can be generated separately as $(r, \theta)$ \citep{fernandes_generalised_2019,DBLP:journals/corr/abs-1212-1984}.
+Hence, generating the nD-variant can be seen as generating multiple $(r, \theta)$ pairs \citep{fernandes_generalised_2019}.
+Where $r$ is the radial distance from the origin $x_0$ and $\theta$ is the angle randomly selected from a unit hypersphere.
+The selection of $r$ is according to the Gamma distribution, with shape $n$ and scale $\delta > 0$ \cite{fernandes_generalised_2019}:
 \begin{equation}
-  \gamma(n, 1/\epsilon)
-  \label{eq:nd-laplace-r}
+  Gam^n_\delta(r) := \frac{r^{n-1}\cdot^{-\frac{r}{\delta}}}{\delta^n(n-1!)}
 \end{equation}
-\todo[inline]{What gamma here}
-For the other dimensions, we consider a vector $U = (\theta_1, \theta_2, \theta_n)$ which is uniformly selected based on a unit $n$-hypersphere $S^n$ \citep{fernandes_generalised_2019}.
-We consider the work that was proposed by Marsaglia et al. for a 4d-sphere that can be used for selecting points from an n-hypersphere \citep{marsaglia_choosing_1972}.
-This method resolves around selecting points from a hypersphere by using a uniform distribution for the domain [0, 1].
-For this purpose, an approach to draw data points from a Gaussian distribution is adopted \footnote{https://mathworld.wolfram.com/SpherePointPicking.html}.
+Then, $\theta$ is drawn from a uniform distribution of a unit hypersphere $S$ \citep{fernandes_generalised_2019}:
+\begin{equation}
+  Uniform^n(\theta) := \frac{\gamma(\frac{n}{2})}{n \cdot \pi ^{\frac{n}{2}}}
+\end{equation}
+This approach is similar to the other variants of the Laplace mechanism.
+Only now, we select points from an $n$-dimensional hypersphere  \footnote{https://mathworld.wolfram.com/SpherePointPicking.html} instead of a unit sphere \ref{eq:3d-laplace-2}. \newline
 
-\subsection{Cartesian coordinates}
-\todo[inline]{it is difficult to understand how it is computed,
-  doesn't the main paper provide more detailed formalized explanation?
-}
-As with the 2/3D-Laplace, the spherical coordinates need to be converted to Cartesian to be able to cluster.
+In the next step, the spherical coordinate representation is converted to Cartesian coordinates \citep{fernandes_generalised_2019}:
 It is comparable to the way it was done in the previous chapters; however, as there are an $n$-amount of angles, the equation is repeated and slightly different:
 \begin{align}
   x_1 = r * cos (\theta_1)                                          \\
@@ -56,6 +58,7 @@ The combination of sections 1 and 2 of this chapter provides a good overview of 
   \label{fig:nd-laplace-overview}
 \end{figure}
 \subsection{Privacy versus utility} \label{theory:privacy-utility-nd}
+\todo[inline]{Needs refactor}
 If we continue adding dimensions, we notice the noise is shrinking proportionally.
 We must first examine the formula for a hypersphere’s volume to understand this behavior.
 \begin{equation}
@@ -77,23 +80,24 @@ The noise decreases as the dimensions increase, increasing utility.
 Hence, observing the behavior of privacy relative to utility is intriguing.
 This behavior will be further emphasized in a later stage of this research.
 \newpage
-\subsection{Truncation}
-In section \ref{2d:optimizing}, we introduced a method to optimize the 2D Laplace mechanism based on crowdedness (point density).
-This method is extended with the help of a more recent paper provided by Chatzikokolakis et al. \citep{chatzikokolakis_efficient_2017}.
-We use this work to extend and optimize the grid-remapping method for 2D/3D Laplace (Sections \ref{theory:truncation} and \ref{2d:optimizing}) and introduce optimal grid-remapping to improve the utility further.
-We want to emphasize that this section focuses on improving utility with remapping.
-Any remap method preserves geo-indistinguishability \citep{chatzikokolakis_efficient_2017}, so the required privacy is still preserved. \newline
+\subsection{Grid-remapping}
+\todo[inline]{Needs refactoring with proof and formal representation}
+In the previous sections, we introduced the 2D, 3D, and nD Laplace mechanisms.
+The current section will be used to formalize nD-Laplace and introduce modifications to improve the mechanisms for clustering.
 
+\subsubsection{Discretization and truncation} \label{theory:nd-laplace-truncation}
 Recalling both mechanisms, the 2D version operates on a plane and approximates on a grid $G$, while the 3D version works in a 3D space using a cuboid grid.
 Given a set of input points $X \subset R^2$, we can truncate points that are outside the domain by remapping them to points within $G$ ($Z = X \cap G$) \citep{DBLP:journals/corr/abs-1212-1984}.
 Here, $X$ represents other data points reported locally by the same user.
+\todo[inline]{proof \& formalize grid-remapping / discretization for nD-Laplace}
+
 The utility of this method depends on the number of grid cells in $G$ since a smaller distance will result in more frequent mapping to the surface of the grid.
 When $\epsilon$ is very low (and thus farther away), the data points are more likely to map to the grid surface (\ref{fig:3d-laplace-noise}, \ref{fig:3d-laplace-example}).
 Increasing the number of grid cells can improve the utility, but this comes at the cost of significantly increased space complexity.
 Also, when the number of dimensions increases, the number of grid cells grows quadratic. \newline
-%This issue is because a grid of $n*m$ dimensions has a $O(n*m)$ complexity. 
 
-So, to extend Andres et al.'s approach to n-dimensional data, we need an efficient way to search points in an n-dimensional hypersphere.
+\subsubsection{Optimalization}
+To extend Andres et al.'s approach to n-dimensional data, we need an efficient way to search points in an n-dimensional hypersphere.
 To do this, we adopt the idea proposed by Chatzikokolakis et al. of using a kd-tree to search the grid efficiently \citep{chatzikokolakis_efficient_2017}.
 Their research describes the theoretical utilization of a kd-tree for searching nearby points for a given point.
 For this reason, we aim to apply this practically by using a kd-tree for the following tasks:
@@ -106,7 +110,7 @@ However, it is essential to emphasize that the same algorithm will also be appli
 The underlying principles and steps of the algorithm remain the same.
 
 The next section explains the concept and underlying idea of kd-trees.
-Then, we delve into its application for grid-remapping.
+Then, we delve into its application for grid remapping.
 Finally, we expand this to a practical application
 \newpage
 \subsubsection*{Kd-trees} \label{theory:kd-trees}
@@ -135,7 +139,7 @@ Constructing the kd-tree costs equal to grid-remapping $O(kn)$, where $k$ is the
 But, searching for the nearest neighbor is a logarithmic function with time complexity of $O(\log n)$ \citep{washington_k-d_2002} (See Figure \ref{theory:big-o-graph} for an overview of the Big-O notation).
 This approach is a significant improvement over searching manually, which would have the same complexity as constructing the tree.
 
-\subsubsection{Grid with kd-tree remapping} \label{theory:grid-remapping}
+\subsubsection{Grid remapping with kd-tree} \label{theory:grid-remapping}
 The kd-tree search method is beneficial for the optimizations we are striving for.
 This optimization extends grid-remapping for 2d \citep{DBLP:journals/corr/abs-1212-1984} and 3d data \citep{9646489} to n-dimensions. \newline
 We have illustrated the three steps required for this below:
@@ -167,7 +171,7 @@ Therefore, we are looking for a solution that might work better in practice
 \input{TheorethicalFramework/ND-Laplace/algorithms/outside-domain.tex}
 \input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}
 \newpage
-\subsubsection{Density remapping} \label{theory:optimal-remapping}
+\subsection{Density remapping} \label{theory:optimal-remapping}
 As discussed, the remapping will be performance intensive to provide good utility, so we adopt the optimal remapping \citep{chatzikokolakis_efficient_2017}.
 This thesis will refer to this as density remapping because this better explains the application.
 
