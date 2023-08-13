@@ -91,7 +91,7 @@ They proved this in theorem 4.1 \citep{DBLP:journals/corr/abs-1212-1984}:
   $K_{\epsilon'}(x_0)(x) \leq e^{\epsilon d(x_0, x'_{0})} K_{\epsilon'}(x'_{0})(x)$.
   \label{theorem:discretization}
 \end{theorem}
-Here, $\delta_{\theta}$ is the machine's precision. \todo[inline]{Do we need to do something with this still?}
+Here, $\delta_{\theta}$ is the machine's precision, which is the hardware precision of the GPS-location in the context of geographical data. We will omit this in our research, but still provide the full theorem nonetheless. 
 The theorem states that $\epsilon'$ is the additional noise needed to satisfy \gls{gi} with the introduction of discretization.
 %Then, the final step is truncation based, which is based on the discretization \citep{DBLP:journals/corr/abs-1212-1984}.
 It is sufficient to take $r_{max}$ as $diam(X)$, which is the diameter of the set of points $X$ if it satisfies theorem \ref{theorem:discretization} \citep{DBLP:journals/corr/abs-1212-1984}:
@@ -145,14 +145,7 @@ For applying it for \gls{ldp}, it is required to supply each user with prior kno
 This approach would require interaction between data points, hence an interactive setup of the mechanism instead of a non-interactive one. \newline
 Nonetheless, the idea of using crowded locations is an exciting approach that is researched further in section \ref{theory:privacy-utility-nd}
 }
-\mycomment{A drawn area, as shown in \ref{figure:parea}, can be expressed as a perturbation area $P_{area}$ \citep{yan_perturb_2022}.
-  This metric was formulated as follows:
-  \begin{equation}
-    P_{area}=\left\{ center = x_{0},radius = \frac{1}{N}\times \sum _{i=1}^{N}r_{i}\right\}
-  \end{equation}
-  The method loops through each perturbed point $r$ on center $x_0$ (recall \ref{figure:parea}) and calculates the Euclidean distance for an $n$ amount of perturbation points.
-  Although the method does not contribute to the Laplace algorithm, it is useful for visualization purposes.
-  This method can also be applied for efficiently calculating the grid points for the truncation method (recall \ref{theory:truncation}).}
+
 
 \newpage
 \subsection{Final mechanism}

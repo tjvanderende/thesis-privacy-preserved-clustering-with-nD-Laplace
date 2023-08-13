@@ -70,13 +70,21 @@ The algorithm then uses an automatic approach to determining the characteristics
 
 \subsubsection{Hierarchical clustering}
 %The name originates from the way hierarchical clustering works.
-A hierarchy of clusters is generated and merged according to the closeness of data points \citep{meng_private_2021}.
+A hierarchy of clusters is generated and merged according to the closeness of data points \citep{meng_private_2021}. Because this is structured as a tree, it can be described using a binary tree and visualised with a dendogram  \citep{nielsen_hierarchical_2016}.
 Hierarchical clustering can be divided into agglomerative and divisive \citep{meng_private_2021}.
 This approach means the clustering occurs from the bottom-up or top-down, respectively.
 Of the two approaches, agglomerative is the most common one \citep{meng_private_2021}.
-For the implementation, there are four popular methods: Single link, Average link, Complete link, and Ward's method \citep{roux_comparative_2015}.
-These methods are used to calculate (dis)similarities between objects.
-\todo[inline]{Provide formal definition}
+For  agglomerative definition, we consider the following definition:
+\begin{equation}
+    L(C_i, C_j) = min_{x \in C_i, y \in C_j} d(x, y)
+\end{equation}
+\begin{enumerate}
+\item Initially, each data-point $x \in X$ is treated as its own cluster \citep{nielsen_hierarchical_2016}.
+    \item Merge $C_i$ and $C_j$ based on a certain metric, and add $C_{ij}$ to the list and remove $C_i$ and $C_j$ from the list \citep{nielsen_hierarchical_2016}.
+    \item The final cluster should contain all the data points, which is the dendogram root ($C_{root} = X$) \citep{nielsen_hierarchical_2016}.
+\end{enumerate}
+The specific implementation and calculation of the closeness of data-points, depends on the linkage function.
+For this function, there are four popular options: Single link, Average link, Complete link, and Ward's method \citep{roux_comparative_2015}. In the next section we evaluate this to choose the most fitting option.
 
 \subsubsection{Research direction}
 There are three different types of clustering algorithms that we have considered for this research.
