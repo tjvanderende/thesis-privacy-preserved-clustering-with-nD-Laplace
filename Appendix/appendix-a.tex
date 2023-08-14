@@ -2,52 +2,146 @@
 \section{K-Means}
 For selecting the appropriate amount of clusters, we used an "elbow" plot in combination with the silhouette score.
 \begin{enumerate}
-  \item Seeds dataset: 4 clusters (see figure: \ref{hyperparameters:k-means-seeds-dataset})
-  \item Heart dataset: TODO
-  \item Circle dataset: 5 clusters (see figure: \ref{hyperparameters:k-means-circle-dataset})
-  \item Line dataset: 4 clusters (see figure: \ref{hyperparameters:k-means-line-dataset})
-  \item Skewed dataset: 4 clusters (see figure: \ref{hyperparameters:k-means-skewed-dataset})
-\end{enumerate}
-\begin{figure}[H]
-  \includegraphics[width=0.6\textwidth]{Appendix/parameter-selection/selecting-k.png}
-  \caption{Selecting the $k$ for K-Means for seeds dataset using the "elbow plot" using section \ref{theory:kmeans}}
-  \label{hyperparameters:k-means-seeds-dataset}
-\end{figure}
+  \item Seeds dataset (All dimensions): k-clusters = 2.
+      \item Heart dataset:
+      \begin{enumerate}
+          \item 2-dimensions k-value: 2
+          \item 3-dimensions k-value: 2
+          \item 9-dimensions k-value: 3
+      \end{enumerate}
+      \item Circle dataset:
+      \begin{enumerate}
+          \item 2-dimensions k-value: 6
+          \item 3-dimensions k-value: 2
+      \end{enumerate}
+      \item Line dataset:
+      \begin{enumerate}
+          \item 2-dimensions k-value: 2
+          \item 3-dimensions k-value: 5
+      \end{enumerate}
+      \item Skewed dataset:
+      \begin{enumerate}
+          \item 2-dimensions k-value: 3
+          \item 3-dimensions k-value: 4
+      \end{enumerate}
+  \end{enumerate}
 
-\begin{figure}[H]
-  \includegraphics[width=0.6\textwidth]{Method/images/synthetic-datasets-k/circle-dataset_elbow.png}
-  \caption{Selecting the $k$ for K-Means for the circle dataset using the "elbow plot" using section \ref{theory:kmeans}}
-  \label{hyperparameters:k-means-circle-dataset}
-\end{figure}
-
-
-\begin{figure}[H]
-  \includegraphics[width=0.6\textwidth]{Method/images/synthetic-datasets-k/line-dataset_elbow.png}
-  \caption{Selecting the $k$ for K-Means for the line dataset using the "elbow plot" using section \ref{theory:kmeans}}
-  \label{hyperparameters:k-means-line-dataset}
-\end{figure}
-
-\begin{figure}[H]
-  \includegraphics[width=0.6\textwidth]{Method/images/synthetic-datasets-k/skewed-dataset_elbow.png}
-  \caption{Selecting the $k$ for K-Means for the skewed dataset using the "elbow plot" using section \ref{theory:kmeans}}
-  \label{hyperparameters:k-means-skewed-dataset}
-\end{figure}
-
-\section{Agglomerative clustering} \label{appendix:agglomerative-hyperparameters}
-
+\newpage
 \subsection{Seeds dataset}
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/seeds-dataset_agglomerative_optimal_cluster_2.png}
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/seeds-dataset-2-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for seeds dataset (2 dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-seeds-dataset-2d}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/seeds-dataset-3-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for seeds dataset (3 dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-seeds-dataset-3d}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/seeds-dataset-n-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for seeds dataset (7 dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-seeds-dataset-7d}
+\end{figure}
+\newpage
+
+\subsection{Heart dataset}
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/heart-dataset-2-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for Heart dataset (2 dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-heart-dataset-2d}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/heart-dataset-3-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for Heart dataset (3 dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-heart-dataset-3d}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/heart-dataset-n-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for Heart dataset (9 dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-heart-dataset-9d}
+\end{figure}
+\newpage
+
+\subsection{Circle dataset}
+
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/circle-dataset-2-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for circle dataset (2-dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-circle-dataset-2d}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/circle-dataset-3-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for circle dataset (3-dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-circle-dataset-3d}
+\end{figure}
+\newpage
+
+\subsection{Line dataset}
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/line-dataset-2-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for line dataset (2-dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-line-dataset-2d}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/line-dataset-3-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for line dataset (3-dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-line-dataset-3d}
+\end{figure}
+\newpage
+\subsection{Skewed dataset}
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/skewed-dataset-2-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for skewed dataset (2-dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-skewed-dataset-2d}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/skewed-dataset-3-kmeans.png}
+  \caption{Selecting the $k$ for K-Means clustering for skewed dataset (3-dimensions) using the "elbow plot."}
+  \label{hyperparameters:agglomerative-skewed-dataset-3d}
+\end{figure}
+\newpage
+\section{Agglomerative clustering} \label{appendix:agglomerative-hyperparameters}
+
+\begin{enumerate}
+    \item Seeds dataset:
+    \begin{enumerate}
+        \item 2-dimensions k-value: 3
+        \item 3-dimensions k-value: 3
+        \item 7-dimensions k-value 2
+    \end{enumerate}
+    \item     Heart dataset:
+    \begin{enumerate}
+        \item 2-dimensions k-value: 2
+        \item 3-dimensions k-value: 3
+        \item 9-dimensions k-value 3
+    \end{enumerate}
+    \item Circle dataset:
+    \begin{enumerate}
+        \item 2-dimensions k-value: 5
+        \item 3-dimensions k-value: 2
+    \end{enumerate}
+    \item Line dataset (all dimensions) k-value: 2
+    \item Skewed dataset:
+    \begin{enumerate}
+        \item 2-dimensions k-value: 3
+        \item 3-dimensions k-value: 4
+    \end{enumerate}
+\end{enumerate}
+\newpage
+\subsection{Seeds dataset}
+\begin{figure}[H]
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/seeds-dataset-2-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for seeds dataset (2 dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-seeds-dataset-2d}
 \end{figure}
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/seeds-dataset_agglomerative_optimal_cluster_3.png}
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/seeds-dataset-3-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for seeds dataset (3 dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-seeds-dataset-3d}
 \end{figure}
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/seeds-dataset_agglomerative_optimal_cluster_7.png}
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/seeds-dataset-n-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for seeds dataset (7 dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-seeds-dataset-7d}
 \end{figure}
@@ -55,17 +149,17 @@ For selecting the appropriate amount of clusters, we used an "elbow" plot in com
 
 \subsection{Heart dataset}
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/heart-dataset_agglomerative_optimal_cluster_2.png}
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/heart-dataset-2-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for Heart dataset (2 dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-heart-dataset-2d}
 \end{figure}
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/heart-dataset_agglomerative_optimal_cluster_3.png}
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/heart-dataset-3-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for Heart dataset (3 dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-heart-dataset-3d}
 \end{figure}
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/heart-dataset_agglomerative_optimal_cluster_9.png}
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/heart-dataset-n-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for Heart dataset (9 dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-heart-dataset-9d}
 \end{figure}
@@ -74,12 +168,12 @@ For selecting the appropriate amount of clusters, we used an "elbow" plot in com
 \subsection{Circle dataset}
 
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/circle-dataset_agglomerative_optimal_cluster_2.png}
+  \includegraphics[width=0.75\textwidth]{circle-dataset-2-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for circle dataset (2-dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-circle-dataset-2d}
 \end{figure}
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/circle-dataset_agglomerative_optimal_cluster_3.png}
+  \includegraphics[width=0.75\textwidth]{circle-dataset-3-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for circle dataset (3-dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-circle-dataset-3d}
 \end{figure}
@@ -87,24 +181,24 @@ For selecting the appropriate amount of clusters, we used an "elbow" plot in com
 
 \subsection{Line dataset}
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/line-dataset_agglomerative_optimal_cluster_2.png}
+  \includegraphics[width=0.8\textwidth]{line-dataset-2-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for line dataset (2-dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-line-dataset-2d}
 \end{figure}
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/line-dataset_agglomerative_optimal_cluster_3.png}
+  \includegraphics[width=0.75\textwidth]{line-dataset-3-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for line dataset (3-dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-line-dataset-3d}
 \end{figure}
 \newpage
 \subsection{Skewed dataset}
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/skewed-dataset_agglomerative_optimal_cluster_2.png}
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/skewed-dataset-2-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for skewed dataset (2-dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-skewed-dataset-2d}
 \end{figure}
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{Appendix/parameter-selection/skewed-dataset_agglomerative_optimal_cluster_3.png}
+  \includegraphics[width=0.75\textwidth]{Appendix//parameter-selection/skewed-dataset-3-agglomerative.png}
   \caption{Selecting the $k$ for Agglomerative clustering for skewed dataset (3-dimensions) using the "elbow plot."}
   \label{hyperparameters:agglomerative-skewed-dataset-3d}
 \end{figure}

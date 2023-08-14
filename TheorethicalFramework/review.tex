@@ -13,10 +13,10 @@ This table includes components such as the type (LDP or DP) and whether a public
 There are different ways how to combine differential privacy with clustering \citep{baraheem_survey_2022}:
 \begin{enumerate}
   \item Input perturbation: This method adds noise to the input data, so the clustering algorithms are trained on perturbed data.
-  \item Gradient perturbation: The term gradient is used in machine learning algorithms that solve an optimization problem like deep learning \citep{hassan_differential_2019}.
-        Perturbing the gradients ensures the optimization algorithm is private \citep{ji_differential_2014}.
   \item Output/label perturbation: This method adds noise to the output of the clustering algorithm.
         The model trains using the original data, and the noise is added to the output \citep{ji_differential_2014}.
+        \item Gradient perturbation: The term gradient is used in machine learning algorithms that solve an optimization problem like deep learning \citep{hassan_differential_2019}.
+        Perturbing the gradients ensures the optimization algorithm is private \citep{ji_differential_2014}.
   \item Objective perturbation: This method slightly differs from output/label perturbation but also adds noise to the output.
         The difference is it is added to the output of a loss function instead of the labels (for example, logistic regression) \citep{baraheem_survey_2022}.
 \end{enumerate}
@@ -25,16 +25,16 @@ There are different ways how to combine differential privacy with clustering \ci
 Many approaches targeting local differential privacy mechanisms must adapt the clustering algorithm (for example, k-Cluster) \citep{sun_distributed_2019}, which we explain later in this chapter.
 For this reason, we concentrate on input perturbation in this study, as it allows a dataset to be used to train various clustering algorithms without modification.
 \begin{figure}[H]
-  \includesvg[width=0.7\textwidth]{./TheorethicalFramework/ND-Laplace/Images/overview-clustering&dp.svg}
-  \caption{Example on how our approach of private training works for clustering and \gls{dp}}
+  \includegraphics[width=0.75\linewidth]{TheorethicalFramework//ND-Laplace//Images/Thesis-nd - Page 7.png}
+ \caption{Example on how our approach (1) of private training works for clustering and the \gls{ldp} setup from Section \ref{section:dp}}
   \label{fig:overview-clustering-and-dp}
 \end{figure}
-\todo[inline]{Improve image}
+The above image shows where input/output perturbation would happen in the \gls{ldp} setup.
 \begin{enumerate}
-  \item Left, each local dataset is perturbed using our method (locally).
-  \item All data is collected and used to train a clustering algorithm (on the server).
-  \item A cluster model is privately trained because we train the algorithm on private data.
-  \item Because we use input perturbation, a third party like a "data analyst" can also directly access the data privately.
+  \item Shows input perturbation. \textit{We use this approach for our research.}
+  \item Shows where output perturbation happens, this would be part of the clustering process. Here the cluster labels perturbed, instead of the input.
+Furthermore, we do not consider the perturbation variants 3 and 4, because they do not fit the research.
+
 \end{enumerate}
 The next section focuses on the differential privacy algorithms that are of interest to this type of input perturbation.
 

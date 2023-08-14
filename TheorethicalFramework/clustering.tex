@@ -70,13 +70,21 @@ The algorithm then uses an automatic approach to determining the characteristics
 
 \subsubsection{Hierarchical clustering}
 %The name originates from the way hierarchical clustering works.
-A hierarchy of clusters is generated and merged according to the closeness of data points \citep{meng_private_2021}.
+A hierarchy of clusters is generated and merged according to the closeness of data points \citep{meng_private_2021}. Because this is structured as a tree, it can be described using a binary tree and visualised with a dendogram  \citep{nielsen_hierarchical_2016}.
 Hierarchical clustering can be divided into agglomerative and divisive \citep{meng_private_2021}.
 This approach means the clustering occurs from the bottom-up or top-down, respectively.
 Of the two approaches, agglomerative is the most common one \citep{meng_private_2021}.
-For the implementation, there are four popular methods: Single link, Average link, Complete link, and Ward's method \citep{roux_comparative_2015}.
-These methods are used to calculate (dis)similarities between objects.
-\todo[inline]{Provide formal definition}
+For  agglomerative definition, we consider the following definition:
+\begin{equation}
+    L(C_i, C_j) = min_{x \in C_i, y \in C_j} d(x, y)
+\end{equation}
+\begin{enumerate}
+\item Initially, each data-point $x \in X$ is treated as its own cluster \citep{nielsen_hierarchical_2016}.
+    \item Merge $C_i$ and $C_j$ based on a certain metric, and add $C_{ij}$ to the list and remove $C_i$ and $C_j$ from the list \citep{nielsen_hierarchical_2016}.
+    \item The final cluster should contain all the data points, which is the dendogram root ($C_{root} = X$) \citep{nielsen_hierarchical_2016}.
+\end{enumerate}
+The specific implementation and calculation of the closeness of data-points, depends on the linkage function.
+For this function, there are four popular options: Single link, Average link, Complete link, and Ward's method \citep{roux_comparative_2015}. In the next section we evaluate this to choose the most fitting option.
 
 \subsubsection{Research direction}
 There are three different types of clustering algorithms that we have considered for this research.
@@ -96,8 +104,8 @@ As for hierarchical clustering, we have decided to go for agglomerative clusteri
 %The algorithm calculates the local density of each data point and identifies density peaks for points with the highest density [Rodriguez and Laio, 2014].
 
 \subsection{Parameter selection}
-A list of important hyperparameters that can influence the results is provided for each clustering algorithm.
-Subsequently, we briefly discuss the methods for determining these hyperparameters for the algorithms. \newline
+A list of important hyper parameters that can influence the results is provided for each clustering algorithm.
+Subsequently, we briefly discuss the methods for determining these hyper parameters for the algorithms. \newline
 We use the same distance function for all algorithms to have all the algorithms in the same setting.
 This function will be Euclidean distance, as used for \gls{gi}.
 \subsubsection{K-Means} \label{theory:kmeans}
@@ -106,27 +114,34 @@ This value determines the number of clusters to consider and influences the resu
 %These methods require a manual way of selecting the best $k$ by visual inspection of a plot.
 The first method is called an "elbow" plot \citep{kodinariya_review_2013}.
 This method finds the best $k$ by applying the K-Means algorithm multiple times and estimating the best $k$.
-\begin{figure}
+Based on the line's visual change, someone can select the best $k$:
+\begin{figure}[H]
     \includegraphics{TheorethicalFramework/dentification-of-Elbow-point.png}
     \caption{Illustration of determining $k$ using the "elbow" method \citep{kodinariya_review_2013}}
     \label{elbow-method}
 \end{figure}
-In this situation, a Silhouette plot can be used to determine the $k$.
-This method uses the Silhouette coefficient for each cluster \citep{saputra_effect_2020}.
-Because this metric measures the separation and cohesion of the cluster, it can be used to choose an optimal amount of clusters \citep{saputra_effect_2020}.
-%The plot can then be made by plotting the silhouette coefficient on the y-axis and $k$ on the x-axis .
-By visualizing the silhouette scores, the K with the highest coefficient has the best-separated clusters. \newline
-Another method is the Gap statistic method \citep{yuan_research_2019}.
-It compares the total within-cluster variation for different values of k with their expected values under a null reference distribution of the data \citep{tibshirani_estimating_2001}.
-A practical appliance of this method uses a line plot for comparing the $k$-value and gap value \citep{yuan_research_2019}.
-Based on the line's visual change, someone can select the best $k$ (see Figure \ref{elbow-method}).
+The cost function $J$ on the y-axis is a metric to measure cluster distance/cohesion \citep{yuan_research_2019}.
+Because there has to be a clear "elbow", using the "distortion" metric is the most straightforward \citep{yuan_research_2019}. This is the Sum of square errors (SSE), and because this value reduces for a higher amount of clusters; there is a distinctive curve as visualized in Figure \ref{elbow-method}. 
 
-In summary, no fixed method exists to choose a good $k$ for K-Means.
-The elbow method is standard in the existing literature and is very popular due to its simplicity.
-However, one disadvantage is that it can be challenging to determine the "elbow" point, as it is not always present \citep{kodinariya_review_2013}.
-In that case, the silhouette or gap statistic method is a good alternative, where the silhouette score is the simpler method.
+Another good option for determining $k$ is the silhouette coefficient, as this metric measures the separation and cohesion of the cluster, it can be used to choose an optimal amount of clusters \citep{saputra_effect_2020}. The method is related to the "elbow" plot by plotting a line, but now the highest value is selected instead of the "elbow":
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{skewed-dataset-3-kmeans.png}
+    \caption{An example on how to select the best (red circle) silhouette score, using the silhouette plot method \citep{saputra_effect_2020}}
+    \label{fig:k-select-silhouette}
+\end{figure}
+
+\newline
+A final metric to consider is the Gap statistic method \citep{yuan_research_2019}.
+It compares the total within-cluster variation for different values of $k$ with their expected values under a null reference distribution of the data \citep{tibshirani_estimating_2001}.
+
+The silhouette coefficient and gap statistic methods are robust, but are performance intensive for bigger data-sets \citep{yuan_research_2019}. Where the Gap statistic is the slowest from the three, and SSE the fastest.
+On the other hand, the SSE can be hard to interpreted as the "elbow" is not always visible \citep{yuan_research_2019}}. Also, the SSE only calculates the distance information, while the other two metrics also incorporate other indicators.
+
+Although performance is important, the data-sets that are used in this thesis are not relatively small. However, the time complexity of Gap statistic is a lot higher then Silhouette plot, while the results are comparable \citep{yuan_research_2019}. Therefore, we decided to go for the Silhouette Coefficient method. The formal definition is provided in the next Section: \ref{eq:silhouette_coefficient}.
+
 \subsubsection{Agglomerative Clustering} \label{theory:clustering-agglomerative}
-The agglomerative clustering algorithm has two essential hyperparameters: the linkage method and the number of clusters. \newline
+The agglomerative clustering algorithm has two essential hyper parameters: the linkage method and the number of clusters. \newline
 \textbf{Choosing linkage:}
 This decision is crucial for the algorithm as it determines the similarity measurement.
 Choosing a linkage method that uses Euclidean distance is important for our research.
@@ -134,13 +149,13 @@ From the four different types of linkage methods, we have chosen the Ward method
 \textbf{Choosing number of clusters:}
 There are not many methods for determining the initial number of clusters.
 Therefore, the approach is similar to K-Means.
-The amount of clusters is selected based on the "elbow" with the highest silhouette score.
+The amount of clusters is selected based on the silhouette method, by selecting the highest silhouette score for a given $k$.
 
 \mycomment{\subsubsection{Affinity Propagation} \label{theory:clustering-ap}
     %\gls{ap} is an algorithm that clusters data points by iteratively passing messages between them.
     %Each point sends and receives messages about the attractiveness of other points as cluster centers (exemplars) and the suitability of itself as a center \citep{keller_balancing_2021}.
     %The method was introduced by Frey et al. and does not require any hyperparameters \citep{frey_clustering_2007}.
-    Although the algorithm is parameterless, important properties could potentially impact the clustering \citep{wang_adaptive_2007}. \newline
+    Although the algorithm is parameter-less, important properties could potentially impact the clustering \citep{wang_adaptive_2007}. \newline
     \textbf{Choosing preference($p$): }
     Indicates the preference for selecting a data point as cluster center \citep{wang_adaptive_2007}.
     It highly influences the number of clusters; a high one would lead to more clusters and a small one to less \citep{moiane_evaluation_2018}.
@@ -281,7 +296,7 @@ The second metric we use is for external validation. We use \gls{sc} because thi
 Based on existing studies and the literature, we have selected metrics adjusted to compensate for the data distribution characteristics.
 Hence, we will focus on these metrics' "adjusted" variants:
 \begin{enumerate}
-    \item \textbf{Silhouette coefficient (Internal validation):}
+    \item \textbf{Silhouette coefficient (Internal validation): \label{eq:silhouette_coefficient}}
           \mycomment{\item \textbf{Calinski Harabasz Index:}
           The definition of \gls{chi} is defined in several steps \citep{liu_understanding_2010}:
           The first definition is the between cluster sum of squares.
