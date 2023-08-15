@@ -17,7 +17,6 @@ This knowledge can be divided into white-box and black-box approaches \citep{hu_
 We will discuss both types of attacks and types in the next two sections.
 
 \section{Membership inference attacks}
-\todo[inline]{Formalize this}
 An attack model that plays a significant role in machine learning is \gls{mia}.
 With this attack, an adversary attempts to infer the training data $x \in X$ (member) from a given data point $z \in Z$ (non-member).
 The attack happens exclusively on supervised learning models, which predict labels or probabilities.
@@ -30,20 +29,31 @@ These models do not necessarily have to be the same as the original model, and t
 It is a black-box attack, but the attacker often needs knowledge of the data distribution to create a good shadow dataset \citep{rigaki_survey_2021}.
 
 One of the earlier works that used this attack was Shokri et al. \citep{shokri_membership_2017}.
-An attacker trains multiple models (shadow model) to overfit the original modal.
-This idea is based on the model giving higher scores to the data on which it was trained (overfitting).
-Using this approach, attackers can retrieve the model's training data (member data) by injecting many fake data (non-membership data).
+This idea is based on the confidentiality percentages of classification model outputs. Presumably the model gives higher scores to the data on which it was trained (overfitting) in comparison to other data. This information is misused by the attacker to reconstruct the original training data.
+
+ Let $y = f_{target(x)}$ be the prediction confidence of a classification model, then the membership probability is calculated as \citep{shokri_membership_2017}: 
+\begin{equation}
+    Pr(x, y) \in D^{train}_{target}
+\end{equation}
+Which is the probability of that input $x$ belongs to the target dataset that was used to generate the target dataset $f_{target}$ \citep{shokri_membership_2017}.
+To execute the attack, the attacker trains so-called shadow models $f^i_{shadow}()$, and each of them are trained on dataset that is comparable to the training dataset and combined to infer training information:
 \begin{figure}[H]
   \includegraphics[width=0.5\textwidth]{TheorethicalFramework/AttacksOnPrivacy/shadow-models-mi.png}
   \caption{Black-box MIA attack on a machine learning model \citep{shokri_membership_2017}}
 \end{figure}
+
 Another approach to a black-box attack was introduced by Peng et al. and only considers that the attacker has access to the already trained model.
-They first rescale the probabilities using temperature scaling to compensate for overconfident models \citep{peng_unsupervised_nodate}.
-So instead of having a probability between two classes with, for example, 99\% against 1\%, it will be more evenly distributed based on the training data.
-They then cluster the probabilities into two clusters using K-Means and label the higher confidence scores as members.
+They first rescale the probabilities using temperature scaling to compensate for overconfident models \citep{peng_unsupervised_nodate}:
+\begin{equation}
+    R_i(h_k(x);T) = \frac{exp(log(h^i_k(x))/T}{\sum_j{exp(log(h^j_k(x))/T}}
+\end{equation}
+Here, the $h(x)$ denotes the probability distribution of $x$, which tells the chance of $x$ being a certain classification/label. Peng et al. then calculate the top-$k$ features $h_k$ and eliminate the smaller values. 
+The formula $R_i$ is are the re-scaled probabilities,  to be more suitable for clustering using temperature scaling, where $T$ is the scaling parameter.  They the fit a K-Means model, resulting in two clusters: training and test data \citep{peng_unsupervised_nodate}.
+\newpage
 %Access to only the output of the model is a typical characteristic of black-box attacks. If the attacker also knows architecture, for example, it is referred to as a white-box attack.
-Another take on this is prediction and confidence-based \gls{mia}, both proposed by \citep{yeom_privacy_2018}.
-They assume that an attacker knows the standard error and has access to the perturbation dataset.
+\todo[inline]{Still needs formal definition:}
+The final method that is considered, is prediction and confidence-based \gls{mia}, both proposed by \citep{yeom_privacy_2018}. Confidence-based attacks look a lot like the attacks proposed by Peng et al. and Shokri et al.
+They assume that an attacker knows the standard error and has access to the dataset.
 The algorithm can then extract the truth label by minimizing the loss. \newline
 %The above attacks do rely on the model to also provide the confidence or probabilities of the predictions.
 %This information is often unavailable, so Choquette-Choo et al. introduced a label-only attack.
