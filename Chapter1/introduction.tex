@@ -1,11 +1,10 @@
 \chapter{Introduction} \label{chapter:introduction}
-\todo[inline]{check all sentences to have verbs}
 Data has become an increasingly important part of our daily lives, and its applications are continuously growing.
 Personal and sensitive information, such as scrolling through Facebook or Instagram, is often sourced from various structured and unstructured data origins.
 As many businesses see the potential of data \citep{noauthor_global_nodate}, the urgency of protecting sensitive information also increases.
 This development is why there have been several regulations regarding data and privacy.
 Therefore, the European Union created the GDPR \citep{noauthor_eur-lex_nodate}, and the United States created the privacy act \citep{division_privacy_2007}.
-For instance, the GDPR describes in Article 34 that data should always be stored in an "incomprehensible way for unauthorized people".
+For instance, Article 34 of the GDPR mandates that data should always be stored in a manner that is "incomprehensible to unauthorized individuals".
 Due to these regulations, it is challenging for companies to store and analyze data to gain insights.
 
 A method for gaining insights into data is using unsupervised machine learning.
@@ -60,15 +59,15 @@ This thesis aims at developing a new privacy framework for training clustering a
 It does so by extending and optimizing the three variants of nD-Laplace to support clustering algorithms.
 Our contribution to the current literature is as follows:
 \begin{enumerate}
-  \item We aim to create a new privacy framework named kd-Laplace using the three variants of Laplace to train privacy-preserving clustering algorithms on distributed n-dimensional data.
+  \item We aim to create a new privacy framework named nD-Laplace using the three variants of Laplace to train privacy-preserving clustering algorithms on distributed n-dimensional data.
   \item In addition to K-means, we also demonstrate the working of our method on multiple other clustering algorithms.
-  \item We introduce different optimization techniques to improve the utility of kd-Laplace using kd-tree.
-  \item We demonstrate the effectiveness and privacy of kd-Laplace using real-world datasets and attacks.
+  \item We introduce different optimization techniques to improve the utility of nD-Laplace using nD-tree.
+  \item We demonstrate the effectiveness and privacy of nD-Laplace using real-world datasets and attacks.
 \end{enumerate}
 
 \subsection*{Research question and methods}
 To reach our goals and objectives, we have formulated the following main question: \newline \newline
-\textit{"How can the kD-Laplace algorithm be applied in training privacy-preserving clustering algorithms on distributed n-dimensional data?"} \newline
+\textit{"How can the nD-Laplace mechanism be applied in training privacy-preserving clustering algorithms on distributed n-dimensional data?"} \newline
 
 Much literature is consulted to answer this research question, and we experiment extensively to gather enough qualitative data.
 Both external and internal validation methods are employed to assess the utility and privacy of the privacy mechanism.
@@ -78,7 +77,7 @@ The qualitative data from these experiments are analyzed to compare the differen
 The first chapter is devoted to literature study and review.
 We explain the various concepts related to clustering and differential privacy.
 This chapter concludes with a literature review.
-The second chapter explicitly focuses on the kd-Laplace part, explaining the relevant algorithms and concepts.
+The second chapter explicitly focuses on the nD-Laplace part, explaining the relevant algorithms and concepts.
 We then delve deeper into privacy attacks and how they can be evaluated. \newline
 The following chapter is dedicated to describing the research itself and the methodology.
 Subsequently, we present the results, and finally, we conclude with the discussion and conclusions.

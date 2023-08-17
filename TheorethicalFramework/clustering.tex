@@ -14,10 +14,12 @@ Then the mean is calculated by calculating the mean of all points in the cluster
 \begin{equation}
     c_i = \frac{1}{|C_i|} \sum_{x_i \in C_i} x_i
 \end{equation}
+\todo[inline]{Add some more explanation.}
 Finally, the K-Means algorithm aims to minimize the within-cluster sum of squares (WCSS) \citep{yuan_research_2019}:
 \begin{equation}
     WCSS = \sum_{i=1}^{k} \sum_{c_i \in C_i} || x_i, c_i ||^2
 \end{equation}
+\todo[inlin]{Also misses some information about the properties}
 The algorithm runs multiple times until the center point no longer changes or reaches the maximum iterations \citep{yuan_research_2019}.
 
 %Iteratively each data point is assigned to its nearest centroid.
@@ -34,7 +36,7 @@ The algorithm runs multiple times until the center point no longer changes or re
 The data points are partitioned for this clustering type based on nearest neighbors \citep{fahad_survey_2014}.
 A region with a high data density is considered a cluster \citep{xu_comprehensive_2015}.
 A popular density-based clustering algorithm is \gls{dbscan}.
-The method was introduced by Ester et al. and worked by drawing a radius around data points \citep{ester_density-based_nodate}.
+The method was introduced by Ester et al. and works by drawing a radius around (epsilon) data points \citep{ester_density-based_nodate}.
 For this thesis, the $\Pi$-symbol is used not to confuse it with the privacy budget $\epsilon$.
 It then groups all points within this radius as clusters.
 The main advantage is its ability to find arbitrarily shaped clusters and detect outliers \citep{liu_privacy_2012}.
@@ -130,15 +132,19 @@ Another good option for determining $k$ is the silhouette coefficient, as this m
     \caption{An example on how to select the best (red circle) silhouette score, using the silhouette plot method \citep{saputra_effect_2020}}
     \label{fig:k-select-silhouette}
 \end{figure}
-
-\newline
 A final metric to consider is the Gap statistic method \citep{yuan_research_2019}.
 It compares the total within-cluster variation for different values of $k$ with their expected values under a null reference distribution of the data \citep{tibshirani_estimating_2001}.
 
-The silhouette coefficient and gap statistic methods are robust, but are performance intensive for bigger data-sets \citep{yuan_research_2019}. Where the Gap statistic is the slowest from the three, and SSE the fastest.
-On the other hand, the SSE can be hard to interpreted as the "elbow" is not always visible \citep{yuan_research_2019}}. Also, the SSE only calculates the distance information, while the other two metrics also incorporate other indicators.
+Both the silhouette coefficient and the gap statistic methods are recognized for their robustness. 
+However, they can be computationally demanding, especially when dealing with larger datasets, as noted by \citep{yuan_research_2019}. 
+Among the three methods discussed, the Gap statistic is the most time-consuming, while the SSE (Sum of Squared Errors) is the most efficient.
 
-Although performance is important, the data-sets that are used in this thesis are not relatively small. However, the time complexity of Gap statistic is a lot higher then Silhouette plot, while the results are comparable \citep{yuan_research_2019}. Therefore, we decided to go for the Silhouette Coefficient method. The formal definition is provided in the next Section: \ref{eq:silhouette_coefficient}.
+However, the SSE method has its own challenges. Specifically, its results can sometimes be ambiguous, as the characteristic "elbow" point, which indicates the optimal number of clusters, might not always be visible \citep{yuan_research_2019, kodinariya_review_2013}. 
+Furthermore, while the SSE primarily focuses on distance metrics, both the silhouette coefficient and gap statistic offer a more comprehensive evaluation by incorporating additional indicators.
+
+While computational efficiency is a crucial factor, it's worth noting that the datasets utilized in this thesis are of a manageable size. 
+Even so, the Gap statistic's time complexity is significantly greater than that of the Silhouette plot, even though their results are often similar, as observed by \citep{yuan_research_2019}. 
+Given these considerations, we have chosen to employ the Silhouette Coefficient method for our analysis. A detailed definition of this method will be provided in the subsequent section, as referenced in Equation: \ref{eq:silhouette_coefficient}.
 
 \subsubsection{Agglomerative Clustering} \label{theory:clustering-agglomerative}
 The agglomerative clustering algorithm has two essential hyper parameters: the linkage method and the number of clusters. \newline
