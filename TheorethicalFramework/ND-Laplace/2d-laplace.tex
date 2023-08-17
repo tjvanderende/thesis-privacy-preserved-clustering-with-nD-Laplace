@@ -79,10 +79,9 @@ Let the below equation be the collection of probabilities for a point being rema
 The original \gls{gi} definition contains $K$, which is the probability of $z$ being reported as $x$ (See Equation: \ref{theory:geo-indistinguishability}).
 However, this probability is no longer guaranteed because $z$ can also be part of $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
 Hence the probability is now $R_X(x) = R(x) \cup X$. \newline
-So, the $R_X(x)$ has a different shape depending on the distance $x_0$ and $x'$ (ergo, it depends on the grid cell width).
-The probability may be 0, and \gls{gi} cannot be satisfied.
+So, the $R_X(x)$ has a different shape depending on the distance $x_0$ and $x'$ (ergo, it depends on the grid cell width). This is due the step units of $G$ stay the same, while the distance $r$ grows \citep{DBLP:journals/corr/abs-1212-1984}.
 \newpage
-To overcome this issue, Andres et al. propose a way of calculating $\epsilon'$, depending on the grid-cell width $u \cdot w$. \citep{DBLP:journals/corr/abs-1212-1984}.
+To overcome this issue, Andres et al. propose a way of calculating $\epsilon'$, depending on the step-unit $u$. \citep{DBLP:journals/corr/abs-1212-1984}.
 They proved this in theorem 4.1 \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{theorem}[Discretization 2D-Laplace]
   Assume $r_{max} < \frac{u}{\delta_{\theta}}$, and let $q = \frac{u}{r_{max}}\delta_{\theta}$. Let $\epsilon$, $\epsilon' \in R^+$ such that \\
@@ -95,9 +94,9 @@ Here, $\delta_{\theta}$ is the machine's precision, which is the hardware precis
 The theorem states that $\epsilon'$ is the additional noise needed to satisfy \gls{gi} with the introduction of discretization.
 %Then, the final step is truncation based, which is based on the discretization \citep{DBLP:journals/corr/abs-1212-1984}.
 It is sufficient to take $r_{max}$ as $diam(X)$, which is the diameter of the set of points $X$ if it satisfies theorem \ref{theorem:discretization} \citep{DBLP:journals/corr/abs-1212-1984}:
-So, $r_{max}$ is the maximum distance between points in $X$.
+So, $r_{max}$ is the maximum distance between points in $X$, which is the area where geo-indistinguishability can be guaranteed \citep{9646489}.
 
-In the context of our research, it is more convenient to find the $u$ based on a given $\epsilon$.
+\mycomment{In the context of our research, it is more convenient to find the $u$ based on a given $\epsilon$.
 So the challenge is to find the $u$ that satisfies \gls{gi}.
 This can be solved by finding the root of the function:
 \begin{equation}
@@ -105,7 +104,7 @@ This can be solved by finding the root of the function:
   \label{eq:find-u-with-epsilon}
 \end{equation}
 The idea of finding the root of a function is to try different values of $u$ until $f(u) = 0$. \todo{Have some proof}
-\todo[inline]{Maybe extend this with some more explanation?}
+\todo[inline]{Maybe extend this with some more explanation?}}
 %This idea was later improved by Chatzikokolakis et al., introducing an optimized way of remapping \citep{chatzikokolakis_efficient_2017}.
 %The algorithm uses the Bayesian rule to minimize the loss of utility while remapping the data.
 %Instead of remapping to the closest point, it remaps to a location where the loss is minimal.

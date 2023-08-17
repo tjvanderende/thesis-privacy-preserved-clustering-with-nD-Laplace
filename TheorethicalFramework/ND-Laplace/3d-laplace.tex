@@ -19,7 +19,7 @@ Therefore, the \gls{pdf} where the noise is drawn from is almost identical \cite
   \label{eq:3d-laplace-pdf}
 \end{equation}
 Where $A$ is the normalization factor, and $d_3$ is the Euclidean distance in a 3-dimensional space.
-Instead of only consisting of a polar angle $\theta$ and radial distance $r$, the third dimension (altitude) is the azimuth angle $psi$ \citep{9646489}:
+Instead of only consisting of a polar angle $\theta$ and radial distance $r$, the third dimension (altitude) is the azimuth angle $\psi$ \citep{9646489}:
 \begin{equation}
   D_{\epsilon}(x_i)(x_0) = \frac{1}{4 \cdot \pi^2} \cdot \epsilon^3 \cdot r^2 \cdot e^{-\epsilon \cdot r}
   \label{eq:3d-laplace-with-normalization}
@@ -100,11 +100,11 @@ Now these are established, we provide the extended theorem as provided by Min et
 \end{theorem}
 This theorem is slightly longer than the 2-dimensional variant, but the principle stays the same.
 \begin{enumerate}
-  \item The device precision variables are defined as $d_0, d_\theta$, and $d_\psi$. Which is the hardware precision of the GPS-location or indoor navigation software. 
+  \item The device precision variables are defined as $d_0, d_\theta$, and $d_\psi$. Which is the hardware precision of the GPS-location or indoor navigation software.  Again, we omit this for the research; but nonetheless provide the full theorem.
   \item The cuboid $G_c$ is defined using the units $u, w, h$ (length, width, and height). The $h$ was used for the theorem as minimum grid-unit value, assuming that $u > v > h$ holds \citep{9646489}.
   \item Finally, the values $x_1, x_2$ should be lower or equal to the maximum radius $r_M$.
 \end{enumerate}
-\todo[inline]{Maybe explain that we use the root of the function $f(x) = 0$ for the minimum value $h$ (height)}
+%\todo[inline]{Maybe explain that we use the root of the function $f(x) = 0$ for the minimum value $h$ (height)}
 
 We plotted example data points on a 3-dimensional grid in Figure \ref{fig:3d-laplace-example} to demonstrate this:
 \begin{figure} [H]
