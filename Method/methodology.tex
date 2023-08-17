@@ -100,16 +100,13 @@ The datasets are sourced from the UCI Machine Learning Repository \citep{noautho
 \end{enumerate}
 The following datasets are for the H3 (shape) hypothesis investigated in research question 3.
 For this purpose, we generated a 2-dimensional and 3-dimensional dataset with 1000 samples.
-\todo[inline]{Skewed looks like circle}
-\todo[inline]{Extend to n-dimensions}
 \begin{figure}[H]
-      \includegraphics[width=1.0\textwidth]{Method/images/rq3.png}
+      \includegraphics[width=1.0\textwidth]{Method//images/2d-shapes.png}
       \caption{Synthetic datasets with 1000 samples and 2-dimensions}
       \label{rq3:synthetic-datasets}
 \end{figure}
 \begin{figure}[H]
-      \includegraphics[width=1.0\textwidth]{Method/images/rq3-3d-synth.png}
-      \caption{Synthetic datasets with 1000 samples and 3-dimensions}
+      \includegraphics[width=1.0\textwidth]{3d-shapes.png}
       \label{rq3:synthetic-datasets-3d}
 \end{figure}
 
@@ -157,10 +154,11 @@ This section gives a short list and explanation of the parameters we used throug
             \hline
             Parameter & Description                          & Value                                                         & Dataset        \\ \hline
             K-value   & Calculated based on an "elbow" plot. & k=4 (see Figure \ref{hyperparameters:k-means-seeds-dataset})  & Seeds dataset  \\ \hline
-            K-value   & ""                                   & k=4                                                           & Heart dataset  \\ \hline
-            K-value   & ""                                   & k=5 (see Figure \ref{hyperparameters:k-means-circle-dataset}) & circle dataset \\ \hline
-            K-value   & ""                                   & k=4 (see Figure \ref{hyperparameters:k-means-line-dataset})   & line dataset   \\ \hline
-            K-value   & ""                                   & k=4 (see Figure \ref{hyperparameters:k-means-skewed-dataset}) & skewed dataset \\ \hline
+            K-value   & ""                                   & k=2                                                          & \makecell{Seeds-dataset (all dimensions), \\ Heart dataset (2 & 3 dimensions), \\ Circle dataset (3 dimensions), \\ Line dataset (2 dimensions) } \\ \hline
+            K-value   & ""                                   & k=3 & \makecell{Heart dataset (9 dimensions) \\ Skewed dataset (2 dimensions) } \\ \hline
+            K-value   & ""                                   & k=4  & \makecell{Skewed dataset (3 dimensions)}   \\ \hline
+            K-value   & ""                                   & k=5 & \makecell{Line dataset (3 dimensions)} \\ \hline
+            K-value  & ""                                    & k=6 & \makecell{Circle dataset (2 dimensions)} \hline
       \end{tabular}
       \caption{K-Means hyperparameters for dataset 1 - 3}
       \label{tab:kmeans-formula-dataset-2}
@@ -259,7 +257,7 @@ In addition, we evaluate privacy by simulating a membership inference attack and
             %We call this "disclosure risk" because it measures how much noise is added.
             To this end, the average Euclidean distance is measured and reported per epsilon. A higher distance indicates more privacy.
       \item \textbf{Adversarial advantage: }
-            We used the Membership Inference Attack (MIA) that Shokri et al. proposed with the implementation that was provided by Adversarial Robustness Toolkit (ART) \citep{nicolae_adversarial_2019}.
+            We use the Membership Inference Attack (MIA) that Shokri et al. proposed with the implementation that was provided by Adversarial Robustness Toolkit (ART) \citep{nicolae_adversarial_2019}.
             An earlier study also explored this attack to evaluate differential privacy.
             Similar to this attack, we train a classifier with perturbed data and evaluate it using non-perturbed data (test-data / shadow-data) \citep{zhao_not_2020}.
             We consider a semi-supervised setup (Figure \ref{figure:MIA-semi-supervised}), where we train a classifier with the perturbed data and evaluate it using non-perturbed data (test-data / shadow-data).
@@ -300,7 +298,7 @@ This section explains the experiments' setup and the result reporting order.
             In this research, we also conduct experiments to assess the impact of the number of dimensions on the utility of each dataset.
       \item Mechanism privacy: We do the same for utility, but now with privacy.
             For this purpose, we evaluate the adversary advantage and privacy distance.
-      \item Mechanism comparison: Now we established the performance of kD-Laplace and Piecewise, we compare the different variants of kD-Laplace.
+      \item Mechanism comparison: Now we established the performance of nD-Laplace and Piecewise, we compare the different variants of kD-Laplace.
 
 \end{enumerate}
 %Therefore, we analyze our method according to a popular attack: Membership inference attack.
