@@ -21,14 +21,24 @@ Please refer to the plots in the appendix for the same scores for kD-Laplace var
 \begin{figure}[H]
   \centering
   \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewise mechanisms for the 2-dimensional data seeds-dataset}}
-  \includegraphics[width=0.9\textwidth]{Results/kd-laplace/kd-Laplace/seeds-dataset/ami-and-sc_2_dimensions.png}
+  \includegraphics[width=0.8\textwidth]{Results/kd-laplace/kd-Laplace/seeds-dataset/ami-and-sc_2_dimensions.png}
 
   \label{fig:validation-seeds-dataset_comparison_2d-laplace}
 \end{figure}
 %The above plots show the AMI and ARI scores for the seeds-dataset with kd-laplace/grid/optimal (left-side) and piecewise (right-side).
-Piecewise shows a higher \gls{ami} for privacy budgets (epsilon) 7 and 9. In contrast, the kd-Laplace mechanism scores higher for all the other epsilons (0.1 onward 7).
-K-Means achieves the best score for both mechanisms with a slight margin compared to \gls{ag}, but they score equal for \gls{sc}
-For both the mechanisms, OPTICS underperforms heavily but still scores the same as AP for Piecewise.
+The Piecewise mechanism excels in Adjusted Mutual Information (\gls{ami}) at a privacy budget (epsilon) of 9, while the nd-Laplace mechanism is superior for other epsilon values. K-Means consistently outperforms other clustering algorithms, though only marginally over \gls{ag}, and both yield similar silhouette coefficient (\gls{sc}) scores. The underperformance of the OPTICS algorithm across both mechanisms, comparable only to the AP algorithm under Piecewise, suggests its potential limitations in these configurations.
+\newpage
+The plot shows that nD-Laplace performs better for lower epsilons. Which is likely due to the mechanism also considering the shape (distance) of the data, so the Piecewise mechanism proportionally adds more noise. But, then we would expect OPTICS to score better. Therefore, we visualize this behaviour:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Discussion/behaviour-2d-seeds-dataset&optics.png}
+    \caption{Evaluating OPTICS for seeds-dataset 2-dimensional data (epsilon 9)}
+    \label{fig:evaluate-optics-seeds-dataset-2d-9eps}
+\end{figure}
+The above plot shows the kernel density of the core points selected by \gls{optics} for the data with epsilon 9. The clusters in the plain and Piecewise datasets are compact and linearly aligned, indicating a specific data distribution or directional noise from the Piecewise mechanism. On the other hand, the nD-Laplace clusters are dispersed, suggesting its noise affects data uniformly in all directions.
+Also,  a general observation is the amount of noise, which should be between  1 and 30\% \citep{schubert_dbscan_2017}. The OPTICS we used reports an average of 40\%, which also implicates an issue with the implementation itself.
+
+
 \newpage
 \begin{figure}[H]
   \centering
@@ -37,9 +47,7 @@ For both the mechanisms, OPTICS underperforms heavily but still scores the same 
 
   \label{fig:validation-heart-dataset_comparison_2d-laplace}
 \end{figure}
-K-Means achieves a high \gls{ami} score of 0.95+ using kD-Laplace from privacy budgets 5 to 9, compared to Piecewise scoring between 0.4 to 0.8.
-Both mechanisms score high for \gls{ag} and K-Means, reaching the baseline value, but \gls{optics} performs poorly.
-\gls{ag} fluctuates more with kD-Laplace. For \gls{sc}, both kD-Laplace and Piecewise reach the baseline for \gls{ag} and K-Means, while \gls{optics} performs poorly.
+The Piecewise mechanism excels in Adjusted Mutual Information (\gls{ami}) at a privacy budget (epsilon) of 9, while the nD-Laplace mechanism is superior for other epsilon values. K-Means consistently outperforms other clustering algorithms, though only marginally over \gls{ag}, and both yield similar silhouette coefficient (\gls{sc}) scores. The under performance of the OPTICS algorithm across both mechanisms, comparable only to the AP algorithm under Piecewise, suggests its potential limitations in these configurations.
 \newpage
 \begin{figure}[H]
   \centering
