@@ -211,6 +211,8 @@ We opted for K-Means as it consistently delivered reliable results across all ou
 
 On the heatmap, the x-axis represents the privacy budget, while the y-axis illustrates the number of dimensions. Each cell of the heatmap conveys the \gls{ami} value. The intensity of the cell's color corresponds to the \gls{ami} score: a darker shade signifies a higher score. Consequently, the darker (or higher) the score, the more favorable the outcome. \newline
 
+The results for the shape datasets (Circle, Line and Skewed) were omitted, because we do not have more then 3 dimensions. Therefore, the heat maps do not yield a lot of information in addition to the cluster utility plots.
+
 Please refer to the plots in the appendix for:
 \begin{enumerate}
   \item Privacy distance: \ref{appendix:results-privacy}.
@@ -332,7 +334,14 @@ In contrast, kD-Laplace scores much lower in this range. Furthermore, it appears
 }
 
 \section{Privacy}
-\todo[inline]{Introduction (see mechanisms)}
+The sections below present a heatmap comparison of the nd-Laplace and Piecewise mechanisms.
+We employed a heatmap to simultaneously depict the privacy budget (epsilon), the number of dimensions, and a specific metric. The metrics we use for this are the Membership advantage, \gls{tpr} and privacy distance. 
+
+On the heatmap, the x-axis represents the privacy budget, while the y-axis illustrates the number of dimensions. Each cell of the heatmap displays the specific metric value. The intensity of the cell's color corresponds to the \gls{ami} score: a darker shade signifies a higher score:
+\begin{enumerate}
+    \item  For the membership advantage and \gls{tpr}, a lighter cell color (lower value) indicates a better score.
+    \item For the privacy distance, the opposite is true; if the cell color is dark (high value), it provides more distance and thus more privacy.
+\end{enumerate}
 %The images below display bar plots for the membership advantage and TPR of membership inference attacks as described in the methodology.
 %We use the same color scheme in the previous section to display the different mechanisms.
 %In addition, a red line was drawn to indicate the baseline TPR (the non-private dataset's TPR). \newline
@@ -379,14 +388,15 @@ When we examine the plot above, we see a different pattern. For Piecewise, the \
 For higher privacy budgets, the \gls{tpr} for both increases to 0.65.
 From the \gls{tpr}, it can be inferred that a higher privacy budget indeed leaks more information.
 The dimensions have little impact on this, but for both mechanisms, it's observable that 2-dimensions have the highest \gls{tpr}, thereby leaking the most information.
+\todo[inline]{Why higher for 2D?}
 
 \newpage
 \subsection{Heart dataset}
 \begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.85\textwidth}
+  \begin{subfigure}[b]{0.75\textwidth}
     \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Heatmap showing adversary advantage for the kD-Laplace mechanism, per privacy budget \& dimension for heart-dataset.}}
+      \caption{\textbf{Heatmap showing adversary advantage for the nD-Laplace mechanism, per privacy budget \& dimension for heart-dataset.}}
       \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/heart-dataset/shokri_mi_adv.png}
       \label{fig:privacy_heart-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
@@ -399,8 +409,31 @@ The dimensions have little impact on this, but for both mechanisms, it's observa
     \end{subfigure}
   \end{subfigure}
 \end{figure}
-
+For the nD-Laplace mechanism, there's little difference observed between the privacy budgets and dimensions. This is expected, as there's also minimal variation in the \gls{ami} score across different privacy budgets. However, a correlation can be seen between lower dimensions (2 / 3) and the impact of higher privacy budgets. For these dimensions, the adversary advantage is approximately 5 points lower than the other dimensions.
+With the Piecewise mechanism, a similar result is observed, but it's evident that higher dimensions (8 and 9) have an impact on privacy budgets ranging from 0.5 to 3. For 2-dimensions, the score also seems significantly higher than the rest.
+Although the adversary advantage in these heatmaps follows a somewhat more logical progression (increasing from left to right), we will also analyze the \gls{tpr} on the following page. 
 \newpage
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.75\textwidth}
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap TPR for the kD-Laplace mechanism, per privacy budget \& dimension for heart-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/heart-dataset/tpr.png}
+            \label{fig:privacy_tpr_heart-dataset_adversial_advantage_kd-laplace}
+        \end{subfigure}
+        \vfill % vertical space
+
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for heart-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/piecewise/heart-dataset/tpr.png}
+            \label{fig:privacy_tpr_heart-dataset_adversial_advantage_piecewise}
+        \end{subfigure}
+    \end{subfigure}
+\end{figure}
+The Piecewise mechanism's \gls{tpr} results are very explicit and clear. 
+There is a 
+\newpage
+
 \subsection{Circle dataset}
 \begin{figure}[H]
   \centering
