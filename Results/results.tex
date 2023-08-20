@@ -351,40 +351,40 @@ On the heatmap, the x-axis represents the privacy budget, while the y-axis illus
   \centering
   \begin{subfigure}[b]{0.75\textwidth}
     \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Heatmap showing adversary advantage for the kD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/seeds-dataset/shokri_mi_adv.png}
+      \caption{\textbf{Heatmap showing membership advantage for the kD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/seeds-dataset/attack_adv.png}
       \label{fig:privacy_seeds-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
     \vfill % vertical space
 
     \begin{subfigure}[c]{1\textwidth}
       \caption{\textbf{Heatmap showing adversary advantage for the Piecewise mechanism, per privacy budget \& dimension for seeds-dataset.}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/seeds-dataset/shokri_mi_adv.png}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/seeds-dataset/attack_adv.png}
       \label{fig:privacy_seeds-dataset_adversial_advantage_piecewise}
     \end{subfigure}
   \end{subfigure}
 \end{figure}
-When comparing the mechanisms, we observe that nD-Laplace has a relatively high score for epsilon values ranging from 0.5 to 2.5. The dimensions also seem to influence this, as dimensions 6 and 7 appear slightly darker. As the privacy budgets increase, the adversary advantage decreases. This trend is also evident in the Piecewise mechanism. The number of dimensions doesn't have much influence, but it's clear that for epsilons 0.5 to 1.5, the dimensional data has a higher adversary advantage.
+When comparing the mechanisms, we observe that nD-Laplace has a relatively high score for epsilon values ranging from 0.5 to 2. The dimensions also seem to influence this, as dimensions  7 appears slightly lighter. While, for privacy budgets 7 and 9 the dimensions 6 and 7 are  darker. As the privacy budgets increase, the adversary advantage decreases. This trend is also evident in the Piecewise mechanism. The number of dimensions doesn't have much influence, but it's clear that for epsilons 0.5 to 1.5, the dimensional data has a higher adversary advantage.
 
-We would expect the adversary advantage increasing from left to right, because a higher privacy budget indicates low noise. So, the \gls{mia} should be higher.
-To get a clearer picture why this is not happing, we consider the \gls{tpr}, which represents the accurately retrieved information (See next page). \newpage
+We would expect the adversary advantage increasing from left to right, because a higher privacy budget indicates low noise. So, as a consequence the membership advantage should be higher.
+To get a clearer picture why this is not happening, we consider the \gls{tpr} for a better illustration of the behaviour (See next page). \newpage
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.75\textwidth}
         \begin{subfigure}[c]{1\textwidth}
             \caption{\textbf{Heatmap TPR for the kD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/seeds-dataset/tpr.png}
+            \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/seeds-dataset/tpr.png}
             \label{fig:privacy_tpr_seeds-dataset_adversial_advantage_kd-laplace}
         \end{subfigure}
         \vfill % vertical space
         \begin{subfigure}[c]{1\textwidth}
             \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for seeds-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/kd-laplace/piecewise/seeds-dataset/tpr.png}
+            \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/seeds-dataset/tpr.png}
             \label{fig:privacy_tpr_seeds-dataset_adversial_advantage_piecewise}
         \end{subfigure}
     \end{subfigure}
 \end{figure}
-When we examine the plot above, we see a different pattern. For Piecewise, the \gls{tpr} for privacy budgets from 0.5 to 2.5 is around 0.35, while that of nD-Laplace is around 0.45.
+When we examine the plot above, we see a similar pattern. But for Piecewise, the \gls{tpr} for privacy budgets are slightly lower for most of them.
 For higher privacy budgets, the \gls{tpr} for both increases to 0.65.
 From the \gls{tpr}, it can be inferred that a higher privacy budget indeed leaks more information.
 The dimensions have little impact on this, but for both mechanisms, it's observable that 2-dimensions have the highest \gls{tpr}, thereby leaking the most information.
@@ -397,41 +397,44 @@ The dimensions have little impact on this, but for both mechanisms, it's observa
   \begin{subfigure}[b]{0.75\textwidth}
     \begin{subfigure}[c]{1\textwidth}
       \caption{\textbf{Heatmap showing adversary advantage for the nD-Laplace mechanism, per privacy budget \& dimension for heart-dataset.}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/heart-dataset/shokri_mi_adv.png}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/heart-dataset/attack_adv.png}
       \label{fig:privacy_heart-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
     \vfill % vertical space
 
     \begin{subfigure}[c]{1\textwidth}
       \caption{\textbf{Heatmap showing adversary advantage for the Piecewise mechanism, per privacy budget \& dimension for heart-dataset.}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/heart-dataset/shokri_mi_adv.png}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/heart-dataset/attack_adv.png}
       \label{fig:privacy_heart-dataset_adversial_advantage_piecewise}
     \end{subfigure}
   \end{subfigure}
 \end{figure}
 For the nD-Laplace mechanism, there's little difference observed between the privacy budgets and dimensions. This is expected, as there's also minimal variation in the \gls{ami} score across different privacy budgets. However, a correlation can be seen between lower dimensions (2 / 3) and the impact of higher privacy budgets. For these dimensions, the adversary advantage is approximately 5 points lower than the other dimensions.
-With the Piecewise mechanism, a similar result is observed, but it's evident that higher dimensions (8 and 9) have an impact on privacy budgets ranging from 0.5 to 3. For 2-dimensions, the score also seems significantly higher than the rest.
-Although the adversary advantage in these heatmaps follows a somewhat more logical progression (increasing from left to right), we will also analyze the \gls{tpr} on the following page. 
+With the Piecewise mechanism, there is a different pattern. For 2-dimensional data, the membership advantage is the highest. When the amount of dimensions increases, the advantage decreases. Higher privacy budgets however seem to have a negative impact, as the advantage increases. This is what we would expect.
+Although the adversary advantage in these heatmaps follows a somewhat more logical progression for Piecewise (increasing from left to right), it still shows some weird results for nD-Laplace. Therefore we will analyze the \gls{tpr} on the following page. 
 \newpage
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.75\textwidth}
         \begin{subfigure}[c]{1\textwidth}
             \caption{\textbf{Heatmap TPR for the kD-Laplace mechanism, per privacy budget \& dimension for heart-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/heart-dataset/tpr.png}
+            \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/heart-dataset/tpr.png}
             \label{fig:privacy_tpr_heart-dataset_adversial_advantage_kd-laplace}
         \end{subfigure}
         \vfill % vertical space
 
         \begin{subfigure}[c]{1\textwidth}
             \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for heart-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/kd-laplace/piecewise/heart-dataset/tpr.png}
+            \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/heart-dataset/tpr.png}
             \label{fig:privacy_tpr_heart-dataset_adversial_advantage_piecewise}
         \end{subfigure}
     \end{subfigure}
 \end{figure}
-The Piecewise mechanism's \gls{tpr} results are very explicit and clear. 
-There is a 
+For the Piecewise mechanism, the results are clear and follow a similar pattern that we also saw with the membership advantage on the previous page.
+With the nD-Laplace mechanism, the results are quite varied. We see a slight influence of the privacy budget (0.5 is slightly lower compared to the rest), but overall, no major changes are noticeable.
+What stands out is the lower score (approximately 0.10 \gls{tpr}) for 3-dimensions compared to the rest.
+\todo[inline]{Why only 3-dimensions?}
+
 \newpage
 
 \subsection{Circle dataset}
@@ -440,38 +443,89 @@ There is a
   \begin{subfigure}[b]{0.85\textwidth}
     \begin{subfigure}[c]{1\textwidth}
       \caption{\textbf{Heatmap showing adversary advantage for the kD-Laplace mechanism, per privacy budget \& dimension for circle-dataset.}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/circle-dataset/shokri_mi_adv.png}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/circle-dataset/attack_adv.png}
       \label{fig:privacy_circle-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
     \vfill % vertical space
 
     \begin{subfigure}[c]{1\textwidth}
       \caption{\textbf{Heatmap showing adversary advantage for the Piecewise mechanism, per privacy budget \& dimension for seeds-dataset.}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/circle-dataset/shokri_mi_adv.png}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/circle-dataset/attack_adv.png}
       \label{fig:privacy_circle-dataset_adversial_advantage_piecewise}
     \end{subfigure}
   \end{subfigure}
 \end{figure}
+For the nD-Laplace mechanism, a pattern is visible that we have also seen in the other plots. The 2-dimensional data is relatively high compared to the other dimensions, and with a higher dimension, the membership advantage is actually lower instead of higher.
+The pattern of the Piecewise mechanism is mostly the same. However, on average, the membership advantage is slightly higher.
+It's notable that for 2 and 3 dimensions, the value is very low for epsilon 3 and 2, respectively.
+On the next page, we will also analyze the \gls{tpr} to get an underlying view of the results.
 
+\newpage
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.9\textwidth}
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap TPR for the nD-Laplace mechanism, per privacy budget \& dimension for Circle-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/circle-dataset/tpr.png}
+            \label{fig:privacy_tpr_circle-dataset_adversial_advantage_kd-laplace}
+        \end{subfigure}
+        \vfill % vertical space
+
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for Circle-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/circle-dataset/tpr.png}
+            \label{fig:privacy_tpr_circle-dataset_adversial_advantage_piecewise}
+        \end{subfigure}
+    \end{subfigure}
+\end{figure}
+For the nD-Laplace mechanism, it's again evident that the privacy budgets and dimensions influence the \gls{tpr}. The 2-dimensional data leaks more information than the 3-dimensional data. The same pattern is visible for the Piecewise mechanism, although the \gls{tpr} in this case is on average 0.10 higher compared to the nD-Laplace mechanism.
+Given the \gls{ami} score, this makes sense since the Piecewise mechanism scored much higher (meaning: it's more similar to the original) than the nD-Laplace mechanism. Thus, the information leakage of the real data is higher.
+{\todo[inline]{Why is 2-dimensional so much higher?}}
 \newpage
 \subsection{Line dataset}
 \begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.85\textwidth}
+  \begin{subfigure}[b]{0.80\textwidth}
     \begin{subfigure}[c]{1\textwidth}
       \caption{\textbf{Heatmap showing adversary advantage for the kD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/line-dataset/shokri_mi_adv.png}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/line-dataset/attack_adv.png}
       \label{fig:privacy_line-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
     \vfill % vertical space
 
     \begin{subfigure}[c]{1\textwidth}
       \caption{\textbf{Heatmap showing adversary advantage for the Piecewise mechanism, per privacy budget \& dimension for seeds-dataset.}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/line-dataset/shokri_mi_adv.png}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/line-dataset/attack_adv.png}
       \label{fig:privacy_line-dataset_adversial_advantage_piecewise}
     \end{subfigure}
   \end{subfigure}
 \end{figure}
+The nD-Laplace mechanism shows similar results to what we've seen before from the other membership advantage scores. Notably here, the 2-dimensional data scores better (lower) this time than the 3-dimensional data. Whereas in the other plots, the 2-dimensional data leaked a lot of information.
+The Piecewise mechanism does show a slightly higher membership advantage for 2-dimensional data.
+In general, we again see the pattern that the membership advantage is higher for the lower privacy budgets, even though we expected the opposite.
+\todo[inline]{Analyze why 2-dimensional data performs better this time}.
+Therefore, we will also look at the \gls{tpr} on the next page again to get a better understanding of the underlying information.
+\newpage
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.9\textwidth}
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap TPR for the kD-Laplace mechanism, per privacy budget \& dimension for line-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/line-dataset/tpr.png}
+            \label{fig:privacy_tpr_line-dataset_adversial_advantage_kd-laplace}
+        \end{subfigure}
+        \vfill % vertical space
+
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for line-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/line-dataset/tpr.png}
+            \label{fig:privacy_tpr_line-dataset_adversial_advantage_piecewise}
+        \end{subfigure}
+    \end{subfigure}
+\end{figure}
+The heatmaps above show a similar result to the other plots, where there is a logical progression of a low membership advantage for lower privacy budgets and, on the other hand, a higher one for higher privacy budgets.
+The nD-Laplace scores a lower membership advantage, which is consistent with the \gls{ami} score that is also low.
+The reason the \gls{tpr} is higher than, for example, the circle-dataset, is because the Piecewise mechanism is good at preserving the shape of the line-data \ref{fig:validation-Line-dataset_comparison_2d-laplace}.}. 
 \newpage
 \subsection{Skewed dataset}
 \begin{figure}[H]
@@ -479,14 +533,14 @@ There is a
   \begin{subfigure}[b]{0.85\textwidth}
     \begin{subfigure}[c]{1\textwidth}
       \caption{\textbf{Heatmap showing adversary advantage for the kD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/skewed-dataset/shokri_mi_adv.png}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/skewed-dataset/attack_adv.png}
       \label{fig:privacy_skewed-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
     \vfill % vertical space
 
     \begin{subfigure}[c]{1\textwidth}
       \caption{\textbf{Heatmap showing adversary advantage for the Piecewise mechanism, per privacy budget \& dimension for seeds-dataset.}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/skewed-dataset/shokri_mi_adv.png}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/skewed-dataset/attack_adv.png}
       \label{fig:privacy_skewed-dataset_adversial_advantage_piecewise}
     \end{subfigure}
   \end{subfigure}
@@ -507,7 +561,7 @@ We are most interested in the utility and performance, and to compare them, we o
     \includegraphics[width=1\textwidth]{Results/nd-laplace/ami_seeds-dataset_comparison.png}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
-    \includegraphics[width=1\textwidth]{Results/nd-laplace/shokri_mi_adv_seeds-dataset_comparison.png}
+    \includegraphics[width=1\textwidth]{Results/nd-laplace/attack_adv_seeds-dataset_comparison.png}
   \end{subfigure}
   \caption{Average AMI (top) and Adversary Advantage (bottom) comparison for each mechanism for seeds-dataset (8 dimensions).}
   \label{fig:utility_seeds-dataset_comparison_nd_plot}
@@ -525,7 +579,7 @@ We are most interested in the utility and performance, and to compare them, we o
     \includegraphics[width=1\textwidth]{Results/nd-laplace/ami_heart-dataset_comparison.png}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
-    \includegraphics[width=1\textwidth]{Results/nd-laplace/shokri_mi_adv_heart-dataset_comparison.png}
+    \includegraphics[width=1\textwidth]{Results/nd-laplace/attack_adv_heart-dataset_comparison.png}
   \end{subfigure}
   \caption{Average AMI (top) and Adversary Advantage (bottom) comparison for each mechanism for heart-dataset (10 dimensions).}
   \label{fig:utility_heart-dataset_comparison_nd_plot}
@@ -544,7 +598,7 @@ We are most interested in the utility and performance, and to compare them, we o
     \includegraphics[width=1\textwidth]{Results/nd-laplace/ami_circle-dataset_comparison.png}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
-    \includegraphics[width=1\textwidth]{Results/nd-laplace/shokri_mi_adv_circle-dataset_comparison.png}
+    \includegraphics[width=1\textwidth]{Results/nd-laplace/attack_adv_circle-dataset_comparison.png}
   \end{subfigure}
   \caption{Average AMI (top) and Adversary Advantage (bottom) comparison for each mechanism for circle-dataset (3 dimensions).}
   \label{fig:utility_circle-dataset_comparison_nd_plot}
@@ -561,7 +615,7 @@ We are most interested in the utility and performance, and to compare them, we o
     \includegraphics[width=1\textwidth]{Results/nd-laplace/ami_skewed-dataset_comparison.png}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
-    \includegraphics[width=1\textwidth]{Results/nd-laplace/shokri_mi_adv_skewed-dataset_comparison.png}
+    \includegraphics[width=1\textwidth]{Results/nd-laplace/attack_adv_skewed-dataset_comparison.png}
   \end{subfigure}
   \caption{Average AMI (top) and Adversary Advantage (bottom) comparison for each mechanism for skewed-dataset (3 dimensions).}
   \label{fig:utility_skewed-dataset_comparison_nd_plot}
@@ -580,7 +634,7 @@ We are most interested in the utility and performance, and to compare them, we o
     \includegraphics[width=1\textwidth]{Results/nd-laplace/ami_line-dataset_comparison.png}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
-    \includegraphics[width=1\textwidth]{Results/nd-laplace/shokri_mi_adv_line-dataset_comparison.png}
+    \includegraphics[width=1\textwidth]{Results/nd-laplace/attack_adv_line-dataset_comparison.png}
   \end{subfigure}
   \caption{Average AMI (top) and Adversary Advantage (bottom) comparison for each mechanism for line-dataset (3 dimensions).}
   \label{fig:utility_line-dataset_comparison_nd_plot}
