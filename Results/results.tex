@@ -1,39 +1,39 @@
 \chapter{Results}
 This chapter aims to present the results to the reader.
-As indicated in the methodology, we tested four mechanisms (three variants of kd-Laplace and Piecewise) for their utility and privacy.
+As indicated in the methodology, we tested four mechanisms (three variants of nD-Laplace and Piecewise) for their utility and privacy.
 \begin{enumerate}
-  \item Cluster utility: Visualise the utility of kD-Laplace and Piecewise for 2/3/n-dimensional data.
+  \item Cluster utility: Visualise the utility of nD-Laplace and Piecewise for 2/3/n-dimensional data.
         The results are displayed using a line diagram, using \gls{ami} and \gls{sc}.
-  \item Mechanism utility: Visualise the utility of kD-Laplace and Piecewise using a heatmap plot.
+  \item Mechanism utility: Visualise the utility of nD-Laplace and Piecewise using a heatmap plot.
         The results for each dimension and privacy budget are provided for only the \gls{ami} score.
-  \item Mechanism privacy: Visualise the privacy of kD-Laplace and Piecewise using a heatmap plot.
+  \item Mechanism privacy: Visualise the privacy of nD-Laplace and Piecewise using a heatmap plot.
         The results for each dimension and privacy budget are provided for only the adversary advantage and privacy distance.
-  \item Mechanism comparison: Visualise the comparison between the variants of kD-Laplace and Piecewise.
+  \item Mechanism comparison: Visualise the comparison between the variants of nD-Laplace and Piecewise.
         The results for each mechanism \& variant are provided using a bar-plot for the \gls{ami} score (utility) and the adversary advantage (privacy).
 \end{enumerate}
 All results are reported for each dataset (See methodology: \ref{datasets-section}) separately.
 \section{Cluster utility}
-The results below display the difference in external and internal utility for the three clustering algorithms using the kd-Laplace and Piecewise mechanisms.
+The results below display the difference in external and internal utility for the three clustering algorithms using the nD-Laplace and Piecewise mechanisms.
 The x-axis shows the privacy budget, and the y-axis shows the \gls{ami}.
-Please refer to the plots in the appendix for the same scores for kD-Laplace variants (See \ref{appendix:results-mechanism-utility}).
+Please refer to the plots in the appendix for the same scores for nD-Laplace variants (See \ref{appendix:results-mechanism-utility}).
 \newpage
 \subsection{2-dimensional data}
 \begin{figure}[H]
   \centering
-  \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewise mechanisms for the 2-dimensional data seeds-dataset}}
+  \caption{\textbf{AMI (top) and SC (bottom) for the nD-Laplace and Piecewise mechanisms for the 2-dimensional data seeds-dataset}}
   \includegraphics[width=0.8\textwidth]{Results/nd-laplace/nd-Laplace/seeds-dataset/ami-and-sc_2_dimensions.png}
 
   \label{fig:validation-seeds-dataset_comparison_2d-laplace}
 \end{figure}
-%The above plots show the AMI and ARI scores for the seeds-dataset with kd-laplace/grid/optimal (left-side) and piecewise (right-side).
+%The above plots show the AMI and ARI scores for the seeds-dataset with nD-Laplace/grid/optimal (left-side) and piecewise (right-side).
 The Piecewise mechanism excels in Adjusted Mutual Information (\gls{ami}) at a privacy budget (epsilon) of 9, while the nd-Laplace mechanism is superior for other epsilon values. K-Means consistently outperforms other clustering algorithms, though only marginally over \gls{ag}, and both yield similar silhouette coefficient (\gls{sc}) scores. The under performance of the OPTICS algorithm across both mechanisms, comparable only to the AP algorithm under Piecewise, suggests its potential limitations in these configurations.
 \newpage
 The plot shows that nD-Laplace performs better for lower epsilons. Which is likely due to the mechanism also considering the shape (distance) of the data, so the Piecewise mechanism proportionally adds more noise. But, then we would expect OPTICS to score better. Therefore, we visualize this behaviour:
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{Discussion/behaviour-2d-seeds-dataset&optics.png}
-    \caption{Evaluating OPTICS for seeds-dataset 2-dimensional data (epsilon 9)}
-    \label{fig:evaluate-optics-seeds-dataset-2d-9eps}
+  \centering
+  \includegraphics[width=1\linewidth]{Discussion/behaviour-2d-seeds-dataset&optics.png}
+  \caption{Evaluating OPTICS for seeds-dataset 2-dimensional data (epsilon 9)}
+  \label{fig:evaluate-optics-seeds-dataset-2d-9eps}
 \end{figure}
 The plot above illustrates the kernel density of core points chosen by the OPTICS algorithm for data with an epsilon value of 9. Clusters within the Plain and Piecewise datasets are compact and exhibit linear alignment, suggesting a distinct data distribution or directional noise stemming from the Piecewise mechanism. Conversely, the nD-Laplace clusters are more scattered, indicating that its noise impacts data uniformly across all directions.
 
@@ -48,14 +48,14 @@ Furthermore, the noise level is concerning. According to Schubert et al. (2017) 
 
   \label{fig:validation-heart-dataset_comparison_2d-laplace}
 \end{figure}
-Using the K-Means method, the nD-Laplace system works better for all epsilon values. For other methods, the results between the two privacy systems are mostly the same. But, nD-Laplace often does a bit better in \gls{ami} scores. If we compare \gls{optics} with the previous section, we see large improvements. 
+Using the K-Means method, the nD-Laplace system works better for all epsilon values. For other methods, the results between the two privacy systems are mostly the same. But, nD-Laplace often does a bit better in \gls{ami} scores. If we compare \gls{optics} with the previous section, we see large improvements.
 When looking at \gls{sc}, both the grouped and K-Means methods do the best for both privacy systems. This is true for most methods. This \gls{ami} score trend matches what we saw with the OPTICS method earlier.
 
 The trends observed in these charts closely mirror those from the seeds-dataset. However, the outcomes here are more consistent. Remarkably, OPTICS stands out in its performance. This can be attributed to the data's configuration. As depicted in Figure \ref{fig:evaluate-optics-seeds-dataset-2d-9eps}, there's a pronounced spread in the nD-Laplace data, similar to the heart-dataset. When data is inherently well-separated, nD-Laplace excels, explaining the strong performance of both Agglomerative and K-Means clustering. This observation is further supported by the \gls{sc}, which aligns closely with the baseline score of K-Means.
 \newpage
 \begin{figure}[H]
   \centering
-  \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace mechanism for the 2-dimensional data circle-dataset}}
+  \caption{\textbf{AMI (top) and SC (bottom) for the nD-Laplace mechanism for the 2-dimensional data circle-dataset}}
   \includegraphics[width=0.9\textwidth]{Results/nd-laplace/nd-Laplace/circle-dataset/ami-and-sc_2_dimensions.png}
   \label{fig:validation-circle-dataset_comparison_2d-laplace}
 \end{figure}
@@ -66,22 +66,22 @@ If there is a thiner line of data, the spread of the data is important. Piecewis
 \newpage
 \begin{figure}[H]
   \centering
-  \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewise mechanisms for the 2-dimensional data line-dataset}}
+  \caption{\textbf{AMI (top) and SC (bottom) for the nD-Laplace and Piecewise mechanisms for the 2-dimensional data line-dataset}}
   \includegraphics[width=0.9\textwidth]{Results/nd-laplace/nd-Laplace/line-dataset/ami-and-sc_2_dimensions.png}
   \label{fig:validation-line-dataset_comparison_2d-laplace}
 \end{figure}
 The nD-Laplace algorithm performs best with a privacy budget of 9 for K-Means (\gls{ami} 0.55 - 0.6).
 \gls{ag} performs slightly worse with a budget of 9 (\gls{ami} 0.4).
 Piecewise outperforms other methods, scoring 0.83 \gls{ami} for K-Means at budget 9 and better for different budgets, .
-For \gls{sc}, the mechanisms have similar scores, with Piecewise at baseline from budget 5, kD-Laplace at 7, and \gls{ag} beyond baseline from budget 9. 
+For \gls{sc}, the mechanisms have similar scores, with Piecewise at baseline from budget 5, nD-Laplace at 7, and \gls{ag} beyond baseline from budget 9.
 
 Overall, the trends observed with the heart-dataset are not mirrored here. The Piecewise mechanism consistently outperforms nD-Laplace across nearly all privacy budgets. Given that the shapes of the line-dataset and seeds-dataset are expected to be analogous, we further illustrate this with the subsequent plot:
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=1\linewidth]{Discussion/behaviour-2d-line-dataset&optics.png}
-\caption{Evaluating OPTICS and density of points for 2-dimensional Line dataset with epsilon 9}
-\label{fig:validation-Line-dataset_comparison_2d-laplace}
+  \centering
+  \includegraphics[width=1\linewidth]{Discussion/behaviour-2d-line-dataset&optics.png}
+  \caption{Evaluating OPTICS and density of points for 2-dimensional Line dataset with epsilon 9}
+  \label{fig:validation-Line-dataset_comparison_2d-laplace}
 \end{figure}
 
 The plot above displays the \gls{optics} scores, denoted by black markers. Even though the data bears resemblance to the seeds-dataset, the dispersion is significantly greater for the nD-Laplace mechanism. This can be attributed to the line shape of the data, as the nD-Laplace mechanism disperses noise uniformly in all directions. However, the extent of this dispersion is notably greater than that observed in the seeds-dataset, leading to inferior results.
@@ -90,7 +90,7 @@ The plot above displays the \gls{optics} scores, denoted by black markers. Even 
 \newpage
 \begin{figure}[H]
   \centering
-  \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewise mechanisms for the 2-dimensional data skewed-dataset}}
+  \caption{\textbf{AMI (top) and SC (bottom) for the nD-Laplace and Piecewise mechanisms for the 2-dimensional data skewed-dataset}}
   \includegraphics[width=0.9\textwidth]{Results/nd-laplace/nd-Laplace/skewed-dataset/ami-and-sc_2_dimensions.png}
   \label{fig:validation-skewed-dataset_comparison_2d-laplace}
 \end{figure}
@@ -100,7 +100,7 @@ In our analysis, the nD-Laplace mechanism exhibits its peak performance when pai
 \subsection{3-dimensional data}
 \begin{figure}[H]
   \centering
-  \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewse mechanisms for the 3-dimensional data seeds-dataset}}
+  \caption{\textbf{AMI (top) and SC (bottom) for the nD-Laplace and Piecewse mechanisms for the 3-dimensional data seeds-dataset}}
   \includegraphics[width=0.9\textwidth]{Results/nd-laplace/nd-Laplace/seeds-dataset/ami-and-sc_3_dimensions.png}
   \label{fig:validation-seeds-dataset_comparison_3d-laplace}
 \end{figure}
@@ -114,7 +114,7 @@ In other visual representations, both \gls{ami} and \gls{sc} metrics exhibit com
 \begin{figure}[H]
   \centering
 
-  \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewise mechanisms for the 3-dimensional data heart-dataset}}
+  \caption{\textbf{AMI (top) and SC (bottom) for the nD-Laplace and Piecewise mechanisms for the 3-dimensional data heart-dataset}}
   \includegraphics[width=0.9\textwidth]{Results/nd-laplace/nd-Laplace/heart-dataset/ami-and-sc_3_dimensions.png}
   \label{fig:validation-heart-dataset_comparison_3d-laplace}
 \end{figure}
@@ -127,7 +127,7 @@ Even though \gls{optics} gets high scores for \gls{ami}, it doesn't do as well f
 \begin{figure}[H]
   \centering
 
-  \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewise mechanisms for the 3-dimensional data circle-dataset}}
+  \caption{\textbf{AMI (top) and SC (bottom) for the nD-Laplace and Piecewise mechanisms for the 3-dimensional data circle-dataset}}
   \includegraphics[width=0.9\textwidth]{Results/nd-laplace/nd-Laplace/circle-dataset/ami-and-sc_3_dimensions.png}
 
   \label{fig:validation-circle-dataset_comparison_3d-laplace}
@@ -137,13 +137,13 @@ The nD-Laplace mechanism excels with K-Means, achieving a peak score of 0.33 \gl
 \newpage
 \begin{figure}[H]
   \centering
-  \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewise mechanisms for the 3-dimensional data line-dataset}}
+  \caption{\textbf{AMI (top) and SC (bottom) for the nD-Laplace and Piecewise mechanisms for the 3-dimensional data line-dataset}}
   \includegraphics[width=0.9\textwidth]{Results/nd-laplace/nd-Laplace/line-dataset/ami-and-sc_3_dimensions.png}
   \label{fig:validation-line-dataset_comparison_3d-laplace}
 \end{figure}
 The scores in this plot closely resemble those from the previous one. With nD-Laplace, both K-Means and \gls{ag} lead the pack, though neither surpasses 0.6 \gls{ami}. Notably, \gls{optics} doesn't score at all.
 The Piecewise mechanism outperforms nD-Laplace, reaching 0.86 \gls{ami} for privacy budgets at levels 7 and 9. In this scenario, \gls{ag} follows but with notably lower scores: 0.6 and 0.78 \gls{ami} for epsilon 7 and 9, respectively. While \gls{optics} remains a weaker performer across both mechanisms, it does exhibit a positive trajectory with the Piecewise mechanism.
-Comparing these findings to the prior set, there are subtle variations in the \gls{sc} metric. Specifically, K-Means and \gls{ag} display a broader range of results, spanning from 0.2 to 0.6. 
+Comparing these findings to the prior set, there are subtle variations in the \gls{sc} metric. Specifically, K-Means and \gls{ag} display a broader range of results, spanning from 0.2 to 0.6.
 \newpage
 \begin{figure}[H]
   \centering
@@ -164,7 +164,7 @@ From the results, it's evident that we see a similar trend in outcomes as with t
 \begin{figure}[H]
   \centering
 
-  \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewise mechanisms for the n-dimensional data seeds-dataset}}
+  \caption{\textbf{AMI (top) and SC (bottom) for the nD-Laplace and Piecewise mechanisms for the n-dimensional data seeds-dataset}}
   \includegraphics[width=0.9\textwidth]{Results/nd-laplace/nd-Laplace/seeds-dataset/ami-and-sc_7_dimensions.png}
 
   \label{fig:validation-seeds-dataset_comparison_nd-laplace}
@@ -173,7 +173,7 @@ For n-dimensional data, we observe that nD-Laplace consistently scores high from
 
 The Piecewise mechanism only starts to show comparable results from a privacy budget of 5. From that point on, the results for K-Means and \gls{ag} are almost identical. For \gls{optics}, Piecewise scores slightly higher at a privacy budget of 9, but for the other privacy budgets, nD-Laplace performs better.
 
-For \gls{sc}, we see a bit more variation between the mechanisms than with the other dimensions. Also, The trend of \gls{sc} seems more similar to that of \gls{ami} than what we've observed in other dimensions. 
+For \gls{sc}, we see a bit more variation between the mechanisms than with the other dimensions. Also, The trend of \gls{sc} seems more similar to that of \gls{ami} than what we've observed in other dimensions.
 Looking at the scores, the nD-Laplace mechanism scores below the baseline from privacy budgets 0.5 to 7 but matches the scores for K-Means and \gls{ag} afterward. For nD-Laplace, \gls{optics} starts at 0.2 \gls{sc}, but then drops below 0. The Piecewise mechanism remains below 0 for \gls{optics} across all privacy budgets.
 
 Something notable occurs for the privacy budget of 2.5, as \gls{optics} peaks at 2.5. We would only expect this at a privacy budget of 9 when less noise has been added.
@@ -182,7 +182,7 @@ Something notable occurs for the privacy budget of 2.5, as \gls{optics} peaks at
 \begin{figure}[H]
   \centering
 
-  \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewise mechanisms for the n-dimensional data heart-dataset}}
+  \caption{\textbf{AMI (top) and SC (bottom) for the nD-Laplace and Piecewise mechanisms for the n-dimensional data heart-dataset}}
   \includegraphics[width=0.9\textwidth]{Results/nd-laplace/nd-Laplace/heart-dataset/ami-and-sc_9_dimensions.png}
 
   \label{fig:validation-heart-dataset_comparison_nd-laplace}
@@ -217,7 +217,7 @@ Please refer to the plots in the appendix for:
   \centering
   \begin{subfigure}[b]{0.8\textwidth}
     \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Adjusted Mutual Information comparison for the kd-Laplace mechanism}}
+      \caption{\textbf{Adjusted Mutual Information comparison for the nD-Laplace mechanism}}
       \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/seeds-dataset/ami.png}
       \label{fig:ami_seeds-dataset_comparison_kdlaplace_2d}
     \end{subfigure}
@@ -228,7 +228,7 @@ Please refer to the plots in the appendix for:
       \label{fig:ami_seeds-dataset_comparison_piecewise_2d}
     \end{subfigure}
   \end{subfigure}
-  
+
 \end{figure}
 For the heatmaps, we observe a similar pattern, which was also evident in the cluster analysis. Specifically, nD-Laplace consistently scores well from lower epsilons, while Piecewise only starts to perform well from a privacy budget of 3.
 For nD-Laplace, the number of dimensions influences the score. The implementation of 3D-Laplace, in particular, scores relatively low. From 4 dimensions onward, we notice an increase in the \gls{ami}, especially in combination with an increasing privacy budget.
@@ -243,7 +243,7 @@ For nD-Laplace, the dimensions can significantly influence the improved result b
   \centering
   \begin{subfigure}[b]{0.80\textwidth}
     \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Adjusted Mutual Information comparison for the kd-Laplace mechanism}}
+      \caption{\textbf{Adjusted Mutual Information comparison for the nD-Laplace mechanism}}
       \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/heart-dataset/ami.png}
       \label{fig:ami_heart-dataset_comparison_kdlaplace_2d}
     \end{subfigure}
@@ -261,79 +261,79 @@ The Piecewise mechanism scores low for privacy budgets between 0.5 and 3. Notabl
 \todo[inline]{Why are the 4 / 5 dimensions worse?}
 \newpage
 \mycomment{
-\subsection{Circle-dataset}
-\begin{figure}[H]
-  \centering
-  \begin{subfigure}[b]{0.8\textwidth}
-    \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Adjusted Mutual Information comparison for the kd-Laplace mechanism}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/circle-dataset/ami.png}
-      \label{fig:ami_circle-dataset_comparison_kdlaplace_2d}
+  \subsection{Circle-dataset}
+  \begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.8\textwidth}
+      \begin{subfigure}[c]{1\textwidth}
+        \caption{\textbf{Adjusted Mutual Information comparison for the nD-Laplace mechanism}}
+        \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/circle-dataset/ami.png}
+        \label{fig:ami_circle-dataset_comparison_kdlaplace_2d}
+      \end{subfigure}
+      \vfill % vertical space
+      \begin{subfigure}[c]{1\textwidth}
+        \caption{\textbf{Adjusted Mutual Information comparison for the Piecewise mechanism}}
+        \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/circle-dataset/ami.png}
+        \label{fig:ami_circle-dataset_comparison_piecewise_2d}
+      \end{subfigure}
     \end{subfigure}
-    \vfill % vertical space
-    \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Adjusted Mutual Information comparison for the Piecewise mechanism}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/circle-dataset/ami.png}
-      \label{fig:ami_circle-dataset_comparison_piecewise_2d}
-    \end{subfigure}
-  \end{subfigure}
-\end{figure}
+  \end{figure}
 
-\newpage
-\subsection{Line-dataset}
-\begin{figure}[H]
-  \centering
-  \begin{subfigure}[b]{0.85\textwidth}
-    \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Adjusted Mutual Information comparison for the kd-Laplace mechanism}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/line-dataset/ami.png}
-      \label{fig:ami_line-dataset_comparison_kdlaplace_2d}
+  \newpage
+  \subsection{Line-dataset}
+  \begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.85\textwidth}
+      \begin{subfigure}[c]{1\textwidth}
+        \caption{\textbf{Adjusted Mutual Information comparison for the nD-Laplace mechanism}}
+        \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/line-dataset/ami.png}
+        \label{fig:ami_line-dataset_comparison_kdlaplace_2d}
+      \end{subfigure}
+      \vfill % vertical space
+      \begin{subfigure}[c]{1\textwidth}
+        \caption{\textbf{Adjusted Mutual Information comparison for the Piecewise mechanism}}
+        \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/line-dataset/ami.png}
+        \label{fig:ami_line-dataset_comparison_piecewise_2d}
+      \end{subfigure}
     \end{subfigure}
-    \vfill % vertical space
-    \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Adjusted Mutual Information comparison for the Piecewise mechanism}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/line-dataset/ami.png}
-      \label{fig:ami_line-dataset_comparison_piecewise_2d}
-    \end{subfigure}
-  \end{subfigure}
-\end{figure}
-Up to privacy budget 3.5, the scores remain relatively similar for both mechanisms, but after that, they become better for Piecewise.
+  \end{figure}
+  Up to privacy budget 3.5, the scores remain relatively similar for both mechanisms, but after that, they become better for Piecewise.
 
-For kD-Laplace, the highest score is 0.63 \gls{ami} for privacy budget 9. For privacy budgets 5 and 7, the score is around 0.5 - 0.55. After that, the scores are no higher than 0.37.
+  For nD-Laplace, the highest score is 0.63 \gls{ami} for privacy budget 9. For privacy budgets 5 and 7, the score is around 0.5 - 0.55. After that, the scores are no higher than 0.37.
 
-Piecewise performs better, with a maximum of 0.90 \gls{ami} for privacy budget 9 for 2 dimensions. For both mechanisms, the dimensions do not significantly impact the score.
-\newpage
-\subsection{Skewed-dataset}
-\begin{figure}[H]
-  \centering
-  \begin{subfigure}[b]{0.85\textwidth}
-    \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Adjusted Mutual Information comparison for the kd-Laplace mechanism}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/skewed-dataset/ami.png}
-      \label{fig:ami_skewed-dataset_comparison_kdlaplace_2d}
+  Piecewise performs better, with a maximum of 0.90 \gls{ami} for privacy budget 9 for 2 dimensions. For both mechanisms, the dimensions do not significantly impact the score.
+  \newpage
+  \subsection{Skewed-dataset}
+  \begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.85\textwidth}
+      \begin{subfigure}[c]{1\textwidth}
+        \caption{\textbf{Adjusted Mutual Information comparison for the nD-Laplace mechanism}}
+        \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/skewed-dataset/ami.png}
+        \label{fig:ami_skewed-dataset_comparison_kdlaplace_2d}
+      \end{subfigure}
+      \vfill % vertical space
+      \begin{subfigure}[c]{1\textwidth}
+        \caption{\textbf{Adjusted Mutual Information comparison for the Piecewise mechanism}}
+        \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/skewed-dataset/ami.png}
+        \label{fig:ami_skewed-dataset_comparison_piecewise_2d}
+      \end{subfigure}
     \end{subfigure}
-    \vfill % vertical space
-    \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Adjusted Mutual Information comparison for the Piecewise mechanism}}
-      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/skewed-dataset/ami.png}
-      \label{fig:ami_skewed-dataset_comparison_piecewise_2d}
-    \end{subfigure}
-  \end{subfigure}
-\end{figure}
-The kD-Laplace mechanism performs slightly better from privacy budgets 2 to 5. However, Piecewise performs significantly better after that, achieving around 0.73 and 0.85 \gls{ami} for privacy budgets 7 and 9, respectively.
+  \end{figure}
+  The nD-Laplace mechanism performs slightly better from privacy budgets 2 to 5. However, Piecewise performs significantly better after that, achieving around 0.73 and 0.85 \gls{ami} for privacy budgets 7 and 9, respectively.
 
-In contrast, kD-Laplace scores much lower in this range. Furthermore, it appears that the dimensions do not significantly impact the performance of the mechanisms in this context.
-\newpage
+  In contrast, nD-Laplace scores much lower in this range. Furthermore, it appears that the dimensions do not significantly impact the performance of the mechanisms in this context.
+  \newpage
 }
 
 \section{Privacy}
 The sections below present a heatmap comparison of the nd-Laplace and Piecewise mechanisms.
-We employed a heatmap to simultaneously depict the privacy budget (epsilon), the number of dimensions, and a specific metric. The metrics we use for this are the Membership advantage, \gls{tpr} and privacy distance. 
+We employed a heatmap to simultaneously depict the privacy budget (epsilon), the number of dimensions, and a specific metric. The metrics we use for this are the Membership advantage, \gls{tpr} and privacy distance.
 
 On the heatmap, the x-axis represents the privacy budget, while the y-axis illustrates the number of dimensions. Each cell of the heatmap displays the specific metric value. The intensity of the cell's color corresponds to the \gls{ami} score: a darker shade signifies a higher score:
 \begin{enumerate}
-    \item  For the membership advantage and \gls{tpr}, a lighter cell color (lower value) indicates a better score.
-    \item For the privacy distance, the opposite is true; if the cell color is dark (high value), it provides more distance and thus more privacy.
+  \item  For the membership advantage and \gls{tpr}, a lighter cell color (lower value) indicates a better score.
+  \item For the privacy distance, the opposite is true; if the cell color is dark (high value), it provides more distance and thus more privacy.
 \end{enumerate}
 %The images below display bar plots for the membership advantage and TPR of membership inference attacks as described in the methodology.
 %We use the same color scheme in the previous section to display the different mechanisms.
@@ -344,7 +344,7 @@ On the heatmap, the x-axis represents the privacy budget, while the y-axis illus
   \centering
   \begin{subfigure}[b]{0.75\textwidth}
     \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Heatmap showing membership advantage for the kD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
+      \caption{\textbf{Heatmap showing membership advantage for the nD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
       \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/seeds-dataset/attack_adv.png}
       \label{fig:privacy_seeds-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
@@ -361,20 +361,20 @@ When evaluating the mechanisms, it's evident that nD-Laplace consistently achiev
 
 The membership advantage provides valuable insights into the privacy attributes of the Piecewise mechanism. However, given the inconsistent outcomes associated with nD-Laplace, a more refined metric is warranted. As such, we'll delve into the \gls{tpr} to offer a clearer depiction of the mechanisms' behaviors (details on the subsequent page).\newpage
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.75\textwidth}
-        \begin{subfigure}[c]{1\textwidth}
-            \caption{\textbf{Heatmap TPR for the kD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/seeds-dataset/tpr.png}
-            \label{fig:privacy_tpr_seeds-dataset_adversial_advantage_kd-laplace}
-        \end{subfigure}
-        \vfill % vertical space
-        \begin{subfigure}[c]{1\textwidth}
-            \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for seeds-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/seeds-dataset/tpr.png}
-            \label{fig:privacy_tpr_seeds-dataset_adversial_advantage_piecewise}
-        \end{subfigure}
+  \centering
+  \begin{subfigure}[b]{0.75\textwidth}
+    \begin{subfigure}[c]{1\textwidth}
+      \caption{\textbf{Heatmap TPR for the nD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/seeds-dataset/tpr.png}
+      \label{fig:privacy_tpr_seeds-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
+    \vfill % vertical space
+    \begin{subfigure}[c]{1\textwidth}
+      \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for seeds-dataset.}}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/seeds-dataset/tpr.png}
+      \label{fig:privacy_tpr_seeds-dataset_adversial_advantage_piecewise}
+    \end{subfigure}
+  \end{subfigure}
 \end{figure}
 The top result displays a more stable outcome for the nD-Laplace mechanism. There's a clear progression from light to dark as the privacy budget increases. The number of dimensions doesn't seem to have a significant influence; however, it's noteworthy that the 2-dimensional data scores higher for lower privacy budgets. The Piecewise mechanism exhibits a similar pattern, but there's a peculiar observation in the bottom left corner. The low membership advantages (ranging from -0.50 to 0.70) aren't as promising as they initially appear. Given that the \gls{tpr} is quite high, it highlights the limitations of the membership advantage metric. A high \gls{tpr} (and consequently a low \gls{fpr}) can distort the actual representation.
 
@@ -404,21 +404,21 @@ In contrast, the Piecewise mechanism displays a distinct pattern. The membership
 While the adversary advantage in the heatmaps for the Piecewise mechanism logically increases from left to right, the nD-Laplace mechanism still presents some inconsistencies. To gain a clearer understanding, we'll delve into the \gls{tpr} on the subsequent page.
 \newpage
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.75\textwidth}
-        \begin{subfigure}[c]{1\textwidth}
-            \caption{\textbf{Heatmap TPR for the kD-Laplace mechanism, per privacy budget \& dimension for heart-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/heart-dataset/tpr.png}
-            \label{fig:privacy_tpr_heart-dataset_adversial_advantage_kd-laplace}
-        \end{subfigure}
-        \vfill % vertical space
-
-        \begin{subfigure}[c]{1\textwidth}
-            \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for heart-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/heart-dataset/tpr.png}
-            \label{fig:privacy_tpr_heart-dataset_adversial_advantage_piecewise}
-        \end{subfigure}
+  \centering
+  \begin{subfigure}[b]{0.75\textwidth}
+    \begin{subfigure}[c]{1\textwidth}
+      \caption{\textbf{Heatmap TPR for the nD-Laplace mechanism, per privacy budget \& dimension for heart-dataset.}}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/heart-dataset/tpr.png}
+      \label{fig:privacy_tpr_heart-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
+    \vfill % vertical space
+
+    \begin{subfigure}[c]{1\textwidth}
+      \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for heart-dataset.}}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/heart-dataset/tpr.png}
+      \label{fig:privacy_tpr_heart-dataset_adversial_advantage_piecewise}
+    \end{subfigure}
+  \end{subfigure}
 \end{figure}
 For the Piecewise mechanism, the results are straightforward, mirroring the pattern observed with the membership advantage on the preceding page. While the bottom-left corner deviates slightly from the membership advantage, it's not strikingly irregular. As anticipated, the \gls{tpr} rises with an increasing privacy budget. Dimensionality doesn't significantly impact this, though the 2-dimensional data stands out with a notably higher value. \todo[inline]{Investigate the impact of mi on 2-dimensional data}.
 
@@ -431,7 +431,7 @@ Overall, Piecewise shows a higher privacy in comparison to nD-Laplace. This is i
   \centering
   \begin{subfigure}[b]{0.85\textwidth}
     \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Heatmap showing adversary advantage for the kD-Laplace mechanism, per privacy budget \& dimension for circle-dataset.}}
+      \caption{\textbf{Heatmap showing adversary advantage for the nD-Laplace mechanism, per privacy budget \& dimension for circle-dataset.}}
       \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/circle-dataset/attack_adv.png}
       \label{fig:privacy_circle-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
@@ -449,32 +449,32 @@ For the Piecewise method, things are a bit clearer. When the privacy budget goes
 
 \newpage
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.9\textwidth}
-        \begin{subfigure}[c]{1\textwidth}
-            \caption{\textbf{Heatmap TPR for the nD-Laplace mechanism, per privacy budget \& dimension for Circle-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/circle-dataset/tpr.png}
-            \label{fig:privacy_tpr_circle-dataset_adversial_advantage_kd-laplace}
-        \end{subfigure}
-        \vfill % vertical space
-
-        \begin{subfigure}[c]{1\textwidth}
-            \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for Circle-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/circle-dataset/tpr.png}
-            \label{fig:privacy_tpr_circle-dataset_adversial_advantage_piecewise}
-        \end{subfigure}
+  \centering
+  \begin{subfigure}[b]{0.9\textwidth}
+    \begin{subfigure}[c]{1\textwidth}
+      \caption{\textbf{Heatmap TPR for the nD-Laplace mechanism, per privacy budget \& dimension for Circle-dataset.}}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/circle-dataset/tpr.png}
+      \label{fig:privacy_tpr_circle-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
+    \vfill % vertical space
+
+    \begin{subfigure}[c]{1\textwidth}
+      \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for Circle-dataset.}}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/circle-dataset/tpr.png}
+      \label{fig:privacy_tpr_circle-dataset_adversial_advantage_piecewise}
+    \end{subfigure}
+  \end{subfigure}
 \end{figure}
 In our examination of the nD-Laplace mechanism, it's clear that both the privacy budgets and the dimensions have a notable impact on the \gls{tpr}. Specifically, two-dimensional data tends to reveal more information than three-dimensional data. On the other hand, the Piecewise mechanism shows a similar trend, but its \gls{tpr} is generally about 0.10 higher. An exception is seen for the lower epsilon values of 0.5 - 1, where the nD-Laplace mechanism has a greater membership advantage.
 
-We also noticed an inconsistency for the Piecewise mechanism with three-dimensional data at privacy budgets of 0.5 and 1. However, the \gls{tpr} for these values seems to be consistent. This suggests that the \gls{fpr} might be higher for these settings. As a result, the membership advantage (defined as $tpr - fpr$) is below zero, even though the \gls{tpr} is higher. 
+We also noticed an inconsistency for the Piecewise mechanism with three-dimensional data at privacy budgets of 0.5 and 1. However, the \gls{tpr} for these values seems to be consistent. This suggests that the \gls{fpr} might be higher for these settings. As a result, the membership advantage (defined as $tpr - fpr$) is below zero, even though the \gls{tpr} is higher.
 \newpage
 \subsection{Line dataset}
 \begin{figure}[H]
   \centering
   \begin{subfigure}[b]{0.80\textwidth}
     \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Heatmap showing adversary advantage for the kD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
+      \caption{\textbf{Heatmap showing adversary advantage for the nD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
       \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/line-dataset/attack_adv.png}
       \label{fig:privacy_line-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
@@ -492,23 +492,23 @@ The scores from both mechanisms largely align and neither exhibits a distinct pa
 To determine whether the \gls{tpr} displays consistent values, we will analyze this metric on the subsequent page.
 \newpage
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.9\textwidth}
-        \begin{subfigure}[c]{1\textwidth}
-            \caption{\textbf{Heatmap TPR for the kD-Laplace mechanism, per privacy budget \& dimension for line-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/line-dataset/tpr.png}
-            \label{fig:privacy_tpr_line-dataset_adversial_advantage_kd-laplace}
-        \end{subfigure}
-        \vfill % vertical space
-
-        \begin{subfigure}[c]{1\textwidth}
-            \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for line-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/line-dataset/tpr.png}
-            \label{fig:privacy_tpr_line-dataset_adversial_advantage_piecewise}
-        \end{subfigure}
+  \centering
+  \begin{subfigure}[b]{0.9\textwidth}
+    \begin{subfigure}[c]{1\textwidth}
+      \caption{\textbf{Heatmap TPR for the nD-Laplace mechanism, per privacy budget \& dimension for line-dataset.}}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/line-dataset/tpr.png}
+      \label{fig:privacy_tpr_line-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
+    \vfill % vertical space
+
+    \begin{subfigure}[c]{1\textwidth}
+      \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for line-dataset.}}
+      \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/line-dataset/tpr.png}
+      \label{fig:privacy_tpr_line-dataset_adversial_advantage_piecewise}
+    \end{subfigure}
+  \end{subfigure}
 \end{figure}
-Both mechanisms exhibit consistent patterns, and the irregularities previously identified for epsilon values of 0.5 and 1 are not present here. Consequently, it is anticipated that this is a result of a heightened \gls{fpr} in relation to the False/True Negative values. 
+Both mechanisms exhibit consistent patterns, and the irregularities previously identified for epsilon values of 0.5 and 1 are not present here. Consequently, it is anticipated that this is a result of a heightened \gls{fpr} in relation to the False/True Negative values.
 
 For the Piecewise mechanism, there is a noticeable increase in membership advantage, approximately 0.2 to 0.3 higher, for epsilon values greater than 2.5. This can be attributed to the mechanism's enhanced utility value for this particular dataset.
 \newpage
@@ -517,7 +517,7 @@ For the Piecewise mechanism, there is a noticeable increase in membership advant
   \centering
   \begin{subfigure}[b]{0.85\textwidth}
     \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Heatmap showing adversary advantage for the kD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
+      \caption{\textbf{Heatmap showing adversary advantage for the nD-Laplace mechanism, per privacy budget \& dimension for seeds-dataset.}}
       \includegraphics[width=1\textwidth]{Results/nd-laplace/nd-Laplace/skewed-dataset/attack_adv.png}
       \label{fig:privacy_skewed-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
@@ -539,21 +539,21 @@ The low membership advantage for the nD-Laplace mechanism is noteworthy, given i
 \newpage
 
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.9\textwidth}
-        \begin{subfigure}[c]{1\textwidth}
-            \caption{\textbf{Heatmap TPR for the kD-Laplace mechanism, per privacy budget \& dimension for skewed-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/skewed-dataset/tpr.png}
-            \label{fig:privacy_tpr_skewed-dataset_adversial_advantage_kd-laplace}
-        \end{subfigure}
-        \vfill % vertical space
-
-        \begin{subfigure}[c]{1\textwidth}
-            \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for skewed-dataset.}}
-            \includegraphics[width=1\textwidth]{Results/kd-laplace/piecewise/skewed-dataset/tpr.png}
-            \label{fig:privacy_tpr_skewed-dataset_adversial_advantage_piecewise}
-        \end{subfigure}
+  \centering
+  \begin{subfigure}[b]{0.9\textwidth}
+    \begin{subfigure}[c]{1\textwidth}
+      \caption{\textbf{Heatmap TPR for the nD-Laplace mechanism, per privacy budget \& dimension for skewed-dataset.}}
+      \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/skewed-dataset/tpr.png}
+      \label{fig:privacy_tpr_skewed-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
+    \vfill % vertical space
+
+    \begin{subfigure}[c]{1\textwidth}
+      \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for skewed-dataset.}}
+      \includegraphics[width=1\textwidth]{Results/kd-laplace/piecewise/skewed-dataset/tpr.png}
+      \label{fig:privacy_tpr_skewed-dataset_adversial_advantage_piecewise}
+    \end{subfigure}
+  \end{subfigure}
 \end{figure}
 Both mechanisms exhibit consistent values, yet they reveal nearly all the information.
 
@@ -564,7 +564,7 @@ Conversely, the Piecewise mechanism demonstrates a less favorable performance. T
 
 \subsection{Mechanism comparison}
 In this section, we compare the different mechanisms for each dataset.
-For this purpose, we also include all the different variants of kd-Laplace to see if there is a difference between them.
+For this purpose, we also include all the different variants of nD-Laplace to see if there is a difference between them.
 So, instead of comparing the mechanisms based on the number of dimensions, we compare them on the average scores for all dimensions per mechanism.
 We are most interested in the utility and performance, and to compare them, we only show the \gls{ami} and adversary advantage scores.
 \newpage
@@ -681,10 +681,10 @@ The nD-Laplace mechanism exhibits suboptimal performance in terms of \gls{ami}. 
   \end{figure}
   The graphs above show the adversary advantage (left) and TPR (right) for the seeds dataset (top) and heart dataset (bottom).
   The first dataset we analyze is the seeds dataset. We can observe a clear pattern for the Piecewise mechanism based on the adversary advantage plot for the seeds dataset. It scores between 0.4 and 0.5 for epsilon values ranging from 0.1 to 0.7 and drops below 0.2 for epsilon values higher than 3.
-  The kd-Laplace mechanism, particularly the variant without optimizations (red), has a high adversary advantage (0.35) for epsilon 0.1. After that, all kd-Laplace variants perform similarly. When we compare them to the TPR, we still see that Piecewise and the regular kd-Laplace variant have higher scores for epsilon 0.1 (0.5+). After that, the mechanisms perform similarly, but we notice that kd-Laplace/grid/optimal consistently outperforms the others. Additionally, the latter is above the baseline value for epsilon 1.5.
+  The nD-Laplace mechanism, particularly the variant without optimizations (red), has a high adversary advantage (0.35) for epsilon 0.1. After that, all nD-Laplace variants perform similarly. When we compare them to the TPR, we still see that Piecewise and the regular nD-Laplace variant have higher scores for epsilon 0.1 (0.5+). After that, the mechanisms perform similarly, but we notice that kd-Laplace/grid/optimal consistently outperforms the others. Additionally, the latter is above the baseline value for epsilon 1.5.
 
   Now, let's turn our attention to the heart dataset. Here, we can see that the adversary advantage shows less variation than the seeds dataset. For all epsilon values, kd-Laplace without optimizations stands out. The mechanisms perform similarly, but the Piecewise mechanism performs better for epsilon values between 1.5 and 5.0.
-  For the TPR, all mechanisms are below the baseline value. They score the same, but the Piecewise mechanism is approximately 0.05 TPR lower than the kd-Laplace variants for epsilon values 0.1 to 3.5.
+  For the TPR, all mechanisms are below the baseline value. They score the same, but the Piecewise mechanism is approximately 0.05 TPR lower than the nD-Laplace variants for epsilon values 0.1 to 3.5.
   \newpage
   \begin{figure}[H]
     \centering
@@ -701,11 +701,11 @@ The nD-Laplace mechanism exhibits suboptimal performance in terms of \gls{ami}. 
   \end{figure}
   %#The above graphs depict the average Euclidean distances between the data with privacy mechanisms applied and without them for the seeds dataset (top) and heart dataset (bottom). 
   %A clear distinction can be observed among the different distances for the seeds dataset. On average, the Piecewise mechanism adds the most distance. 
-  At epsilon values 7 and 9, the Piecewise mechanism adds the least distance. Among the various kd-Laplace variants, the variant without optimizations adds the most distance.
+  At epsilon values 7 and 9, the Piecewise mechanism adds the least distance. Among the various nD-Laplace variants, the variant without optimizations adds the most distance.
   This trend continues until epsilon 5, after which the variants become equal.
 
-  Similarly, a noticeable difference is observed between the Piecewise mechanism and kd-Laplace for the heart dataset. At epsilon 9, the Piecewise mechanism has the same score as kd-Laplace.
-  Among the kd-Laplace variants, the variant without optimizations adds the least distance, but it is slightly higher than the other variants for epsilon 0.1.
+  Similarly, a noticeable difference is observed between the Piecewise mechanism and nD-Laplace for the heart dataset. At epsilon 9, the Piecewise mechanism has the same score as nD-Laplace.
+  Among the nD-Laplace variants, the variant without optimizations adds the least distance, but it is slightly higher than the other variants for epsilon 0.1.
   \newpage
   %\subsection{Utility}
   %subsubsection*{Cluster comparison}
@@ -741,13 +741,13 @@ The nD-Laplace mechanism exhibits suboptimal performance in terms of \gls{ami}. 
   %The above graphs display the adversary advantage (left) and TPR (right) per epsilon for the seeds dataset (top) and heart dataset (bottom).
 
   The seeds dataset shows that Piecewise has a higher adversary advantage for epsilons ranging from 0.1 to 1.
-  However, the TPR for Piecewise is consistently lower than that of kd-Laplace. There is no clear distinction among the kd-Laplace variants.
-  However, for epsilon values 7 and 9, kd-Laplace/grid/optimal does not exceed the baseline for TPR, while the other variants do.
+  However, the TPR for Piecewise is consistently lower than that of nD-Laplace. There is no clear distinction among the nD-Laplace variants.
+  However, for epsilon values 7 and 9, nD-Laplace/grid/optimal does not exceed the baseline for TPR, while the other variants do.
 
   For the heart dataset, the Piecewise mechanism scores below 0.10 for adversary advantage for epsilons 0.1 to 3.
-  In contrast, the kd-Laplace variants yield values above 0.25 for the same epsilon values.
+  In contrast, the nD-Laplace variants yield values above 0.25 for the same epsilon values.
   The Piecewise mechanism also scores lower for epsilon values 3.5 and 5, but they have nearly equal scores for epsilons 7 and 9.
-  Among the variants of kd-Laplace, kd-Laplace, and kd-Laplace/grid perform slightly worse for epsilon 0.1, but for the other epsilons, they function similarly.
+  Among the variants of nD-Laplace, kd-Laplace, and kd-Laplace/grid perform slightly worse for epsilon 0.1, but for the other epsilons, they function similarly.
   The TPR follows a similar trend to the adversary advantage, except for epsilon 0.1, where the kd-Laplace variants have equal scores.
 
   \newpage

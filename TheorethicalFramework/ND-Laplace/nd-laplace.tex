@@ -28,7 +28,7 @@ The theorems for \gls{gi} are extended by Fernandes et al. to support n-dimensio
   \label{theorem:nd-laplace}
 \end{theorem}
 This theorem extends $\epsilon$-geo-indistinguishability to $\epsilon-d_x$-privacy as a more general notion of distinguishability \citep{fernandes_generalised_2019}:
-Here, $d_x$ is a pseudo metric which was provided by Chatzikokalakis et al. as elastic privacy definition for location privacy \citep{chatzikokolakis_constructing_2015}. For the use with the Euclidean distance, the privacy definition is defined as $d_{euc}$. Due to the flexibility of $d_x$ the theorem \ref{theorem:nd-laplace} also holds for $d_{euc}$.  Furthermore, $\epsilon-d_{euc}$ provides the same privacy definition as geo-indistinguishability \citep{chatzikokolakis_constructing_2015}. 
+Here, $d_x$ is a pseudo metric which was provided by Chatzikokalakis et al. as elastic privacy definition for location privacy \citep{chatzikokolakis_constructing_2015}. For the use with the Euclidean distance, the privacy definition is defined as $d_{euc}$. Due to the flexibility of $d_x$ the theorem \ref{theorem:nd-laplace} also holds for $d_{euc}$.  Furthermore, $\epsilon-d_{euc}$ provides the same privacy definition as geo-indistinguishability \citep{chatzikokolakis_constructing_2015}.
 Therefore, $d_{euc}$ is adopted by this thesis from now on, to be used for n-dimensions to establish a more general notion of privacy. \newline
 
 The 2D-Laplace mechanism is referenced as a plane, and the coordinates can be generated separately as $(r, \theta)$ \citep{fernandes_generalised_2019,DBLP:journals/corr/abs-1212-1984}.
@@ -58,7 +58,7 @@ It is comparable to the way it was done in the previous chapters; however, as th
 The combination of sections 1 and 2 of this chapter provides a good overview of the solution using a similar image as the 2D and 3D variants (figure \ref{fig:nd-laplace-overview}).
 \begin{figure}[H]
   \includesvg[width=0.6\textwidth]{TheorethicalFramework/ND-Laplace/Images/nd_laplace}
-  \caption{Overview of the kD-Laplace mechanism}
+  \caption{Overview of the nD-Laplace mechanism}
   \label{fig:nd-laplace-overview}
 \end{figure}
 \subsection{Privacy versus utility} \label{theory:privacy-utility-nd}
@@ -91,40 +91,40 @@ The current section will be used to formalize nD-Laplace with grid-remapping (di
 \subsubsection{Discretization and truncation} \label{theory:nd-laplace-truncation}
 To recall the working of 2D and 3D-Laplace remapping, we give a short summary of these two sections. The discretized 2D version operates on a plane and approximates on a grid $G$, while the 3D version works in a sphere and approximates the data using a cuboid grid  $G_C$.
 Given a set of perturbed points $Z$ we can truncate the points that are outside the domain by remapping them to points within $G$ ($Z = X \cap G$) \citep{DBLP:journals/corr/abs-1212-1984}.
-Here, $X$ represents other non-private data points reported locally by the same user. 
+Here, $X$ represents other non-private data points reported locally by the same user.
 The following part aims at extending the theorems for 2D and 3D-Laplace for discritezation and truncation to n-dimensions. \newline
 
 The theorems for 2D (See  Theorem\ref{theorem:discretization} and 3D-Laplace (See Theorem \ref{theorem:3d-discretization} include a device precision. This variable is the hardware precision of a GPS provided by the user's device (e.g. a mobile phone). For the purpose of clustering, we omit this for the formulation of truncation with n-dimensions.
 
-We extend the reasoning of Min et al. behind extending 2D-Laplace to 3D-Laplace as this applies to nD-Laplace as well. 
-Let $v > w > h$ be a cuboid grid $G_c$, equal to the one provided by Min et al \citep{9646489}. 
+We extend the reasoning of Min et al. behind extending 2D-Laplace to 3D-Laplace as this applies to nD-Laplace as well.
+Let $v > w > h$ be a cuboid grid $G_c$, equal to the one provided by Min et al \citep{9646489}.
 We are be-able to extend this by providing a hypercube ($n$-cube) with n-dimensions denoted as $G_n = u_1, u_2, u_3 ... u_n$. This $n$-cube has $2^n$ sides, but can essentially be seen as a generalization of a 3-cube to $n$-dimensions \footnote{https://mathworld.wolfram.com/Hypercube.html}.
 An issue arises with the definition of the grid-units, where Min et al. and Andres et al. both consider the possibility of unequal grid-units, for the purpose of generalisation \citep{9646489, DBLP:journals/corr/abs-1212-1984}.
 However, for a $n$-cube this is generalisation is harder to justify, because \todo{Add reasoning}.
-For this reason, we define $v, w, h = u_1$. We choose $u_1$, but in general this can be any given value $u \in G_n$. 
+For this reason, we define $v, w, h = u_1$. We choose $u_1$, but in general this can be any given value $u \in G_n$.
 Another important property, is the maximum diameter defined as $r_M$ \citep{9646489}.
-This property can also be converted to support n-dimensions, by calculating the diameter of $G_n$. 
-This is the maximum distance between any pair of nodes  [HARARY1988277].:  
+This property can also be converted to support n-dimensions, by calculating the diameter of $G_n$.
+This is the maximum distance between any pair of nodes  [HARARY1988277].:
 The Euclidean distance diameter is defined as (ref):
 \begin{equation}
-    d_e(G_n) = r_H = \sqrt{n}
+  d_e(G_n) = r_H = \sqrt{n}
 \end{equation}
 
-Where, $n$ is the amount of dimensions. 
-\newpage  
+Where, $n$ is the amount of dimensions.
+\newpage
 Finally, we are be-able to establish our own theorem for the discretization and truncation of nD-Laplace:
 \begin{theorem}
-    Assume $u$ to be a side length, Let $G_u$ be an $n$-dimensional hypercube of $u$ size, Let $r_H < u$ and let $w = \frac{u^2}{r^2_H \cdot sin (\theta)} > \frac{u}{r_H}.$ Let $\epsilon, \epsilon' \in R^+$ such that \\
-    $\epsilon' + \frac{1}{u} ln \frac{w + n \cdot e^{\epsilon' \cdot u}}{w - n \cdot e^{\epsilon' \cdot u}} \leq \epsilon$ \\
-    Then $K\epsilon'$ satisfies $\epsilon$-geo-indistinguishability within range
-    of $r_H$. That is to say, if $d_n(x, z)$ and $d_{euc}(x, x') \leq r_H$ then, 
-      $K(x)(z) \leq e^{\epsilon \cdot d_{euc} (x, x')} \cdot K(x')(z)$ forall $x, x' \in X, z \in Z$ \citep{chatzikokolakis_constructing_2015}
+  Assume $u$ to be a side length, Let $G_u$ be an $n$-dimensional hypercube of $u$ size, Let $r_H < u$ and let $w = \frac{u^2}{r^2_H \cdot sin (\theta)} > \frac{u}{r_H}.$ Let $\epsilon, \epsilon' \in R^+$ such that \\
+  $\epsilon' + \frac{1}{u} ln \frac{w + n \cdot e^{\epsilon' \cdot u}}{w - n \cdot e^{\epsilon' \cdot u}} \leq \epsilon$ \\
+  Then $K\epsilon'$ satisfies $\epsilon$-geo-indistinguishability within range
+  of $r_H$. That is to say, if $d_n(x, z)$ and $d_{euc}(x, x') \leq r_H$ then,
+  $K(x)(z) \leq e^{\epsilon \cdot d_{euc} (x, x')} \cdot K(x')(z)$ forall $x, x' \in X, z \in Z$ \citep{chatzikokolakis_constructing_2015}
 \end{theorem}
 Since we specify the hypercube to have equal sides of $u_i$, we are be-able to simplify the theorem.
 %We use the proof provided by Min et al. in some extend by satisfying preliminary variables \citep{9646489}.
 By satisfying the conditions for $r_H$ and $u$, we use the proof provided for 3-dimensions and use it for $n$-dimensions \citep{9646489}.
 If we select a $u$ smaller then the max diameter $r_H$, we can satisfy $d_{euc}(x_n, x0) < r_H < u$. Which is according to the proof provided by Min et al.
-Moreover, $w = \frac{u^2}{r_H^2 \cdot sin(\theta)} > \frac{u}{r_H}$ is also satisfied as the sizes of $G_n$ are equal. 
+Moreover, $w = \frac{u^2}{r_H^2 \cdot sin(\theta)} > \frac{u}{r_H}$ is also satisfied as the sizes of $G_n$ are equal.
 Given that these pre-conditions apply, we can reuse the proof from 3-dimensions for n-dimensions. \newline
 
 The utility of this method depends on the number of grid cells in $G_n$ since a smaller distance will result in more frequent mapping to the surface of the grid.
@@ -258,13 +258,13 @@ Much like the 2D and 3D Laplace methods, which use the likelihood of a point $z_
 %The remapping is not applied for these users and is also not applied for $z$ if it is within the domain of $X$.
 \input{TheorethicalFramework/ND-Laplace/algorithms/optimal-remapping.tex}
 \newpage
-\subsection{Putting it together: kd-Laplace}
+\subsection{Putting it together: nD-Laplace}
 Now that we have defined everything, we can write the algorithm in a step-by-step manner:
 \input{TheorethicalFramework/ND-Laplace/algorithms/nd-laplace.tex}
 
 It is important to note that with the introduction of this algorithm, it is no longer a non-interactive method, as the data points now interact with each other.
 Therefore, we expect the introduction of optimal grid remapping with kd-tree will bring more utility \citep{wang_comprehensive_2020, xiongComprehensiveSurveyLocal2020}.
-The introduction of the kd-tree is also why we present our method as \textit{kd-Laplace}, where $k$ is the number of dimensions.
+The introduction of the kd-tree is also why we present our method as \textit{nD-Laplace}, where $k$ is the number of dimensions.
 %\todo[inline]{Also refactor this}
 
 %\subsection{Extending to $d_x$-privacy}

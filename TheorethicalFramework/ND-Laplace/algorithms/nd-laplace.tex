@@ -1,19 +1,19 @@
 \begin{algorithm}[H]
-  \caption{Full algorithm for perturbing training data for nD-clustering using kd-Laplace}
-  \begin{algorithmic}
-    \Require $x \in X$  \Comment n-dimensional array of original points
-    \Require $\epsilon$ \Comment privacy budget
-    \Ensure $z \in Z$ \Comment n-dimensional array of optimal-remapped perturbed points
-    \State $sphere = \Call{GenerateUnitSphere}{x}$ \Comment construct a sphere around $x$.
-    \For{$row \in X$}
-    \State $d \gets \Call{Length}{row}$ \Comment amount of dimensions
-    \State $r \gets \Call{GenerateRadius}{d}$ \Comment generate radius $r$ using Equation \ref{eq:nd-laplace-r}.
-    \State $sphere \gets \Call{GenerateTheta}{d}$ \Comment perturb the sphere Figure \ref{fig:nd-laplace-overview}.
-    \State $noise \gets \Call{Cartesian}{row, epsilon}$ \Comment use Equation \ref{eq:nd-laplace-cartesian} to perturb $row$ and convert to cartesian.
-    \State $z = x + noise$
-    \State \Call{Append}{$Z, z$}
-    \EndFor
-    \State \Return Z
-  \end{algorithmic}
-  \label{alg:nd-laplace}
+   \caption{Full algorithm for perturbing training data for nD-clustering using nD-Laplace}
+   \begin{algorithmic}
+      \Require $x \in X$  \Comment n-dimensional array of original points
+      \Require $\epsilon$ \Comment privacy budget
+      \Ensure $z \in Z$ \Comment n-dimensional array of optimal-remapped perturbed points
+      \State $sphere = \Call{GenerateUnitSphere}{x}$ \Comment construct a sphere around $x$.
+      \For{$row \in X$}
+      \State $d \gets \Call{Length}{row}$ \Comment amount of dimensions
+      \State $r \gets \Call{GenerateRadius}{d}$ \Comment generate radius $r$ using Equation \ref{eq:nd-laplace-r}.
+      \State $sphere \gets \Call{GenerateTheta}{d}$ \Comment perturb the sphere Figure \ref{fig:nd-laplace-overview}.
+      \State $noise \gets \Call{Cartesian}{row, epsilon}$ \Comment use Equation \ref{eq:nd-laplace-cartesian} to perturb $row$ and convert to cartesian.
+      \State $z = x + noise$
+      \State \Call{Append}{$Z, z$}
+      \EndFor
+      \State \Return Z
+   \end{algorithmic}
+   \label{alg:nd-laplace}
 \end{algorithm}
