@@ -62,7 +62,7 @@ The trends observed in these charts closely mirror those from the seeds-dataset.
 Among the two mechanisms, Piecewise consistently achieves the highest scores for all \gls{ami} metrics. Analyzing the three algorithms, a recurring pattern emerges: K-Means leads in performance, trailed by Agglomerative and then \gls{optics}. Notably, within the nD-Laplace mechanism, \gls{optics} significantly lags behind the other algorithms. While a similar trend is observed in the \gls{sc} scores, the disparity between the two mechanisms is less pronounced. Yet, \gls{optics} consistently underperforms across all epsilon values.
 
 We observe the same patterns as with the seeds-dataset; which is shaped as a line.
-If there is a thiner line of data, the spread of the data is important. Piecewise mechanism handles this better, to stay close to the original line of data, while nD-Laplace's data is more spread. There are various factors why this issue impacts \gls{optics} the most, but this is probably due to the Euclidean space metric. Here, the distance matters more then similar metrics, and 
+If there is a thiner line of data, the spread of the data is important. Piecewise mechanism handles this better, to stay close to the original line of data, while nD-Laplace's data is more spread. There are various factors why this issue impacts \gls{optics} the most, but this is probably due to the Euclidean space metric. Here, the distance matters more then similar metrics.
 \newpage
 \begin{figure}[H]
   \centering
@@ -364,10 +364,9 @@ On the heatmap, the x-axis represents the privacy budget, while the y-axis illus
     \end{subfigure}
   \end{subfigure}
 \end{figure}
-When comparing the mechanisms, we observe that nD-Laplace has a relatively high score for epsilon values ranging from 0.5 to 2. The dimensions also seem to influence this, as dimensions  7 appears slightly lighter. While, for privacy budgets 7 and 9 the dimensions 6 and 7 are  darker. As the privacy budgets increase, the adversary advantage decreases. This trend is also evident in the Piecewise mechanism. The number of dimensions doesn't have much influence, but it's clear that for epsilons 0.5 to 1.5, the dimensional data has a higher adversary advantage.
+When evaluating the mechanisms, it's evident that nD-Laplace consistently achieves higher scores for epsilon values, particularly in dimensions 6 and 7. This suggests that the number of dimensions significantly influences the results to a certain degree. As privacy budgets rise, so does the adversary advantage. However, there are anomalies in the nD-Laplace results, such as the 0.03 advantage for epsilon 9, which deviates from the expected range of 0.15 to 0.20. In contrast, the Piecewise mechanism displays a clear color gradient that darkens from left to right, aligning with expectations: the membership advantage tends to increase as the privacy budget diminishes. Notably, the Piecewise mechanism introduces substantial noise for privacy budgets between 0.5 and 1.5, attributed to the unbounded noise that surpasses the original domain $X$. This observation aligns with the \gls{ami} results from the 2-dimensional seeds-dataset, where Piecewise registered a score of 0 for these specific privacy budgets.
 
-We would expect the adversary advantage increasing from left to right, because a higher privacy budget indicates low noise. So, as a consequence the membership advantage should be higher.
-To get a clearer picture why this is not happening, we consider the \gls{tpr} for a better illustration of the behaviour (See next page). \newpage
+The membership advantage provides valuable insights into the privacy attributes of the Piecewise mechanism. However, given the inconsistent outcomes associated with nD-Laplace, a more refined metric is warranted. As such, we'll delve into the \gls{tpr} to offer a clearer depiction of the mechanisms' behaviors (details on the subsequent page).\newpage
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.75\textwidth}
@@ -384,11 +383,7 @@ To get a clearer picture why this is not happening, we consider the \gls{tpr} fo
         \end{subfigure}
     \end{subfigure}
 \end{figure}
-When we examine the plot above, we see a similar pattern. But for Piecewise, the \gls{tpr} for privacy budgets are slightly lower for most of them.
-For higher privacy budgets, the \gls{tpr} for both increases to 0.65.
-From the \gls{tpr}, it can be inferred that a higher privacy budget indeed leaks more information.
-The dimensions have little impact on this, but for both mechanisms, it's observable that 2-dimensions have the highest \gls{tpr}, thereby leaking the most information.
-\todo[inline]{Why higher for 2D?}
+The top result displays a more stable outcome for the nD-Laplace mechanism. There's a clear progression from light to dark as the privacy budget increases. The number of dimensions doesn't seem to have a significant influence; however, it's noteworthy that the 2-dimensional data scores higher for lower privacy budgets. The Piecewise mechanism exhibits a similar pattern, but there's a peculiar observation in the bottom left corner. The low membership advantages (ranging from -0.50 to 0.70) aren't as promising as they initially appear. Given that the \gls{tpr} is quite high, it highlights the limitations of the membership advantage metric. A high \gls{tpr} (and consequently a low \gls{fpr}) can distort the actual representation.
 
 \newpage
 \subsection{Heart dataset}
@@ -409,9 +404,11 @@ The dimensions have little impact on this, but for both mechanisms, it's observa
     \end{subfigure}
   \end{subfigure}
 \end{figure}
-For the nD-Laplace mechanism, there's little difference observed between the privacy budgets and dimensions. This is expected, as there's also minimal variation in the \gls{ami} score across different privacy budgets. However, a correlation can be seen between lower dimensions (2 / 3) and the impact of higher privacy budgets. For these dimensions, the adversary advantage is approximately 5 points lower than the other dimensions.
-With the Piecewise mechanism, there is a different pattern. For 2-dimensional data, the membership advantage is the highest. When the amount of dimensions increases, the advantage decreases. Higher privacy budgets however seem to have a negative impact, as the advantage increases. This is what we would expect.
-Although the adversary advantage in these heatmaps follows a somewhat more logical progression for Piecewise (increasing from left to right), it still shows some weird results for nD-Laplace. Therefore we will analyze the \gls{tpr} on the following page. 
+For the nD-Laplace mechanism, minimal variation is observed across different privacy budgets and dimensions, aligning with the consistent \gls{ami} scores. While there's a slight dip in membership advantage for dimensions greater than 5, the results remain somewhat inconsistent, similar to those from the seeds-dataset.
+
+In contrast, the Piecewise mechanism displays a distinct pattern. The membership advantage peaks for 2-dimensional data and diminishes as the number of dimensions increases. The higher privacy budgets appear to compromise privacy, which aligns with expectations for increased privacy budgets.
+
+While the adversary advantage in the heatmaps for the Piecewise mechanism logically increases from left to right, the nD-Laplace mechanism still presents some inconsistencies. To gain a clearer understanding, we'll delve into the \gls{tpr} on the subsequent page.
 \newpage
 \begin{figure}[H]
     \centering
@@ -430,11 +427,10 @@ Although the adversary advantage in these heatmaps follows a somewhat more logic
         \end{subfigure}
     \end{subfigure}
 \end{figure}
-For the Piecewise mechanism, the results are clear and follow a similar pattern that we also saw with the membership advantage on the previous page.
-With the nD-Laplace mechanism, the results are quite varied. We see a slight influence of the privacy budget (0.5 is slightly lower compared to the rest), but overall, no major changes are noticeable.
-What stands out is the lower score (approximately 0.10 \gls{tpr}) for 3-dimensions compared to the rest.
-\todo[inline]{Why only 3-dimensions?}
+For the Piecewise mechanism, the results are straightforward, mirroring the pattern observed with the membership advantage on the preceding page. While the bottom-left corner deviates slightly from the membership advantage, it's not strikingly irregular. As anticipated, the \gls{tpr} rises with an increasing privacy budget. Dimensionality doesn't significantly impact this, though the 2-dimensional data stands out with a notably higher value. \todo[inline]{Investigate the impact of mi on 2-dimensional data}.
 
+In contrast, the nD-Laplace mechanism presents a more diverse set of results. On the whole, there aren't any drastic shifts, but there's a subtle trend of the membership advantage growing with a higher privacy budget. Interestingly, the 3-dimensional data scores approximately 0.5 points lower than the others, warranting further investigation. \todo[inline]{Delve deeper into this discrepancy}.
+Overall, Piecewise shows a higher privacy in comparison to nD-Laplace. This is in line with a higher utility that nD-Laplace offers.
 \newpage
 
 \subsection{Circle dataset}
@@ -447,7 +443,6 @@ What stands out is the lower score (approximately 0.10 \gls{tpr}) for 3-dimensio
       \label{fig:privacy_circle-dataset_adversial_advantage_kd-laplace}
     \end{subfigure}
     \vfill % vertical space
-
     \begin{subfigure}[c]{1\textwidth}
       \caption{\textbf{Heatmap showing adversary advantage for the Piecewise mechanism, per privacy budget \& dimension for seeds-dataset.}}
       \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/circle-dataset/attack_adv.png}
@@ -455,10 +450,9 @@ What stands out is the lower score (approximately 0.10 \gls{tpr}) for 3-dimensio
     \end{subfigure}
   \end{subfigure}
 \end{figure}
-For the nD-Laplace mechanism, a pattern is visible that we have also seen in the other plots. The 2-dimensional data is relatively high compared to the other dimensions, and with a higher dimension, the membership advantage is actually lower instead of higher.
-The pattern of the Piecewise mechanism is mostly the same. However, on average, the membership advantage is slightly higher.
-It's notable that for 2 and 3 dimensions, the value is very low for epsilon 3 and 2, respectively.
-On the next page, we will also analyze the \gls{tpr} to get an underlying view of the results.
+For the nD-Laplace method, it's hard to see a clear trend. There's a small increase with a higher privacy budget, but it's only by 0.1 to 0.2. These numbers match the \gls{ami} scores, which are around 0.3 to 0.4. So, if the data has low utility, there's not much information that can be leaked.
+
+For the Piecewise method, things are a bit clearer. When the privacy budget goes up, the advantage also goes up. But there's something odd for epsilon values of 0.5 and 1 with 3-dimensional data. We'll look into this more by checking the \gls{tpr} on the next page.
 
 \newpage
 \begin{figure}[H]
@@ -478,9 +472,9 @@ On the next page, we will also analyze the \gls{tpr} to get an underlying view o
         \end{subfigure}
     \end{subfigure}
 \end{figure}
-For the nD-Laplace mechanism, it's again evident that the privacy budgets and dimensions influence the \gls{tpr}. The 2-dimensional data leaks more information than the 3-dimensional data. The same pattern is visible for the Piecewise mechanism, although the \gls{tpr} in this case is on average 0.10 higher compared to the nD-Laplace mechanism.
-Given the \gls{ami} score, this makes sense since the Piecewise mechanism scored much higher (meaning: it's more similar to the original) than the nD-Laplace mechanism. Thus, the information leakage of the real data is higher.
-{\todo[inline]{Why is 2-dimensional so much higher?}}
+In our examination of the nD-Laplace mechanism, it's clear that both the privacy budgets and the dimensions have a notable impact on the \gls{tpr}. Specifically, two-dimensional data tends to reveal more information than three-dimensional data. On the other hand, the Piecewise mechanism shows a similar trend, but its \gls{tpr} is generally about 0.10 higher. An exception is seen for the lower epsilon values of 0.5 - 1, where the nD-Laplace mechanism has a greater membership advantage.
+
+We also noticed an inconsistency for the Piecewise mechanism with three-dimensional data at privacy budgets of 0.5 and 1. However, the \gls{tpr} for these values seems to be consistent. This suggests that the \gls{fpr} might be higher for these settings. As a result, the membership advantage (defined as $tpr - fpr$) is below zero, even though the \gls{tpr} is higher. 
 \newpage
 \subsection{Line dataset}
 \begin{figure}[H]
@@ -494,17 +488,15 @@ Given the \gls{ami} score, this makes sense since the Piecewise mechanism scored
     \vfill % vertical space
 
     \begin{subfigure}[c]{1\textwidth}
-      \caption{\textbf{Heatmap showing adversary advantage for the Piecewise mechanism, per privacy budget \& dimension for seeds-dataset.}}
+      \caption{\textbf{Heatmap showing membership advantage for the Piecewise mechanism, per privacy budget \& dimension for seeds-dataset.}}
       \includegraphics[width=1\textwidth]{Results/nd-laplace/piecewise/line-dataset/attack_adv.png}
       \label{fig:privacy_line-dataset_adversial_advantage_piecewise}
     \end{subfigure}
   \end{subfigure}
 \end{figure}
-The nD-Laplace mechanism shows similar results to what we've seen before from the other membership advantage scores. Notably here, the 2-dimensional data scores better (lower) this time than the 3-dimensional data. Whereas in the other plots, the 2-dimensional data leaked a lot of information.
-The Piecewise mechanism does show a slightly higher membership advantage for 2-dimensional data.
-In general, we again see the pattern that the membership advantage is higher for the lower privacy budgets, even though we expected the opposite.
-\todo[inline]{Analyze why 2-dimensional data performs better this time}.
-Therefore, we will also look at the \gls{tpr} on the next page again to get a better understanding of the underlying information.
+The scores from both mechanisms largely align and neither exhibits a distinct pattern. However, for the nD-Laplace mechanism, two values stand out for the three-dimensional data: -0.09 and -0.10. These values are notably lower than the two-dimensional values for the same privacy budgets. Similarly, for the Piecewise mechanism, we observe this trend for both dimensions, but only for a privacy budget of 0.5.
+
+To determine whether the \gls{tpr} displays consistent values, we will analyze this metric on the subsequent page.
 \newpage
 \begin{figure}[H]
     \centering
@@ -523,9 +515,9 @@ Therefore, we will also look at the \gls{tpr} on the next page again to get a be
         \end{subfigure}
     \end{subfigure}
 \end{figure}
-The heatmaps above show a similar result to the other plots, where there is a logical progression of a low membership advantage for lower privacy budgets and, on the other hand, a higher one for higher privacy budgets.
-The nD-Laplace scores a lower membership advantage, which is consistent with the \gls{ami} score that is also low.
-The reason the \gls{tpr} is higher than, for example, the circle-dataset, is because the Piecewise mechanism is good at preserving the shape of the line-data \ref{fig:validation-Line-dataset_comparison_2d-laplace}.}. 
+Both mechanisms exhibit consistent patterns, and the irregularities previously identified for epsilon values of 0.5 and 1 are not present here. Consequently, it is anticipated that this is a result of a heightened \gls{fpr} in relation to the False/True Negative values. 
+
+For the Piecewise mechanism, there is a noticeable increase in membership advantage, approximately 0.2 to 0.3 higher, for epsilon values greater than 2.5. This can be attributed to the mechanism's enhanced utility value for this particular dataset.
 \newpage
 \subsection{Skewed dataset}
 \begin{figure}[H]
@@ -545,13 +537,44 @@ The reason the \gls{tpr} is higher than, for example, the circle-dataset, is bec
     \end{subfigure}
   \end{subfigure}
 \end{figure}
+
+The nD-Laplace mechanism exhibits a modest correlation with the privacy budget for 3-dimensional data. However, for the 2-dimensional data, there is minimal variation in the membership advantage. Within the heatmap, the privacy budget of 1.5 stands out due to its lighter shade, but the difference is still marginal (0.01) compared to the rest of the heatmap.
+
+In contrast, the Piecewise mechanism displays a more pronounced pattern. For 2-dimensional data, the trend aligns with the utility, especially for higher privacy budgets where the \gls{ami} exceeded 0.85. For 3-dimensional data, it is particularly evident that the privacy budgets ranging from 0.5 to 1.5 exhibit minimal membership advantage. This observation is consistent with the \gls{ami} values, which are approximately 0.00.
+
+The low membership advantage for the nD-Laplace mechanism is noteworthy, given its high \gls{ami} score. This is reflected in the membership advantage for privacy budgets of 7 and 9, but not for other values. The Piecewise mechanism offers a clearer picture, as the elevated \gls{ami} values correlate with higher membership advantages. In addition to these shifts, the results for 3-dimensional data and lower privacy budgets are also of interest. On the subsequent page, the \gls{tpr} is presented to determine if similar observations can be made.
 \newpage
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.9\textwidth}
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap TPR for the kD-Laplace mechanism, per privacy budget \& dimension for skewed-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/kd-Laplace/skewed-dataset/tpr.png}
+            \label{fig:privacy_tpr_skewed-dataset_adversial_advantage_kd-laplace}
+        \end{subfigure}
+        \vfill % vertical space
+
+        \begin{subfigure}[c]{1\textwidth}
+            \caption{\textbf{Heatmap TPR for the Piecewise mechanism, per privacy budget \& dimension for skewed-dataset.}}
+            \includegraphics[width=1\textwidth]{Results/kd-laplace/piecewise/skewed-dataset/tpr.png}
+            \label{fig:privacy_tpr_skewed-dataset_adversial_advantage_piecewise}
+        \end{subfigure}
+    \end{subfigure}
+\end{figure}
+Both mechanisms exhibit consistent values, yet they reveal nearly all the information.
+
+For the nD-Laplace mechanism, a high \gls{ami} is observed across numerous privacy budgets. However, for the more constrained privacy budgets, the \gls{ami} is notably lower, suggesting that the \gls{tpr} should similarly be reduced.
+
+Conversely, the Piecewise mechanism demonstrates a less favorable performance. This mechanism consistently registers a significantly lower \gls{ami} (below 0.5) for all privacy budgets up to 5.
+\todo[inline]{Why is the TPR so freaking high?}
+
 \subsection{Mechanism comparison}
 In this section, we compare the different mechanisms for each dataset.
 For this purpose, we also include all the different variants of kd-Laplace to see if there is a difference between them.
 So, instead of comparing the mechanisms based on the number of dimensions, we compare them on the average scores for all dimensions per mechanism.
 We are most interested in the utility and performance, and to compare them, we only show the \gls{ami} and adversary advantage scores.
-\todo[inline]{Also needs privacy distance comparison}.
+\newpage
 \begin{figure}[H]
   \centering
   \begin{subfigure}{0.30\textwidth}
@@ -566,14 +589,14 @@ We are most interested in the utility and performance, and to compare them, we o
   \caption{Average AMI (top) and Adversary Advantage (bottom) comparison for each mechanism for seeds-dataset (8 dimensions).}
   \label{fig:utility_seeds-dataset_comparison_nd_plot}
 \end{figure}
-\todo[inline]{Add interpretation}
+The presented plot illustrates the \gls{ami} values for various configurations of the nD-Laplace and Piecewise mechanisms. Notably, the Piecewise mechanism yields a lower \gls{ami} compared to nD-Laplace. Among the three configurations, there isn't a singular mechanism that consistently surpasses the others; their performance is contingent upon specific privacy budget values. Although the Piecewise mechanism demonstrates a commendable membership advantage, one must consider the anomalies in the privacy budgets between 0.5 and 1.5. Outside of this range, the Piecewise mechanism provides only a slight enhancement in privacy.
 \newpage
 
 
 \begin{figure}[H]
   \centering
   \begin{subfigure}{0.30\textwidth}
-    \includegraphics[width=\textwidth]{Results/kd-laplace/ami_bar_comparison_legend.png}
+    \includegraphics[width=\textwidth]{Results/nd-laplace/ami_bar_comparison_legend.png}
   \end{subfigure}
   \begin{subfigure}{1\textwidth}
     \includegraphics[width=1\textwidth]{Results/nd-laplace/ami_heart-dataset_comparison.png}
@@ -584,7 +607,12 @@ We are most interested in the utility and performance, and to compare them, we o
   \caption{Average AMI (top) and Adversary Advantage (bottom) comparison for each mechanism for heart-dataset (10 dimensions).}
   \label{fig:utility_heart-dataset_comparison_nd_plot}
 \end{figure}
-\todo[inline]{Add interpretation}
+Building upon the cluster and utility plots discussed in previous sections, the heart-dataset consistently exhibits elevated \gls{ami} values. Both density-nD-Laplace and nD-Laplace mechanisms achieve the highest scores, whereas the grid-based variant remains relatively constant. Among the three configurations, the grid-nD-Laplace offers the most robust privacy.
+
+The membership advantage of the Piecewise mechanism is closely tied to its \gls{ami} performance. As a result, it registers low values across all epsilons but aligns closely with privacy budgets 7 and 9. Notably, all mechanisms, with the exception of nD-Laplace and density-nD-Laplace, fall below the baseline value.
+
+For the nD-Laplace mechanism, a significant portion of data deviates from the original domain $X$ when the privacy budget is set at 0.5. This deviation leads the classifier to train on inaccurate data, resulting in overfitting since it lacks generalization to the unaltered data (test dataset) as elucidated by \citep{shokri_membership_2017}. This phenomenon makes it more discernible to distinguish between member and non-member data. A similar trend is observed with the Piecewise mechanism, albeit to a lesser degree. The Piecewise mechanism more adeptly conforms to the shape of the original data, as seen in (\ref{fig:evaluate-optics-seeds-dataset-2d-9eps}), while nD-Laplace disperses the data uniformly in all directions.
+\todo[inline]{Examine the behavior of density-remapping as well.}
 \newpage
 
 \subsection{Shape datasets}
@@ -603,7 +631,8 @@ We are most interested in the utility and performance, and to compare them, we o
   \caption{Average AMI (top) and Adversary Advantage (bottom) comparison for each mechanism for circle-dataset (3 dimensions).}
   \label{fig:utility_circle-dataset_comparison_nd_plot}
 \end{figure}
-\todo[inline]{Add interpretation}
+
+The observed trend for the seeds-dataset and heart-dataset is inversed, with the Piecewise mechanism emerging as the more favorable option. For the nD-Laplace mechanism, the utility remains notably low, and its variants do not present any significant enhancement in this regard. As a result, while the privacy levels are elevated for nD-Laplace, the Piecewise mechanism still provides superior privacy, especially for the lower privacy budgets. Predictably, the Piecewise mechanism exhibits reduced privacy (manifested as a higher advantage) for the more generous privacy budgets.
 \newpage
 
 \begin{figure}[H]
@@ -620,7 +649,7 @@ We are most interested in the utility and performance, and to compare them, we o
   \caption{Average AMI (top) and Adversary Advantage (bottom) comparison for each mechanism for skewed-dataset (3 dimensions).}
   \label{fig:utility_skewed-dataset_comparison_nd_plot}
 \end{figure}
-\todo[inline]{Add interpretation}
+The nD-Laplace mechanism consistently exhibits a nearly uniform \gls{ami} across all privacy budgets. In contrast, the Piecewise mechanism generally registers lower scores for most privacy budgets, with an exception at privacy budget 9 where it surpasses the former. This pattern aligns with our observations from the cluster utility and heatmap analyses. The enhanced performance of the Piecewise mechanism at higher privacy budgets can be attributed to its ability to retain the shape of the data, as evidenced in the 2-dimensional line-dataset and seeds-dataset. Mirroring trends from other plots, the Piecewise mechanism demonstrates superior privacy levels at lower privacy budgets. Yet, when considering higher privacy budgets, the variants of the nD-Laplace mechanism prove to be more effective.
 \newpage
 
 
@@ -639,10 +668,7 @@ We are most interested in the utility and performance, and to compare them, we o
   \caption{Average AMI (top) and Adversary Advantage (bottom) comparison for each mechanism for line-dataset (3 dimensions).}
   \label{fig:utility_line-dataset_comparison_nd_plot}
 \end{figure}
-\todo[inline]{Add interpretation}
-\newpage
-
-
+The nD-Laplace mechanism exhibits suboptimal performance in terms of \gls{ami}. This can be attributed to its uniform distribution, which is not well-suited for datasets with a line-shaped structure, as illustrated in Figure \ref{fig:validation-Line-dataset_comparison_2d-laplace}. In contrast, the Piecewise mechanism more effectively retains the original shape, though it registers an average \gls{ami} of 0.6 for a privacy budget of 9. Notably, the majority of the values surpass the baseline in terms of privacy. Furthermore, it is observed that for an epsilon value of 0.5, a significant number of mechanisms exhibit a negative membership advantage.
 
 \mycomment{\subsection{3-dimensional data}
   \begin{figure}[H]
