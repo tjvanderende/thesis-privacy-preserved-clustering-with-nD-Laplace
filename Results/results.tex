@@ -26,7 +26,7 @@ Please refer to the plots in the appendix for the same scores for kD-Laplace var
   \label{fig:validation-seeds-dataset_comparison_2d-laplace}
 \end{figure}
 %The above plots show the AMI and ARI scores for the seeds-dataset with kd-laplace/grid/optimal (left-side) and piecewise (right-side).
-The Piecewise mechanism excels in Adjusted Mutual Information (\gls{ami}) at a privacy budget (epsilon) of 9, while the nd-Laplace mechanism is superior for other epsilon values. K-Means consistently outperforms other clustering algorithms, though only marginally over \gls{ag}, and both yield similar silhouette coefficient (\gls{sc}) scores. The underperformance of the OPTICS algorithm across both mechanisms, comparable only to the AP algorithm under Piecewise, suggests its potential limitations in these configurations.
+The Piecewise mechanism excels in Adjusted Mutual Information (\gls{ami}) at a privacy budget (epsilon) of 9, while the nd-Laplace mechanism is superior for other epsilon values. K-Means consistently outperforms other clustering algorithms, though only marginally over \gls{ag}, and both yield similar silhouette coefficient (\gls{sc}) scores. The under performance of the OPTICS algorithm across both mechanisms, comparable only to the AP algorithm under Piecewise, suggests its potential limitations in these configurations.
 \newpage
 The plot shows that nD-Laplace performs better for lower epsilons. Which is likely due to the mechanism also considering the shape (distance) of the data, so the Piecewise mechanism proportionally adds more noise. But, then we would expect OPTICS to score better. Therefore, we visualize this behaviour:
 \begin{figure}[H]
@@ -132,34 +132,27 @@ Even though \gls{optics} gets high scores for \gls{ami}, it doesn't do as well f
 
   \label{fig:validation-circle-dataset_comparison_3d-laplace}
 \end{figure}
-The nD-Laplace mechanism excels with K-Means, achieving a peak score of 0.33 \gls{ami}. While \gls{ag} closely follows, \gls{optics} lags significantly with scores less than 0.1 \gls{ami}. Similarly, the Piecewise mechanism registers its highest scores with K-Means, nearing 0.7 \gls{ami}. In this context, \gls{ag} maintains a comparable trend. Notably, \gls{optics} scores higher with Piecewise (less than 0.4 \gls{ami) than with nD-Laplace. For both mechanisms, \gls{sc} scores hover around the baseline at approximately 0.2. Across all privacy budgets, \gls{optics} consistently scores below 0 for \gls{sc}.
+The nD-Laplace mechanism excels with K-Means, achieving a peak score of 0.33 \gls{ami}. While \gls{ag} closely follows, \gls{optics} lags significantly with scores less than 0.1 \gls{ami}. Similarly, the Piecewise mechanism registers its highest scores with K-Means, nearing 0.7 \gls{ami}. In this context, \gls{ag} maintains a comparable trend. Notably, \gls{optics} scores higher with Piecewise (less than 0.4 \gls{ami} than with nD-Laplace). For both mechanisms, \gls{sc} scores hover around the baseline at approximately 0.2. Across all privacy budgets, \gls{optics} consistently scores below 0 for \gls{sc}.
 \todo[inline]{Discussion}
 \newpage
 \begin{figure}[H]
   \centering
-
   \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewise mechanisms for the 3-dimensional data line-dataset}}
   \includegraphics[width=0.9\textwidth]{Results/nd-laplace/nd-Laplace/line-dataset/ami-and-sc_3_dimensions.png}
   \label{fig:validation-line-dataset_comparison_3d-laplace}
 \end{figure}
 The scores in this plot closely resemble those from the previous one. With nD-Laplace, both K-Means and \gls{ag} lead the pack, though neither surpasses 0.6 \gls{ami}. Notably, \gls{optics} doesn't score at all.
-
 The Piecewise mechanism outperforms nD-Laplace, reaching 0.86 \gls{ami} for privacy budgets at levels 7 and 9. In this scenario, \gls{ag} follows but with notably lower scores: 0.6 and 0.78 \gls{ami} for epsilon 7 and 9, respectively. While \gls{optics} remains a weaker performer across both mechanisms, it does exhibit a positive trajectory with the Piecewise mechanism.
-
-Comparing these findings to the prior set, there are subtle variations in the \gls{sc} metric. Specifically, K-Means and \gls{ag} display a broader range of results, spanning from 0.2 to 0.6.
-
+Comparing these findings to the prior set, there are subtle variations in the \gls{sc} metric. Specifically, K-Means and \gls{ag} display a broader range of results, spanning from 0.2 to 0.6. 
 \newpage
 \begin{figure}[H]
   \centering
-
-  \caption{\textbf{AMI (top) and SC (bottom) for the kD-Laplace and Piecewise mechanisms for the 3-dimensional data skewed-dataset}}
+  \caption{\textbf{AMI (top) and SC (bottom) for the nD-Laplace and Piecewise mechanisms for the 3-dimensional data skewed-dataset}}
   \includegraphics[width=0.9\textwidth]{Results/nd-laplace/nd-Laplace/skewed-dataset/ami-and-sc_3_dimensions.png}
-
   \label{fig:validation-skewed-dataset_comparison_3d-laplace}
 \end{figure}
 The nD-Laplace mechanism performs best with the K-Means algorithm, scoring approximately +/- 0.76 \gls{ami} for privacy budgets 7 and 9. \gls{ag} also scores well, reaching a maximum of 0.63 \gls{ami}. In contrast, \gls{optics} scores significantly lower.
-
-For the Piecewise mechanism, we observe a similar pattern for K-Means and \gls{ag}. Although the progression of scores is alike, the actual scores only start to match from privacy budget 7 onwards. However, \gls{optics} scores much better from privacy budget 5.
+For the Piecewise mechanism, we observe a similar pattern for K-Means and \gls{ag}. Although the progression of scores is alike, the actual scores only start to match from privacy budget 7 on wards. However, \gls{optics} scores much better from privacy budget 5.
 
 For \gls{sc}, we see the same behavior, which we actually observe in every dataset. Both K-Means and \gls{ag} score close to the baseline value. In this case, \gls{ag} is slightly below K-Means.
 
@@ -238,7 +231,7 @@ Please refer to the plots in the appendix for:
   
 \end{figure}
 For the heatmaps, we observe a similar pattern, which was also evident in the cluster analysis. Specifically, nD-Laplace consistently scores well from lower epsilons, while Piecewise only starts to perform well from a privacy budget of 3.
-For nD-Laplace, the number of dimensions influences the score. The implementation of 3D-Laplace, in particular, scores relatively low. From 4 dimensions onward, we notice an increase in the \gls{ami}, especially in combination with an increasing \gls{epsilon}.
+For nD-Laplace, the number of dimensions influences the score. The implementation of 3D-Laplace, in particular, scores relatively low. From 4 dimensions onward, we notice an increase in the \gls{ami}, especially in combination with an increasing privacy budget.
 For Piecewise, it's notable that the number of dimensions has minimal impact on the outcome, with the privacy budget being the primary influencing factor. However, dimension does play a role for privacy budgets between 3 and 5, as scores are higher from 5 dimensions compared to lower dimensions.
 
 For nD-Laplace, the dimensions can significantly influence the improved result because as the number of dimensions increases, the noise decreases. We've elaborated on this phenomenon in Section \ref{fig:curse-of-dimensionality}. As a result, more information is retained, leading to an increase in score with the number of dimensions. The Piecewise mechanism might also be affected by this, but to a lesser extent.
