@@ -21,6 +21,7 @@
 \usepackage{makecell}
 \usepackage[flushleft]{threeparttable}
 \usepackage{changes}
+\usepackage{nomencl}
 \newtheorem{theorem}{Theorem}
 
 \let\oldFootnote\footnote
@@ -32,7 +33,10 @@
 
 \newcommand\isFootnote{%
     \ifx\footnote\nextToken\textsuperscript{,}\fi}
-    
+
+\makenomenclature
+\renewcommand{\nomname}{List of Symbols}
+\renewcommand{\nompreamble}{The next list describes several symbols that will used in the rest of the document}
 %\newglossary*{genericmath}{Math symbols}
 %\newglossary*{2dlaplace}{2D-Laplace symbols}
 %\newglossary*{differential-privacy}{Math symbols}
@@ -93,6 +97,7 @@
 %% Include an optional summary page.
 %\input{Summary/summary}
 %\input{Summary/samenvatting}
+\input{TheorethicalFramework/symbols}
 \input{glossary/acronyms.tex}
 \input{glossary/glossary.tex}
 \mainmatter

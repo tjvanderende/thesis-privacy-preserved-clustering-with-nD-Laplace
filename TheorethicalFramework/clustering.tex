@@ -14,14 +14,15 @@ Then the mean is calculated by calculating the mean of all points in the cluster
 \begin{equation}
     c_i = \frac{1}{|C_i|} \sum_{x_i \in C_i} x_i
 \end{equation}
-\todo[inline]{Add some more explanation.}
+The $c_i$ represents the mean of a cluster $C_i$,
+So, $|C_i|$ is the count of data-points (size of the cluster), then the average is calculated.
 Finally, the K-Means algorithm aims to minimize the within-cluster sum of squares (WCSS) \citep{yuan_research_2019}:
 \begin{equation}
-    WCSS = \sum_{i=1}^{k} \sum_{c_i \in C_i} || x_i, c_i ||^2
+    WCSS = \sum_{i=1}^{k} \sum_{c_i \in C_i} || x_i - c_i ||^2
 \end{equation}
-\todo[inline]{Also misses some information about the properties}
-The algorithm runs multiple times until the center point no longer changes or reaches the maximum iterations \citep{yuan_research_2019}.
-
+This metric quantifies the variance within each cluster. For all \( k \) clusters, it evaluates every data point \( x_i \) that is assigned to cluster \( C_i \). 
+The squared Euclidean distance between each point \( x_i \) and its corresponding centroid \( c_i \) is computed. 
+The algorithm iterates until either the centroids stabilize and no longer shift or a predefined maximum number of iterations is reached \citep{yuan_research_2019}.
 %Iteratively each data point is assigned to its nearest centroid.
 %It keeps proceeding until the distance between the cluster centroids is optimal.
 %The algorithm can also be used in a distributed manner.
@@ -142,7 +143,7 @@ Among the three methods discussed, the Gap statistic is the most time-consuming,
 However, the SSE method has its own challenges. Specifically, its results can sometimes be ambiguous, as the characteristic "elbow" point, which indicates the optimal number of clusters, might not always be visible \citep{yuan_research_2019, kodinariya_review_2013}. 
 Furthermore, while the SSE primarily focuses on distance metrics, both the silhouette coefficient and gap statistic offer a more comprehensive evaluation by incorporating additional indicators.
 
-While computational efficiency is a crucial factor, it's worth noting that the datasets utilized in this thesis are of a manageable size. 
+While computational efficiency is a crucial factor, it is worth noting that the datasets utilized in this thesis are of a manageable size. 
 Even so, the Gap statistic's time complexity is significantly greater than that of the Silhouette plot, even though their results are often similar, as observed by \citep{yuan_research_2019}. 
 Given these considerations, we have chosen to employ the Silhouette Coefficient method for our analysis. A detailed definition of this method will be provided in the subsequent section, as referenced in Equation: \ref{eq:silhouette_coefficient}.
 

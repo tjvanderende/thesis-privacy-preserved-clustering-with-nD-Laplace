@@ -16,7 +16,7 @@ In our concluding experiments, we delved into the details of the nD-Laplace mech
 
 Drawing from existing literature, we recognized the criticality of employing a remapping or truncation method. Without such a method, data with a low epsilon value risks being plotted outside its original domain. This deviation can potentially provide attackers with an advantage, enabling them to infer whether the data is part (member) of the original dataset.
 
-Our empirical findings agreed on these findings. Specifically, when operating with a constrained privacy budget, we observed a clear drop in membership advantage, plummeting to values even lower than -50. While this decline was anticipated, its magnitude was surprising. A deeper dive revealed that this steep decline could be attributed to the membership advantage metric itself, which, as highlighted in our literature review \todo{citation needed}, has certain inherent limitations. Contrary to the pattern suggested by the membership advantage, the underlying \gls{tpr} was considerably high, especially unexpected for a lower privacy budget. This anomaly was notably absent, or at least less pronounced, in the nD-Laplace variants. 
+Our empirical findings agreed on these findings. Specifically, when operating with a constrained privacy budget, we observed a clear drop in membership advantage, plummeting to values even lower than -50. While this decline was anticipated, its magnitude was surprising. A deeper dive revealed that this steep decline could be attributed to the membership advantage metric itself, which, as highlighted in our literature review, has certain inherent limitations. Contrary to the pattern suggested by the membership advantage, the underlying \gls{tpr} was considerably high, especially unexpected for a lower privacy budget. This anomaly was notably absent, or at least less pronounced, in the nD-Laplace variants. 
 
 The high \gls{tpr} for lower privacy budgets can be attributed to the fact that, for an epsilon value of 0.5, data points were plotted significantly outside the original domain. Our empirical findings thus emphasize the necessity, also echoed in the literature, of addressing this issue. Both nD-Laplace and Piecewise mechanisms would likely exhibit these shortcomings in practical settings.
 
@@ -25,7 +25,7 @@ The two variants, grid-nD-Laplace and density-nD-Laplace, have demonstrated thei
 \subsection{Constraints}
 We encountered challenges with \gls{optics} clustering algorithm.
 Our analysis revealed a higher number of clusters for \gls{optics} compared to K-Means and \gls{ag}. Additionally, a significant portion of data points were labeled as noise. This suggests potential issues with the configuration of \gls{optics}, particularly the $minPts$ parameter. Despite these configuration issues, the Piecewise mechanism still outperformed nD-Laplace in certain scenarios, likely due to its ability to handle dense data shapes.
-
+% \todo[inline]{Selection of features for 2d/3d heart-dataset \& seedsdataset might have impact}
 \subsection{Future work}
 The nD-Laplace mechanism, based on our findings, holds promise for clustering applications. While it showcases distinct advantages and disadvantages compared to the Piecewise mechanism, there's room for improvement, especially in handling diverse data forms. To further its practical applicability, we propose the following research directions:
 

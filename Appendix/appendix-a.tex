@@ -1,6 +1,8 @@
 \chapter{Hyperparameters}
 \section{K-Means}
-For selecting the appropriate amount of clusters, we used an "elbow" plot in combination with the silhouette score.
+For selecting the appropriate amount of clusters, we used the silhouette method. 
+Using this method, we ran the K-Means method multiple times for different $k$ values.
+The results are plotted using a line-plot, and we select the highest silhouette score from this plot. 
 \begin{enumerate}
   \item Seeds dataset (All dimensions): k-clusters.
   \begin{enumerate}
@@ -35,17 +37,17 @@ For selecting the appropriate amount of clusters, we used an "elbow" plot in com
 \subsection{Seeds dataset}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images//k-values/seeds-dataset-2-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for seeds dataset (2 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for seeds dataset (2 dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-seeds-dataset-2d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/seeds-dataset-2-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for seeds dataset (3 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for seeds dataset (3 dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-seeds-dataset-3d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/seeds-dataset-n-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for seeds dataset (7 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for seeds dataset (7 dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-seeds-dataset-7d}
 \end{figure}
 \newpage
@@ -53,17 +55,17 @@ For selecting the appropriate amount of clusters, we used an "elbow" plot in com
 \subsection{Heart dataset}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/heart-dataset-2-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for Heart dataset (2 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for Heart dataset (2 dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-heart-dataset-2d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/heart-dataset-3-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for Heart dataset (3 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for Heart dataset (3 dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-heart-dataset-3d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/heart-dataset-n-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for Heart dataset (9 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for Heart dataset (9 dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-heart-dataset-9d}
 \end{figure}
 \newpage
@@ -72,12 +74,12 @@ For selecting the appropriate amount of clusters, we used an "elbow" plot in com
 
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/circle-dataset-2-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for circle dataset (2-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for circle dataset (2-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-circle-dataset-2d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/circle-dataset-3-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for circle dataset (3-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for circle dataset (3-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-circle-dataset-3d}
 \end{figure}
 \newpage
@@ -85,29 +87,29 @@ For selecting the appropriate amount of clusters, we used an "elbow" plot in com
 \subsection{Line dataset}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/line-dataset-2-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for line dataset (2-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for line dataset (2-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-line-dataset-2d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/line-dataset-3-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for line dataset (3-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for line dataset (3-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-line-dataset-3d}
 \end{figure}
 \newpage
 \subsection{Skewed dataset}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/skewed-dataset-2-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for skewed dataset (2-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for skewed dataset (2-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-skewed-dataset-2d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/skewed-dataset-3-kmeans.png}
-  \caption{Selecting the $k$ for K-Means clustering for skewed dataset (3-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for K-Means clustering for skewed dataset (3-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-skewed-dataset-3d}
 \end{figure}
 \newpage
 \section{Agglomerative clustering} \label{appendix:agglomerative-hyperparameters}
-
+The same as with K-Means applies to \gls{ag}.
 \begin{enumerate}
     \item Seeds dataset:
     \begin{enumerate}
@@ -141,17 +143,17 @@ For selecting the appropriate amount of clusters, we used an "elbow" plot in com
 \subsection{Seeds dataset}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/seeds-dataset-2-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for seeds dataset (2 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for seeds dataset (2 dimensions) using the"silhouette method"}
   \label{hyperparameters:agglomerative-seeds-dataset-2d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/seeds-dataset-3-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for seeds dataset (3 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for seeds dataset (3 dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-seeds-dataset-3d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/seeds-dataset-n-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for seeds dataset (7 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for seeds dataset (7 dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-seeds-dataset-7d}
 \end{figure}
 \newpage
@@ -159,17 +161,17 @@ For selecting the appropriate amount of clusters, we used an "elbow" plot in com
 \subsection{Heart dataset}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/heart-dataset-2-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for Heart dataset (2 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for Heart dataset (2 dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-heart-dataset-2d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/heart-dataset-3-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for Heart dataset (3 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for Heart dataset (3 dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-heart-dataset-3d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/heart-dataset-n-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for Heart dataset (9 dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for Heart dataset (9 dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-heart-dataset-9d}
 \end{figure}
 \newpage
@@ -178,12 +180,12 @@ For selecting the appropriate amount of clusters, we used an "elbow" plot in com
 
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/circle-dataset-2-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for circle dataset (2-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for circle dataset (2-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-circle-dataset-2d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/circle-dataset-3-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for circle dataset (3-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for circle dataset (3-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-circle-dataset-3d}
 \end{figure}
 \newpage
@@ -191,23 +193,23 @@ For selecting the appropriate amount of clusters, we used an "elbow" plot in com
 \subsection{Line dataset}
 \begin{figure}[H]
   \includegraphics[width=0.8\textwidth]{Method/images/k-values/line-dataset-2-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for line dataset (2-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for line dataset (2-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-line-dataset-2d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/line-dataset-3-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for line dataset (3-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for line dataset (3-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-line-dataset-3d}
 \end{figure}
 \newpage
 \subsection{Skewed dataset}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/skewed-dataset-2-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for skewed dataset (2-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for skewed dataset (2-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-skewed-dataset-2d}
 \end{figure}
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{Method/images/k-values/skewed-dataset-3-agglomerative.png}
-  \caption{Selecting the $k$ for Agglomerative clustering for skewed dataset (3-dimensions) using the "elbow plot."}
+  \caption{Selecting the $k$ for Agglomerative clustering for skewed dataset (3-dimensions) using the "silhouette method"}
   \label{hyperparameters:agglomerative-skewed-dataset-3d}
 \end{figure}

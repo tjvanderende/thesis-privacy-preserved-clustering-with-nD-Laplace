@@ -59,7 +59,7 @@ This question is divided into four smaller sub-questions:
         The choice of K-Means is due to its simplicity, making it suitable for our hypothesis tests.
         Also, we assume that the K-Means results are representative of the other clustering algorithms.
         \begin{enumerate}
-          \item \textit{H1: The shape of the data negatively impacts the nd-Laplace mechanism in terms of privacy and utility:}
+          \item \textit{H1: The shape of the data negatively impacts the nD-Laplace mechanism in terms of privacy and utility:}
                 Because the mechanism heavily relies on Euclidean distance, the shape (distance between the data points) can ultimately harm utility and privacy.
                 We have already observed this difference when comparing the heart and seed datasets in research questions 1 and 2.
                 But, to rule out the potential impact of the number of data points (the heart dataset has 2126 samples and the seed-dataset 210), we generate three synthetic datasets, each with 1000 samples (See section \ref{datasets-section}).
@@ -143,7 +143,7 @@ The packages for Python are:
 \section{Data collection}
 This section explains what methods/ algorithms we use to collect the data necessary to answer the research questions.
 \subsection{Hyperparameter selection}
-For the three different algorithms: K-Means, \gls{ap}, and OPTICS, we analyzed the most important decisions regarding hyperparameter selection (See section \ref{paragraph:choosing-r}).
+For the three different algorithms: K-Means, \gls{ap}, and \gls{optics}, we analyzed the most important decisions regarding hyperparameter selection.
 This section gives a short list and explanation of the parameters we used throughout the experiments.
 \subsubsection{K-Means}
 \begin{table}[H]
@@ -163,7 +163,7 @@ This section gives a short list and explanation of the parameters we used throug
 The above table shows the relevant hyperparameters for the K-Means clustering algorithm.
 The hyperparameter differs for each dataset, so we must display it for each.
 This hyperparameter is the k-value used to determine the number of clusters.
-The "value" column shows the value we used for the experiments, with the corresponding "elbow" plot in the referenced figure.
+The "value" column shows the value we used for the experiments, which is selected using the highest silhouette score (See the Appendix \ref{appendix:agglomerative-hyperparameters}).
 \subsubsection{Agglomerative clustering}
 \begin{table}[H]
   \begin{tabular}{|l|p{6cm}|l|l|l|}
@@ -204,7 +204,7 @@ In addition, there is the "linkage," which is "ward" for all configurations (See
     \hline
     Minimum points & ""                                                                                                             & $minPts=14$ & \makecell[l]{Seeds dataset \\ (7-dimensions)}  \\
     \hline
-    Minimum points & ""                                                                                                             & $minPts=18$ & \makecell[l]{Heart dataset \\ (10-dimensions)} \\
+    Minimum points & ""                                                                                                             & $minPts=18$ & \makecell[l]{Heart dataset \\ (9-dimensions)} \\
     \hline
   \end{tabular}
   \caption{OPTICS  hyperparameters for datasets}
@@ -288,6 +288,7 @@ In addition, we evaluate privacy by simulating a membership inference attack and
         The attacker could infer many original labels if the adversary advantage or \gls{tpr} is high.
         In this case, a lower score is better than a lower score.
 \end{enumerate}
+\newpage
 %\input{Method/algorithms/shokri-setup-mi.tex}
 \subsection{Research roadmap} \label{research-roadmap}
 This section explains the experiments' setup and the result reporting order.

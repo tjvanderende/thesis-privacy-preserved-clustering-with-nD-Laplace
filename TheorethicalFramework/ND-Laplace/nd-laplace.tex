@@ -11,6 +11,8 @@ Therefore, for the rest of the thesis, we use the following names:
 \end{enumerate}
 For each mechanism, we explain the equation for \gls{gi}, the mechanism, and the data truncation.
 
+\printnomenclature
+
 \input{TheorethicalFramework/ND-Laplace/2d-laplace.tex}
 \input{TheorethicalFramework/ND-Laplace/3d-laplace.tex}
 \newpage
@@ -28,25 +30,28 @@ The theorems for \gls{gi} are extended by Fernandes et al. to support n-dimensio
   \label{theorem:nd-laplace}
 \end{theorem}
 This theorem extends $\epsilon$-geo-indistinguishability to $\epsilon-d_x$-privacy as a more general notion of distinguishability \citep{fernandes_generalised_2019}:
-Here, $d_x$ is a pseudo metric which was provided by Chatzikokalakis et al. as elastic privacy definition for location privacy \citep{chatzikokolakis_constructing_2015}. For the use with the Euclidean distance, the privacy definition is defined as $d_{euc}$. Due to the flexibility of $d_x$ the theorem \ref{theorem:nD-Laplace} also holds for $d_{euc}$.  Furthermore, $\epsilon-d_{euc}$ provides the same privacy definition as geo-indistinguishability \citep{chatzikokolakis_constructing_2015}.
-Therefore, $d_{euc}$ is adopted by this thesis from now on, to be used for n-dimensions to establish a more general notion of privacy. \newline
+Here, $d_x$ is a pseudo metric which was provided by Chatzikokalakis et al. as elastic privacy definition for location privacy \citep{chatzikokolakis_constructing_2015}. For the use with the Euclidean distance, the privacy definition is defined as $d_{euc}$. Due to the flexibility of $d_x$ the theorem \ref{theorem:nd-laplace} also holds for $d_{euc}$.  Furthermore, $\epsilon-d_{euc}$ provides the same privacy definition as geo-indistinguishability \citep{chatzikokolakis_constructing_2015}.
+Therefore, $d_{euc}$ is adopted by this thesis from now on, to be used for applying it for non-geographical data to establish a more general notion of privacy. \newline
 
 The 2D-Laplace mechanism is referenced as a plane, and the coordinates can be generated separately as $(r, \theta)$ \citep{fernandes_generalised_2019,DBLP:journals/corr/abs-1212-1984}.
 Hence, generating the nD-variant can be seen as generating multiple $(r, \theta)$ pairs \citep{fernandes_generalised_2019}.
 Where $r$ is the radial distance from the origin $x_0$ and $\theta$ is the angle randomly selected from a unit hypersphere.
-The selection of $r$ is according to the Gamma distribution, with shape $n$ and scale $\delta > 0$ \cite{fernandes_generalised_2019}:
+The selection of $r$ is according to the Gamma distribution, with shape $n$ and scale $\delta > 0$ \citep{fernandes_generalised_2019}:
 \begin{equation}
   Gam^n_\delta(r) := \frac{r^{n-1}\cdot^{-\frac{r}{\delta}}}{\delta^n(n-1!)}
+  \label{eq:generate_r_for_nd_laplace}
 \end{equation}
 Then, $\theta$ is drawn from a uniform distribution of a unit hypersphere $S$ \citep{fernandes_generalised_2019}:
 \begin{equation}
   Uniform^n(\theta) := \frac{\gamma(\frac{n}{2})}{n \cdot \pi ^{\frac{n}{2}}}
+  \label{eq:generate_theta_for_nd_laplace}
 \end{equation}
 This approach is similar to the other variants of the Laplace mechanism.
 Only now, we select points from an $n$-dimensional hypersphere  \footnote{https://mathworld.wolfram.com/SpherePointPicking.html} instead of a unit sphere \ref{eq:3d-laplace-2}. \newline
 
 In the next step, the spherical coordinate representation is converted to Cartesian coordinates \citep{fernandes_generalised_2019}:
-It is comparable to the way it was done in the previous chapters; however, as there are an $n$-amount of angles, the equation is repeated and slightly different:
+It is comparable to the way it was done in the previous chapters; however, as there are an $n$-amount of angles, the equation is repeated and slightly different.
+The formula is provided by Fernandes et al. to convert $r$ to spherical coordinates \citep{fernandes_generalised_2019}:
 \begin{align}
   x_1 = r * cos (\theta_1)                                          \\
   x_2 = r * sin (\theta_1) * cos (\theta_2)                         \\
@@ -54,7 +59,7 @@ It is comparable to the way it was done in the previous chapters; however, as th
   x_n = r * sin(\theta_{n-1}) * sin(\theta_{n-2}) * sin(\theta_{n-1})
   \label{eq:nd-laplace-cartesian}
 \end{align}
-\todo[inline]{Needs some extra explanation}
+
 The combination of sections 1 and 2 of this chapter provides a good overview of the solution using a similar image as the 2D and 3D variants (figure \ref{fig:nd-laplace-overview}).
 \begin{figure}[H]
   \includesvg[width=0.6\textwidth]{TheorethicalFramework/ND-Laplace/Images/nd_laplace}
@@ -94,23 +99,27 @@ Given a set of perturbed points $Z$ we can truncate the points that are outside 
 Here, $X$ represents other non-private data points reported locally by the same user.
 The following part aims at extending the theorems for 2D and 3D-Laplace for discritezation and truncation to n-dimensions. \newline
 
-The theorems for 2D (See  Theorem\ref{theorem:discretization} and 3D-Laplace (See Theorem \ref{theorem:3d-discretization} include a device precision. This variable is the hardware precision of a GPS provided by the user's device (e.g. a mobile phone). For the purpose of clustering, we omit this for the formulation of truncation with n-dimensions.
+The theorems for 2D (See Theorem \ref{theorem:discretization}) and 3D-Laplace (See Theorem \ref{theorem:3d-discretization}) include a device precision. 
+This variable is the hardware precision of a GPS provided by the user's device (e.g. a mobile phone). 
+For the purpose of clustering, we omit this for the formulation of truncation with n-dimensions.
 
 We extend the reasoning of Min et al. behind extending 2D-Laplace to 3D-Laplace as this applies to nD-Laplace as well.
 Let $v > w > h$ be a cuboid grid $G_c$, equal to the one provided by Min et al \citep{9646489}.
 We are be-able to extend this by providing a hypercube ($n$-cube) with n-dimensions denoted as $G_n = u_1, u_2, u_3 ... u_n$. This $n$-cube has $2^n$ sides, but can essentially be seen as a generalization of a 3-cube to $n$-dimensions \footnote{https://mathworld.wolfram.com/Hypercube.html}.
-An issue arises with the definition of the grid-units, where Min et al. and Andres et al. both consider the possibility of unequal grid-units, for the purpose of generalisation \citep{9646489, DBLP:journals/corr/abs-1212-1984}.
-However, for a $n$-cube this is generalisation is harder to justify, because \todo{Add reasoning}.
+
+However, An issue arises with the definition of the grid-units, where Min et al. and Andres et al. both consider the possibility of unequal grid-units, for the purpose of generalisation \citep{9646489, DBLP:journals/corr/abs-1212-1984}. 
+But for a $n$-cube this is generalisation is harder to justify, because the are $2^n$ possible sides to consider.
 For this reason, we define $v, w, h = u_1$. We choose $u_1$, but in general this can be any given value $u \in G_n$.
+
 Another important property, is the maximum diameter defined as $r_M$ \citep{9646489}.
 This property can also be converted to support n-dimensions, by calculating the diameter of $G_n$.
-This is the maximum distance between any pair of nodes  [HARARY1988277].:
-The Euclidean distance diameter is defined as (ref):
+This is the maximum distance between any pair of nodes \citep{HARARY1988277}. \newline
+The Euclidean distance diameter is defined as:
 \begin{equation}
   d_e(G_n) = r_H = \sqrt{n}
 \end{equation}
 
-Where, $n$ is the amount of dimensions.
+Where, $n$ is the number of dimensions.
 \newpage
 Finally, we are be-able to establish our own theorem for the discretization and truncation of nD-Laplace:
 \begin{theorem}
@@ -128,8 +137,10 @@ Moreover, $w = \frac{u^2}{r_H^2 \cdot sin(\theta)} > \frac{u}{r_H}$ is also sati
 Given that these pre-conditions apply, we can reuse the proof from 3-dimensions for n-dimensions. \newline
 
 The utility of this method depends on the number of grid cells in $G_n$ since a smaller distance will result in more frequent mapping to the surface of the grid.
-When $\epsilon$ is very low (and thus $z$ is farther away from $x_0$), the data points are more likely to map to the grid surface (\ref{fig:3d-laplace-noise}, \ref{fig:3d-laplace-example}), and if the grid cells width is very high this impacts utility.
-So, the number of grid cells could possibly the utility, but this comes at the cost of significantly increased space complexity. Also, when the number of dimensions increases, the number of grid cells grows quadratic. \newline
+When $\epsilon$ is very low (resulting in $z$ being much farther away from $x_0$), data points have a higher likelihood of mapping to map to the grid surface 
+(as seen in \ref{fig:3d-laplace-noise}, \ref{fig:3d-laplace-example}). 
+While increasing the number of grid cells might enhance utility, it also leads to a notable rise in space complexity. 
+Moreover, as the number of dimensions grows, the count of grid cells increases quadratically.
 
 \subsubsection{Optimization}
 To make grid-remapping practically possible with n-dimensions, the data structure has to be more efficient to search spatial data. For this purpose, we adopt the idea proposed by Chatzikokolakis et al. of using a kd-tree to search the grid efficiently \citep{chatzikokolakis_efficient_2017}.
@@ -142,7 +153,7 @@ For this reason, we aim to apply this practically by using a kd-tree for the fol
 The usage of kd-tree does not impact any privacy guarantee provided in the previous section. It is just a more efficient way of searching in n-dimensional spatial structures. Also, for visualization purposes, this section will primarily focus on 2D data. \newline
 The next section explains the concept and underlying idea of kd-trees.
 Then, we delve into its application for grid remapping.
-Finally, we expand this to a practical application
+Finally, we expand this to a practical application with nD-Laplace.
 \newpage
 \subsubsection*{Kd-trees} \label{theory:kd-trees}
 A kd-tree algorithm can search a grid for nearby points \citep{bentley_multidimensional_1975}.
@@ -195,9 +206,9 @@ In the illustration, you can observe that $z_i$ falls outside the original domai
 We accomplish this by utilizing the nearest-neighbor search from the kd-tree algorithm, allowing us to search in $X \cup G$.
 Using this algorithm, we can effectively remap point $z \in Z$ to either $X$ or $G$ based on the closest Euclidean distance (Algorithm \ref{alg:grid-remapping-laplace} and Algorithm \ref{alg:find-outside-domain-laplace}).
 
-Although the methodology works for scaling grid-remapping for n-dimensional data, it can still cause scalability issues.
-It still does not scale well with the number of dimensions and a more significant number of grid cells.
-Therefore, we are looking for a solution that might work better in practice
+A dataset with little dispersion in the data is remapped to the grid regardless of the data shape. 
+Generating a grid with sufficiently small grid units to account for this would still result in too much complexity. 
+Therefore, in the next chapter, we will look at a variant that addresses this issue.
 
 \input{TheorethicalFramework/ND-Laplace/algorithms/outside-domain.tex}
 \input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}
@@ -210,7 +221,7 @@ According to the grid-remapping methodology, a point $z_i$ is mapped to the cent
 The utility is improved by reducing the distance between $z_i$ and $x_i$, as this is closer to the original data point.
 But, to consider the privacy of the data, this can only be done if there is enough indistinguishability between $z_i$ and $x_i$.
 To this end, we adopt the remapping approach of Chatzikokolakis et al. to remap based on the data density \citep{chatzikokolakis_efficient_2017}.
-The remapping algorithm works on the idea of crowded places \ref{2d:optimizing}, with the intuition that a crowded place leverages indistinguishability by crowdedness (density) \citep{chatzikokolakis_efficient_2017}.  \newline
+The remapping algorithm works on the idea of crowded places, with the intuition that a crowded place leverages indistinguishability by crowdedness (density) \citep{chatzikokolakis_efficient_2017}.  \newline
 
 The approach is visualized using the following figure:
 \begin{figure}[H]
@@ -233,8 +244,8 @@ But, in the context of our study, we consider the points within $r$ of $q$ or $x
 
 In equation \ref{eq:optimal-remapping-formula-1}, the $w(x)$ and $w(q)$ are normalization factors for estimating the likelihood of a point $x'_i$ being close to $z_i$ and $q$ being close to $z_i$.
 So, this remapping is according to the original definition of the 2D Laplace \gls{pdf} definition \ref{eq:polar-laplace-pdf}.
-The outcome of the formula is a collection of values that indicate the degree of density $sigma(x_i)$.
-The new value $z'_i$ is calculated by taking the mean of the $sigma(x_i)$ \citep{chatzikokolakis_efficient_2017}:
+The outcome of the formula is a collection of values that indicate the degree of density $\sigma(x_i)$.
+The new value $z'_i$ is calculated by taking the mean of the $\sigma(x_i)$ \citep{chatzikokolakis_efficient_2017}:
 \begin{equation}
   z_i' = \sum_{x'_i \in Q_r} \sigma(x'_i) * x'_i
   \label{eq:optimal-remapping-formula-2}
@@ -263,8 +274,8 @@ Now that we have defined everything, we can write the algorithm in a step-by-ste
 \input{TheorethicalFramework/ND-Laplace/algorithms/nd-laplace.tex}
 
 It is important to note that with the introduction of this algorithm, it is no longer a non-interactive method, as the data points now interact with each other.
-Therefore, we expect the introduction of optimal grid remapping with kd-tree will bring more utility \citep{wang_comprehensive_2020, xiongComprehensiveSurveyLocal2020}.
-The introduction of the kd-tree is also why we present our method as \textit{nD-Laplace}, where $k$ is the number of dimensions.
+Due to the extra interaction rounds, we expect the introduction of density grid remapping with kd-tree will bring more utility \citep{wang_comprehensive_2020, xiongComprehensiveSurveyLocal2020}.
+If this proofs to be true, it might out-weights the privacy implications for clustering.
 %\todo[inline]{Also refactor this}
 
 %\subsection{Extending to $d_x$-privacy}

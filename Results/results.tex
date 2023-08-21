@@ -14,7 +14,7 @@ As indicated in the methodology, we tested four mechanisms (three variants of nD
 All results are reported for each dataset (See methodology: \ref{datasets-section}) separately.
 \section{Cluster utility}
 The results below display the difference in external and internal utility for the three clustering algorithms using the nD-Laplace and Piecewise mechanisms.
-The x-axis shows the privacy budget, and the y-axis shows the \gls{ami}.
+The x-axis shows the privacy budget, and the y-axis shows the \gls{ami} or \gls{sc}.
 Please refer to the plots in the appendix for the same scores for nD-Laplace variants (See \ref{appendix:results-mechanism-utility}).
 \newpage
 \subsection{2-dimensional data}
@@ -26,18 +26,18 @@ Please refer to the plots in the appendix for the same scores for nD-Laplace var
   \label{fig:validation-seeds-dataset_comparison_2d-laplace}
 \end{figure}
 %The above plots show the AMI and ARI scores for the seeds-dataset with nD-Laplace/grid/optimal (left-side) and piecewise (right-side).
-The Piecewise mechanism excels in Adjusted Mutual Information (\gls{ami}) at a privacy budget (epsilon) of 9, while the nd-Laplace mechanism is superior for other epsilon values. K-Means consistently outperforms other clustering algorithms, though only marginally over \gls{ag}, and both yield similar silhouette coefficient (\gls{sc}) scores. The under performance of the OPTICS algorithm across both mechanisms, comparable only to the AP algorithm under Piecewise, suggests its potential limitations in these configurations.
+The Piecewise mechanism excels in Adjusted Mutual Information (\gls{ami}) at a privacy budget (epsilon) of 9, while the nD-Laplace mechanism is superior for other epsilon values. K-Means consistently outperforms other clustering algorithms, though only marginally over \gls{ag}, and both yield similar silhouette coefficient (\gls{sc}) scores. The under performance of the \gls{optics} algorithm across both mechanisms, suggest an incorrect configuration of this algorithm. The next page analyzes this behaviour.
 \newpage
-The plot shows that nD-Laplace performs better for lower epsilons. Which is likely due to the mechanism also considering the shape (distance) of the data, so the Piecewise mechanism proportionally adds more noise. But, then we would expect OPTICS to score better. Therefore, we visualize this behaviour:
+The plot shows that nD-Laplace performs better for lower epsilons. Which is likely due to the mechanism also considering the shape (distance) of the data, so the Piecewise mechanism proportionally adds more noise. But, then we would expect \gls{optics} to score better. Therefore, we visualize this behaviour:
 \begin{figure}[H]
   \centering
   \includegraphics[width=1\linewidth]{Discussion/behaviour-2d-seeds-dataset&optics.png}
   \caption{Evaluating OPTICS for seeds-dataset 2-dimensional data (epsilon 9)}
   \label{fig:evaluate-optics-seeds-dataset-2d-9eps}
 \end{figure}
-The plot above illustrates the kernel density of core points chosen by the OPTICS algorithm for data with an epsilon value of 9. Clusters within the Plain and Piecewise datasets are compact and exhibit linear alignment, suggesting a distinct data distribution or directional noise stemming from the Piecewise mechanism. Conversely, the nD-Laplace clusters are more scattered, indicating that its noise impacts data uniformly across all directions.
+The plot above illustrates the kernel density of core points chosen by the \gls{optics} algorithm for data with an epsilon value of 9. Clusters within the Plain and Piecewise datasets are compact and exhibit linear alignment, suggesting a distinct data distribution or directional noise stemming from the Piecewise mechanism. Conversely, the nD-Laplace clusters are more scattered, indicating that its noise impacts data uniformly across all directions.
 
-Furthermore, the noise level is concerning. According to Schubert et al. (2017) \citep{schubert_dbscan_2017}, the noise should range between 1\% and 30\%. However, the OPTICS algorithm we employed indicates an average noise level of 40\%, pointing to a potential problem with the algorithm's implementation. Additionally, the number of clusters reported is notably high.
+Furthermore, the noise level is concerning. According to Schubert et al. (2017) \citep{schubert_dbscan_2017}, the noise should range between 1\% and 30\%. However, the \gls{optics} algorithm we employed indicates an average noise level of 40\%, pointing to a potential problem with the algorithm's implementation. Additionally, the number of clusters reported is notably high.
 
 
 \newpage
@@ -49,9 +49,13 @@ Furthermore, the noise level is concerning. According to Schubert et al. (2017) 
   \label{fig:validation-heart-dataset_comparison_2d-laplace}
 \end{figure}
 Using the K-Means method, the nD-Laplace system works better for all epsilon values. For other methods, the results between the two privacy systems are mostly the same. But, nD-Laplace often does a bit better in \gls{ami} scores. If we compare \gls{optics} with the previous section, we see large improvements.
-When looking at \gls{sc}, both the grouped and K-Means methods do the best for both privacy systems. This is true for most methods. This \gls{ami} score trend matches what we saw with the OPTICS method earlier.
+When looking at \gls{sc}, both the grouped and K-Means methods do the best for both privacy systems. This is true for most methods. This \gls{ami} score trend matches what we saw with the \gls{optics} method earlier.
 
-The trends observed in these charts closely mirror those from the seeds-dataset. However, the outcomes here are more consistent. Remarkably, OPTICS stands out in its performance. This can be attributed to the data's configuration. As depicted in Figure \ref{fig:evaluate-optics-seeds-dataset-2d-9eps}, there's a pronounced spread in the nD-Laplace data, similar to the heart-dataset. When data is inherently well-separated, nD-Laplace excels, explaining the strong performance of both Agglomerative and K-Means clustering. This observation is further supported by the \gls{sc}, which aligns closely with the baseline score of K-Means.
+The trends observed in these charts closely mirror those from the seeds-dataset. However, the outcomes here are more consistent. 
+Remarkably, \gls{optics} stands out in its performance. This can be attributed to the data's configuration. 
+As depicted in Figure \ref{fig:evaluate-optics-seeds-dataset-2d-9eps}, there's a pronounced spread in the nD-Laplace data, similar to the heart-dataset. 
+When data is inherently well-separated, nD-Laplace excels, explaining the strong performance of both Agglomerative and K-Means clustering. 
+This observation is further supported by the \gls{sc}, which aligns closely with the baseline score of K-Means.
 \newpage
 \begin{figure}[H]
   \centering
@@ -84,8 +88,9 @@ Overall, the trends observed with the heart-dataset are not mirrored here. The P
   \label{fig:validation-Line-dataset_comparison_2d-laplace}
 \end{figure}
 
-The plot above displays the \gls{optics} scores, denoted by black markers. Even though the data bears resemblance to the seeds-dataset, the dispersion is significantly greater for the nD-Laplace mechanism. This can be attributed to the line shape of the data, as the nD-Laplace mechanism disperses noise uniformly in all directions. However, the extent of this dispersion is notably greater than that observed in the seeds-dataset, leading to inferior results.
-\todo[inline]{Analyze why this is such a big difference}
+The plot above displays the \gls{optics} scores, denoted by black markers. Even though the data bears resemblance to the seeds-dataset, the dispersion is significantly greater for the nD-Laplace mechanism. This can be attributed to the line shape of the data, as the nD-Laplace mechanism disperses noise uniformly in all directions. However, the extent of this dispersion is notably greater than that observed in the seeds-dataset, leading to inferior results. 
+The most probable reason for this is the amount of data-samples. 
+The likelihood to generate $z$ close to $x_0$ is higher. However, the line dataset is 5 times more data and the data is more dense.
 
 \newpage
 \begin{figure}[H]
@@ -133,7 +138,7 @@ Even though \gls{optics} gets high scores for \gls{ami}, it doesn't do as well f
   \label{fig:validation-circle-dataset_comparison_3d-laplace}
 \end{figure}
 The nD-Laplace mechanism excels with K-Means, achieving a peak score of 0.33 \gls{ami}. While \gls{ag} closely follows, \gls{optics} lags significantly with scores less than 0.1 \gls{ami}. Similarly, the Piecewise mechanism registers its highest scores with K-Means, nearing 0.7 \gls{ami}. In this context, \gls{ag} maintains a comparable trend. Notably, \gls{optics} scores higher with Piecewise (less than 0.4 \gls{ami} than with nD-Laplace). For both mechanisms, \gls{sc} scores hover around the baseline at approximately 0.2. Across all privacy budgets, \gls{optics} consistently scores below 0 for \gls{sc}.
-\todo[inline]{Discussion}
+% \todo[inline]{Discussion}
 \newpage
 \begin{figure}[H]
   \centering
@@ -157,7 +162,6 @@ For the Piecewise mechanism, we observe a similar pattern for K-Means and \gls{a
 For \gls{sc}, we see the same behavior, which we actually observe in every dataset. Both K-Means and \gls{ag} score close to the baseline value. In this case, \gls{ag} is slightly below K-Means.
 
 From the results, it's evident that we see a similar trend in outcomes as with the heart-dataset. With nD-Laplace performing well at both lower and higher privacy budgets. When looking at the data distribution, it is spread out similarly to the heart-dataset. Whereas with the other datasets (especially circle/line), we noticed that the datasets have a strong shape.
-\todo[inline]{Add some distribution image}.
 
 \newpage
 \subsection{n-dimensional data}
@@ -176,9 +180,9 @@ The Piecewise mechanism only starts to show comparable results from a privacy bu
 For \gls{sc}, we see a bit more variation between the mechanisms than with the other dimensions. Also, The trend of \gls{sc} seems more similar to that of \gls{ami} than what we've observed in other dimensions.
 Looking at the scores, the nD-Laplace mechanism scores below the baseline from privacy budgets 0.5 to 7 but matches the scores for K-Means and \gls{ag} afterward. For nD-Laplace, \gls{optics} starts at 0.2 \gls{sc}, but then drops below 0. The Piecewise mechanism remains below 0 for \gls{optics} across all privacy budgets.
 
-Something notable occurs for the privacy budget of 2.5, as \gls{optics} peaks at 2.5. We would only expect this at a privacy budget of 9 when less noise has been added.
-\todo[inline]{We have to research this.}
-\newpage
+%Something notable occurs for the privacy budget of 2.5, as \gls{optics} peaks at 2.5. We would only expect this at a privacy budget of 9 when less noise has been added.
+%\todo[inline]{We have to research this.}
+% \newpage
 \begin{figure}[H]
   \centering
 
@@ -194,7 +198,7 @@ The Piecewise mechanism shows a similar trend for both K-Means and \gls{ag}, wit
 For \gls{optics}, the score remains at 0 for the Piecewise mechanism.
 With the \gls{sc} metric, the same pattern is evident, but the \gls{sc} is relatively low when considering the high \gls{ami} achieved. For \gls{optics}, an odd result is observed, as it scores 0.6 \gls{ami} (0.25 above the baseline) from 0.5 to 3. However, for privacy budgets of 3, 5, and 9, the score drops back to 0 \gls{sc}.
 
-\todo[inline]{Analyse gedrag}
+\todo[inline]{Why its fluctuating so much?}
 
 \newpage
 \section{Mechanism utility}
@@ -235,7 +239,7 @@ For nD-Laplace, the number of dimensions influences the score. The implementatio
 For Piecewise, it's notable that the number of dimensions has minimal impact on the outcome, with the privacy budget being the primary influencing factor. However, dimension does play a role for privacy budgets between 3 and 5, as scores are higher from 5 dimensions compared to lower dimensions.
 
 For nD-Laplace, the dimensions can significantly influence the improved result because as the number of dimensions increases, the noise decreases. We've elaborated on this phenomenon in Section \ref{fig:curse-of-dimensionality}. As a result, more information is retained, leading to an increase in score with the number of dimensions. The Piecewise mechanism might also be affected by this, but to a lesser extent.
-\todo[inline]{Further research needed}
+% \todo[inline]{Further research needed}
 
 \newpage
 \subsection{Heart-dataset}
@@ -258,7 +262,7 @@ For nD-Laplace, the dimensions can significantly influence the improved result b
 The scores for the heart-dataset are, as expected, in favor of nD-Laplace. We observe the same trend as in the cluster analysis, where nD-Laplace performs well across almost all privacy budgets. The performance of the 3D-Laplace implementation is slightly inferior, a finding that was also noted for the seeds-dataset. The influence of dimensions appears to be somewhat less pronounced than in the seeds-dataset, but from the 5th dimension onward, its impact becomes more significant.
 
 The Piecewise mechanism scores low for privacy budgets between 0.5 and 3. Notably, the scores for 4 and 5 dimensions are considerably lower for these privacy budgets. Beyond that, the number of dimensions has minimal influence on the outcomes, with the privacy budget being the primary determinant.
-\todo[inline]{Why are the 4 / 5 dimensions worse?}
+% \todo[inline]{Why are the 4 / 5 dimensions worse?}
 \newpage
 \mycomment{
   \subsection{Circle-dataset}
@@ -420,9 +424,11 @@ While the adversary advantage in the heatmaps for the Piecewise mechanism logica
     \end{subfigure}
   \end{subfigure}
 \end{figure}
-For the Piecewise mechanism, the results are straightforward, mirroring the pattern observed with the membership advantage on the preceding page. While the bottom-left corner deviates slightly from the membership advantage, it's not strikingly irregular. As anticipated, the \gls{tpr} rises with an increasing privacy budget. Dimensionality doesn't significantly impact this, though the 2-dimensional data stands out with a notably higher value. \todo[inline]{Investigate the impact of mi on 2-dimensional data}.
+For the Piecewise mechanism, the results are straightforward, mirroring the pattern observed with the membership advantage on the preceding page. While the bottom-left corner deviates slightly from the membership advantage, it's not strikingly irregular. As anticipated, the \gls{tpr} rises with an increasing privacy budget. Dimensionality doesn't significantly impact this, though the 2-dimensional data stands out with a notably higher value. 
+This happens for both mechanisms, so this is probably related to the choice in cluster features for 2-dimensional data.
+%\todo[inline]{Investigate the impact of mi on 2-dimensional data}.
 
-In contrast, the nD-Laplace mechanism presents a more diverse set of results. On the whole, there aren't any drastic shifts, but there's a subtle trend of the membership advantage growing with a higher privacy budget. Interestingly, the 3-dimensional data scores approximately 0.5 points lower than the others, warranting further investigation. \todo[inline]{Delve deeper into this discrepancy}.
+In contrast, the nD-Laplace mechanism presents a more diverse set of results. On the whole, there aren't any drastic shifts, but there's a subtle trend of the membership advantage growing with a higher privacy budget. %Interestingly, the 3-dimensional data scores approximately 0.5 points lower than the others, warranting further investigation. \todo[inline]{Delve deeper into this discrepancy}.
 Overall, Piecewise shows a higher privacy in comparison to nD-Laplace. This is in line with a higher utility that nD-Laplace offers.
 \newpage
 
@@ -560,7 +566,7 @@ Both mechanisms exhibit consistent values, yet they reveal nearly all the inform
 For the nD-Laplace mechanism, a high \gls{ami} is observed across numerous privacy budgets. However, for the more constrained privacy budgets, the \gls{ami} is notably lower, suggesting that the \gls{tpr} should similarly be reduced.
 
 Conversely, the Piecewise mechanism demonstrates a less favorable performance. This mechanism consistently registers a significantly lower \gls{ami} (below 0.5) for all privacy budgets up to 5.
-\todo[inline]{Why is the TPR so freaking high?}
+%\todo[inline]{Why is the TPR so freaking high?}
 
 \subsection{Mechanism comparison}
 In this section, we compare the different mechanisms for each dataset.
@@ -605,7 +611,7 @@ Building upon the cluster and utility plots discussed in previous sections, the 
 The membership advantage of the Piecewise mechanism is closely tied to its \gls{ami} performance. As a result, it registers low values across all epsilons but aligns closely with privacy budgets 7 and 9. Notably, all mechanisms, with the exception of nD-Laplace and density-nD-Laplace, fall below the baseline value.
 
 For the nD-Laplace mechanism, a significant portion of data deviates from the original domain $X$ when the privacy budget is set at 0.5. This deviation leads the classifier to train on inaccurate data, resulting in overfitting since it lacks generalization to the unaltered data (test dataset) as elucidated by \citep{shokri_membership_2017}. This phenomenon makes it more discernible to distinguish between member and non-member data. A similar trend is observed with the Piecewise mechanism, albeit to a lesser degree. The Piecewise mechanism more adeptly conforms to the shape of the original data, as seen in (\ref{fig:evaluate-optics-seeds-dataset-2d-9eps}), while nD-Laplace disperses the data uniformly in all directions.
-\todo[inline]{Examine the behavior of density-remapping as well.}
+% \todo[inline]{Examine the behavior of density-remapping as well.}
 \newpage
 
 \subsection{Shape datasets}

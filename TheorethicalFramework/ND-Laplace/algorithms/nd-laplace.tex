@@ -7,9 +7,9 @@
       \State $sphere = \Call{GenerateUnitSphere}{x}$ \Comment construct a sphere around $x$.
       \For{$row \in X$}
       \State $d \gets \Call{Length}{row}$ \Comment amount of dimensions
-      \State $r \gets \Call{GenerateRadius}{d}$ \Comment generate radius $r$ using Equation \ref{eq:nd-laplace-r}.
-      \State $sphere \gets \Call{GenerateTheta}{d}$ \Comment perturb the sphere Figure \ref{fig:nd-laplace-overview}.
-      \State $noise \gets \Call{Cartesian}{row, epsilon}$ \Comment use Equation \ref{eq:nd-laplace-cartesian} to perturb $row$ and convert to cartesian.
+      \State $r \gets \Call{GenerateRadius}{d}$ \Comment Equation \ref{eq:generate_r_for_nd_laplace}.
+      \State $sphere \gets \Call{GenerateTheta}{d}$ \Comment Equation \ref{eq:generate_theta_for_nd_laplace}.
+      \State $noise \gets \Call{Cartesian}{row, \epsilon}$ \Comment Equation \ref{eq:nd-laplace-cartesian}.
       \State $z = x + noise$
       \State \Call{Append}{$Z, z$}
       \EndFor

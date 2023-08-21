@@ -9,9 +9,9 @@
     \State $\epsilon \gets \frac{l}{r}$ \Comment Calculating privacy budget \citep{DBLP:journals/corr/abs-1212-1984}
     \State $Z \gets []$
     \For{$point_i \in X$}
-    \State $\theta \gets [1, \pi2]$       \Comment Random noise according to equation 3.7
-    \State $p \gets \frac{1}{2\pi}$     \Comment Random noise according to equation 3.8
-    \State $r \gets \frac{1}{2}\epsilon^3 * r^2 * e^{-\epsilon * r}$          \Comment Draw $r$ based on equation \ref{eq:3d-laplace-r}
+    \State $\theta \gets [1, \pi2]$       \Comment Random noise according to equation \ref{eq:3d-laplace-1}.
+    \State $p \gets \frac{1}{2\pi}$     \Comment Random noise according to equation \ref{eq:3d-laplace-2}.
+    \State $r \gets \frac{1}{2}\epsilon^3 * r^2 * e^{-\epsilon * r}$          \Comment Draw $r$ based on equation \ref{eq:3d-laplace-3}
     %\State $z_i \gets T(x_{min}, x_{max}, point_i, z_i)$ \Comment algorithm 1.
     \State $z_x \gets r * \sin(\theta) * \sin(\psi)$
     \State $z_y \gets r * \sin(\theta) * \cos(\psi)$
