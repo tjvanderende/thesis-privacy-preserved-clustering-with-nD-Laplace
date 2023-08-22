@@ -63,7 +63,7 @@ This question is divided into four smaller sub-questions:
                 Because the mechanism heavily relies on Euclidean distance, the shape (distance between the data points) can ultimately harm utility and privacy.
                 We have already observed this difference when comparing the heart and seed datasets in research questions 1 and 2.
                 But, to rule out the potential impact of the number of data points (the heart dataset has 2126 samples and the seed-dataset 210), we generate three synthetic datasets, each with 1000 samples (See section \ref{datasets-section}).
-          \item \textit{H2: The privacy leakage (adversary advantage) and utility increases for more dimensions:}
+          \item \textit{H2: The privacy leakage (membership advantage) and utility increases for more dimensions:}
                 The hypothesis arose from our observation while investigating/implementing nD-laplace(\ref{theory:privacy-utility-nd}).
                 Adding more dimensions (5 >) decreases the added noise gradually, increasing utility.
                 On the other hand, privacy is expected to decrease because the noise is less.
@@ -263,10 +263,10 @@ In addition, we evaluate privacy by simulating a membership inference attack and
         Similar to this attack, we train a classifier with perturbed data and evaluate it using non-perturbed data (test-data / shadow-data) \citep{zhao_not_2020}.
         We consider a semi-supervised setup (Figure \ref{figure:MIA-semi-supervised}), where we train a classifier with the perturbed data and evaluate it using non-perturbed data (test-data / shadow-data).
         For the classifier, we use a RandomForestClassifier \citep{rigaki_survey_2021}.
-        Finally, we evaluate the adversary advantage (percentage) using $TPR - FPR$ \citep{yeom_privacy_2018}.
+        Finally, we evaluate the membership advantage (percentage) using $TPR - FPR$ \citep{yeom_privacy_2018}.
         Figure: \ref{figure:mi-attack} provides a visual setup of the experiment.
 
-        Although the adversary advantage is a proven method for measuring MI attacks, we also include the TPR as an essential measurement.
+        Although the membership advantage is a proven method for measuring MI attacks, we also include the \gls{tpr} as an essential measurement.
         This metric is most interesting to us because this displays the percentage of the actual leaked labels (see Section \ref{theory:attack-evaluation}).
         \begin{figure}[H]
           \includegraphics[width=1.1\textwidth]{Method/images/MI-setup.png}
@@ -283,9 +283,9 @@ In addition, we evaluate privacy by simulating a membership inference attack and
                 This approach uses Shokri et al. attack setup using shadow models \citep{shokri_membership_2017}.
                 The random shadow datasets and classifiers are combined into an attack dataset.
           \item Then, the attacker tries to infer the training data from the attack dataset using the classifier's predictions.
-          \item Finally, we calculate the adversary advantage using the inferred labels and the original labels.
+          \item Finally, we calculate the membership advantage using the inferred labels and the original labels.
         \end{enumerate}
-        The attacker could infer many original labels if the adversary advantage or \gls{tpr} is high.
+        The attacker could infer many original labels if the membership advantage or \gls{tpr} is high.
         In this case, a lower score is better than a lower score.
 \end{enumerate}
 \newpage
@@ -299,7 +299,7 @@ This section explains the experiments' setup and the result reporting order.
   \item Mechanism utility: Both mechanisms are compared against each other by evaluating the \gls{ami} and \gls{sc}.
         In this research, we also conduct experiments to assess the impact of the number of dimensions on the utility of each dataset.
   \item Mechanism privacy: We do the same for utility, but now with privacy.
-        For this purpose, we evaluate the adversary advantage and privacy distance.
+        For this purpose, we evaluate the membership advantage and privacy distance.
   \item Mechanism comparison: Now we established the performance of nD-Laplace and Piecewise, we compare the different variants of nD-Laplace.
 
 \end{enumerate}

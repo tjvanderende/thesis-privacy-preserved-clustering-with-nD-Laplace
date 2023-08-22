@@ -135,8 +135,8 @@ This is because the input to the model is perturbed.
 While it is still possible to retrieve the training data, the leaked privacy is significantly reduced.
 A simple but effective way to measure the privacy leakage is by calculating the accuracy of correctly predicting membership by the adversary \citep{choquette-choo_label-only_2021}.
 
-Yeom et al. created a metric specifically for membership inference attacks which can be measured using an "adversarial advantage."
-This metric describes the percentage of privacy compromised during a member inference attack \citep{yeom_privacy_2018}.
+Yeom et al. created a metric specifically for membership inference attacks which can be measured using an "membership advantage" \citep{yeom_privacy_2018}.
+This metric describes the percentage of privacy compromised during a member inference attack.
 This metric is calculated by subtracting the \gls{fpr} from the \gls{tpr}.
 The \gls{tpr} represents the number of correctly predicted member data (training data), and the \gls{fpr} represents the number of correctly predicted non-member data.
 Although these metrics are commonly applied in the literature for \gls{mia}, they do not provide enough information \citep{carlini_membership_2022}.
