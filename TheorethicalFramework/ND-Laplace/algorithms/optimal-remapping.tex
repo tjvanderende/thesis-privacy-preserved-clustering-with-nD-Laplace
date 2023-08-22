@@ -16,7 +16,7 @@
     \State $w_x = \Call{Length}{X_r, B_r}$ 
     \For{$q \in Q_r$}
     \State $q \gets \Call{KDTree::query}{q}$
-    \State $w_q = \Call{Length}{Q_r}$ \Comment 
+    \State $w_q = \Call{Length}{Q_r}$ 
     \State $\sigma(w_x) \gets \Call{Remap}{w_x, \epsilon}$ \Comment Equation \ref{eq:optimal-remapping-formula-1}.
     \State $\sigma(x) \gets \Call{Append}{\sigma}$ 
     \EndFor

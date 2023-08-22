@@ -10,7 +10,8 @@ Our findings underline the significant influence of the privacy budget on the ut
 
 In comparing nD-Laplace with the Piecewise mechanism, it was clear that nD-Laplace excelled with the heart-dataset, seeds-dataset, and skewed dataset, particularly when evaluated using K-Means and \gls{ag} clustering \gls{ami} scores. However, its performance was subpar for the line-dataset and circle dataset. Also, the \gls{optics} yielded a notably low \gls{ami} score.
 
-Dimensionality had a marginal effect on the utility and privacy for the seeds and heart-dataset. The most significant outcome was observed for the top two dimensions, which demonstrated a minor uptick in \gls{ami}, suggesting enhanced utility with increased dimensions. However, this enhancement in utility did not translate to a corresponding increase in privacy. \newpage
+Dimensionality had a marginal effect on the utility and privacy for the seeds and heart-dataset. The most significant outcome was observed for the top two dimensions, which demonstrated a minor increase in \gls{ami}, suggesting enhanced utility with increased dimensions.  This might be due to our observation for the hypersphere volume (See Section: \ref{theory:privacy-utility-nd}), where we stated the possibility of a increased utility for 7 > dimensions. This would need further investigation to tell for sure.
+Also, the enhancement in utility did not translate to a corresponding increase in privacy. \newpage
 
 In our concluding experiments, we delved into the details of the nD-Laplace mechanism by examining its variants: grid-nD-Laplace and density-nD-Laplace. The primary objective of these variants is to ensure that data processed by nD-Laplace remains confined within its original domain.
 
@@ -32,7 +33,7 @@ The nD-Laplace mechanism, based on our findings, holds promise for clustering ap
 \begin{enumerate}
 \item \textbf{Examine diverse data shapes}: nD-Laplace's practicality hinges on its adaptability to various data shapes. Given its current limitations with certain datasets, directed noise introduction, as opposed to uniform noise distribution, might offer a solution.
 \item \textbf{Dimensionality in synthetic datasets}: Our current study limits dimensionality to 7 and 9 for certain datasets. Expanding this to higher dimensions, especially for synthetic datasets, could provide deeper insights.
-\item \textbf{Explore higher dimensions}: With observed improvements in utility beyond 7 dimensions, it's worth investigating data with 20+ dimensions.
+\item \textbf{Explore higher dimensions}: With observed improvements in utility beyond 7 dimensions, it's worth investigating data with 20+ dimensions .
 \item \textbf{Incorporate categorical and binary data}: Enhancing nD-Laplace to support these data types, similar to the Piecewise mechanism, can broaden its practical applicability. 
 \end{enumerate}
 
