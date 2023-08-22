@@ -40,10 +40,8 @@ This variable is defined as $dist(x_0, z)$ and can be randomly drawn by invertin
   C{_\epsilon}{^{-1}}(p) = - \frac{1}{\epsilon}(W_-1 (\frac{p - 1}{e}) + 1)
   \label{eq:lambert_w_1}
 \end{equation}
-For this equation, $W_{-1}$ is a Lambert W function with a -1 branch.
-\todo[inline]{Explain -1 branch?}
-The Lambert w function (also called the product logarithm) is defined as $W(x)e^{W(x)} = x$ \citep{lehtonen_lambert_2016}.
-The purpose of the Lambert w function is to invert the \gls{cdf} of the Laplace distribution to generate random noise for one of the coordinates ($r$) using the random value of $p$.
+For this equation, the Lambert $W$ function is used. This function consists of two different branches $W_0(x)$  \citep{corless_lambertw_1996}.  This notation  means the value of $W_0(x)$ is always positive, while $W_{-1}(x)$ is always negative. The Lambert w function (also called the product logarithm) is defined as $W(x)e^{W(x)} = x$ \citep{lehtonen_lambert_2016}.
+The purpose of the Lambert W function is to invert the \gls{cdf} of the Laplace distribution to generate random noise for one of the coordinates ($r$) using the random value of $p$. It draws the $r$ which will be bounded by the $W_{-1}$, this is very useful for drawing the random planar noise \citep{corless_lambertw_1996}. 
 
 \textbf{Calculating $\theta$:}
 The other variable ($\theta$) is defined as a random number $[0, 2\pi]$. \newline
