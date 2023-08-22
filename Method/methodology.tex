@@ -238,23 +238,23 @@ For this purpose, we use standard scaling provided by the Scikit-learn package \
 
 \subsubsection{Privacy}
 Privacy is hard to quantify, but we can measure the privacy loss/gain by calculating the Euclidean distance between the non-perturbed and perturbed data.
-In addition, we evaluate privacy by simulating a membership inference attack and calculating the adversary advantage.
+In addition, we evaluate privacy by simulating a membership inference attack and calculating the membership advantage.
 \begin{enumerate}
     \item \textbf{Privacy distance: }
           The first measurement we evaluate is the distance between the dataset's non-private and private variants.
           This metric gives us a sense of how much extra distance (and privacy) the privacy mechanisms offer compared to the non-private variant.
           %We call this "disclosure risk" because it measures how much noise is added.
           To this end, the average Euclidean distance is measured and reported per epsilon. A higher distance indicates more privacy.
-    \item \textbf{Adversarial advantage: }
+    \item \textbf{Membership advantage: }
           We use the Membership Inference Attack (MIA) that Shokri et al. proposed with the implementation that was provided by Adversarial Robustness Toolkit (ART) \citep{nicolae_adversarial_2019}.
           An earlier study also explored this attack to evaluate differential privacy.
           Similar to this attack, we train a classifier with perturbed data and evaluate it using non-perturbed data (test-data / shadow-data) \citep{zhao_not_2020}.
           We consider a semi-supervised setup (Figure \ref{figure:MIA-semi-supervised}), where we train a classifier with the perturbed data and evaluate it using non-perturbed data (test-data / shadow-data).
           For the classifier, we use a RandomForestClassifier \citep{rigaki_survey_2021}.
-          Finally, we evaluate the adversary advantage (percentage) using $TPR - FPR$ \citep{yeom_privacy_2018}.
+          Finally, we evaluate the membership advantage (percentage) using $TPR - FPR$ \citep{yeom_privacy_2018}.
           Figure: \ref{figure:mi-attack} provides a visual setup of the experiment.
 
-          Although the adversary advantage is a proven method for measuring MI attacks, we also include the TPR as an essential measurement.
+          Although the membership advantage is a proven method for measuring MI attacks, we also include the TPR as an essential measurement.
           This metric is most interesting to us because this displays the percentage of the actual leaked labels (see Section \ref{theory:attack-evaluation}).
           \begin{figure}[H]
               \includegraphics[width=1.1\textwidth]{Method/images/MI-setup.png}

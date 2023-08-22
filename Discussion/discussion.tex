@@ -23,11 +23,11 @@ The high \gls{tpr} for lower privacy budgets can be attributed to the fact that,
 
 The two variants, grid-nD-Laplace and density-nD-Laplace, have demonstrated their capability to mitigate this issue in practice. Grid-nD-Laplace, in particular, showcased more stable results, with its privacy and utility metrics aligning closely with those of nD-Laplace. We introduced density-nD-Laplace to address the nD-Laplace mechanism's sensitivity to data shapes. However, it fell short in practice, particularly with the Line and Circle datasets.
 
-\subsection{Constraints}
+\section{Constraints}
 We encountered challenges with \gls{optics} clustering algorithm.
 Our analysis revealed a higher number of clusters for \gls{optics} compared to K-Means and \gls{ag}. Additionally, a significant portion of data points were labeled as noise. This suggests potential issues with the configuration of \gls{optics}, particularly the $minPts$ parameter. Despite these configuration issues, the Piecewise mechanism still outperformed nD-Laplace in certain scenarios, likely due to its ability to handle dense data shapes.
 % \todo[inline]{Selection of features for 2d/3d heart-dataset \& seedsdataset might have impact}
-\subsection{Future work}
+\section{Future work}
 The nD-Laplace mechanism, based on our findings, holds promise for clustering applications. While it showcases distinct advantages and disadvantages compared to the Piecewise mechanism, there's room for improvement, especially in handling diverse data forms. To further its practical applicability, we propose the following research directions:
 
 \begin{enumerate}
