@@ -46,6 +46,7 @@ Then, $\theta$ is drawn from a uniform distribution of a unit hypersphere $S$ \c
   Uniform^n(\theta) := \frac{\gamma(\frac{n}{2})}{n \cdot \pi ^{\frac{n}{2}}}
   \label{eq:generate_theta_for_nd_laplace}
 \end{equation}
+Where $\gamma(a) = \int^\infty_0 x^{a-1} \cdot e{-x} \cdot d \cdot x$ is the gamma function \citep{fernandes_generalised_2019}.
 This approach is similar to the other variants of the Laplace mechanism.
 Only now, we select points from an $n$-dimensional hypersphere  \footnote{https://mathworld.wolfram.com/SpherePointPicking.html} instead of a unit sphere \ref{eq:3d-laplace-2}. \newline
 
@@ -66,28 +67,19 @@ The combination of sections 1 and 2 of this chapter provides a good overview of 
   \caption{Overview of the nD-Laplace mechanism}
   \label{fig:nd-laplace-overview}
 \end{figure}
+\newpage
 \subsection{Privacy versus utility} \label{theory:privacy-utility-nd}
-\todo[inline]{Needs refactor}
-If we continue adding dimensions, we notice the noise is shrinking proportionally.
-We must first examine the formula for a hypersphere’s volume to understand this behavior.
-\begin{equation}
-  S_n = \frac{2 \pi^{n/2}}{\gamma(\frac{1}{2}n)}
-\end{equation}
-$\gamma$ is the Gamma distribution determined based on the number of dimensions $n$ \footnote{https://mathworld.wolfram.com/Hypersphere.html}.
-\todo[inline]{What are these numbers?}
-As the amount of dimensions increases, the most volume is located on the hypersphere surface.
-When we convert the points to Cartesian coordinates, some will be located at the center (e.g., 0.5), while others will be close to the surface (e.g., 0.0).
-However, as the number of dimensions increases, most will be close to the surface (e.g., 0.99).
-The decreasing amount of volume is illustrated using this figure:
+When we specifically look at the \(uniform^n(\theta)\) function (see Equation: \ref{eq:generate_theta_for_nd_laplace}), the \(\theta\) can be generated \(n\)-times, but this has some limitation \footnote{\url{https://mathworld.wolfram.com/Hypersphere.html}}.
+The value of \(\theta\) decreases after the $\approx 7$ dimensions have been reached. Subsequently, the hyper-surface area reaches a maximum, so the value of $\theta$ decreases towards 0 \footnote{\url{https://mathworld.wolfram.com/Hypersphere.html}}
+This behaviour is illustrated in the following figure:
 \begin{figure}[H]
   \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/volume.png}
   \caption{Illustration of the decreasing volume while increasing the number of dimensions}
   \label{fig:curse-of-dimensionality}
 \end{figure}
+As can be seen in the image, the amount of volume starts to decrease after the 7 dimensions. From this, it can be inferred that the value of  $\theta$ will also decrease. 
+The consequence of this behavior is that the final noise decreases for higher dimensions. This will result in the possibility that utility increases in higher dimensions, but privacy decreases.
 
-The noise decreases as the dimensions increase, increasing utility.
-Hence, observing the behavior of privacy relative to utility is intriguing.
-This behavior will be further emphasized in a later stage of this research.
 \newpage
 \subsection{Grid-remapping}
 In the previous sections, we introduced the 2D, 3D, and nD Laplace mechanisms.
@@ -116,7 +108,7 @@ This property can also be converted to support n-dimensions, by calculating the 
 This is the maximum distance between any pair of nodes \citep{HARARY1988277}. \newline
 The Euclidean distance diameter is defined as:
 \begin{equation}
-  d_e(G_n) = r_H = \sqrt{n}
+  d_{euc}(G_n) = r_H = \sqrt{n}
 \end{equation}
 
 Where, $n$ is the number of dimensions.
@@ -178,12 +170,12 @@ An example of this is provided in the following image (Figure \ref{fig:kd-tree-s
 In the example, we are searching for all points that fall within the radius of a random query point.
 The most significant advantage is that this dramatically reduces the complexity of searching.
 Constructing the kd-tree costs equal to grid-remapping $O(kn)$, where $k$ is the number of dimensions and $n$ is the dataset size.
-But, searching for the nearest neighbor is a logarithmic function with time complexity of $O(\log n)$ \citep{washington_k-d_2002} (See Figure \ref{theory:big-o-graph} for an overview of the Big-O notation).
+But, searching for the nearest neighbor is a logarithmic function with time complexity of $O(\log n)$ \citep{washington_k-d_2002}.
 This approach is a significant improvement over searching manually, which would have the same complexity as constructing the tree.
 
 \subsubsection{Grid remapping with kd-tree} \label{theory:grid-remapping}
 The kd-tree search method is beneficial for the optimizations we are striving for.
-This optimization extends grid-remapping for 2d \citep{DBLP:journals/corr/abs-1212-1984} and 3d data \citep{9646489} to n-dimensions. \newline
+This optimization extends grid-remapping for 2D \citep{DBLP:journals/corr/abs-1212-1984} and 3D data \citep{9646489} to n-dimensions. \newline
 We have illustrated the three steps required for this below:
 \begin{figure}[H]
   \includegraphics[width=1\textwidth]{TheorethicalFramework/ND-Laplace/Images/KD-tree.png}
@@ -217,9 +209,9 @@ Therefore, in the next chapter, we will look at a variant that addresses this is
 As discussed, the remapping will be performance intensive to provide good utility, so we adopt the optimal remapping \citep{chatzikokolakis_efficient_2017}.
 This thesis will refer to this as density remapping because this better explains the application.
 
-According to the grid-remapping methodology, a point $z_i$ is mapped to the center of the grid cell.
-The utility is improved by reducing the distance between $z_i$ and $x_i$, as this is closer to the original data point.
-But, to consider the privacy of the data, this can only be done if there is enough indistinguishability between $z_i$ and $x_i$.
+According to the grid-remapping methodology, a private point $z$ is mapped to the center of the grid cell.
+The utility is improved by reducing the distance between $z$ and $x$, as this is closer to the original data point.
+But, to consider the privacy of the data, this can only be done if there is enough indistinguishability between $z$ and $x$.
 To this end, we adopt the remapping approach of Chatzikokolakis et al. to remap based on the data density \citep{chatzikokolakis_efficient_2017}.
 The remapping algorithm works on the idea of crowded places, with the intuition that a crowded place leverages indistinguishability by crowdedness (density) \citep{chatzikokolakis_efficient_2017}.  \newline
 
@@ -229,29 +221,29 @@ The approach is visualized using the following figure:
   \label{fig:optimal-remapping}
   \caption{Representation of density remapping \citep{chatzikokolakis_efficient_2017}}
 \end{figure}
-The first step is calculating $B_r(z_i)$, which refers to all the data points within the radius $r$ around the data point $z_i$ \citep{chatzikokolakis_efficient_2017}.
+The first step is calculating $B_r(z)$, which refers to all the data points within the radius $r$ around the data point $z_i$ \citep{chatzikokolakis_efficient_2017}.
 Then, the algorithm collects the data points around $x_i$, again using $r$, to determine the density of $x_i$.
-This is the convex hull (collection) of all the original data points within the radius $r$ around $x_i$ and is denoted as $Q_r (x_i)$.
-Finally, we obtain $Q_r$ which is a union of $Q_r (x_i)$ and $B_r(z_i)$.
+This is the convex hull (collection) of all the original data points within the radius $r$ around $x_i$ and is denoted as $Q_r (x)$.
+Finally, we obtain $Q_r$ which is a union of $Q_r (x)$ and $B_r(z)$.
 Now that we have the sets of points around $x_i$ and $z_i$, we can calculate the density \citep{chatzikokolakis_efficient_2017}:
 \begin{equation}
-  \forall x'_i \in Q_r \quad \sigma(x_i) = \frac{w(x'_i)e^{-\epsilon d(x'_i, z_i)}}{\sum{_{q\in Q_r} w(q)e^{-\epsilon d(q, z_i)}}}
+  \forall x' \in Q_r \quad \sigma(x) = \frac{w(x')e^{-\epsilon d(x'_i, z_i)}}{\sum{_{q\in Q_r} w(q)e^{-\epsilon d(q, z)}}}
   \label{eq:optimal-remapping-formula-1}
 \end{equation}
 $w(q)$ is the weight of a point $q \in Q_r$, and $w(x_i)$ the weight of a point $x_i \in X$.
 Here, the weight can be a point of interest \citep{chatzikokolakis_efficient_2017}.
 But, in the context of our study, we consider the points within $r$ of $q$ or $x_i$ to be the weight.
 
-In equation \ref{eq:optimal-remapping-formula-1}, the $w(x)$ and $w(q)$ are normalization factors for estimating the likelihood of a point $x'_i$ being close to $z_i$ and $q$ being close to $z_i$.
+In equation \ref{eq:optimal-remapping-formula-1}, the $w(x)$ and $w(q)$ are normalization factors for estimating the likelihood of a point $x'$ being close to $z_i$ and $q$ being close to $z$.
 So, this remapping is according to the original definition of the 2D Laplace \gls{pdf} definition \ref{eq:polar-laplace-pdf}.
-The outcome of the formula is a collection of values that indicate the degree of density $\sigma(x_i)$.
-The new value $z'_i$ is calculated by taking the mean of the $\sigma(x_i)$ \citep{chatzikokolakis_efficient_2017}:
+The outcome of the formula is a collection of values that indicate the degree of density $\sigma(x)$.
+The new value $z'$ is calculated by taking the mean of the $\sigma(x)$ \citep{chatzikokolakis_efficient_2017}:
 \begin{equation}
-  z_i' = \sum_{x'_i \in Q_r} \sigma(x'_i) * x'_i
+  z' = \sum_{x' \in Q_r} \sigma(x') * x'
   \label{eq:optimal-remapping-formula-2}
 \end{equation}
-By applying this formula, the new $z_i'$ is closer to $x_i$ to minimize the expected loss of utility \citep{chatzikokolakis_efficient_2017}.
-Much like the 2D and 3D Laplace methods, which use the likelihood of a point $z_i$ being close to $x_i$ \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
+By applying this formula, the new $z'$ is closer to $x$ to minimize the expected loss of utility \citep{chatzikokolakis_efficient_2017}.
+Much like the 2D and 3D Laplace methods, which use the likelihood of a point $z$ being close to $x$ \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
 %The first step is to calculate the coefficients for each point $x \in X$ by multiplying the density $\sigma(x)$ with the original point $x$.
 
 %The probability that $z'$ will be closer to $x$ is higher, and this probability is calculated based on the original value $x \in X$ to first determine the coefficient.

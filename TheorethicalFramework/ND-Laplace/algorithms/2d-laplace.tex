@@ -12,11 +12,11 @@
     \For{$point_i \in X$}
     \State $\theta \gets [0, \pi2]$       \Comment Random noise for $\theta$
     \State $p \gets [0, 1]$
-    \State $z_i \gets C{_\epsilon}{^{-1}}(p)$       \Comment formula 3.2
+    \State $z \gets C{_\epsilon}{^{-1}}(p)$       \Comment Equation: \ref{eq:lambert_w_1}
     %\State $z_i \gets T(x_{min}, x_{max}, point_i, z_i)$ \Comment algorithm 1.
-    \State $x_{perturbed} \gets point_{i_x} + (z_{i_x} * \cos(\theta)) $ \Comment add noise to x-coordinate
-    \State $y_{perturbed} \gets point_{i_y} + (z_{i_y} * \sin(\theta)) $ \Comment add noise to y-coordinate
-    \State append $x_{perturbed}, y_{perturbed}$ to Z
+    \State $x' \gets point_{i_x} + (z_{i_x} * \cos(\theta)) $ 
+    \State $y' \gets point_{i_y} + (z_{i_y} * \sin(\theta)) $ 
+    \State append $x', y'$ to Z
     \EndFor
     \State \Return Z
   \end{algorithmic}

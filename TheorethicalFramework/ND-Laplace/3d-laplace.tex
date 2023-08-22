@@ -15,13 +15,13 @@ Where $x_1$ and $x_2$ are two real data points in the same dataset $X$, and $K$ 
 Implementing the 3D-Laplace is based on the same method as the 2D-Laplace mechanism.
 Therefore, the \gls{pdf} where the noise is drawn from is almost identical \citep{9646489}:
 \begin{equation}
-  D_{\epsilon}(x_i)(x_0) = A \cdot e^{-\epsilon \cdot d_3(x_i, x_0)}
+  D_{\epsilon}(x)(x_0) = A \cdot e^{-\epsilon \cdot d_3(x_i, x_0)}
   \label{eq:3d-laplace-pdf}
 \end{equation}
 Where $A$ is the normalization factor, and $d_3$ is the Euclidean distance in a 3-dimensional space.
 Instead of only consisting of a polar angle $\theta$ and radial distance $r$, the third dimension (altitude) is the azimuth angle $\psi$ \citep{9646489}:
 \begin{equation}
-  D_{\epsilon}(x_i)(x_0) = \frac{1}{4 \cdot \pi^2} \cdot \epsilon^3 \cdot r^2 \cdot e^{-\epsilon \cdot r}
+  D_{\epsilon}(x)(x_0) = \frac{1}{4 \cdot \pi^2} \cdot \epsilon^3 \cdot r^2 \cdot e^{-\epsilon \cdot r}
   \label{eq:3d-laplace-with-normalization}
 \end{equation}
 The distance between $x_i$ and $x_0$ is replaced by $r$, leaving us with the normalization factor.
@@ -40,7 +40,7 @@ Because these can be sampled independently, Min et al. formulate three marginal 
 \end{subequations}
 \begin{itemize}
   \item The radius $r$ is sampled randomly from the Gamma distribution (Equation \ref{eq:3d-laplace-1}) with a shape of 3 and a scale of $1/\epsilon$ \citep{9646489}.
-  \item The $\theta$ and $psi$ are also random sampled from the uniform distribution with the range given in Equations \ref{eq:3d-laplace-2} and \ref{eq:3d-laplace-3} \citep{9646489}.
+  \item The $\theta$ and $\psi$ are also random sampled from the uniform distribution with the range given in Equations \ref{eq:3d-laplace-2} and \ref{eq:3d-laplace-3} \citep{9646489}.
 \end{itemize}
 Finally, the noise is added to the original location $x$ to obtain the perturbed location $z = x + U*r$ (See Figure \ref{fig:3d-laplace-noise}).
 The spherical coordinates $(r, \theta, \psi)$ are converted to the Cartesian coordinates $(x, y, z)$ to obtain the perturbed location $z$:

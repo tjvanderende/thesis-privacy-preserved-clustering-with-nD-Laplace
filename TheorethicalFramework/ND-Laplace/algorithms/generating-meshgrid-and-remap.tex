@@ -1,18 +1,18 @@
 \begin{algorithm}[H]
   \caption{Algorithm for generating and remapping to a grid.}
   \begin{algorithmic}
-    \Require $x \in X$  \Comment original dataset
-    \Require $z \in Z$ \Comment perturbed dataset
+    \Require $x \in X$  
+    \Require $z \in Z$ 
     \Require $grid$ \Comment grid structure ($n * m$)
     %\State $tree \gets KDTree(X)$ \Comment construct a KDTree from the original data.
     %\State $X_{domain} \gets$ \Call{KDTree::query}{$Z$} \Comment find the closest points.
-    \State $d_{X} = \Call{Z::dist}{X}$ \Comment euclidean distances between $X$ and $Z$.
+    \State $d_{X} = \Call{Z::dist}{X}$ 
     \State $d_{grid} = \Call{Z::dist}{grid}$
-    \State $Z_{out-domain} \gets \Call{X::FindPointsOutsideDomain}{Z}$ \Comment Algorithm \ref{alg:find-outside-domain-laplace}
-    \State $grid_{tree} \gets \Call{KDTree::BuildTree}{grid}$  \Comment create kd-tree
+    \State $Z_{out-domain} \gets \Call{X::FindPointsOutsideDomain}{Z}$ \Comment Algorithm: \ref{alg:find-outside-domain-laplace}
+    \State $grid_{tree} \gets \Call{KDTree::BuildTree}{grid}$ 
     \State $grid_{mask} \gets \Call{KDTree::query}{Z}$ \Comment find indices of $z \in Z$ that are closeby grid cells.
     \State $Z_{grid-mask} \gets Z_{out-domain} \cup d_{grid} < d_{X}$ \Comment All points $z \in Z$ that are closeby grid cells and are outside domain.
-    \State $Z` \gets Z[grid[grid_{mask}][Z_{grid-mask}]]$ \Comment combinate masks to set appropiate indexes to $g \in grid$.
+    \State $Z` \gets Z[grid[grid_{mask}][Z_{grid-mask}]]$ \Comment combine masks to set appropriate indexes to $g \in grid$.
     \State \Return $Z`$
   \end{algorithmic}
   \label{alg:grid-remapping-laplace}
