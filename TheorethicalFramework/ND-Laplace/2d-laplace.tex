@@ -42,7 +42,7 @@ This variable is defined as $dist(x_0, z)$ and can be randomly drawn by invertin
   \label{eq:lambert_w_1}
 \end{equation}
 For this equation, the Lambert $W$ function is used. This function consists of two different branches $W_0(x)$  \citep{corless_lambertw_1996}.  This notation  means the value of $W_0(x)$ is always positive, while $W_{-1}(x)$ is always negative. The Lambert w function (also called the product logarithm) is defined as $W(x)e^{W(x)} = x$ \citep{lehtonen_lambert_2016}.
-The purpose of the Lambert W function is to invert the \gls{cdf} of the Laplace distribution to generate random noise for one of the coordinates ($r$) using the random value of $p$. It draws the $r$ which will be bounded by the $W_{-1}$, this is very useful for drawing the random planar noise \citep{corless_lambertw_1996}. 
+The purpose of the Lambert W function is to invert the \gls{cdf} of the Laplace distribution to generate random noise for one of the coordinates ($r$) using the random value of $p$. It draws the $r$ which will be bounded by the $W_{-1}$, this is very useful for drawing the random planar noise \citep{corless_lambertw_1996}.
 
 \textbf{Calculating $\theta$:}
 The other variable ($\theta$) is defined as a random number $[0, 2\pi]$. \newline
@@ -90,62 +90,17 @@ They proved this in theorem 4.1 \citep{DBLP:journals/corr/abs-1212-1984}:
   $K_{\epsilon'}(x_0)(x) \leq e^{\epsilon d(x_0, x'_{0})} K_{\epsilon'}(x'_{0})(x)$.
   \label{theorem:discretization}
 \end{theorem}
-Here, $\delta_{\theta}$ is the machine's precision, which is the hardware precision of the GPS-location in the context of geographical data. We will omit this in our research, but still provide the full theorem nonetheless. 
+Here, $\delta_{\theta}$ is the machine's precision, which is the hardware precision of the GPS-location in the context of geographical data. We will omit this in our research, but still provide the full theorem nonetheless.
 The theorem states that $\epsilon'$ is the additional noise needed to satisfy \gls{gi} with the introduction of discretization.
 %Then, the final step is truncation based, which is based on the discretization \citep{DBLP:journals/corr/abs-1212-1984}.
 It is sufficient to take $r_{max}$ as $diam(X)$, which is the diameter of the set of points $X$ if it satisfies theorem \ref{theorem:discretization} \citep{DBLP:journals/corr/abs-1212-1984}:
 So, $r_{max}$ is the maximum distance between points in $X$, which is the area where geo-indistinguishability can be guaranteed \citep{9646489}.
-
-\mycomment{In the context of our research, it is more convenient to find the $u$ based on a given $\epsilon$.
-So the challenge is to find the $u$ that satisfies \gls{gi}.
-This can be solved by finding the root of the function:
-\begin{equation}
-  \epsilon' + \frac{1}{u}ln (\frac{\frac{u}{r_{max}} + 2 e^{\epsilon'u}}{\frac{u}{r_{max}} - 2 e^{\epsilon'u}}) - \epsilon = 0
-  \label{eq:find-u-with-epsilon}
-\end{equation}
-The idea of finding the root of a function is to try different values of $u$ until $f(u) = 0$. \todo{Have some proof}
-\todo[inline]{Maybe extend this with some more explanation?}}
 %This idea was later improved by Chatzikokolakis et al., introducing an optimized way of remapping \citep{chatzikokolakis_efficient_2017}.
 %The algorithm uses the Bayesian rule to minimize the loss of utility while remapping the data.
 %Instead of remapping to the closest point, it remaps to a location where the loss is minimal.
 %To decrease the performance impact of this algorithm, it is possible only to consider a specific region around the perturbed point $z$.
 %The disadvantage of this method is the need for a prior set of data points to calculate the optimal remapping.
 %It does not work for new users and extends the training period.
-
-\mycomment{\subsection{Optimizing for clustering} \label{2d:optimizing}
-The decision of the parameters for the algorithm is straightforward as it depends on the $\epsilon$. \label{paragraph:choosing-r}
-This constant is calculated by defining the radius $r$, and the desired level of privacy $l$ and $\epsilon$ is calculated using $l/r$.
-The $l$ is a predefined constant $l \in R^+$ but usually will be below 10.
-For geographical data, the $r$ can be configured using meters as a unit of measure.
-So, for example, $r = 200$ corresponds to a radius of 200m around point $x_0$.
-Without a unit, it is a challenge to define a reasonable radius.
-%The $\epsilon$ can be considered the inverse unit of $r$ \citep{DBLP:journals/corr/abs-1212-1984}.
-In that regard, the radius can also be a flexible value defined based on the crowdedness of a region \citep{chatzikokolakis_constructing_2015}.
-Suppose a user's location is within a crowded area.
-In that case, the radius can be smaller than if the user is located in a rural area (because the user's location is indistinguishable due to the overlap of other users' locations).
-Instead of providing \gls{gi}, the authors introduce a more flexible privacy definition $d_x$-privacy.
-The $r$ is calculated based on the mass of other regional locations $r$, which they call \emph{privacy mass}.
-So, the total mass of a set A is defined as $M(A) = \sum_{x \in A} m(x) = a + q(x)b$.
-Where $m(x)$ is the mass of a location $x$ and $x$ is in value [0, 1].
-For this formula, $a$ is the number of points assigned to each location.
-The authors define $q(x)$ as the "quality" of a point, which is essentially the number of other users that are also interested in the same point (e.g. a mall).
-
-The $a$ is defined as a Euclidean ball $B_r = {x' | d_{euc}(x, x') \leq r}$, which returns all locations within the radius $r$.
-\todo[inline]{Explain this formula better, and create it as a separate equation}
-To retrieve a value within [0, 1], the authors use the following formula:
-\begin{equation}
-  a = \frac{1}{|B_r|}
-  \label{equation:privacy-mass-a}
-\end{equation}
-If the locations are only considered for space and not quality, $q(x)$ is defined as 0 \citep{chatzikokolakis_constructing_2015}.
-
-Although the method is an interesting approach to increasing utility while not reducing privacy, it is hard to adopt for clustering.
-For applying it for \gls{ldp}, it is required to supply each user with prior knowledge of the dataset.
-This approach would require interaction between data points, hence an interactive setup of the mechanism instead of a non-interactive one. \newline
-Nonetheless, the idea of using crowded locations is an exciting approach that is researched further in section \ref{theory:privacy-utility-nd}
-}
-
-
 \newpage
 \subsection{Final mechanism}
 Finally, we provide as means of a summary the final algorithm for the Laplace mechanism for 2D space

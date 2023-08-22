@@ -146,18 +146,6 @@ The intuition of the \gls{gi} definition is that it displays the distinguishabil
 %Therefore, the definition for \gls{gi} is $d_2$-privacy, but it is essentially the same as the proof provided for \gls{gi}.
 \subsection{Laplace mechanism} \label{theory:laplace}
 The previous sections have explained the different privacy frameworks that exist for differential privacy.
-\mycomment{This section explains the various mechanisms used to achieve differential privacy.
-  The different mechanisms are not limited to the type of \gls{dp}; some can be applied to multiple types.
-  %The mechanisms are divided into three categories: \gls{dp}, \gls{ldp} and \gls{gi}.
-  \subsubsection{Randomized response mechanism}
-  The random response method is relatively simple and was first applied in 1965 by Warner et al.
-  It was originally used to mask individuals' answers by randomly switching them with predictable randomness \citep{warner_randomized_1965}.
-  Therefore, the method is mainly used for categorical data.
-  This method satisfies its own set of requirements for LDP \citep{del_rey_comprehensive_2020}, which differs from the formal definition that was mentioned earlier
-
-  Since then, it is still one of the better-known methods, and larger organizations such as Google have used it \citep{erlingsson_rappor_2014}.
-  They have named their extension RAPPOR and expanded it with bloom filters to be able to collect numerical data as well.
-  It is possible to ensure $\epsilon$-differential privacy, and it is also possible to preserve \gls{ldp} \citep{del_rey_comprehensive_2020}.}
 In the current section, we explain an important (L)DP mechanism on which the mechanism of \gls{gi} is based.
 We provide the definition, laying the groundwork for the mechanisms of \gls{gi}.
 

@@ -8,17 +8,17 @@
     \State $Z' = FindRemappedPoints(Z)$ \Comment Algorithm: \ref{alg:find-outside-domain-laplace}
     \State $tree \gets KDTree(X)$
     \For{$z' \in Z'$}
-    \State $r = \Call{FindRadius}{(z')}$ 
-    \State $X_r \gets \Call{KDTree::query}{x}$ 
+    \State $r = \Call{FindRadius}{(z')}$
+    \State $X_r \gets \Call{KDTree::query}{x}$
     \State $B_r \gets \Call{KDTree::query}{z'} $
     \State $\sigma(x) = []$
     \State $Q_r = \gets X_r \cap B_r$
-    \State $w_x = \Call{Length}{X_r, B_r}$ 
+    \State $w_x = \Call{Length}{X_r, B_r}$
     \For{$q \in Q_r$}
     \State $q \gets \Call{KDTree::query}{q}$
-    \State $w_q = \Call{Length}{Q_r}$ 
+    \State $w_q = \Call{Length}{Q_r}$
     \State $\sigma(w_x) \gets \Call{Remap}{w_x, \epsilon}$ \Comment Equation \ref{eq:optimal-remapping-formula-1}.
-    \State $\sigma(x) \gets \Call{Append}{\sigma}$ 
+    \State $\sigma(x) \gets \Call{Append}{\sigma}$
     \EndFor
     \State $z' \gets \Call{Average}{\sigma(x)}$ \Comment Equation: \ref{eq:optimal-remapping-formula-2}.
     \EndFor
@@ -37,9 +37,4 @@
 \end{itemize}
 
 \newpage
-\mycomment{The equation for density remapping \ref{eq:optimal-remapping-formula-1} was created for 2-dimensional data.
-However, we aim to use this same approach for 3-dimensional and n-dimensional data.
-To do so, we first revisit the \gls{pdf} for 3D-Laplace, which was defined using this Equation: \ref{eq:3d-laplace-pdf}.
-Few modifications are necessary, as the normalization factor $A$ is now defined using Equation: \ref{eq:optimal-remapping-formula-1}.
-\todo[inline]{Formulate the definition of $A$}
-\todo[inline]{Check if this can be extended to nD-Laplace}}
+

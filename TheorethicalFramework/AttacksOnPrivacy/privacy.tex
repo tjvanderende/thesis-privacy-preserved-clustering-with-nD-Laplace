@@ -5,9 +5,9 @@ Therefore, assessing the mechanism's privacy is best measurable using common att
 In this context, we evaluate attacks that explicitly uncover training data from a privately trained model.
 We consider two types of attacks:
 \begin{enumerate}
-  \item \textbf{Reconstruction attack}:  An adversary could reconstruct training data from a given (classifier) model using a reconstruction attack. The goal of the adversary is to reconstruct a secret bit $b$ from a row, by producing random data that agrees on this secret bit $b$. \citep{dwork_exposed_2017}. 
+  \item \textbf{Reconstruction attack}:  An adversary could reconstruct training data from a given (classifier) model using a reconstruction attack. The goal of the adversary is to reconstruct a secret bit $b$ from a row, by producing random data that agrees on this secret bit $b$. \citep{dwork_exposed_2017}.
   \item \textbf{Membership inference attack}: An adversary attempts to infer whether a data point was used for training. With this attack, an adversary attempts to infer the training data $x \in X$ (member) from a given data point $z \in Z$ (non-member).
-%An attack model that plays a significant role in machine learning is \gls{mia}.
+        %An attack model that plays a significant role in machine learning is \gls{mia}.
 
 \end{enumerate}
 The knowledge of the attacker (adversarial knowledge) is an important factor to consider.
@@ -17,11 +17,11 @@ This knowledge can be divided into white-box and black-box approaches \citep{hu_
   \item \textbf{Black-box}: The attacker has limited information, like training data distribution and the trained model \citep{hu_membership_2022}.
 \end{enumerate}
 %The concept of reconstruction attacks predates differential privacy, as this principle also gave rise to the idea of database privatization \citep{dinur_revealing_2003}.
- %\newline
+%\newline
 %A general reconstruction attack for our use-case is the attribute inference attack \citep{dwork_exposed_2017} or model inference \citep{rigaki_survey_2021}, but both terms are essentially the same \citep{jegorova_survey_2022}. 
 %Differential privacy aims to introduce sufficient noise to mitigate the risk of these attacks \citep{dwork_exposed_2017,jayaraman_evaluating_nodate}.
 %Assessing the privacy leakage of our model can be effectively accomplished by employing attribute/membership inference techniques.
-Both reconstruction and membership attacks serve the purpose of assessing the effectiveness of \gls{dp} mechanisms to preserve privacy. 
+Both reconstruction and membership attacks serve the purpose of assessing the effectiveness of \gls{dp} mechanisms to preserve privacy.
 However, the membership attack has an attack-model that is easier to generalize by inferring training data, while the reconstruction attack depends much more on data-properties.
 This thesis has many different datasets, and as both types of attacks serve the same purpose, \gls{mia} is the better fit. \newline
 Therefore, the focus of evaluating \gls{dp} will rely primarily on \gls{mia} and the next section is used to evaluate different attacks for this attack type.
@@ -43,9 +43,9 @@ It is a black-box attack, but the attacker often needs knowledge of the data dis
 One of the earlier works that used this attack was Shokri et al. \citep{shokri_membership_2017}.
 This idea is based on the confidentiality percentages of classification model outputs. Presumably the model gives higher scores to the data on which it was trained (overfitting) in comparison to other data. This information is misused by the attacker to reconstruct the original training data.
 
- Let $y = f_{target(x)}$ be the prediction confidence of a classification model, then the membership probability is calculated as \citep{shokri_membership_2017}: 
+Let $y = f_{target(x)}$ be the prediction confidence of a classification model, then the membership probability is calculated as \citep{shokri_membership_2017}:
 \begin{equation}
-    Pr(x, y) \in D^{train}_{target}
+  Pr(x, y) \in D^{train}_{target}
 \end{equation}
 Which is the probability of that input $x$ belongs to the target dataset that was used to generate the target dataset $f_{target}$ \citep{shokri_membership_2017}.
 To execute the attack, the attacker trains so-called shadow models $f^i_{shadow}()$, and each of them are trained on dataset that is comparable to the training dataset and combined to infer training information:
@@ -57,67 +57,13 @@ To execute the attack, the attacker trains so-called shadow models $f^i_{shadow}
 Another approach to a black-box attack was introduced by Peng et al. and only considers that the attacker has access to the already trained model.
 They first rescale the probabilities using temperature scaling to compensate for overconfident models \citep{peng_unsupervised_nodate}:
 \begin{equation}
-    R_i(h_k(x);T) = \frac{exp(log(h^i_k(x))/T}{\sum_j{exp(log(h^j_k(x))/T}}
+  R_i(h_k(x);T) = \frac{exp(log(h^i_k(x))/T)}{\sum_j{exp(log(h^j_k(x))/T)}}
 \end{equation}
-Here, the $h(x)$ denotes the probability distribution of $x$, which tells the chance of $x$ being a certain classification/label. Peng et al. then calculate the top-$k$ features $h_k$ and eliminate the smaller values. 
-The formula $R_i$ is are the re-scaled probabilities,  to be more suitable for clustering using temperature scaling, where $T$ is the scaling parameter.  They the fit a K-Means model, resulting in two clusters: training and test data \citep{peng_unsupervised_nodate}.
-%Access to only the output of the model is a typical characteristic of black-box attacks. If the attacker also knows architecture, for example, it is referred to as a white-box attack.
-
-%The above attacks do rely on the model to also provide the confidence or probabilities of the predictions.
-%This information is often unavailable, so Choquette-Choo et al. introduced a label-only attack.
-%While the existing models exploit MIA's probability output, they rely solely on labels \citep{choquette-choo_label-only_2021}.
-%They use the "HopSkipJump" attack, a so-called decision-based attack \citep{chen_hopskipjumpattack_2020}.
-%Choquette-Choo et al. consider a more semi-black-box approach, for which the attacker still requires access to a subset of the original training data and the trained model.
-%Another paper using "HopSkipJump" requires only the trained model and achieves higher accuracy using an approach with random data \citep{li_membership_2021}. \newline
-
-
-
-
-
-
-%If the data is fed with real data the score is higher than similar data, which means the real data can be inferred \citep{shokri_membership_2017,jayaraman_evaluating_nodate}
-%A white-box setting requires a lot of adversarial knowledge for training the shadow models.
-%The black-box settings only take the prediction as input and decide if it is a (non-) member \citep{hu_membership_2022}.
-%To conclude on this, there are many methods for MIA and in that regard, the black-box approaches look the most promising.
-%They require less setup and there is plenty of black-box approaches score with a success rate of 70\% and 80\%.
-%For our use case, however, it is harder to establish an MIA; as we focus mainly on clustering.
-%Anyhow, it is possible if we consider a semi-supervised approach where we consider the cluster labels as ground truth.
-%%Differential privacy is proposed as a wmay of solving the inference attack for both white-box and black-box \citep{hu_membership_2022}.
-%%However, it is hard to find a way to protect privacy and utility as well, so it depends heavily on the privacy budget.
+Here, the $h(x)$ denotes the probability distribution of $x$, which tells the chance of $x$ being a certain classification/label. Peng et al. then calculate the top-$k$ features $h_k$ and eliminate the smaller values.
+The formula $R_i$ is the re-scaled probabilities, to be more suitable for clustering using temperature scaling, where $T$ is the scaling parameter.
+They fit a K-Means model, resulting in two clusters: training and test data \citep{peng_unsupervised_nodate}.
 
 \newpage
-
-
-\mycomment{A practical implementation of the attack was provided by Fredrikson et al. as a way to infer sensitive features \citep{fredrikson_model_2015}.
-To accomplish this, they used a decision tree attack, a white-box approach, as they also accessed the count of instances for each decision tree branch.
-They also considered a black-box approach with access only to the target model (ML-as-a-service in this example).
-% Finally, they showed that if the attacker can capture a single output label, they can reproduce the original data with high confidence \citep{fredrikson_model_2015}.
-The attack targets gradient descent, which is used to optimize the input data of an attack to mimic the original data.
-It has only been shown to work on a neural network for face identification images (named MIFace) \citep{fredrikson_model_2015}, but it could be extended to another machine learning classifier if it uses gradient descent (e.g. Support Vector Machines) \citep{nicolae_adversarial_2019}.
-%Most other comparable work focus almost exclusively on neural networks [decristofaroOverviewPrivacyMachine2020a, jegorovaSurveyLeakagePrivacy2022].
- Yeom et al. proposed a membership inference attack, which can also be utilized for attribute inference in a white-box setting.
-The attribute inference attack follows a similar methodology, wherein the target model is queried to assess the loss of synthetic data based on adversarial knowledge.
-Repeating the process, the attack identifies and selects the value with the highest prior probability, incorporating membership information \citep{yeom_privacy_2018,jayaraman_are_2022}.
-Evaluating the effectiveness of such attacks is challenging, as it relies on the correlation between attributes, irrespective of whether the data belongs to the training or test dataset \citep{zhao_feasibility_2021}.
-Therefore, Yeom et al. focus on the similarity between membership/attribute- inference and combine them to evaluate the attribute inference attack \citep{yeom_privacy_2018}. \newline}
-
-%using available code implementations \citep{nicolae_adversarial_2019}.
-\newpage
-%\section{Model inversion attack}
-%\todo[inline]{Do research for this attack}
-
-% \section{Poison attack}
-%\textbf{Reconstruction attacks:}
-%Another attack that is a threat, especially to differential privacy is a reconstruction attack.
-%This attack is also more known as the attribute inference attack and is more focused on the data itself than machine learning models \citep{rigaki_survey_2021}. 
-
-%\textbf{Model extraction attacks:}
-%The final attack that is considered, is the model extraction attack.
-%This attack consists of the attacker being able to reconstruct and gather information about the original model.
-
-% Jayaraman et al. evaluate inference attacks and differential privacy and express a metric called "privacy leakage"  \citep{jayaraman_evaluating_nodate}.
-
-
 
 \section{Attack evaluation} \label{theory:attack-evaluation}
 In this section, we evaluate the membership inference attack and evaluate it as it is the most appropriate for this study (See previous chapter).
