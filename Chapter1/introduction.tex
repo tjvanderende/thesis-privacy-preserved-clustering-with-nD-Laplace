@@ -27,7 +27,7 @@ This makes the noise more significant, impacting the data utility \citep{yang_lo
 
 \newpage
 
-\subsection*{Related work}
+\subsection*{\replaced{Research context}{Related work}}
 %\todo[inline]{Tell something about other mechanisms}
 Preserving utility in clustering while ensuring privacy is a well-known challenge in the existing literature.
 Previous studies have attempted to address this issue, with some focusing on preserving cluster shapes by sending feature distance information to the server rather than the feature values \citep{sun_distributed_2019}.
@@ -61,7 +61,7 @@ Our contribution to the current literature is as follows:
 \begin{enumerate}
   \item We aim to create a new privacy framework named nD-Laplace using the three variants of Laplace to train privacy-preserving clustering algorithms on distributed n-dimensional data.
   \item In addition to K-means, we also demonstrate the working of our method on multiple other clustering algorithms.
-  \item We introduce different optimization techniques to improve the utility of nD-Laplace using nD-tree.
+  \item We introduce different optimization techniques to improve the utility of nD-Laplace using kd-tree.
   \item We demonstrate the effectiveness and privacy of nD-Laplace using real-world datasets and attacks.
 \end{enumerate}
 
@@ -69,9 +69,12 @@ Our contribution to the current literature is as follows:
 To reach our goals and objectives, we have formulated the following main question: \newline \newline
 \textit{"How can the nD-Laplace mechanism be applied in training privacy-preserving clustering algorithms on distributed n-dimensional data?"} \newline
 
-Much literature is consulted to answer this research question, and we experiment extensively to gather enough qualitative data.
-Both external and internal validation methods are employed to assess the utility and privacy of the privacy mechanism.
-The qualitative data from these experiments are analyzed to compare the different privacy mechanisms and their performance concerning clustering tasks.
+\replaced{We review a significant amount of existing literature to address our research question and gather qualitative data for analysis. 
+To acquire this qualitative data, we conduct a series of experiments that include both cluster utility and mechanism utility/privacy. These experiments are conducted using real-world datasets and synthetic datasets.
+
+In order to ensure a comprehensive evaluation of utility, we utilize a combination of external and internal validation methods. For evaluating privacy we focus on real-world attacks to acquire quantitative information about the privacy for our mechanism.
+By carefully analyzing the qualitative data from these experiments, we conduct a detailed comparison of various privacy mechanisms for both clustering and mechanism performance.}
+{Much literature is consulted to answer this research question, and we experiment extensively to gather enough qualitative data. Both external and internal validation methods are employed to assess the utility and privacy of the privacy mechanism. The qualitative data from these experiments are analyzed to compare the different privacy mechanisms and their performance concerning clustering tasks.}
 
 \subsection*{Roadmap}
 The first chapter is devoted to literature study and review.

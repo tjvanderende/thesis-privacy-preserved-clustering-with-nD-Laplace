@@ -83,11 +83,12 @@ The specific implementation and calculation of the closeness of data-points, dep
 For this function, there are four popular options: Single link, Average link, Complete link, and Ward's method \citep{roux_comparative_2015}. In the next section we evaluate this to choose the most fitting option.
 
 \subsubsection{Research direction}
-There are three different types of clustering algorithms that we have considered for this research.
-Therefore, we will choose one algorithm for each type to ensure a representative selection.
+\replaced{In the previous sections, three types of cluster algorithms have been introduced, each related to distance. For each type, the most popular algorithms have been explained, and to arrive at a representative selection, one algorithm from each type is chosen for use in the research.}
+{There are three different types of clustering algorithms that we have considered for this research.
+Therefore, we will choose one algorithm for each type to ensure a representative selection.}
 
 Based on the different types of clustering algorithms, we have chosen to use K-Means for this research.
-K-Mean clustering is widely used in the literature and, therefore, easily compared with other studies.
+K-Means clustering is widely used in the literature and, therefore, easily compared with other studies.
 
 For density-based clustering, we will solely focus on \gls{optics} in this study.
 The parameter $\Pi$ in \gls{dbscan} is influenced by the data shape, which is further affected by our privacy mechanism.
@@ -100,10 +101,10 @@ As for hierarchical clustering, we have decided to go for agglomerative clusteri
 %The algorithm calculates the local density of each data point and identifies density peaks for points with the highest density [Rodriguez and Laio, 2014].
 
 \subsection{Parameter selection}
-A list of important hyper parameters that can influence the results is provided for each clustering algorithm.
-Subsequently, we briefly discuss the methods for determining these hyper parameters for the algorithms. \newline
+A list of important hyper parameters that can influence the results is provided for each clustering algorithm. \replaced{Subsequently, methods for determining these hyper parameters for the algorithms are briefly discussed. The same distance function is employed for all algorithms to maintain a consistent setting. The chosen function is Euclidean distance, as utilized for \gls{gi}.}
+{Subsequently, we briefly discuss the methods for determining these hyper parameters for the algorithms. \newline
 We use the same distance function for all algorithms to have all the algorithms in the same setting.
-This function will be Euclidean distance, as used for \gls{gi}.
+This function will be Euclidean distance, as used for \gls{gi}.}
 \subsubsection{K-Means} \label{theory:kmeans}
 The most crucial parameter of the K-Means algorithm is the value of $k$.
 This value determines the number of clusters to consider and influences the results by a lot \citep{ahmed_k-means_2020}.
@@ -152,7 +153,7 @@ Therefore, the approach is similar to K-Means.
 The amount of clusters is selected based on the silhouette method, by selecting the highest silhouette score for a given $k$.
 
 \subsubsection{OPTICS} \label{theory:clustering-dbscan}
-With the introduction of \gls{optics}, we no longer need to worry about the $radius(\epsilon)$ value.
+With the introduction of \gls{optics}, we no longer need to worry about the \replaced{$\Pi$}{$radius(\epsilon)$} value.
 Therefore, only $minPts$ remains an important parameter to consider. \newline
 %\todo[inline]{Use OPTICS instead of DBSCAN}
 %\gls{dbscan} is introduced by \citep{ester_density-based_nodate} and draws a radius (neighborhood) around data points.
@@ -160,15 +161,17 @@ Therefore, only $minPts$ remains an important parameter to consider. \newline
 %The \gls{dbscan} algorithm uses the inputs $minPts$, $radius(\epsilon)$ (not to be confused with the privacy budget $\epsilon$), and the Euclidean distance \citep{schubert_dbscan_2017}.
 %This $\epsilon'$ is used to draw a neighborhood, and the $minPts$ is used as a weight to evaluate which points should be inside the neighborhood.
 %The Euclidean distance is used for the distance function to be consistent with the other algorithms. \newline
-The $minPts$ is the minimum amount of points that have to be within the $radius(\epsilon)$ to mark it a cluster.
+The $minPts$ is the minimum amount of points that have to be within the \replaced{$\Pi$}{$radius(\epsilon)$} to mark it a cluster.
 This hyperparameter is analyzed in a paper by Sander et al.
 The work describes calculating this parameter by applying two times the feature amount \citep{sander_density-based_1998}.
 So, using this approach, a dataset with two features will have an $minPts$ of four \citep{schubert_dbscan_2017}.
 
 %In conclusion, K-Means and \gls{ap} have straightforward methods for determining hyperparameters.
 %For K-Means, the elbow method is the most common, and for \gls{ap}, the median is used for the preference.
-\gls{dbscan} is a little more complicated due to the variety of datasets and noise-altering mechanisms we experiment with.
-This complexity is why we use \gls{optics} to determine the best value for $radius(\epsilon)$ and choose $minPts$ based on the number of features times two.
+\replaced{The extensive use of noise-altering mechanisms and distinct data sets in this study makes the application of \gls{dbscan} difficult.
+It cannot be ruled out that the hyper parameters have an effect on the results, as this algorithm is highly dependent on the distance between data points.
+This is why the \gls{optics} algorithm is used to calculate $\Pi$.}{ \gls{dbscan} is a little more complicated due to the variety of datasets and noise-altering mechanisms we experiment with.
+This complexity is why we use \gls{optics} to determine the best value for $radius(\epsilon)$ and choose $minPts$ based on the number of features times two.}
 
 \subsection{Evaluation methods} \label{theory:evaluate}
 Clustering comparison measures are important in cluster analysis for external validation by comparing clustering solutions to a "ground truth" clustering \citep{vinh_information_nodate}.

@@ -1,5 +1,5 @@
 \chapter{nD-Laplace}
-In this chapter, we delve deeper into geo-indistinguishability and the various mechanisms that work with it.
+In this chapter, we delve deeper into geo-indistinguishability and the various mechanisms that work with it, \added{and aim to provide the theoretical foundation for research questions 1, 2 and 3.}
 We also explain the theory behind the nD-Laplace mechanism and how we modify it and apply it for clustering.
 %This explanation is build-up out of several sections, each dedicated to 2, 3, and n-dimensional data.
 Because we frequently discuss 2, 3, and dimensional data in our thesis, we decided to prefix the respective Laplace method with this information.
@@ -9,7 +9,7 @@ Therefore, for the rest of the thesis, we use the following names:
   \item 3D-Laplace: This refers to the spherical Laplace mechanism \citep{9646489}.
   \item nD-Laplace
 \end{enumerate}
-For each mechanism, we explain the equation for \gls{gi}, the mechanism, and the data truncation.
+\replaced{The theory, mechanism, and data truncation are explained for each section. In addition, an explanation is provided when a section relates directly to a research question.}{For each mechanism, we explain the equation for \gls{gi}, the mechanism, and the data truncation.}
 
 \printnomenclature
 
@@ -63,16 +63,19 @@ The formula is provided by Fernandes et al. to convert $r$ to spherical coordina
 
 The combination of sections 1 and 2 of this chapter provides a good overview of the solution using a similar image as the 2D and 3D variants (figure \ref{fig:nd-laplace-overview}).
 \begin{figure}[H]
-  \includesvg[width=0.6\textwidth]{TheorethicalFramework/ND-Laplace/Images/nd_laplace}
+   \centering
+  \includesvg[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/nd_laplace}
   \caption{Overview of the nD-Laplace mechanism}
   \label{fig:nd-laplace-overview}
 \end{figure}
+\todo[inline]{Update image with other notation and add explanation}
 \newpage
 \subsection{Privacy versus utility} \label{theory:privacy-utility-nd}
 When we specifically look at the \(uniform^n(\theta)\) function (see Equation: \ref{eq:generate_theta_for_nd_laplace}), the \(\theta\) can be generated \(n\)-times, but this has some limitation \footnote{\url{https://mathworld.wolfram.com/Hypersphere.html}}.
 The value of \(\theta\) decreases after the $\approx 7$ dimensions have been reached. Subsequently, the hyper-surface area reaches a maximum, so the value of $\theta$ decreases towards 0 \footnote{\url{https://mathworld.wolfram.com/Hypersphere.html}}
 This behaviour is illustrated in the following figure:
 \begin{figure}[H]
+\centering
   \includegraphics[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/volume.png}
   \caption{Illustration of the decreasing volume while increasing the number of dimensions}
   \label{fig:curse-of-dimensionality}

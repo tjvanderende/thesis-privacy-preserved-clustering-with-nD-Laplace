@@ -49,6 +49,7 @@ The other variable ($\theta$) is defined as a random number $[0, 2\pi]$. \newlin
 To visualize the data, it is necessary to convert the polar coordinates for $z = (r, \theta)$ back to planar coordinates $z = (x, y)$.
 This conversion is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals/corr/abs-1212-1984} and visualized using figure \ref{figure:geo}.
 \begin{figure}[h]
+    \centering
   \includesvg[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/polar-laplace-to-planar.svg}
   \centering
   \caption{Representation of converting the perturbed point $z = (r, \theta)$ to a point ${z_x, z_y}$}
@@ -62,6 +63,7 @@ If this is not the case, the data is easily distinguished by an unwanted adversa
 The truncation is an essential part of the mechanism to ensure the data is contained within the domain of the original data $X$.
 %We assume a user has a set of data points with a range of [-1, 1].
 \begin{figure}[H]
+\centering
   \includegraphics[width=0.7\textwidth]{TheorethicalFramework/ND-Laplace/Images/remapping.png}
   \caption{Representation of truncation of data points for 2-dimensional Laplace mechanism.}
   \label{figure:truncation-2d}
@@ -80,7 +82,7 @@ The original \gls{gi} definition contains $K$, which is the probability of $z$ b
 However, this probability is no longer guaranteed because $z$ can also be part of $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
 Hence the probability is now $R_X(x) = R(x) \cup X$. \newline
 So, the $R_X(x)$ has a different shape depending on the distance $x_0$ and $x'$ (ergo, it depends on the grid cell width). This is due the step units of $G$ stay the same, while the distance $r$ grows \citep{DBLP:journals/corr/abs-1212-1984}.
-\newpage
+
 To overcome this issue, Andres et al. propose a way of calculating $\epsilon'$, depending on the step-unit $u$. \citep{DBLP:journals/corr/abs-1212-1984}.
 They proved this in theorem 4.1 \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{theorem}[Discretization 2D-Laplace]
