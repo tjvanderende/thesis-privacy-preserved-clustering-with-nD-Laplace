@@ -11,29 +11,36 @@ Our findings underline the significant influence of the privacy budget on the ut
 In comparing nD-Laplace with the Piecewise mechanism, it was clear that nD-Laplace excelled with the heart data set, seeds data set and skewed data set, particularly when evaluated using K-Means and \gls{ag} clustering \gls{ami} scores. However, its performance was subpar for the line-dataset and circle dataset. Also, \gls{optics} yielded a notably low \gls{ami} score.
 
 Dimensionality had a marginal effect on the utility and privacy for the seeds and heart-dataset. The most significant outcome was observed for the top two dimensions, which demonstrated a minor increase in \gls{ami}, suggesting enhanced utility with increased dimensions.  This might be due to our observation for the hypersphere volume (see Section: \ref{theory:privacy-utility-nd}), where we stated the possibility of an increased utility for 7 > dimensions. This would need further investigation to know for sure.
-In addition, the enhancement in utility did not translate into a corresponding increase in privacy. \newpage
+In addition, the enhancement in utility did not translate into a corresponding increase in privacy. 
 
 In our concluding experiments, we delved into the details of the nD-Laplace mechanism by examining its variants: grid-nD-Laplace and density-nD-Laplace. The primary objective of these variants is to ensure that the data processed by nD-Laplace remain confined within its original domain.
 
 Drawing from existing literature, we recognized the criticality of employing a remapping or truncation method. Without such a method, data with a low epsilon value risk being plotted outside its original domain. This deviation can potentially provide attackers with an advantage, enabling them to infer whether the data is part (member) of the original dataset.
 
-Our empirical findings agreed on these findings. Specifically, when operating with a limited privacy budget, we observed a clear drop in membership advantage, plummeting to values even lower than -50. While this decline was anticipated, its magnitude was surprising. A deeper dive revealed that this steep decline could be attributed to the membership advantage metric itself, which, as highlighted in our review of the literature, has certain inherent limitations. Contrary to the pattern suggested by the membership advantage, the underlying \gls{tpr} was considerably high, especially unexpected for a lower privacy budget. This anomaly was notably absent, or at least less pronounced, in the nD-Laplace variants. 
+Our empirical findings agreed on these findings. Specifically, when operating with a limited privacy budget, we observed a clear drop in adversary advantage, plummeting to values even lower than -50. After further investigation, we saw the value of the adversary advantage was misleading because the \gls{tpr} was a lot higher then the other \gls{tpr}.
 
 The high \gls{tpr} for lower privacy budgets can be attributed to the fact that, for an epsilon value of 0.5, data points were plotted significantly outside the original domain. Our empirical findings thus emphasize the necessity, also echoed in the literature, of addressing this issue. Both nD-Laplace and Piecewise mechanisms would likely exhibit these shortcomings in practical settings.
 
 The two variants, grid-nD-Laplace and density-nD-Laplace, have demonstrated their ability to mitigate this issue in practice. Grid-nD-Laplace, in particular, showcased more stable results, with its privacy and utility metrics aligning closely with those of nD-Laplace. We introduced density-nD-Laplace to address the sensitivity of the nD-Laplace mechanism to data shapes. However, it fell short in practice, particularly with the Line and Circle datasets.
 
-\section{Constraints}
-We encountered challenges with the \gls{optics} clustering algorithm.
-Our analysis revealed a higher number of clusters for \gls{optics} compared to K-Means and \gls{ag}. Additionally, a significant portion of the data points were labeled as noise. This suggests potential issues with the configuration of \gls{optics}, particularly the $minPts$ parameter. Despite these configuration issues, the Piecewise mechanism still outperformed nD-Laplace in certain scenarios, likely because of its ability to handle dense data shapes.
-% \todo[inline]{Selection of features for 2d/3d heart-dataset \& seedsdataset might have impact}
+\section{\replaced{Limitations}{Constraints}}
+\added{In this section, we discuss the limitations of the research that have been identified based on our observations of the results.}
+\begin{enumerate}
+    \item \textbf{Utility of \gls{optics}: }
+\added{We experienced difficulties with the \gls{optics} clustering algorithm.
+Our analysis revealed a higher number of clusters for \gls{optics} compared to K-Means and \gls{ag}. In addition, a substantial proportion of the data points were identified as noise. This indicates possible problems with the $minPts$ parameter (see Section section:cluster-utility-2). The algorithm is extremely sensitive to the uniform noise generated by the nD-Laplace mechanism for the same reason.
+The Piecewise mechanism is better able to preserve specific data structures and, as a result, has a smaller impact on the performance degradation of the  \gls{optics} algorithm.}
+    \item \textbf{3-dimensional data:}
+\todo[inline]{Selection of features for 2d/3d heart-dataset \& seeds-dataset might have impact}
+    \item \textbf{Adversary advantage:} 
+\added{The adversary advantage, while valuable, proved inadequate in capturing all crucial aspects of our privacy experiments. This limitation had been anticipated, as we had observed similar issues in the existing literature, which led us to incorporate the True Positive Rate (\gls{tpr}) as an additional metric. The varying reporting and utilization of metrics in related studies make it harder to draw broader conclusions. In future research, when existing literature highlights specific limitations, we should also define alternative metrics, preferably ones already established within the related work.}
+\end{enumerate} 
 \section{Future work}
 The nD-Laplace mechanism, based on our findings, holds promise for clustering applications. While it showcases distinct advantages and disadvantages compared to the Piecewise mechanism, there is room for improvement, especially in handling diverse data forms. To further its practical applicability, we propose the following research directions:
 
 \begin{enumerate}
-\item \textbf{Examine diverse data shapes}: nD-Laplace's practicality hinges on its adaptability to various data shapes. Given its current limitations with certain datasets, directed noise introduction, as opposed to uniform noise distribution, might offer a solution.
-\item \textbf{Dimensionality in synthetic datasets}: Our current study limits the dimensionality to 7 and 9 for certain datasets. Expanding this to higher dimensions, especially for synthetic datasets, could provide deeper insights.
-\item \textbf{Explore higher dimensions}: With observed improvements in utility beyond 7 dimensions, it's worth investigating data with 20+ dimensions .
+\item \textbf{Examine impact of data shapes}: \added{The practicality of nD-Laplace relies on its ability to adapt to different data shapes and clustering algorithms. This work has brought attention to challenges posed by certain directed data shapes and sensitive clustering algorithms, such as \gls{optics}. Consequently, there are several approaches for future research aimed at mitigating the impact of nD-Laplace noise for specific use cases, as we have attempted to do with density-nD-Laplace.}. 
+\item \textbf{Dimensionality in (synthetic) datasets}: Our current study limits the dimensionality to 7 and 9 for certain datasets. Expanding this to higher dimensions, especially for synthetic datasets, could provide deeper insights. 
 \item \textbf{Incorporate categorical and binary data}: Enhancing nD-Laplace to support these data types, similar to the Piecewise mechanism, can broaden its practical applicability. 
 \end{enumerate}
 

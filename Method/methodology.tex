@@ -1,5 +1,4 @@
-\chapter{Methodology}
-
+\chapter{\added{Research} methodology}  \label{chapter:methodology}
 We conducted experiments to gain insights into the proposed methods for researching the appliance of nD-Laplace for clustering algorithms.
 The experiment results are used to evaluate our method against other literature.
 In this chapter, we explain:
@@ -13,36 +12,16 @@ In this chapter, we explain:
 
 \section{Research design}
 This section describes the overall setup of the research.
-\subsection{Research background}
-Clustering data is a crucial part of machine learning, aiming to discover patterns in the data that may not be immediately visible to the human eye.
-To achieve this, the data is trained on large datasets.
-However, storing such data is unsafe, as unauthorized access could lead to breaches.
 
-\gls{ldp} has been introduced to safeguard user privacy while preserving data patterns.
-Adding local noise means the plain data is never stored on a central server.
-But, the limited available data in the local view distorts the patterns excessively in each noise addition.
-
-Current literature has attempted to address this challenge, but the solutions fall short.
-They either require modifications to the clustering algorithm or lack practical applicability due to the use of synthetic data.
-Existing literature focuses mainly on 2-dimensional data with K-Means as the clustering algorithm.
-
-To address these limitations, we propose a new \gls{ldp} method called nD-Laplace, utilizing distance to preserve data patterns using the concept of \gls{gi}. \newline
-Our method enables secure training of clustering algorithms based on input-perturbation.
-Due to this approach, we can train multiple clustering algorithms without modifications and extend them to n-dimensional data.
-We will test three variants of the nD-Laplace mechanism to assess their utility and privacy characteristics.
-\begin{enumerate}
-    \item nD-Laplace: Plain mechanism without any additions for truncation.
-    \item grid-nD-Laplace: Mechanism with truncation using grid-remapping (See Equation: \ref{alg:grid-remapping-laplace}).
-    \item density-nD-Laplace: Mechanism with truncation using density-remapping (See Equation: \ref{alg:optimal-remapping-laplace}).
-\end{enumerate}
-We will compare the nD-Laplace mechanism to Piecewise, which is another \gls{ldp} mechanism (See Section \ref{theory:literature-review}) and assess the effectiveness of the proposed nD-Laplace variants.
-
-This research combines real-world and synthetic data to demonstrate practical applicability.
-Extensive external and internal validation experiments will be conducted to establish the method's practical relevance and effectiveness.
-
-
-\subsection{Research questions}
-The main question of the research is as follows: \newline \newline
+\subsection{Research background \& questions}
+\added{
+The utilization of clustering plays an important part in the identification of hidden data patterns; but, the handling of datasets may give rise to potential privacy vulnerabilities. \gls{ldp} is an approach that has potential for protecting user privacy while maintaining data patterns.
+}
+\added{
+Previous research attempted to tackle the issue of maintaining utility in clustering while simultaneously protecting privacy. Nevertheless, the range of these methods is limited, as they mostly concentrate on K-means clustering. Also, existing research is constrained by its focus on datasets that are either two or three-dimensional, or on synthetic data, hence failing to comprehensively represent the complexity inherent in real-world data. 
+Therefore, the primary aim of this research is to develop a framework that protects privacy in the context of secure training for various clustering algorithms on distributed n-dimensional data.} \newline
+\added{We accomplish this by employing a method known as \gls{gi}, which employs a distance variation of the Laplace algorithm to introduce noise to data. Thus, the study question is phrased as follows:}
+\newline 
 \textit{"How can the nD-Laplace mechanism be applied in training privacy-preserving clustering algorithms on distributed n-dimensional data?"} \newline
 This question is divided into four smaller sub-questions:
 \begin{enumerate}
@@ -63,16 +42,16 @@ This question is divided into four smaller sub-questions:
                     Because the mechanism heavily relies on Euclidean distance, the shape (distance between the data points) can ultimately harm utility and privacy.
                     We have already observed this difference when comparing the heart and seed datasets in research questions 1 and 2.
                     But, to rule out the potential impact of the number of data points (the heart dataset has 2126 samples and the seed-dataset 210), we generate three synthetic datasets, each with 1000 samples (See section \ref{datasets-section}).
-              \item \textit{H2: The privacy leakage (adversary advantage) and utility increases for more dimensions:}
+              \item \textit{H2: The privacy leakage (adversary advantage) and utility increases for datasets with more then 7 dimensions:}
                     The hypothesis arose from our observation while investigating/implementing nD-laplace(\ref{theory:privacy-utility-nd}).
-                    Adding more dimensions (5 >) decreases the added noise gradually, increasing utility.
+                    Adding more dimensions (7 >) decreases the added noise gradually, increasing utility.
                     On the other hand, privacy is expected to decrease because the noise is less.
               \item \textit{H3: Adding remapping based on density improves utility without sacrificing privacy:}
                     We expect that the shape of the data has a certain influence on the effectivity of the nD-Laplace mechanism ($H1$).
                     Therefore, our hypotheses is that the shape impact is reduced by introducing density based remapping (\ref{alg:optimal-remapping-laplace}).
           \end{enumerate}
 \end{enumerate}
-
+\newpage
 \subsection{Datasets} \label{datasets-section}
 For this research, we selected two real-world datasets based on the related papers (\ref{theory:literature-review}).
 The datasets are sourced from the UCI Machine Learning Repository \citep{noauthor_uci_nodate}.
@@ -112,15 +91,14 @@ For this purpose, we generated a 2-dimensional and 3-dimensional dataset with 10
     \item \textbf{Line dataset:} Dataset is a line (shape is much like the seeds dataset).
     \item \textbf{Skewed dataset:} Dataset samples are skewed/concentrated to one side (shape is much like the heart dataset).
 \end{enumerate}
-
+\newpage
 \subsection{Experiment setup}
 We evaluate all privacy mechanisms by comparing them in utility and privacy.
 To reduce the measurement bias of results, we executed them ten times for multiple privacy budgets and reported the average for each \citep{9679364}.
 \begin{enumerate}
     \item The experiments run ten times, and we report the mean.
-    \item All experiments run for multiple epsilons: ${0.5, 0.7, 1, 1.5, 2, 3.5, 5, 7, 9}$.
+    \item \added{In line with existing research, we establish a set of privacy budgets under which the experiments are conducted:} ${0.5, 0.7, 1, 1.5, 2, 3.5, 5, 7, 9}$.
 \end{enumerate}
-\newpage
 
 \subsection{Environmental setup}
 For running the experiments, we use 16GB RAM and an i7-10750H 2.6Ghz processor.
@@ -256,8 +234,9 @@ In addition, we evaluate privacy by simulating a membership inference attack and
 
           Although the membership advantage is a proven method for measuring MI attacks, we also include the TPR as an essential measurement.
           This metric is most interesting to us because this displays the percentage of the actual leaked labels (see Section \ref{theory:attack-evaluation}).
+          \begin{landscape}
           \begin{figure}[H]
-              \includegraphics[width=1.1\textwidth]{Method/images/MI-setup.png}
+              \includegraphics[width=1.3\textwidth]{Method/images/MI-setup.png}
               \caption{Member inference attack using shadow models. The green swim lane illustrates the normal setup, and the red swim lane projects the adversary steps.}
               \label{figure:mi-attack}
           \end{figure}
@@ -275,20 +254,21 @@ In addition, we evaluate privacy by simulating a membership inference attack and
           \end{enumerate}
           The attacker could infer many original labels if the adversary advantage or \gls{tpr} is high.
           In this case, a lower score is better than a lower score.
-\end{enumerate}
+          \end{landscape}
 \newpage
 %\input{Method/algorithms/shokri-setup-mi.tex}
 \subsection{Research roadmap} \label{research-roadmap}
 This section explains the experiments' setup and the result reporting order.
 \begin{enumerate}
-    \item Cluster utility: The mechanisms nD-Laplace and Piecewise are compared using the external and internal validation methods.
+    \item Cluster utility: we consider the cluster utility by comparing nD-Laplace and Piecewise are compared using the external and internal validation methods.
           We report the \gls{ami} and SC in the results for both mechanisms and each dataset.
           For this experiment, we only consider real-world datasets.
+    \item Mechanism comparison: In addition to evaluating the privacy/utility of nD-Laplace and Piecewise, we also compare the different variants of nD-Laplace using a barplot.
     \item Mechanism utility: Both mechanisms are compared against each other by evaluating the \gls{ami} and \gls{sc}.
           In this research, we also conduct experiments to assess the impact of the number of dimensions on the utility of each dataset.
     \item Mechanism privacy: We do the same for utility, but now with privacy.
           For this purpose, we evaluate the adversary advantage and privacy distance.
-    \item Mechanism comparison: Now we established the performance of nD-Laplace and Piecewise, we compare the different variants of nD-Laplace.
+    %\item Mechanism comparison: Now we established the performance of nD-Laplace and Piecewise, we compare the different variants of nD-Laplace.
 
 \end{enumerate}
 %Therefore, we analyze our method according to a popular attack: Membership inference attack.
