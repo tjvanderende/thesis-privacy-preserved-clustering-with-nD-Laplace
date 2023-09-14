@@ -7,10 +7,14 @@ Therefore, for the rest of the thesis, we use the following names:
 \begin{enumerate}
   \item 2D-Laplace: This refers to the planar Laplace mechanism \citep{DBLP:journals/corr/abs-1212-1984}.
   \item 3D-Laplace: This refers to the spherical Laplace mechanism \citep{9646489}.
-  \item nD-Laplace
+  \item nD-Laplace: Also named like this, in the original paper \citep{fernandes_generalised_2019}.
+  \item grid-nD-Laplace: This is a grid-remapping approach that is generalised for nD-Laplace.
+  \item density-nD-Laplace: This is a density-remapping approach to provide an alternative to grid-nD-Laplace.
 \end{enumerate}
-\replaced{The theory, mechanism, and data truncation are explained for each section. In addition, an explanation is provided when a section relates directly to a research question.}{For each mechanism, we explain the equation for \gls{gi}, the mechanism, and the data truncation.}
-
+\deleted{For each mechanism, we explain the equation for \gls{gi}, the mechanism, and the data truncation.}
+\added{
+The first three points are focused on the theory for our first research question. Here, we delve into the implementation of 2/3/nD-Laplace. Subsequently, point 4 is centered on the theory for the second research question, which focuses on grid-nD-Laplace. Finally, we address the theory related to research question 3 for the density-nD-Laplace variant. Once all the theory has been covered, a summary will be provided along with an overview of the privacy framework.
+}
 \printnomenclature
 
 \input{TheorethicalFramework/ND-Laplace/2d-laplace.tex}
@@ -20,7 +24,7 @@ Therefore, for the rest of the thesis, we use the following names:
 As mentioned in the previous chapter, the paper introduced by Min et al. can handle 3-dimensional data.
 A small recap: a point $(r, \theta, \psi)$ gives us the three coordinates of a location on the 3-dimensional sphere.
 An important property is that these coordinates can be generated separately \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
-The $r$ gives us the radius or distance from $(\theta, \psi)$ to the center of the sphere \footnote{https://mathworld.wolfram.com/SphericalCoordinates.html}.
+The $r$ gives us the distance from $(\theta, \psi)$ to the center of the sphere \footnote{https://mathworld.wolfram.com/SphericalCoordinates.html}.
 So, instead of having just these two coordinates, we can extend this to n-dimensions by considering an n-hypersphere \citep{fernandes_generalised_2019, 9646489}.
 The theorems for \gls{gi} are extended by Fernandes et al. to support n-dimensional data:
 %To this end, in addition to points $\theta$ and $\psi$, we consider $\theta \in S^n$, where $S$ is a unit hypersphere.
@@ -36,12 +40,12 @@ Therefore, $d_{euc}$ is adopted by this thesis from now on, to be used for apply
 The 2D-Laplace mechanism is referenced as a plane, and the coordinates can be generated separately as $(r, \theta)$ \citep{fernandes_generalised_2019,DBLP:journals/corr/abs-1212-1984}.
 Hence, generating the nD-variant can be seen as generating multiple $(r, \theta)$ pairs \citep{fernandes_generalised_2019}.
 Where $r$ is the radial distance from the origin $x_0$ and $\theta$ is the angle randomly selected from a unit hypersphere.
-The selection of $r$ is according to the Gamma distribution, with shape $n$ and scale $\delta > 0$ \citep{fernandes_generalised_2019}:
+The selection of $r$ is according to the Gamma distribution, with shape $n$ (dimensions) and scale $\delta > 0$ \citep{fernandes_generalised_2019}:
 \begin{equation}
   Gam^n_\delta(r) := \frac{r^{n-1}\cdot^{-\frac{r}{\delta}}}{\delta^n(n-1!)}
   \label{eq:generate_r_for_nd_laplace}
 \end{equation}
-Then, $\theta$ is drawn from a uniform distribution of a unit hypersphere $S$ \citep{fernandes_generalised_2019}:
+Then, $\theta$ is drawn from an uniform distribution of a unit hypersphere $S$ \citep{fernandes_generalised_2019}:
 \begin{equation}
   Uniform^n(\theta) := \frac{\gamma(\frac{n}{2})}{n \cdot \pi ^{\frac{n}{2}}}
   \label{eq:generate_theta_for_nd_laplace}
@@ -89,7 +93,7 @@ The consequence of this behavior is that the final noise decreases for higher di
 
 \newpage
 \subsection{Grid-remapping \label{section-grid-remapping}}
-In the previous sections, we introduced the 2D, 3D, and nD Laplace mechanisms.
+In the previous sections, we introduced the 2D, 3D, and nD Laplace mechanisms and introduced truncation for 2/3-Laplace.
 The current section will be used to formalize nD-Laplace with grid-remapping (disretization \& truncation) and introduce modifications to improve the mechanisms for clustering for n-dimensional data.
 
 \subsubsection{Discretization and truncation} \label{theory:nd-laplace-truncation}
@@ -105,13 +109,12 @@ For the purpose of clustering, we omit this for the formulation of truncation wi
 We extend the reasoning of Min et al. behind extending 2D-Laplace to 3D-Laplace as this applies to nD-Laplace as well.
 Let $u > v > h$ be a cuboid grid $G_c$, equal to the one provided by Min et al \citep{9646489}.
 We are be-able to extend this by providing a hypercube ($n$-cube) with n-dimensions denoted as $G_n = v_0, v_1, v_2 ... v_{n-1}$. This $n$-cube has $2^n$ sides, but can essentially be seen as a generalization of a 3-cube to $n$-dimensions \footnote{https://mathworld.wolfram.com/Hypercube.html}.
-
-However, An issue arises with the definition of the grid-units, where Min et al. and Andres et al. both consider the possibility of unequal grid-units, for the purpose of generalisation \citep{9646489, DBLP:journals/corr/abs-1212-1984}. 
+An issue arises with the definition of the grid-units, where Min et al. and Andres et al. both consider the possibility of unequal grid-units, for the purpose of generalisation \citep{9646489, DBLP:journals/corr/abs-1212-1984}. 
 But for a $n$-cube this is generalisation is harder to justify, because the are $2^n$ possible sides to consider.
 For this reason, we define $v, w, h = v \in G_n$.
 
 Another important property, is the maximum diameter defined as $r_M$ \citep{9646489}.
-This property can also be converted to support n-dimensions, by calculating the diameter of $G_n$.
+This property can also be converted to support $n$-dimensions, by calculating the diameter of $G_n$.
 This is the maximum distance between any pair of nodes \citep{HARARY1988277}. \newline
 The Euclidean distance diameter is defined as:
 \begin{equation}
@@ -120,9 +123,9 @@ The Euclidean distance diameter is defined as:
 Where, $n$ is the number of dimensions. \newpage
 Finally, we are be-able to establish our own theorem for the discretization and truncation of nD-Laplace:
 \begin{theorem}
-Assume $v$ to be a side length, Let $G_n$ be an $n$-dimensional $n$-cube of equal size $v$, Let $r_H < v_n$  for all $n \in N$. Where $N$ is the set of dimensions. Let $\epsilon, \epsilon' \in R^+$ such that \\
+Assume $r_H < v_n$  for all $n \in N$. Where $N$ is the set of dimensions. Let $\epsilon, \epsilon' \in R^+$ such that \\
   $\epsilon' + \frac{1}{v} \ln \frac{1 + n \cdot e^{\epsilon' \cdot v}}{1 - n \cdot e^{\epsilon' \cdot v}} \leq \epsilon$ \\
-  Then $K\epsilon'$ satisfies $\epsilon$-geo-indistinguishability within range
+  Then $K\epsilon'$ satisfies $\epsilon-d_{euc}$-privacy within range
   of $r_H$. That is to say, if $d_{euc}(x, z)$ and $d_{euc}(x, x') \leq r_H$ then, \\
   $K(x)(z) \leq e^{\epsilon \cdot d_{euc} (x, x')} \cdot K(x')(z)$ forall $x, x' \in X, z \in Z$ \citep{chatzikokolakis_constructing_2015} 
 \end{theorem}
@@ -136,15 +139,17 @@ Given that these pre-conditions apply, we can reuse the proof from 3-dimensions 
 \added{Now we provide the proof that extends the 3-dimensional version provided by Min et al for the above theorem. We begin by noting the similarities and adding explanations to various steps of the process.}
 %Let $G_c$ be the cuboid provided by Min et al., where the sides are of unequal sizes: $u < v < h$. To simplify our analysis, we consider the hypercube $G_n$ to have equal sides, denoted as $v = v_1, v_2, v_3 ... v_{n-1}$, where $n$ is the number of dimensions.
 
-\added{We set the upper bound and lower bounds to be $K_{\epsilon'}(x)(x')$ for each $n$-dimensional vector $x$ and $x'$, such that $d_{euc}(x), d_{euc}(x') \leq r_H$ for all $x, x′ \in X$.
-Similar to Min et al., we consider a case where a coordinate is outside the hypercube: $d_{euc}(x_5, x_6) \geq v$. Let $V$ be the set of locations for which $x_0$ is the closest location in $G_n$ \citep{9646489}.} 
-\added{Each side $v$ should be larger than $r_H$ while considering precision coordinates: $v_n > r_H$ for all $n \in N$, where $N$ is the number of dimensions. 
-The original proof by Min et al. considers a compensation for the device's precision.  To facilitate clustering, this property is not needed. Therefore, we omit $w$ from our proof. This variable is defined as the number of cuboids $B$ around $x_0$ when compensated for the device precision \citep{9646489}.  \newline}
-\added{We extend the negative impact on $K$ in 3-dimensional space to n-dimensional space with slight modifications as provided by Min et al.:
+\added{We set the upper bound and lower bounds to be $K_{\epsilon'}(x)(x')$ for each $n$-dimensional vector $x$ and $x'$, such that $d_{euc}(x), d_{euc}(x') \leq r_H$ for all $x, x' \in X$.
+Similar to proof provided by Min et al., we consider a case where a coordinate is outside the $n$-cube: $d_{euc}(x_5, x_6) \geq v$. Let $V$ be the set of locations for which $x_0$ is the closest location in $G_n$ \citep{9646489}.} 
+\added{Assume $v_n > r_H$ for all $n \in N$, where $N$ is the number of dimensions.}
+%Please note that we excluded the variable $w$ from this calculation when compared to the original proof. This omission is due to our lack of consideration for device precision in the context of clustering.}
+%This variable is defined in the original proof as the number of cuboids $B$ around $x_0$ when compensated for the device precision \citep{9646489}.  \newline}
+%The original proof by Min et al. considers a compensation for the device's precision. To facilitate clustering, this property is not needed. Therefore, we omit $w$ from our proof.
+\added{As with the 3-dimensional space, some sides contribute negatively or positively to $K_{\epsilon'}(x)(x')$. Both cases are provided by Min et al., and we modified them to n-dimensional data:
 \begin{align}
 K_{\epsilon'}(x_5)(x') \leq (1 + n \cdot e^{\epsilon' \cdot v}) \int ... \int_V{D_{\epsilon'}(x_5)(V)dv}
 \end{align}
-Because we consider a $n$-cube, we replace $3 \cdot e^{\epsilon' \cdot v}$ by $n \cdot e^{\epsilon' \cdot v}$.  Also, we replaced $h = v$ to support n-dimensional data. Instead of using three integrals for each side of the $G_c$, we used an $n$ amount for every side $v \in G_n$.  \newline
+Because nD-Laplace considers a $n$-cube, we replace $3 \cdot e^{\epsilon' \cdot v}$ by $n \cdot e^{\epsilon' \cdot v}$.  Also, we replaced $h = v$ to support n-dimensional data. Instead of using three integrals for each side of the $G_c$, we used an $n$ amount for every side $v \in G_n$.  \newline
 The negative side, including these modifications is defined as \cite{9646489}:
 \begin{align}
 (1 - n \cdot e^{\epsilon' \cdot v}) \int ... \int_V{D_{\epsilon'}(x_6)(V)dv \leq K_{\epsilon'}(x_6)(x')}

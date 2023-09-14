@@ -12,13 +12,13 @@ This section starts with an introduction to mathematics, and for each of the dif
 \subsection{Planar and polar Laplace}
 In Section \ref{theory:geo-indistinguishability}, an explanation of the concept of \gls{gi} has been given.
 As indicated, the method works on 2-dimensional data, and when visualized, this can be done with a so-called plane \citep{DBLP:journals/corr/abs-1212-1984}.
-From there, the term "Planar" Laplace (2D-Laplace) originated and was used thoughtfully by Andres et al.
+From there, the term "Planar" Laplace (2D-Laplace) originated.
 
 The idea of 2D-Laplace is to generate an area around $x0 \in X$ according to the multivariate Laplace distribution.
 The mechanism of 2D-Laplace is a modification of the Laplace algorithm to support distance \citep{DBLP:journals/corr/abs-1212-1984}.
-This distance method $dist(x, x')$ is a method to calculate the Euclidean distance between two points $x$ and $x'$.
+This distance method $d(x, x')$ is a method to calculate the Euclidean distance between two points $x$ and $x'$.
 Recalling the definition of Laplace, this method $|x-x'|$ is replaced by the distance metric.
-Hence, the definition of the \gls{pdf}) by Andrés et al. is:
+Hence, the definition of the \gls{pdf} by Andrés et al. is:
 \begin{equation}
   \frac{\epsilon^2}{2*\pi}e(-\epsilon d(x_0, x))
   \label{eq:polar-laplace-pdf}
@@ -36,12 +36,12 @@ This idea is visualized in the following figure:
 \end{figure}
 
 \textbf{Calculating $r$:}
-This variable is defined as $dist(x_0, z)$ and can be randomly drawn by inverting the \gls{cdf} for the Laplace distribution:
+This variable is defined as $d(x_0, z)$ and can be randomly drawn by inverting the \gls{cdf} for the Laplace distribution:
 \begin{equation}
   C{_\epsilon}{^{-1}}(p) = - \frac{1}{\epsilon}(W_-1 (\frac{p - 1}{e}) + 1)
   \label{eq:lambert_w_1}
 \end{equation}
-For this equation, the Lambert $W$ function is used. This function consists of two different branches $W_0(x)$  \citep{corless_lambertw_1996}.  This notation  means the value of $W_0(x)$ is always positive, while $W_{-1}(x)$ is always negative. The Lambert w function (also called the product logarithm) is defined as $W(x)e^{W(x)} = x$ \citep{lehtonen_lambert_2016}.
+For this equation, the Lambert $W$ function is used. This function consists of two different branches \citep{corless_lambertw_1996}. This means the value of $W_0(x)$ is always positive, while $W_{-1}(x)$ is always negative. The Lambert w function (also called the product logarithm) is defined as $W(x)e^{W(x)} = x$ \citep{lehtonen_lambert_2016}.
 The purpose of the Lambert W function is to invert the \gls{cdf} of the Laplace distribution to generate random noise for one of the coordinates ($r$) using the random value of $p$. It draws the $r$ which will be bounded by the $W_{-1}$, this is very useful for drawing the random planar noise \citep{corless_lambertw_1996}.
 
 \textbf{Calculating $\theta$:}
@@ -84,7 +84,7 @@ Hence the probability is now $R_X(x) = R(x) \cup X$. \newline
 So, the $R_X(x)$ has a different shape depending on the distance $x_0$ and $x'$ (ergo, it depends on the grid cell width). This is due the step units of $G$ stay the same, while the distance $r$ grows \citep{DBLP:journals/corr/abs-1212-1984}.
 
 To overcome this issue, Andres et al. propose a way of calculating $\epsilon'$, depending on the step-unit $u$. \citep{DBLP:journals/corr/abs-1212-1984}.
-They proved this in theorem 4.1 \citep{DBLP:journals/corr/abs-1212-1984}:
+They proved this and provided theorem 4.1 \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{theorem}[Discretization 2D-Laplace]
   Assume $r_{max} < \frac{u}{\delta_{\theta}}$, and let $q = \frac{u}{r_{max}}\delta_{\theta}$. Let $\epsilon$, $\epsilon' \in R^+$ such that \\
   $\epsilon' + \frac{1}{u}ln \frac{q + 2 e^{\epsilon'u}}{q - 2 e^{\epsilon'u}} \leq \epsilon$ \\
