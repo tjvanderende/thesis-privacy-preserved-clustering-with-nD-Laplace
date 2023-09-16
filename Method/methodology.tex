@@ -100,9 +100,11 @@ To reduce the measurement bias of results, we executed them ten times for multip
 \end{enumerate}
 
 \subsection{Environmental setup}
+\added{To make the code easily transferable and ensure that all changes are tracked, GitHub.com has been used.
+Both the code and the thesis LaTeX can be found there.} \footnote{\url{https://github.com/tjvanderende/privacy-preserved-clustering-with-nD-Laplace}}\footnote{\url{https://github.com/tjvanderende/thesis-privacy-preserved-clustering-with-nD-Laplace}}
 For running the experiments, we use 16GB RAM and an i7-10750H 2.6Ghz processor.
 The experiments are run using a Docker container which runs a pre-configured distribution of Linux Alpine.
-It includes a pre-installed Anaconda environment for Python \footnote{https://github.com/devcontainers/images/tree/main/src/anaconda}\footnote{tag: mcr.microsoft.com/devcontainers/anaconda:0-3}.
+It includes a pre-installed Anaconda environment for Python \footnote{https://github.com/devcontainers/images/tree/main/src/anaconda}\footnote{tag: mcr.microsoft.com/devcontainers/anaconda:0-3}. \newpage
 We run the container using the dev-container feature for visual-studio code \footnote{https://code.visualstudio.com/docs/devcontainers/containers}.
 This allows us to create a reproducible experiment environment.
 \subsubsection{Libraries \& code versions}
@@ -261,6 +263,7 @@ In addition, we evaluate privacy by simulating a membership inference attack and
           The attacker could infer many original labels if the adversary advantage or \gls{tpr} is high.
           In this case, a lower score is better than a lower score.
           \end{landscape}
+\end{enumerate}
 \newpage
 %\input{Method/algorithms/shokri-setup-mi.tex}
 \subsection{Research roadmap} \label{research-roadmap}
