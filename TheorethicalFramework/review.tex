@@ -22,22 +22,22 @@ There are different ways how to combine differential privacy with clustering \ci
 \end{enumerate}
 %This research aims to create a differential privacy framework training clustering on distributed data (See Section \ref{chapter:introduction}).
 %The introduction explains that most differential privacy and clustering literature focuses on K-Means.
-Many approaches targeting local differential privacy mechanisms must adapt the clustering algorithm (for example, k-Cluster) \citep{sun_distributed_2019}, which we explain later in this chapter.
-For this reason, we concentrate on input perturbation in this study, as it allows a dataset to be used to train various clustering algorithms without modification.
+Existing literature on \gls{ldp} and clustering primarily focuses on input and output perturbation. 
+In practice, it looks like this:
 \begin{figure}[H]
   \includegraphics[width=0.75\linewidth]{TheorethicalFramework//ND-Laplace//Images/Thesis-nd - Page 7.png}
  \caption{Example on how our approach (1) of private training works for clustering and the \gls{ldp} setup from Section \ref{section:dp}}
   \label{fig:overview-clustering-and-dp}
 \end{figure}
-The above image shows where input/output perturbation would happen in the \gls{ldp} setup.
 \begin{enumerate}
-  \item Shows input perturbation. \textit{We use this approach for our research.}
-  \item Shows where output perturbation happens, this would be part of the clustering process. Here the cluster labels perturbed, instead of the input.
-Furthermore, we do not consider the perturbation variants 3 and 4, because they do not fit the research.
-
+  \item Shows input perturbation.
+  \item Shows where output perturbation happens, this would be part of the clustering process. Here the cluster labels are perturbed, instead of the input.
 \end{enumerate}
-The next section focuses on the differential privacy algorithms that are of interest to this type of input perturbation.
+Many studies that use \gls{ldp} mechanisms for clustering utilize output perturbation. 
+This often involves modifying the initial clustering algorithm to work with their privacy mechanism. 
+Therefore, this thesis uses input perturbation to train diverse clustering algorithms.
 
+The next section will concentrate on differential privacy algorithms that can be compared to our mechanism utilizing input perturbation.
 \newpage
 \subsection{Differential privacy methods}
 As discussed earlier, the Laplace method was the first to establish \gls{dp} \citep{dwork_differential_2006}.
@@ -211,11 +211,11 @@ To evaluate the performance of ppDBSCAN, the study compares its Adjusted Rand In
         \midrule
         %2022                    & 3D Geo-Indistinguishability for Indoor Location... & 3-dimensional geographical data                    & -                                                  & -                                                  & Geo-indistinguishability   & Differential privacy method & -               & 3-dimensional Laplace mechanism & -                               \\
         %2019                    & Generalised Differential Privacy for Text Docum... & n-dimensional (?? data)                            & -                                                  & -                                                  & Differential privacy       & Differential privacy method & -               & n-dimensional Laplace mechanism & -                               \\
-        \citep{wang_collecting_2019}   & \makecell[l]{n-dimensional                                                                                        \\ and 1-dimensional} & BR, MR  & \tnote{a} & LDP            & -                           & \makecell[l]{- Piecewise Mechanism (PM) \\- Hybrid Mechanism (HM)}                         \\
+        \citep{wang_collecting_2019}   & \makecell[l]{n-dimensional                                                                                        \\ and 1-dimensional} & BR, MX  & \tnote{a} & LDP            & -                           & \makecell[l]{- Piecewise Mechanism (PM) \\- Hybrid Mechanism (HM)}                         \\
         \citep{duchi_minimax_2017}     & \makecell[l]{1-dimensional}    & -       & \tnote{a} & LDP           & -               & -                        \\
-        \citep{nguyen_collecting_2016} & \makecell[l]{numerical, binary                                                                                    \\ and categorical data.} & BR      & -                                                  & $\epsilon$-LDP &                             & Harmony                                \\
+        \citep{nguyen_collecting_2016} & \makecell[l]{numerical, binary                                                                                    \\ and categorical data.} & BR      & -                                                  & LDP &                             & Harmony                                \\
         \citep{geng_staircase_2015}    & \makecell[l]{n-dimensional}    & -       & \tnote{b} & DP            & -               & Staircase mechanism (SM) \\
-        \citep{geng_optimal_2013}      & n-dimensional                  & -       & -         & $\epsilon$-DP & Non interactive & -                        \\
+        \citep{geng_optimal_2013}      & n-dimensional                  & -       & -         & DP & Non interactive & -                        \\
         %2012                    & Geo-indistinguishability: Differential privacy ... & 2-dimensional geographical data                    & -                                                  & -                                                  & Geo-indistinguishability   & Differential privacy method & -               & 2-dimensional Laplace mechanism & -                               \\
         \bottomrule
       \end{tabular}
@@ -247,7 +247,9 @@ To evaluate the performance of ppDBSCAN, the study compares its Adjusted Rand In
       9      & Lsun            & 400        & 2 numerical                   & ground truth clusters & -              & No              \\
       10     & S1              & 1500       & 2 numerical                   & ground truth clusters & -              & No              \\
       11     & Deer            & 20,033     & 2 numerical                   & -                     & -              & Yes             \\
-      13     & Gowalla         & 6,442,890  & \makecell[l]{5 (geographical,                                                            \\ data, ids and time)} & -                     & \footnote{https://snap.stanford.edu/data/loc-gowalla.html} & Yes             \\
+      13     & Gowalla         & 6,442,890  & \makecell[l]{5 (geographical,                                                            \\ data, ids and time)} & -  & \footnote{https://snap.stanford.edu/data/loc-gowalla.html} & Yes             \\
+      14     & BR              & \approx 4,000,000         & 6 numerical    & total income          & Ipums Brazil census           & Yes             \\
+      15     & MX              & \approx 4,000,000          & 5 numerical   & total income          & Ipums Mexico census        & Yes             \\
       \bottomrule
     \end{tabular}
     \caption{The different datasets used in the related literature.}

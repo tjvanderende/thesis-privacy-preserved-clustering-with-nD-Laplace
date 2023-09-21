@@ -44,7 +44,7 @@ This is mathematically formulated in the same research named \gls{dp}.
 Using the definition of privacy, it is formulated as the maximal possible change when adding or removing a single record \citep{dwork_differential_2006, friedman_data_2010}.
 This is reflected using the formal mathematical formulation as formulated by Dwork et al:
 \begin{equation}
-  {\mathrm{Pr}}[K(D_{1})\in S]\leq\exp(\epsilon)\times{\mathrm{Pr}}[K(D_{2})\in S]
+  {\mathrm{Pr}}[K(D_{1})\in S]\leq\exp(\epsilon) \cdot {\mathrm{Pr}}[K(D_{2})\in S]
   \label{pure-dp}
 \end{equation}
 So, given a randomization function $K$, it gives $\epsilon$-differential privacy if dataset $D_1$ and $D_2$ are differing at most one element \citep{dwork_differential_2006}.
@@ -64,7 +64,7 @@ It is also mathematically defined by Dwork et al.:
 The formal notion of differential privacy has only the privacy budget $\epsilon$ as a parameter.
 This formulation is strict, but most methods relax this a little, with $(\epsilon, \delta)$:
 \begin{equation}
-  {\mathrm{Pr}}[K(D_{1})\in S]\leq\exp(\epsilon)\times{\mathrm{Pr}}[K(D_{2})\in S] + \delta
+  {\mathrm{Pr}}[K(D_{1})\in S]\leq\exp(\epsilon) \cdot {\mathrm{Pr}}[K(D_{2})\in S] + \delta
   \label{approxiate-dp}
 \end{equation}
 This equation means the sensitivity ($\delta$) loosens the formal definition of differential privacy.

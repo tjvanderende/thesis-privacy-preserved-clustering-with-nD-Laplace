@@ -1,36 +1,29 @@
 \chapter{Summary}
-\added{
 The importance of data in our lives emphasizes the critical need for data security, particularly considering that this data often contains sensitive and personal information. As a response to this concern, privacy laws like the US Privacy Act and the GDPR were enacted. However, these regulations pose challenges for data-mining techniques such as clustering, as they necessitate the storage of historical data for training, thereby increasing the risk of data leaks. Given that storing plain data on the server is not a viable option, it underscores the necessity of implementing differential privacy (DP).
 DP, is a technique that enhances data with controlled noise and provides the opportunity to protect privacy while maintaining clustering patterns.
 The original data must still be completely copied for this method to work.
 Therefore Local differential privacy (LDP) was introduced, which introduces data locally.
 This takes away the privacy constraints, but increases the noise impact on the data.
-}
 
-\added{
-Balancing utility and privacy in LDP clustering poses known challenges, often limited by information leaks and cluster algorithms only trained 2/3D datasets. Our research addresses these issues with realistic scenarios and data, aiming to establish a robust privacy framework for secure training of diverse clustering algorithms on distributed n-dimensional data.
-}
+Balancing utility and privacy in LDP clustering poses known challenges, often limited by information leaks and cluster algorithms only trained 2-dimensional and 3-dimensional datasets. Our research addresses these issues with realistic scenarios and data, aiming to establish a robust privacy framework for secure training of diverse clustering algorithms on distributed n-dimensional data. \newline
 
-\added{
-The primary goal of this research is to enhance data clustering through the utilization of the Geo-indistinguishability framework, a distance-optimized framework for achieving differential privacy. The thesis is designed to facilitate the training of privacy-preserving clustering algorithms on distributed n-dimensional data by extending a method known as nD-Laplace for clustering. This entails applying nD-Laplace to various clustering algorithms, introducing optimization techniques involving kd-trees, and substantiating its effectiveness and privacy-preserving capabilities through experimentation with real-world datasets and security assessments. For this purpose, the following research question is formulated: \newline
+The primary goal of this research is to enhance privacy and utility for data clustering through the utilization of the Geo-indistinguishability (GI) framework, a distance-optimized framework for achieving differential privacy. 
+The GI framework uses the 2D-Laplace and 3D-Laplace mechanisms, respectively, for adding noise to 2-dimensional and 3-dimensional data based on a privacy budget. 
+In this thesis, we adapt these mechanisms for clustering and extend this to nD-Laplace for working with n-dimensional data. 
+Therefore, the following research question is formulated: \newline
 \textit{How can the nD-Laplace mechanism be applied in training privacy-preserving clustering algorithms on distributed n-dimensional data?}
-}
 
-\added{
-The research addresses three sub-questions, including adapting nD-Laplace for privacy-preserving clustering algorithms and grid-remapping noise within the data domain. It also investigates how dataset characteristics affect nD-Laplace's utility and privacy, with hypotheses related to data shape, dimensions, and density-based remapping.
-To answer the questions, we conducted literature study and experiments to collect quantitative data. \newline
-}
+The research addresses three sub-questions, including the adaptation of nD-Laplace for privacy-preserving clustering algorithms. 
+It also investigates how dataset characteristics affect nD-Laplace's utility and privacy, with hypotheses related to data shape, dimensions, and adaptability. 
+To answer these questions, we conducted a literature study and experiments to collect quantitative data and compared it to an existing privacy mechanism called Piecewise. \newline
 
-\added{
-The experimental findings revealed that nD-Laplace achieved a high Adjusted Mutual Information (AMI) score at lower privacy budgets, particularly for real-world datasets. In contrast, the Piecewise mechanism exhibited better utility when applied to synthetic datasets, notably those with Line and Circle shapes. Additionally, there was an observed increase in AMI scores for dimensions exceeding 7. K-Means consistently outperformed other clustering algorithms for both mechanisms.
-}
-\added{
-Furthermore, the findings underscored the substantial impact of the privacy budget, indicating that higher budgets enhance utility at the expense of decreased privacy. The privacy experiments also revealed notable data leakage at lower privacy budgets, which was mitigated through data remapping within the domain. Among the two remapping variants, grid-nD-Laplace exhibited greater stability. \newline
-}
+The results have shown that the nD-Laplace mechanism achieves high accuracy on certain datasets compared to the Piecewise mechanism. 
+Additionally, the findings underscored the substantial impact of the privacy budget, indicating that higher budgets enhance utility at the expense of decreased privacy. 
+Furthermore, the privacy results showed that the mechanisms sometimes exhibit high privacy leakage. 
+In our research and experiments, we also included a solution for this issue as an extension of the nD-Laplace mechanism. \newline
 
-\added{
-The research uncovered limitations in using nD-Laplace for the \gls{optics} clustering algorithm due to its sensitivity to uniform noise generated by nD-Laplace. Limitations related to data dimensionality restricted the focus to 2D and 3D synthetic data, instead of including higher dimensions. Additionally, there was an emphasis on refining privacy metrics, as the current one failed to capture the most important privacy properties. Future work should delve deeper into nD-Laplace's adaptation to diverse data shapes, expand dimensionality beyond current limits, and enhance support for categorical and binary data for broader practical applications.
-}
+The research uncovered limitations in using nD-Laplace for specific clustering algorithms due to its sensitivity to specific data shapes. Additionally, there was an emphasis on refining privacy metrics, as the current ones failed to capture the most important privacy properties. Future work should delve deeper into adapting nD-Laplace to diverse data shapes, expanding dimensionality beyond current limits, and enhancing support for categorical and binary data for broader practical applications.
+
 %Data has become a crucial part of our daily lives, with personal and sensitive information often sourced from various data sources. As businesses recognize the potential of data, the need for data protection has increased, leading to regulations like the GDPR and the privacy act. Unsupervised machine learning, such as clustering, is used to gain insights into data. 
 %However, encryption is unsuitable for data analysis due to its communication overhead and unreadable nature. Anonymization methods have been explored, but they can still reveal personal information. Differential privacy, which adds noise to the original data to hide the actual value, is an effective way to preserve privacy while preserving data patterns. However, this method has limitations, such as leaking distance information and focusing on 2-dimensional synthetic datasets. The research aims to develop a privacy framework that enables secure training of various clustering algorithms on distributed n-dimensional data, addressing the shortcomings of previous studies and real-world dataset challenges. \newline
 

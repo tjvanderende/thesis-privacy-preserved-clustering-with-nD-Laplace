@@ -47,7 +47,7 @@ The algorithm attempts different $\Pi$ values to achieve the best result \citep{
 The algorithm uses \gls{dbscan}, so we explain this algorithm first in detail.
 It calculates the "density-reachable" property of each data point first \citep{ankerst_optics_nodate}:
 \begin{equation}
-  N_Pi(x_i) = {x_i \in X : d(x_i, x_j) \leq \Pi}
+  N_Pi(x_i) = \{x_i \in X \ | \ d(x_i, x_j) \leq \Pi \}
 \end{equation}
 If $N_Pi(x_i) \geq minPts$ then $x_i$ is a "core-object" \citep{ankerst_optics_nodate}.
 These core objects are used for identifying dense regions to grow clusters.
@@ -83,28 +83,23 @@ The specific implementation and calculation of the closeness of data-points, dep
 For this function, there are four popular options: Single link, Average link, Complete link, and Ward's method \citep{roux_comparative_2015}. In the next section we evaluate this to choose the most fitting option.
 
 \subsubsection{Research direction}
-\replaced{In the previous sections, three types of cluster algorithms have been introduced, each related to distance. For each type, the most popular algorithms have been explained, and to have a representative selection, one algorithm from each type is chosen for use in the research.}
-{There are three different types of clustering algorithms that we have considered for this research.
-Therefore, we will choose one algorithm for each type to ensure a representative selection.}
+In the previous sections, three types of clustering algorithms have been introduced, each related to distance. For each type, the most popular algorithms have been explained, and to have a representative selection, one algorithm from each type is chosen for use in the research:
+\begin{enumerate}
+    \item \textbf{Partition based clustering:} Based on the different types of clustering algorithms, we have chosen to use K-Means for this research. 
+    K-Means clustering is widely used in the literature and, therefore, easily compared with other studies.
+    \item \textbf{Density based clustering:} For this clustering type, we will solely focus on \gls{optics} in this study. 
+    The parameter $\Pi$ in \gls{dbscan} is influenced by the data shape, which is further affected by our privacy mechanism.
+    However, as \gls{optics} automatically determines the $\Pi$, the impact of this parameter is less significant, enabling us to emphasize the evaluation of the privacy mechanism itself.
+    \item \textbf{Hierarchical clustering:} As for hierarchical clustering, we have decided to go for agglomerative clustering.
+\end{enumerate}
 
-Based on the different types of clustering algorithms, we have chosen to use K-Means for this research.
-K-Means clustering is widely used in the literature and, therefore, easily compared with other studies.
-
-For density-based clustering, we will solely focus on \gls{optics} in this study.
-The parameter $\Pi$ in \gls{dbscan} is influenced by the data shape, which is further affected by our privacy mechanism.
-However, as \gls{optics} automatically determines the $\Pi$, the impact of this parameter is less significant, enabling us to emphasize the evaluation of the privacy mechanism itself.
-
-As for hierarchical clustering, we have decided to go for agglomerative clustering.
 %Because the \gls{dbscan}'s $epsilon'$ algorithm is sensitive to the shape $epsilon'$ value, we utilize \gls{optics} for this research instead of \gls{dbscan}.
 
 %Another density-based cluster method is Density Peak Clustering (DPC). 
 %The algorithm calculates the local density of each data point and identifies density peaks for points with the highest density [Rodriguez and Laio, 2014].
 
 \subsection{Parameter selection}
-A list of important hyper parameters that can influence the results is provided for each clustering algorithm. \replaced{Subsequently, methods for determining these hyper parameters for the algorithms are briefly discussed. The same distance function is employed for all algorithms to maintain a consistent setting. The chosen function is Euclidean distance, as utilized for \gls{gi}.}
-{Subsequently, we briefly discuss the methods for determining these hyper parameters for the algorithms. \newline
-We use the same distance function for all algorithms to have all the algorithms in the same setting.
-This function will be Euclidean distance, as used for \gls{gi}.}
+A list of important hyper parameters that can influence the results is provided for each clustering algorithm. Subsequently, methods for determining these hyper parameters for the algorithms are briefly discussed. The same distance function is employed for all algorithms to maintain a consistent setting. The chosen function is Euclidean distance, as utilized for \gls{gi}.
 \subsubsection{K-Means} \label{theory:kmeans}
 The most crucial parameter of the K-Means algorithm is the value of $k$.
 This value determines the number of clusters to consider and influences the results by a lot \citep{ahmed_k-means_2020}.
@@ -153,7 +148,7 @@ Therefore, the approach is similar to K-Means.
 The amount of clusters is selected based on the silhouette method, by selecting the highest silhouette score for a given $k$.
 
 \subsubsection{OPTICS} \label{theory:clustering-dbscan}
-With the introduction of \gls{optics}, we no longer need to worry about the \replaced{$\Pi$}{$radius(\epsilon)$} value.
+With the introduction of \gls{optics}, we no longer need to worry about the $\Pi$ value.
 Therefore, only $minPts$ remains an important parameter to consider. \newline
 %\todo[inline]{Use OPTICS instead of DBSCAN}
 %\gls{dbscan} is introduced by \citep{ester_density-based_nodate} and draws a radius (neighborhood) around data points.
@@ -161,17 +156,13 @@ Therefore, only $minPts$ remains an important parameter to consider. \newline
 %The \gls{dbscan} algorithm uses the inputs $minPts$, $radius(\epsilon)$ (not to be confused with the privacy budget $\epsilon$), and the Euclidean distance \citep{schubert_dbscan_2017}.
 %This $\epsilon'$ is used to draw a neighborhood, and the $minPts$ is used as a weight to evaluate which points should be inside the neighborhood.
 %The Euclidean distance is used for the distance function to be consistent with the other algorithms. \newline
-The $minPts$ is the minimum amount of points that have to be within the \replaced{$\Pi$}{$radius(\epsilon)$} to mark it a cluster.
+The $minPts$ is the minimum amount of points that have to be within the $\Pi$ to mark it a cluster.
 This hyperparameter is analyzed in a paper by Sander et al.
 The work describes calculating this parameter by applying two times the feature amount \citep{sander_density-based_1998}.
 So, using this approach, a dataset with two features will have an $minPts$ of four \citep{schubert_dbscan_2017}.
 
 %In conclusion, K-Means and \gls{ap} have straightforward methods for determining hyperparameters.
 %For K-Means, the elbow method is the most common, and for \gls{ap}, the median is used for the preference.
-\replaced{The extensive use of noise-altering mechanisms and distinct data sets in this study makes the application of \gls{dbscan} difficult.
-It cannot be ruled out that the hyper parameters have an effect on the results, as this algorithm is highly dependent on the distance between data points.
-This is why the \gls{optics} algorithm is used to calculate $\Pi$.}{ \gls{dbscan} is a little more complicated due to the variety of datasets and noise-altering mechanisms we experiment with.
-This complexity is why we use \gls{optics} to determine the best value for $radius(\epsilon)$ and choose $minPts$ based on the number of features times two.}
 
 \subsection{Evaluation methods} \label{theory:evaluate}
 Clustering comparison measures are important in cluster analysis for external validation by comparing clustering solutions to a "ground truth" clustering \citep{vinh_information_nodate}.
@@ -247,14 +238,14 @@ Hence, we will focus on these metrics' "adjusted" variants:
         But, if the outcome has a lower probability, it carries more information.
         The \gls{mi} uses this property and is defined as follows \citep{vinh_information_nodate}:
         \begin{equation}
-          MI(U, V) = - \sum_{i=1}^{U} \sum_{j=1}^{V} p(i,j) \cdot log \frac{p(i,j)}{p(i)p(j)}
+          MI(U, V) = - \sum_{i=1}^{U} \sum_{j=1}^{V} p(i,j) \cdot log \frac{p(i,j)}{p(i) \cdot p(j)}
         \end{equation}
         It re-uses the properties of $H$ to measure the (dis)similarity between two clusterings $U$ and $V$.
         The $p(i,j)$ is the joint probability of a random point falling into both cluster $U$ and $V$.
         This same calculation is executed for the second label $V$ and divided by each other.
         The \gls{ami} is formulated as follows \citep{vinh_information_nodate}:
         \begin{equation}
-          AMI (U, V)  = \frac{MI - E(MI)}{max(H(U), H(V)) - E(MI)}
+          AMI (U, V)  = \frac{MI(U, V) - E(MI)}{max(H(U), H(V)) - E(MI)}
         \end{equation}
         The $E(MI)$ is the expected value of the \gls{mi} and serves as an upper bound for the \gls{mi}.
         For the details of this calculation, we refer to the original paper \citep{vinh_information_nodate}.
