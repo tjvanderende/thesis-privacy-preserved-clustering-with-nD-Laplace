@@ -13,48 +13,56 @@ Therefore, we only selected Piecewise to compare with our mechanism.
 
 \subsubsection{Duchi et al.'s mechanism}
 The Piecewise mechanism is based on Duchi et al.'s mechanism for one-dimensional data.
-Therefore, we start by explaining this mechanism first.
-Duchi et al.'s mechanism is a relatively simple method based on the Bernoulli distribution \citep{duchi_minimax_2017}.
-This distribution yields either a 0 (negative) or a 1 (false) based on specified probabilities \footnote{https://mathworld.wolfram.com/BernoulliDistribution.html}.
-The mechanism works on a domain tuple [-1, 1] and returns -1 or 1.
-So, the \gls{pdf} of this function is as follows \footnote{https://mathworld.wolfram.com/BernoulliDistribution.html}:
-\begin{equation}[H]
-  P(n) =
-  \begin{cases}
-    1 - p & \text{if } n = 0 \\
-    p     & \text{if } n = 1
-  \end{cases}
+They describe how, in different types of estimation problems, the ideal estimation rate changes based on the privacy level and other problem-related factors \citep{duchi_minimax_2017}.
+Their own solution is centered on providing a \gls{ldp} method utilizing the Bernoulli distribution \citep{duchi_minimax_2017}. 
+In this distribution, outcomes can be either 0 (representing negative) or 1 (representing positive) based on specified probabilities \footnote{https://mathworld.wolfram.com/BernoulliDistribution.html}. \newline
+The proposed mechanism can perturb a tuple $t_i$ from the range [-1, 1] to a tuple $t_i'$ according to the following probabilities \citep{wang_collecting_2019}:
+\begin{equation}
+    Pr [t_i' = x \ | \ t_i ] = 
+    \begin{cases}
+        \frac{e^\epsilon - 1}{2 \cdot e^\epsilon + 2} \cdot t_i + \frac{1}{2}, & \quad \text{if} \ x = \frac{e^\epsilon + 1}{e^\epsilon - 1} \\
+        - \frac{e^\epsilon - 1}{2 \cdot e^\epsilon + 2} \cdot t_i + \frac{1}{2}, & \quad \text{if} \ x = - \frac{e^\epsilon + 1}{e^\epsilon - 1}
+    \end{cases}
 \end{equation}
-The probabilities are calculated based on the input value and can then be used to estimate a mean value.
-Compared to Laplace, Duchi et al. solution performs better in variance for epsilons smaller than 2 \citep{wang_collecting_2019}.
-However, it performs worse when the epsilon value is higher because the algorithm does not consider the privacy budget for values that are 0.
-The multidimensional variant looks like the one-dimensional version but samples each data point's noise independently.
+In this context, $\epsilon$ (privacy budget) serves the same purpose as it does for other privacy mechanisms.
+Duchi et al. demonstrates, through their proof of this formula, that the average value $t_i'$ closely aligns with the original value $t_i$ \citep{duchi_minimax_2017, wang_collecting_2019}.
+When compared to the Laplace mechanism, Duchi et al.'s solution demonstrates superior performance in terms of variance when the privacy budget is less than 2 \citep{wang_collecting_2019}. 
+However, its performance declines with higher privacy budgets because the algorithm does not account for the privacy budget when values are set to 0.
 
 \subsubsection*{Piecewise mechanism} \label{theory:piecewise}
 The authors aim to create a method that combines the advantages of the Laplace mechanism and Duchi et al.'s methods \citep{wang_collecting_2019}.
 The goal is to reduce the variance for a broader range of privacy budgets.
-Like the mechanism above, the Piecewise mechanism only accepts data from -1 to 1.
 We first explain the one-dimensional variant and then the multidimensional variant. \newpage
 
-The mechanism takes an input of the range $[-1, 1]$ and returns a perturbed value in the same range.
-It uses a piecewise function (hence the name), which is a function that is defined by multiple sub-functions.
-The Piecewise mechanism starts with randomly selecting a value $x$ between 0 and 1 and a value $t \in R^1$.
-Then, based on this value the mechanism re-assigns a random value to $x$, but with a modified domain (based on the initial value of $x$) \citep{wang_collecting_2019}:
-\begin{equation} \label{eq:piecewise-domain}
-  t = \begin{cases}
-    [l(t), r(t)] & \text{if } x < \frac{e^{\epsilon/2}}{e^{\epsilon/2}+1} \\
-    [-C, l(t) \cup r(t), C]
-  \end{cases}
+As with Duchi et al's mechanism Piecewise takes an input of  $t_i \in [-1, 1]$ and returns a perturbed value in the range $t_i' \in [-C, C]$, where C \citep{wang_collecting_2019}:
+\begin{equation}
+    C = \frac{e^{\epsilon/2} + 1}{e^{\epsilon/2} - 1}
 \end{equation}
+The PDF of $t_i'$  is defined as a piecewise function (hence the name) \citep{wang_collecting_2019}:
+\begin{equation}
+    pdf [t_i' = x \ | \ t_i ] = 
+    \begin{cases}
+        p & \text{if} \ x \in [l(t_i), r(t_i)] \\ 
+        \frac{p}{e^\epsilon} & \text{if} \ x \in [-C, l(t_i) \cup r(t_i), C]
+    \end{cases}
+    \label{eq:piecewise-domain}
+\end{equation}
+Where the $p$ , $l(t_i)$ and $r(t_i)$ are defined as \citep{wang_collecting_2019}:
+\begin{align}
+    \label{piecewise-p}
+    & p = \frac{e^\epsilon - e^{\epsilon/2}}{2 \cdot e^{\epsilon/2} + 2} \\ 
+    \label{piecewise-l-i}
+    & l(t_i) = \frac{C + 1}{2} \cdot t_i - \frac{C - 1}{2} \\
+    \label{piecewise-r-i}
+    & r(t_i) = l(t_i) + C - 1
+\end{align}
 %According to this formula, the outcome domain shifts depending on the value of $t$.
-\begin{enumerate}
-  \item Calculated using the privacy budget $\epsilon$, the $C$ determines the amount of noise by bounding the lower/ upper limit of the domain.
-  \item $l(t)$ and $r(t)$ are the left and right boundaries of the domain. These are calculated based on the value of $t$ and the privacy budget.
-\end{enumerate}
-Depending on the value of $t$, the domain is shifted to the left or right on a domain of three "pieces": $[-1, 0, 1]$ \citep{wang_collecting_2019}.
-According to Wang et al., when $t = 0$, the probability of $t \in [l(t), r(t)]$ is higher.
-In this case, the mechanism generates a perturbed value close to $0$ (depending on the privacy budget).
-This phenomenon is the same for $t = 1$ and $t = -1$. \newline
+Based on the privacy budget $\epsilon$, the $C$ determines the amount of noise by bounding the lower/ upper limit of the domain.
+
+In cases where $t_i = 0$ there is a higher likelihood that the perturbed value $t_i'$ will be closer to the central region $[l(t_i), r(t_i)]$ rather than moving towards $-C$ or $C$."
+Similar adjustments occur when $t_i = 1 or t_i = -1$ but in those instances, the perturbed values tend to move towards $C$ or $-C$ respectively. 
+This results in the mechanism effectively shifting the value of $t_i$ between three distinct values ("pieces") [$-1, 0, 1$] based on the provided probability density function (PDF) \citep{wang_collecting_2019}.
+
 %Where $C$ is defined according to the following mathematical formula:
 %\begin{equation}
 %  C = \frac{exp(\epsilon/2)+1}{exp(\epsilon/2) - 1} \\
