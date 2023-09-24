@@ -136,12 +136,10 @@ In a practical scenario, the $r$ and $l$ variables are combined to obtain the pr
 The privacy budget is obtained by using the formula $\epsilon = \frac{l}{r}$, and the $\epsilon$ is used as input for the \gls{gi} mechanism to calibrate the noise. \newline
 The formal definition of \gls{gi} is the following \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{equation}
-  K(x)(y) \le e^{\epsilon * d(x,x')} K(x')(y)
+  K(x)(Z) \le e^{\epsilon \cdot d(x,x')} K(x')(Z) \ for \ all \ x,x' \in X, Z \subseteq X 
   \label{algo:2d-geo-indistinguishability}
 \end{equation}
-$K$ is a probability method reporting $x, x' \in X$ as $z \in Z$.
-According to the Andres et al., the mechanism provides ($\epsilon$)-Geo-indistinguishability for any $z$ that is generated within the radius $r$ \citep{DBLP:journals/corr/abs-1212-1984}.
-The intuition of the \gls{gi} definition is that it displays the distinguishability level between two secret locations/points $x$ and $x'$ \citep{chatzikokolakis_constructing_2015}.
+According to the Andres et al., the mechanism provides ($\epsilon$)-geo-indistinguishability for any $z \in Z$ that is generated within the radius $r$ \citep{DBLP:journals/corr/abs-1212-1984}.
 %An extension of this is called $d_x$-privacy, a more general notation of distance-aware differential privacy.
 %Therefore, the definition for \gls{gi} is $d_2$-privacy, but it is essentially the same as the proof provided for \gls{gi}.
 \subsection{Laplace mechanism} \label{theory:laplace}

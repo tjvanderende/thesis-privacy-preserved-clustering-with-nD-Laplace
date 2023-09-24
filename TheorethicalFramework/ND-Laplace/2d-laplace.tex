@@ -1,4 +1,5 @@
 %\input{TheorethicalFramework/ND-Laplace/general-math-symbols.tex}
+
 \newpage
 \section{2D-Laplace}
 The idea of \gls{gi} was introduced to address the issue of privacy and location data \citep{DBLP:journals/corr/abs-1212-1984} (See Equation \ref{algo:2d-geo-indistinguishability}).
@@ -10,33 +11,30 @@ This section starts with an introduction to mathematics, and for each of the dif
 %\printglossary[type=genericmath, nonumberlist]
 %The other symbols can be found in section \ref{section:dp}.
 \subsection{Planar and polar Laplace}
-In Section \ref{theory:geo-indistinguishability}, an explanation of the concept of \gls{gi} has been given.
-As indicated, the method works on 2-dimensional data, and when visualized, this can be done with a so-called plane \citep{DBLP:journals/corr/abs-1212-1984}.
-From there, the term "Planar" Laplace (2D-Laplace) originated.
+In Section \ref{theory:geo-indistinguishability}, we provided an explanation of the concept of \gls{gi}. 
+\added{
+Additionally, we introduced the notion that when a point $x_0 \in X$ serves as the center of a range $r$, a point $x$ is generated using a noise function \citep{DBLP:journals/corr/abs-1212-1984}. The objective here is to ensure that when the actual locations are $x_0$ and $x_0'$, their divergence is limited to at most $e^{-\epsilon} \cdot d(x_0, x_0')$. This characteristic aligns with the Laplace distribution, which the "planar Laplace" mechanism leverages.}
+\added{Furthermore, it's worth noting that the "planar Laplace" mechanism is an adaptation of the Laplace distribution designed to accommodate distances in a 2-dimensional space \citep{DBLP:journals/corr/abs-1212-1984}. For clarity, we will refer to this method as "2D-Laplace" from this point forward.}
 
-The idea of 2D-Laplace is to generate an area around $x0 \in X$ according to the multivariate Laplace distribution.
-The mechanism of 2D-Laplace is a modification of the Laplace algorithm to support distance \citep{DBLP:journals/corr/abs-1212-1984}.
 This distance method $d(x, x')$ is a method to calculate the Euclidean distance between two points $x$ and $x'$.
 Recalling the definition of Laplace, this method $|x-x'|$ is replaced by the distance metric.
-Hence, the definition of the \gls{pdf} by Andrés et al. is:
+Given the actual location $x_0 \in X$, the \gls{pdf} of the noise mechanism on any other point $x \in X$ is provided as \citep{DBLP:journals/corr/abs-1212-1984}: 
 \begin{equation}
-  \frac{\epsilon^2}{2*\pi}e(-\epsilon d(x_0, x))
+  D_\epsilon(x_0)(x) = \frac{\epsilon^2}{2 \cdot \pi}e^{-\epsilon \cdot d(x_0, x)}
   \label{eq:polar-laplace-pdf}
 \end{equation}
-This is the likelihood a generated point $z \in Z$ is close to $x0$.
 The method works for Cartesian coordinates but was modified to support polar coordinates by including $\theta$.
-So each point is reflected as $(r, \theta)$.
-A point $z \in Z$ where $z = (r, \theta)$ is randomly generated using two separate methods for calculating $r$ and $\theta$.
+So each polar coordinate is reflected as $(r, \theta)$, where $r = d(x_0, x)$.
 This idea is visualized in the following figure:
 \begin{figure}[H]
   \includegraphics[scale=0.6]{TheorethicalFramework/ND-Laplace/Images/polar-laplace.png}
   \centering
-  \caption{Representation of the generated $z = {r \theta}$ and original point $x0$.}
+  \caption{Representation of the generated $(r,\theta)$ and original point $x_0$.}
   \label{figure:parea}
 \end{figure}
-
+Next we show in detail, how to generate the polar coordinates $(r, \theta)$. \newline
 \textbf{Calculating $r$:}
-This variable is defined as $d(x_0, z)$ and can be randomly drawn by inverting the \gls{cdf} for the Laplace distribution:
+This variable is defined as $d(x_0, x)$ and can be randomly drawn by inverting the \gls{cdf} for the Laplace distribution:
 \begin{equation}
   C{_\epsilon}{^{-1}}(p) = - \frac{1}{\epsilon}(W_-1 (\frac{p - 1}{e}) + 1)
   \label{eq:lambert_w_1}
@@ -46,13 +44,13 @@ The purpose of the Lambert W function is to invert the \gls{cdf} of the Laplace 
 
 \textbf{Calculating $\theta$:}
 The other variable ($\theta$) is defined as a random number $[0, 2\pi]$. \newline
-To visualize the data, it is necessary to convert the polar coordinates for $z = (r, \theta)$ back to planar coordinates $z = (x, y)$.
+To visualize the data, it is necessary to convert the polar coordinates for $(r, \theta)$ back to Cartesian coordinates $z = (x, y)$.
 This conversion is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals/corr/abs-1212-1984} and visualized using figure \ref{figure:geo}.
 \begin{figure}[h]
     \centering
   \includesvg[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/polar-laplace-to-planar.svg}
   \centering
-  \caption{Representation of converting the perturbed point $z = (r, \theta)$ to a point ${z_x, z_y}$}
+  \caption{Representation of converting the polar coordinate $(r, \theta)$ to a perturbed point $z = (x, y)$.}
   \label{figure:geo}
 \end{figure}
 

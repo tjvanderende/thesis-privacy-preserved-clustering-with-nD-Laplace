@@ -58,9 +58,8 @@ Where the $p$ , $l(t_i)$ and $r(t_i)$ are defined as \citep{wang_collecting_2019
 \end{align}
 %According to this formula, the outcome domain shifts depending on the value of $t$.
 Based on the privacy budget $\epsilon$, the $C$ determines the amount of noise by bounding the lower/ upper limit of the domain.
-
-In cases where $t_i = 0$ there is a higher likelihood that the perturbed value $t_i'$ will be closer to the central region $[l(t_i), r(t_i)]$ rather than moving towards $-C$ or $C$."
-Similar adjustments occur when $t_i = 1 or t_i = -1$ but in those instances, the perturbed values tend to move towards $C$ or $-C$ respectively. 
+In cases where $t_i = 0$ there is a higher likelihood that the perturbed value $t_i'$ will be closer to $[l(t_i), r(t_i)]$ rather than moving towards $-C$ or $C$."
+Similar adjustments occur when $t_i = 1$ or $t_i = -1$ but in those instances, the perturbed values tend to move towards $C$ or $-C$ respectively. 
 This results in the mechanism effectively shifting the value of $t_i$ between three distinct values ("pieces") [$-1, 0, 1$] based on the provided probability density function (PDF) \citep{wang_collecting_2019}.
 
 %Where $C$ is defined according to the following mathematical formula:
@@ -74,7 +73,6 @@ This results in the mechanism effectively shifting the value of $t_i$ between th
 %Imagine it as a histogram with the distribution centered around 0. \todo[inline]{mathematical formula?}
 %The histogram consists of three "parts" on the left, right, and center (0).
 %This approach allows for determining the probability of 0 based on a certain likelihood, unlike Duchi et al.'s solution.
-
 For multidimensional data, the authors use the one-dimensional version multiple times.
 However, they compensate for the number of dimensions by generating a $k$ based on the following formula \citep{wang_collecting_2019}:
 \begin{equation}
@@ -83,3 +81,4 @@ However, they compensate for the number of dimensions by generating a $k$ based 
 Here, $d$ is the number of dimensions, and $k$ is used to sample a $d$ number of random samples.
 Finally, the Piecewise mechanism (see Equation \ref{eq:piecewise-domain}) is executed for each sample.
 
+\todo[todo]{Check}
