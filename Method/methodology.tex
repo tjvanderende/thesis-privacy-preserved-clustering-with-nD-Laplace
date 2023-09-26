@@ -1,10 +1,10 @@
-\chapter{\added{Research} methodology}  \label{chapter:methodology}
+\chapter{Research methodology}  \label{chapter:methodology}
 We conducted experiments to gain insights into the proposed methods for researching the appliance of nD-Laplace for clustering algorithms.
 The experiment results are used to evaluate our method against other literature.
 In this chapter, we explain:j
 \begin{enumerate}
     \item Research design: The background and research questions are explained.
-          Furthermore, we explain the datasets and privacy mechanisms used in the experiments, \added{and we explain how the research was designed to utilize use knowledge from the Software engineer master.}
+          Furthermore, we explain the datasets and privacy mechanisms used in the experiments, and we explain how the research was designed to utilize use knowledge from the Software engineer master.
     \item Data collection: The methods used to collect the data necessary to answer the research questions.
           These are methods for running experiments to collect data about utility and privacy.
     \item Data analysis: We explain how we analyze the data collected in the previous step.
@@ -14,13 +14,11 @@ In this chapter, we explain:j
 This section describes the overall setup of the research.
 
 \subsection{Research background \& questions}
-\added{
 The utilization of clustering plays an important part in the identification of hidden data patterns; but, the handling of datasets may give rise to potential privacy vulnerabilities. \gls{ldp} is an approach that has potential for protecting user privacy while maintaining data patterns.
-}
-\added{
+
 Previous research attempted to tackle the issue of maintaining utility in clustering while simultaneously protecting privacy. Nevertheless, the range of these methods is limited, as they mostly concentrate on K-means clustering. Also, existing research is constrained by its focus on datasets that are either two or three-dimensional, or on synthetic data, hence failing to comprehensively represent the complexity inherent in real-world data. 
-Therefore, the primary aim of this research is to develop a framework that protects privacy in the context of secure training for various clustering algorithms on distributed n-dimensional data.} \newline
-\added{We accomplish this by employing a method known as \gls{gi}, which employs a distance variation of the Laplace algorithm to introduce noise to data. Thus, the study question is phrased as follows:}
+Therefore, the primary aim of this research is to develop a framework that protects privacy in the context of secure training for various clustering algorithms on distributed n-dimensional data. \newline
+We accomplish this by employing a method known as \gls{gi}, which employs a distance variation of the Laplace algorithm to introduce noise to data. Thus, the study question is phrased as follows:
 \newline 
 \textit{"How can the nD-Laplace mechanism be applied in training privacy-preserving clustering algorithms on distributed n-dimensional data?"} \newline
 This question is divided into four smaller sub-questions:
@@ -31,7 +29,7 @@ This question is divided into four smaller sub-questions:
           This research question extends grid-remapping (See Equation: \ref{alg:grid-remapping-laplace}) and density-remapping (See Equation: \ref{alg:optimal-remapping-laplace}) to be used with nD-Laplace for clustering
     \item \textit{RQ3: How do dataset characteristics impact the nD-Laplace mechanism for utility and privacy?} \newline
           In this research question, we evaluate the dataset characteristics and their influence on nD-Laplace.
-          Also, we investigate if we can improve the utility and privacy of nD-Laplace by adopting grid-nD-Laplace and density-nD-Laplace (\ref{fig:optimal-remapping}).
+          Also, we investigate if we can improve the utility and privacy of nD-Laplace by adopting grid-nD-Laplace and density-nD-Laplace.
           We use several hypotheses questions to answer research question 3.
 
           In the last two hypotheses, we specifically focus on the K-Means clustering algorithm to test our hypotheses.
@@ -42,7 +40,7 @@ This question is divided into four smaller sub-questions:
                     Because the mechanism heavily relies on Euclidean distance, the shape (distance between the data points) can ultimately harm utility and privacy.
                     We have already observed this difference when comparing the heart and seed datasets in research questions 1 and 2.
                     But, to rule out the potential impact of the number of data points (the heart dataset has 2126 samples and the seed-dataset 210), we generate three synthetic datasets, each with 1000 samples (See section \ref{datasets-section}).
-              \item \textit{H2: The privacy leakage (adversary advantage) and utility increases for datasets with more then 7 dimensions:}
+              \item \textit{H2: The privacy leakage (adversary advantage) and utility increases for datasets with more than 7 dimensions:}
                     The hypothesis arose from our observation while investigating/implementing nD-laplace(\ref{theory:privacy-utility-nd}).
                     Adding more dimensions (7 >) decreases the added noise gradually, increasing utility.
                     On the other hand, privacy is expected to decrease because the noise is less.
@@ -96,12 +94,12 @@ We evaluate all privacy mechanisms by comparing them in utility and privacy.
 To reduce the measurement bias of results, we executed them ten times for multiple privacy budgets and reported the average for each \citep{9679364}.
 \begin{enumerate}
     \item The experiments run ten times, and we report the mean.
-    \item \added{In line with existing research, we establish a set of privacy budgets under which the experiments are conducted:} ${0.5, 0.7, 1, 1.5, 2, 3.5, 5, 7, 9}$.
+    \item In line with existing research, we establish a set of privacy budgets under which the experiments are conducted: ${0.5, 0.7, 1, 1.5, 2, 3.5, 5, 7, 9}$.
 \end{enumerate}
 
 \subsection{Environmental setup}
-\added{To make the code easily transferable and ensure that all changes are tracked, GitHub.com has been used.
-Both the code and the thesis LaTeX can be found there.} \footnote{\url{https://github.com/tjvanderende/privacy-preserved-clustering-with-nD-Laplace}}\footnote{\url{https://github.com/tjvanderende/thesis-privacy-preserved-clustering-with-nD-Laplace}}
+To make the code easily transferable and ensure that all changes are tracked, GitHub.com has been used.
+Both the code and the thesis LaTeX can be found there. \footnote{\url{https://github.com/tjvanderende/privacy-preserved-clustering-with-nD-Laplace}}\footnote{\url{https://github.com/tjvanderende/thesis-privacy-preserved-clustering-with-nD-Laplace}}
 For running the experiments, we use 16GB RAM and an i7-10750H 2.6Ghz processor.
 The experiments are run using a Docker container which runs a pre-configured distribution of Linux Alpine.
 It includes a pre-installed Anaconda environment for Python \footnote{https://github.com/devcontainers/images/tree/main/src/anaconda}\footnote{tag: mcr.microsoft.com/devcontainers/anaconda:0-3}. \newpage
@@ -119,13 +117,13 @@ The packages for Python are:
     \item Mathplotlib: 3.5.*
 \end{itemize}
 
-\added{\subsection{Educational background \& skills}}
-\added{This master's thesis forms an integral part of the software engineering master's program at OU, and therefore, its research design is tailored to leverage the courses and literature offered in this program. Specifically, the following courses have influenced and contributed to this research:}
+\subsection{Educational background \& skills}
+This master's thesis forms an integral part of the software engineering master's program at OU, and therefore, its research design is tailored to leverage the courses and literature offered in this program. Specifically, the following courses have influenced and contributed to this research:
 \begin{enumerate}
-    \item \added{Discrete Mathematics and Logic (pre-master): This course laid the foundation for various proofs and theorems incorporated into this research.}
-    \item \added{Software Security: The origins of this research stem from this course, and a substantial portion of its theoretical background draws from the knowledge gained in this subject.}
+    \item Discrete Mathematics and Logic (pre-master): This course laid the foundation for various proofs and theorems incorporated into this research.
+    \item Software Security: The origins of this research stem from this course, and a substantial portion of its theoretical background draws from the knowledge gained in this subject.
 \end{enumerate}
-\added{Intentionally, the research has been designed with numerous experiments and a substantial amount of data. Consequently, we have developed a sophisticated software-driven experimental pipeline that enables us to generate results independently of data and presentation aspects. This approach underscores the crucial role played by software development and architecture in the research methodology.}
+Intentionally, the research has been designed with numerous experiments and a substantial amount of data. Consequently, we have developed a sophisticated software-driven experimental pipeline that enables us to generate results independently of data and presentation aspects. This approach underscores the crucial role played by software development and architecture in the research methodology.
 \section{Data collection}
 This section explains what methods/ algorithms we use to collect the data necessary to answer the research questions.
 \subsection{Hyperparameter selection}

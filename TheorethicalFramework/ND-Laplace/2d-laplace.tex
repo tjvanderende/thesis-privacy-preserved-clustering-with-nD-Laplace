@@ -12,29 +12,34 @@ This section starts with an introduction to mathematics, and for each of the dif
 %The other symbols can be found in section \ref{section:dp}.
 \subsection{Planar and polar Laplace}
 In Section \ref{theory:geo-indistinguishability}, we provided an explanation of the concept of \gls{gi}. 
-\added{
-Additionally, we introduced the notion that when a point $x_0 \in X$ serves as the center of a range $r$, a point $x$ is generated using a noise function \citep{DBLP:journals/corr/abs-1212-1984}. The objective here is to ensure that when the actual locations are $x_0$ and $x_0'$, their divergence is limited to at most $e^{-\epsilon} \cdot d(x_0, x_0')$. This characteristic aligns with the Laplace distribution, which the "planar Laplace" mechanism leverages.}
-\added{Furthermore, it's worth noting that the "planar Laplace" mechanism is an adaptation of the Laplace distribution designed to accommodate distances in a 2-dimensional space \citep{DBLP:journals/corr/abs-1212-1984}. For clarity, we will refer to this method as "2D-Laplace" from this point forward.}
+Additionally, we introduced the notion that when a point $x_0 \in X$ serves as the center of a range $r$, a point $z \in Z$ is generated using a noise function \citep{DBLP:journals/corr/abs-1212-1984}. The objective here is to ensure that when the actual locations are $x_0$ and $x_0'$, their divergence is limited to at most $e^{-\epsilon \cdot d(x_0, x_0')}$. This characteristic aligns with the Laplace distribution, which the "planar Laplace" mechanism leverages.
+Furthermore, it's worth noting that the "planar Laplace" mechanism is an adaptation of the Laplace distribution designed to accommodate distances in a 2-dimensional space \citep{DBLP:journals/corr/abs-1212-1984}. For clarity, we will refer to this method as "2D-Laplace" from this point forward.
 
-This distance method $d(x, x')$ is a method to calculate the Euclidean distance between two points $x$ and $x'$.
+The distance method $d(\cdot, \cdot)$ is a method to calculate the Euclidean distance between two points.
 Recalling the definition of Laplace, this method $|x-x'|$ is replaced by the distance metric.
-Given the actual location $x_0 \in X$, the \gls{pdf} of the noise mechanism on any other point $x \in X$ is provided as \citep{DBLP:journals/corr/abs-1212-1984}: 
+Given the actual location $x_0 \in X$, the \gls{pdf} of the noise mechanism on any other point $z \in Z$ is provided as \citep{DBLP:journals/corr/abs-1212-1984}: 
 \begin{equation}
-  D_\epsilon(x_0)(x) = \frac{\epsilon^2}{2 \cdot \pi}e^{-\epsilon \cdot d(x_0, x)}
+  D_\epsilon(x_0)(z) = \frac{\epsilon^2}{2 \cdot \pi}e^{-\epsilon \cdot d(x_0, z)}
   \label{eq:polar-laplace-pdf}
 \end{equation}
 The method works for Cartesian coordinates but was modified to support polar coordinates by including $\theta$.
-So each polar coordinate is reflected as $(r, \theta)$, where $r = d(x_0, x)$.
+So each polar coordinate is reflected as $(r, \theta)$, where $r = d(x_0, z)$ around point $x_0$.
 This idea is visualized in the following figure:
 \begin{figure}[H]
-  \includegraphics[scale=0.6]{TheorethicalFramework/ND-Laplace/Images/polar-laplace.png}
+  \includesvg[scale=1]{TheorethicalFramework/ND-Laplace/Images/polar-laplace.svg}
   \centering
   \caption{Representation of the generated $(r,\theta)$ and original point $x_0$.}
   \label{figure:parea}
 \end{figure}
 Next we show in detail, how to generate the polar coordinates $(r, \theta)$. \newline
 \textbf{Calculating $r$:}
-This variable is defined as $d(x_0, x)$ and can be randomly drawn by inverting the \gls{cdf} for the Laplace distribution:
+The $r$ is randomly selected based on a distribution $R$ \citep{DBLP:journals/corr/abs-1212-1984}: 
+\begin{equation}
+    D_{\epsilon, R}(r) = \int^{2\cdot \pi}_0 \ D_\epsilon(r, \theta) \ d\theta = \epsilon^2 \ r \epsilon^{-\epsilon \cdot r}
+    \label{2d:generate-r}
+\end{equation}
+Where the $r$ is selected randomly on the area of the radius. 
+Next, the can be randomly drawn by inverting the \gls{cdf} for the Laplace distribution \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{equation}
   C{_\epsilon}{^{-1}}(p) = - \frac{1}{\epsilon}(W_-1 (\frac{p - 1}{e}) + 1)
   \label{eq:lambert_w_1}
@@ -43,8 +48,12 @@ For this equation, the Lambert $W$ function is used. This function consists of t
 The purpose of the Lambert W function is to invert the \gls{cdf} of the Laplace distribution to generate random noise for one of the coordinates ($r$) using the random value of $p$. It draws the $r$ which will be bounded by the $W_{-1}$, this is very useful for drawing the random planar noise \citep{corless_lambertw_1996}.
 
 \textbf{Calculating $\theta$:}
-The other variable ($\theta$) is defined as a random number $[0, 2\pi]$. \newline
-To visualize the data, it is necessary to convert the polar coordinates for $(r, \theta)$ back to Cartesian coordinates $z = (x, y)$.
+The other variable ($\theta$) is defined in a similar way \citep{DBLP:journals/corr/abs-1212-1984}: 
+\begin{equation}
+    D_{\epsilon, \Theta}(\theta) = \int^\infty_0 D_\epsilon(r, \theta) \ dr = \frac{1}{2 \cdot \pi}
+    \label{2d:generate-theta}
+\end{equation}
+To visualize the data, it is necessary to convert the polar coordinates for $(r, \theta)$ to Cartesian coordinates $z = (x, y)$.
 This conversion is described as step 4 of the planar Laplace algorithm \citep{DBLP:journals/corr/abs-1212-1984} and visualized using figure \ref{figure:geo}.
 \begin{figure}[h]
     \centering
@@ -58,43 +67,45 @@ This conversion is described as step 4 of the planar Laplace algorithm \citep{DB
 \subsection{Truncation} \label{theory:truncation}
 After adding the noise to the data, it cannot be ensured the data is within the original domain (figure \ref{figure:truncation-2d}).
 If this is not the case, the data is easily distinguished by an unwanted adversary \citep{DBLP:journals/corr/abs-1212-1984,9646489}.
-The truncation is an essential part of the mechanism to ensure the data is contained within the domain of the original data $X$.
+The truncation is an essential part of the mechanism to ensure the data is contained within the domain of the original data $X$. The following example shows two different point original points $x_0$ and $x_0'$, where $z$ and $z'$ are being remapped to be within the domain:
 %We assume a user has a set of data points with a range of [-1, 1].
 \begin{figure}[H]
 \centering
-  \includegraphics[width=0.7\textwidth]{TheorethicalFramework/ND-Laplace/Images/remapping.png}
+  \includesvg[width=1\textwidth]{TheorethicalFramework/ND-Laplace/Images/remapping.svg}
   \caption{Representation of truncation of data points for 2-dimensional Laplace mechanism.}
   \label{figure:truncation-2d}
 \end{figure}
 %A solution was described by Andres et al. in step 5 of the Laplacian mechanism for 2D space \citep{DBLP:journals/corr/abs-1212-1984}.
 %A viable solution is to create a grid around the diameter of the set of points $X = R^2$ that belong to the user \citep{DBLP:journals/corr/abs-1212-1984}.
-The approach Andres et al. introduces is to remap a perturbed point $z$ to the closest point $x'$ in $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
-Here, $G$ is a grid generated using constant cell width.
+This approach was introduced by Andres et al. to remap a perturbed point $z$ to the closest point in $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
+Here, $G$ is a grid with sides $u$ and $v$, such that $u \leq v$.
 %Although this approach remaps data within the original domain of $X$, it is not guaranteed it preserves \gls{gi} anymore.
-Let the below equation be the collection of probabilities for a point being remapped to a grid cell $x'$ \citep{DBLP:journals/corr/abs-1212-1984}:
+Let the below equation be the collection of probabilities for a point being remapped to a closest point in $G$:
 \begin{equation}
-  R(x) = { y \in R^2 | \forall x' \in G \cdot d(y, x') \leq d(y, x')}
+  R(z) = { y \in R^2 | \forall z' \in G \cdot d(y, z') \leq d(y, z')}
   \label{eq:grid-probability}
 \end{equation}
-The original \gls{gi} definition contains $K$, which is the probability of $z$ being reported as $x$ (See Equation: \ref{theory:geo-indistinguishability}).
+The original \gls{gi} definition contains $K$, which is the probability of $z$ being reported as $x_0$ (See Equation: \ref{theory:geo-indistinguishability}).
 However, this probability is no longer guaranteed because $z$ can also be part of $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
-Hence the probability is now $R_X(x) = R(x) \cup X$. \newline
-So, the $R_X(x)$ has a different shape depending on the distance $x_0$ and $x'$ (ergo, it depends on the grid cell width). This is due the step units of $G$ stay the same, while the distance $r$ grows \citep{DBLP:journals/corr/abs-1212-1984}.
+Hence the probability is now $R(z) = G \cap A$. Where $A$ is a set of acceptable datapoints.\newline
+So, $R(z)$ has a different shape depending on the distance $x_0$ and $z$ (ergo, it depends on the grid cell width). This is due the step units of $G$ stay the same, while the distance $r$ grows \citep{DBLP:journals/corr/abs-1212-1984}.
 
 To overcome this issue, Andres et al. propose a way of calculating $\epsilon'$, depending on the step-unit $u$. \citep{DBLP:journals/corr/abs-1212-1984}.
 They proved this and provided theorem 4.1 \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{theorem}[Discretization 2D-Laplace]
-  Assume $r_{max} < \frac{u}{\delta_{\theta}}$, and let $q = \frac{u}{r_{max}}\delta_{\theta}$. Let $\epsilon$, $\epsilon' \in R^+$ such that \\
+  Assume $r_{max} < \frac{u}{\delta_{\theta}}$, and let $q = \frac{u}{r_{max}}\delta_{\theta}$. \\ Let $\epsilon$, $\epsilon' \in R^+$ such that \\
   $\epsilon' + \frac{1}{u}ln \frac{q + 2 e^{\epsilon'u}}{q - 2 e^{\epsilon'u}} \leq \epsilon$ \\
-  Then $K_{\epsilon'}$ provides $\epsilon$-geo-indistinguishability within the range of $r_{max}$. Namely, if ${d(x_0, x), d(x'_0, x) \leq r_{max}}$ then: \\
-  $K_{\epsilon'}(x_0)(x) \leq e^{\epsilon d(x_0, x'_{0})} K_{\epsilon'}(x'_{0})(x)$.
+Then $K_{\epsilon'}$ provides $\epsilon$-geo-indistinguishability within the range of $r_{max}$. \\ 
+  Namely, if ${d(x_0, z), d(x'_0, z) \leq r_{max}}$ then: \\
+  $K_{\epsilon'}(x_0)(z) \leq e^{\epsilon d(x_0, x'_{0})} K_{\epsilon'}(x'_{0})(z)$.
   \label{theorem:discretization}
 \end{theorem}
+Where $x_0$ and $x_0'$ are two different original points for which the noise is generated. 
 Here, $\delta_{\theta}$ is the machine's precision, which is the hardware precision of the GPS-location in the context of geographical data. We will omit this in our research, but still provide the full theorem nonetheless.
 The theorem states that $\epsilon'$ is the additional noise needed to satisfy \gls{gi} with the introduction of discretization.
 %Then, the final step is truncation based, which is based on the discretization \citep{DBLP:journals/corr/abs-1212-1984}.
-It is sufficient to take $r_{max}$ as $diam(X)$, which is the diameter of the set of points $X$ if it satisfies theorem \ref{theorem:discretization} \citep{DBLP:journals/corr/abs-1212-1984}:
-So, $r_{max}$ is the maximum distance between points in $X$, which is the area where geo-indistinguishability can be guaranteed \citep{9646489}.
+It is sufficient to take $r_{max}$ as $diam(A)$, which is the diameter of the set of points $A$ if it satisfies theorem \ref{theorem:discretization} \citep{DBLP:journals/corr/abs-1212-1984}:
+So, $r_{max}$ is the maximum distance between points in $A$, which is the area where geo-indistinguishability can be guaranteed \citep{9646489}.
 %This idea was later improved by Chatzikokolakis et al., introducing an optimized way of remapping \citep{chatzikokolakis_efficient_2017}.
 %The algorithm uses the Bayesian rule to minimize the loss of utility while remapping the data.
 %Instead of remapping to the closest point, it remaps to a location where the loss is minimal.

@@ -1,17 +1,19 @@
 \begin{algorithm}[H]
    \caption{Full algorithm for perturbing training data for nD-clustering using nD-Laplace}
    \begin{algorithmic}
-      \Require $x \in X$  \Comment n-dimensional array of original points
-      \Require $\epsilon$ \Comment privacy budget
-      \Ensure $z \in Z$ \Comment n-dimensional array of optimal-remapped perturbed points
-      \State $sphere = \Call{GenerateUnitSphere}{x}$ \Comment construct a sphere around $x$.
-      \For{$row \in X$}
-      \State $d \gets \Call{Length}{row}$ \Comment amount of dimensions
-      \State $r \gets \Call{GenerateRadius}{d}$ \Comment Equation \ref{eq:generate_r_for_nd_laplace}.
-      \State $sphere \gets \Call{GenerateTheta}{d}$ \Comment Equation \ref{eq:generate_theta_for_nd_laplace}.
-      \State $noise \gets \Call{Cartesian}{row, \epsilon}$ \Comment Equation \ref{eq:nd-laplace-cartesian}.
-      \State $z = x + noise$
-      \State \Call{Append}{$Z, z$}
+      \Require $X$,  $\epsilon$, $v$ 
+      \Ensure $Z$ 
+      \State Generate unit hypersphere to select $\theta$. \Comment Equation: \ref{eq:generate_theta_for_nd_laplace}
+      \State Generate $G_h$ from given sides $v$ and amount of dimensions $n$.
+        \State Generate $A_h$ from grid unit $v$ \Comment Accepted region to remap into. 
+      \For{$x_i \in X$}
+      \State Generate $r$ around center $x_i$ \Comment Equation \ref{eq:generate_r_for_nd_laplace}.
+      \State Draw angle $\theta$ from unit sphere in $n$-dimensional space \Comment Equation \ref{eq:generate_theta_for_nd_laplace}.
+      \State Convert spherical coordinates $(r, \theta)$ for \\ each dimension to Cartesian coordinates $z = (z, ...z_n$). \Comment Equation: \ref{eq:nd-laplace-cartesian}.
+       \If {$z \notin A_h$}
+            \State Remap $z$ to closest point in $A_h \cap G_h$.
+       \EndIf
+      \State Add $z$ to Z
       \EndFor
       \State \Return Z
    \end{algorithmic}

@@ -1,22 +1,23 @@
 \begin{algorithm}[H]
   \caption{Full algorithm for perturbing training data for 3D-clustering using planar/2D-Laplace \citep{DBLP:journals/corr/abs-1212-1984}}\label{alg:rq1}
   \begin{algorithmic}
-    \Require $x \in X$ 
-    \Require $l \in R^ +$
-    \Require $r \in R^ +$
+    \Require $X, u, w, h, \epsilon$
     \Ensure $z \in Z$ 
     %\State $r = \frac{\sigma}{2}$ \Comment formula 4.1
-    \State $\epsilon \gets \frac{l}{r}$ \Comment Calculating privacy budget \citep{DBLP:journals/corr/abs-1212-1984}
-    \State $Z \gets []$
-    \For{$point_i \in X$}
-    \State $\theta \gets [1, \pi2]$       \Comment  Equation: \ref{eq:3d-laplace-1}.
-    \State $p \gets \frac{1}{2\pi}$     \Comment Equation: \ref{eq:3d-laplace-2}.
-    \State $r \gets \frac{1}{2}\epsilon^3 * r^2 * e^{-\epsilon * r}$          \Comment Equation: \ref{eq:3d-laplace-3}
+    \State Generate $\epsilon'$ \Comment Theorem \ref{theorem:3d-discretization}
+    \State $Z \gets \varnothing$ 
+    \State Generate $G_c$ from given sides $u, w, h$.
+    \State Generate $A_c$ from grid unit $h$ \Comment Accepted region to remap into.
+    \For{$x_i \in X$}
+    \State Generate $\theta$      \Comment  Equation: \ref{eq:3d-laplace-1}.
+    \State Generate  $\psi$     \Comment Equation: \ref{eq:3d-laplace-2}.
+    \State Generate the radius $r$ around $x_0$          \Comment Equation: \ref{eq:3d-laplace-3}
     %\State $z_i \gets T(x_{min}, x_{max}, point_i, z_i)$ \Comment algorithm 1.
-    \State $z_x \gets r * \sin(\theta) * \sin(\psi)$
-    \State $z_y \gets r * \sin(\theta) * \cos(\psi)$
-    \State $z_z \gets r * \cos(\theta)$
-    \State $Z::Add(z)$  
+    \State Convert spherical coordinate $(r, \theta, \psi$) to Cartesian coordinates $z = (x, y, z)$ \Comment{Equation: \ref{eq:3d-cartesian}}
+    \If {$z \notin A_c$}
+        \State Remap $z$ to closest point in $A_c \cap G_c$ 
+    \EndIf
+    \State Add $z$ to perturbed set $Z$  
     \EndFor
     \State \Return Z
   \end{algorithmic}

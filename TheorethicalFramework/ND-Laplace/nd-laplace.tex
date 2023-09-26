@@ -11,8 +11,7 @@ Therefore, for the rest of the thesis, we use the following names:
   \item grid-nD-Laplace: This is a grid-remapping approach that is generalised for nD-Laplace.
   \item density-nD-Laplace: This is a density-remapping approach to provide an alternative to grid-nD-Laplace.
 \end{enumerate}
-The first three points are focused on the theory for our first research question. Here, we delve into the implementation of 2/3/nD-Laplace. Subsequently, point 4 is centered on the theory for the second research question, which focuses on grid-nD-Laplace. Finally, we address the theory related to research question 3 for the density-nD-Laplace variant. Once all the theory has been covered, a summary will be provided along with an overview of the privacy framework.
-\printnomenclature
+The first three points are focused on the theory for our first research question. Here, we delve into the implementation of 2D-Laplace, 3D-Laplace and nD-Laplace. Subsequently, point 4 is centered on the theory for the second research question, which focuses on grid-nD-Laplace. Finally, we address the theory related to research question 3 for the density-nD-Laplace variant. Once all the theory has been covered, a summary will be provided along with an overview of the privacy framework.
 
 \input{TheorethicalFramework/ND-Laplace/2d-laplace.tex}
 \input{TheorethicalFramework/ND-Laplace/3d-laplace.tex}
@@ -22,7 +21,7 @@ As mentioned in the previous chapter, the paper introduced by Min et al. can han
 A small recap: a point $(r, \theta, \psi)$ gives us the three coordinates of a location on the 3-dimensional sphere.
 An important property is that these coordinates can be generated separately \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
 The $r$ gives us the distance from $(\theta, \psi)$ to the center of the sphere \footnote{https://mathworld.wolfram.com/SphericalCoordinates.html}.
-So, instead of having just these two coordinates, we can extend this to n-dimensions by considering an n-hypersphere \citep{fernandes_generalised_2019, 9646489}.
+So, instead of having just these two coordinates, we can extend this to n-dimensions by considering a hypersphere \citep{fernandes_generalised_2019, 9646489}.
 The theorems for \gls{gi} are extended by Fernandes et al. to support n-dimensional data:
 %To this end, in addition to points $\theta$ and $\psi$, we consider $\theta \in S^n$, where $S$ is a unit hypersphere.
 \begin{theorem}
@@ -30,8 +29,8 @@ The theorems for \gls{gi} are extended by Fernandes et al. to support n-dimensio
   $K(x)(Z) \leq e^{\epsilon \cdot d_x (x, x')} \cdot K(x')(Z) \ for \ all \ x, x' \in X, Z \subseteq X$.
   \label{theorem:nd-laplace}
 \end{theorem}
-\todo[inline]{What is x'?}
-\todo[inline]{What is Z?}
+Where $Z$ is a set of perturbed points generated from the original dataset $X$. 
+For any two original datapoints $x$ and $x'$ the distance between them is limited at most $e^{-\epsilon \cdot d(x_0, x_0')}$. 
 This theorem extends $\epsilon$-geo-indistinguishability to $\epsilon-d_x$-privacy as a more general notion of distinguishability \citep{fernandes_generalised_2019}:
 Here, $d_x$ is a pseudo metric which was provided by Chatzikokalakis et al. as elastic privacy definition for location privacy \citep{chatzikokolakis_constructing_2015}. For the use with the Euclidean distance, the privacy definition is defined as $d_{euc}$. Due to the flexibility of $d_x$ the theorem \ref{theorem:nd-laplace} also holds for $d_{euc}$.  Furthermore, $\epsilon-d_{euc}$ provides the same privacy definition as geo-indistinguishability \citep{chatzikokolakis_constructing_2015}.
 Therefore, $d_{euc}$ is adopted by this thesis from now on, to be used for applying it for non-geographical data to establish a more general notion of privacy. \newline
@@ -41,7 +40,7 @@ Hence, generating the nD-variant can be seen as generating multiple $(r, \theta)
 Where $r$ is the radial distance from the origin $x_0$ and $\theta$ is the angle randomly selected from a unit hypersphere.
 The selection of $r$ is according to the Gamma distribution, with shape $n$ (dimensions) and scale $\delta > 0$ \citep{fernandes_generalised_2019}:
 \begin{equation}
-  Gam^n_\delta(r) := \frac{r^{n-1}\cdot^{-\frac{r}{\delta}}}{\delta^n(n-1!)}
+  Gam^n_\delta(r) := \frac{r^{n-1}\cdot e^{-\frac{r}{\delta}}}{\delta^n(n-1!)}
   \label{eq:generate_r_for_nd_laplace}
 \end{equation}
 Then, $\theta$ is drawn from an uniform distribution of a unit hypersphere $S$ \citep{fernandes_generalised_2019}:
@@ -49,124 +48,122 @@ Then, $\theta$ is drawn from an uniform distribution of a unit hypersphere $S$ \
   Uniform^n(\theta) := \frac{\gamma(\frac{n}{2})}{n \cdot \pi ^{\frac{n}{2}}}
   \label{eq:generate_theta_for_nd_laplace}
 \end{equation}
-Where $\gamma(a) = \int^\infty_0 x^{a-1} \cdot e{-x} \cdot d \cdot x$ is the gamma function \citep{fernandes_generalised_2019}.
+Where $\gamma(a) = \int^\infty_0 x^{a-1} \cdot e^{-x} \ dx$ is the gamma function \citep{fernandes_generalised_2019}.
 This approach is similar to the other variants of the Laplace mechanism.
 Only now, we select points from an $n$-dimensional hypersphere  \footnote{https://mathworld.wolfram.com/SpherePointPicking.html} instead of a unit sphere \ref{eq:3d-laplace-2}. \newline
 
 In the next step, the spherical coordinate representation is converted to Cartesian coordinates \citep{fernandes_generalised_2019}:
 It is comparable to the way it was done in the previous chapters; however, as there are an $n$-amount of angles, the equation is repeated and slightly different.
 The formula is provided by Fernandes et al. to convert $r$ to spherical coordinates \citep{fernandes_generalised_2019}:
-\begin{align}
-  x_1 = r * cos (\theta_1)                                          \\
-  x_2 = r * sin (\theta_1) * cos (\theta_2)                         \\
-  x_{n} = r * sin(\theta_1) … sin(\theta_{n-2}) *cos (\theta_{n-1}) \\
-  x_n = r * sin(\theta_{n-1}) * sin(\theta_{n-2}) * sin(\theta_{n-1})
+\begin{align*}
+  x_1 = r \cdot cos (\theta_1)                                          \\
+  x_2 = r \cdot sin (\theta_1) \cdot cos (\theta_2)                         \\
+  ... \\
+  x_n = r \cdot sin(\theta_{n-1}) \cdot sin(\theta_{n-2}) \ ..., sin(\theta_{n-2} \cdot sin(\theta_{n-1})
   \label{eq:nd-laplace-cartesian}
-\end{align}
+\end{align*}
+This formula is the same for the first two dimensions in comparison to 2D-Laplace and 3D-Laplace. After that, the conversion happens using the $sin$ for all $\theta$.
 
-The combination of sections 1 and 2 of this chapter provides a good overview of the solution using a similar image as the 2D and 3D variants (figure \ref{fig:nd-laplace-overview}).
-\begin{figure}[H]
-   \centering
-  \includesvg[width=0.8\textwidth]{TheorethicalFramework/ND-Laplace/Images/master-thesis-Page-10}
-  \caption{Overview of the nD-Laplace mechanism}
-  \label{fig:nd-laplace-overview}
-\end{figure}
-\newpage
-
-\subsubsection{Putting it together: nD-Laplace}
-\todo[inline]{Rewrite title}
-Now that we have defined everything, we can write the algorithm in a step-by-step manner:
-\input{TheorethicalFramework/ND-Laplace/algorithms/nd-laplace.tex}
-\subsubsection{Privacy versus utility} \label{theory:privacy-utility-nd}
+\subsubsection{Impact of dimensions} \label{theory:privacy-utility-nd}
 When we specifically look at the \(uniform^n(\theta)\) function (see Equation: \ref{eq:generate_theta_for_nd_laplace}), the \(\theta\) can be generated \(n\)-times, but this has some limitation \citep{weisstein_hypersphere_nodate}.
 The value of \(\theta\) decreases after the $\approx 7$ dimensions have been reached \citep{wells_penguin_1997}. Subsequently, the hyper-surface area reaches a maximum, so the value of $\theta$ decreases towards 0 \citep{weisstein_hypersphere_nodate}.
 This behaviour is illustrated in the following figure:
 \begin{figure}[H]
 \centering
   \includesvg[width=0.8\textwidth]{TheorethicalFramework//ND-Laplace//Images/HypersphereArea_900.svg}
-  \caption{Illustration of the decreasing volume while increasing the number of dimensions \citep{weisstein_hypersphere_nodate}.}
+  \caption{Illustration of the decreasing hypersphere volume $S_n$ while increasing the number of dimensions \citep{weisstein_hypersphere_nodate}.}
   \label{fig:curse-of-dimensionality}
 \end{figure}
 As can be seen in the image, the amount of volume starts to decrease after the 7 dimensions . From this, it can be inferred that the value of  $\theta$ will also decrease. 
 The consequence of this behavior is that the final noise decreases for higher dimensions. This will result in the possibility that utility increases in higher dimensions, but privacy decreases.
-
 \newpage
-\subsection{Grid-remapping \label{section-grid-remapping}}
-In the previous sections, we introduced the 2D, 3D, and nD Laplace mechanisms and introduced truncation for 2/3-Laplace.
-The current section will be used to formalize nD-Laplace with grid-remapping (disretization \& truncation) and introduce modifications to improve the mechanisms for clustering for n-dimensional data.
+\subsection{nD-Laplace truncation \label{section-grid-remapping}}
+In the previous sections, we introduced the 2D-Laplace, 3D-Laplace, and nD-Laplace mechanisms and introduced truncation for 2D-Laplace and 3D-Laplace.
+The current section will be used to formalize nD-Laplace with truncation, and also provide the theoretical groundwork for research question 2 (grid-remapping).
 
 \subsubsection{Discretization and truncation} \label{theory:nd-laplace-truncation}
 As mentioned from the previous sections. The discretized 2D version operates on a plane and approximates on a grid $G$, while the 3D version works in a sphere and approximates the data using a cuboid grid  $G_C$.
 
 Given a set of non-private points $X$ and perturbed points $Z$ we can truncate the points that are outside the domain by remapping them to points such that $Z = X \cap G$ \citep{DBLP:journals/corr/abs-1212-1984}.
-The following part aims at extending the theorems for 2D-Laplace and 3D-Laplace for discritezation and truncation to n-dimensions. \newline
+The following part aims at extending the theorems for 2D-Laplace and 3D-Laplace for truncation to n-dimensions.
 
 The theorems for 2D (See Theorem \ref{theorem:discretization}) and 3D-Laplace (See Theorem \ref{theorem:3d-discretization}) include a device precision. 
 This variable is the hardware precision of a GPS provided by the user's device (e.g. a mobile phone). 
 For the purpose of clustering, we omit this for the formulation of truncation with n-dimensions. \newline
 
-We extend the reasoning of Min et al. behind extending 2D-Laplace to 3D-Laplace as this applies to nD-Laplace as well.
-\added{The $G_c$ that was introduced for 3D-Laplace can be extended to a \textit{n}-dimensions by providing a \textit{n}-cube, as it can be seen as a generalization of the 3D cuboid.} \footnote{https://mathworld.wolfram.com/Hypercube.html}.
-\added{Due to this extension the \textit{n}-cube has $2^n$ sides and is defined as $G_n$ with an $n$ amount of sides.
-In contrast to the cuboid $G_c$, we consider equal sides for the purpose of simplicity.} 
+We build upon Min et al.'s rationale for the expansion from 2D-Laplace to 3D-Laplace, highlighting its relevance to nD-Laplace. 
+Additionally, we reference the concept of the n-cube, an extension of the 3D cuboid, which is discussed further in detail in this source \footnote{https://mathworld.wolfram.com/Hypercube.html}.
+This expansion allows us to define the n-cube as $G_n$, characterized by an $n$ number of sides. In contrast to the cuboid $G_c$, we maintain equal side lengths for the sake of simplicity.
 
-\added{The probability of a point $x \in X$ in $G_h$ can be described as the following, as we did for 2D-Laplace and 3D-Laplace as well (See Equations \ref{eq:3d-grid-probability}, \ref{eq:grid-probability}): 
+The probability associated with a point $z$ belonging to $G_h$ can be expressed as follows, similar to how we previously did for 2D-Laplace and 3D-Laplace, as demonstrated in Equations \ref{eq:grid-probability} and \ref{eq:3d-grid-probability}:
 \begin{equation}
-    R_h(x) = { y \in R^+ \ | \ \forall x' \in G_h \cdot d_{euc}(y, x') \leq d_{euc}(y, x')}
+R_h(x) = { y \in \mathbb{R}^+ \ | \ \forall x' \in G_h \cdot d_{euc}(y, x') \leq d_{euc}(y, x') }
 \end{equation}
-This can be seen as a region $R_h$ in which we want to preserve $\epsilon$-geo-indistinguishability \citep{9646489}.}
-\added{Consequently, the maximum $r$, is within the region $R_h$ and defined as $r_{max}$. This means, we have to select a suitable $\epsilon'$ that depends on the length of the grid units of $G_h$ and $\epsilon$, in such a way that we preserve $\epsilon'-$geo-indistinguishability for $r_{max}$ \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.}
-
-\added{The theorem for this is provided as the following:}
+This can be interpreted as a region, denoted as $R_h$ around $x \in X$, in which we aim to preserve $\epsilon$-geo-indistinguishability \citep{9646489}.
+Using this variant of nD-Laplace, the region $R_h$ can be expressed as a collection of acceptable report points $A$, where nD-Laplace uses $A_h$ \citep{DBLP:journals/corr/abs-1212-1984}.
+The truncated nD-Laplace mechanism remaps points outside the diameter $diam(A)$ to the closest point $A_h \cap G_h$. 
+Where the $diam(A_h) = r_{max}$ as the maximum allowed radial distance from $x_0$. \newline
+Based on this, we define the theorem:
 \begin{theorem}
-Assume  $r_{max} = v \in G_h$. Let $\epsilon \in R+$ and $\epsilon' = \frac{\epsilon}{|G_h|}$such that: \\
-  $\epsilon' \leq \epsilon$ \\
-  Then $K^T_{\epsilon'}$ satisfies $\epsilon-d_{euc}$-privacy in any area of diameter $r_{max}$, namely: \\ 
+Assume  $r_{max} = v$, where $v \in G_h$. Let $\epsilon \in R^+$ and $\epsilon' = \frac{\epsilon}{|G_h|}$ such that: \\
+  $\epsilon' \leq \epsilon$ and $\epsilon = \sum_i{\epsilon'_i}$ \\
+  Then $K_{\epsilon'}$ satisfies $\epsilon'-d_{euc}$-privacy in any area of diameter $r_{max}$, namely: \\ 
   $K_{\epsilon'}(x)(Z) \leq e^{\epsilon \cdot d_{euc} (x, x')} \cdot K_{\epsilon'}(x')(Z) \ for \ all \ x, x' \in X, Z \subseteq X$.  \\
-  Whenever $d_{euc}(x, z)$ and $d_{euc}(x, x') \leq r_{max}$.
+  Whenever $d_{euc}(x, z)$ and $d_{euc}(x', z) \leq r_{max}$.
   \label{theorem:nd-laplace-truncation}
 \end{theorem}
-\added{
-Given the above theorem, the privacy of a data-point is protected in an area $A \cap G_h$:
+Given the above theorem, the privacy of a perturbed point $z$ outside an area $A \cap G_h$, can be remapped as:
 \begin{equation}
 z' = 
 \begin{cases}
-        z & \text{if} \ z \notin A \cap G_h \\ 
-        min  & \text{if} \ x \in [-C, l(t_i) \cup r(t_i), C]
+        z & \text{if} \ z \in A_h \cap G_h \\ 
+        min (z, A_h \cap G_h)  & \text{if} \ z \notin A_h \cap G_h
     \end{cases}    
 \end{equation}
-The $min(z', A \cap G_h)$ indicates a point $A$ closest to $z'$, which is provided by the high privacy budget $\epsilon'$. 
-}
+The $min(z, A_h \cap G_h)$ indicates that we remap to the closest point in $A_h$ from the perturbed point $z$. Such that $d(x_0, z) \leq r_{max}$.  \newline
 %\added{The truncated variant reduces the privacy of the mechanism, so we recalculate the $\epsilon$ based on the length of the grid unit, where $\epsilon' = \frac{1}{v}$ \citep{DBLP:journals/corr/abs-1212-1984}. } \newline
-\added{Now we provide the proof, by redefining the basics of \gls{gi}, after which we explaining the theorem in detail.}
-\added{In the fundamentals of \gls{gi}, it's essential to ensure that the likelihood of reporting a point within a specific region around $x$ when the true locations are $x_0$ and $x_0'$ should only differ at most $e^{\epsilon \cdot d(x_0, x_0')}$ \citep{DBLP:journals/corr/abs-1212-1984}. This occurs when the noise function causes the probability of generating a point near $x$ to drop significantly as you move further from the true location $x_0$.
-The area around $x_0$ is defined as the radius $r$, so according to \gls{gi} any point that is generated within this area preserves $\epsilon$-geo-indistinguishability. The probability of this, was expressed using an intergral to represent the area between $0$ and $r$ \citep{DBLP:journals/corr/abs-1212-1984}}:
+Now, let's present the proof, starting with a redefinition of the fundamentals of \gls{gi}, followed by a detailed explanation of the theorem. \newline
+
+In the fundamentals of \gls{gi}, it is essential to ensure that the likelihood of reporting a point within a specific region around $z$ when the true locations are $x_0$ and $x_0'$ should only differ at most $e^{\epsilon \cdot d(x_0, x_0')}$ \citep{DBLP:journals/corr/abs-1212-1984}. This behaviour occurs when the noise function causes the probability of generating a point near $z$ to drop significantly as you move further from the true location $x_0$.
+The area around $x_0$ is defined as the radius $r$, so according to \gls{gi} any point that is generated within this area preserves $\epsilon$-geo-indistinguishability. The probability of this, was expressed using an integral to represent the area between $\theta$ and $r$ \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{equation}
     C_\epsilon(r) = \int^r_0 D_{\epsilon, R(p)dp}
 \end{equation}
-\added{Where the integral represents the area of $r$, and $p$ is a random value between the original point $x_0$ and $r$. This $p$ is generated according to the earlier description we gave for 2D-Laplace (See Algorithm \ref{alg:2d-laplace}}).
-\added{The proof 2D of \gls{gi} was provided by Andres et al., and was extended to 3D-Laplace and nD-Laplace by Min et al. and Fernandes et al., respectively. 
-The latter, extended the proof for nD-Laplace by showing that nD-Laplace can be represented by selecting multiple spherical coordinates $(r, \theta)$ independently. Hence, the proof they provided is an extension of that of 2D-Laplace. In addition to considering the area of $r$ for a planar, they also consider the area for the angular coordinates over the hyper sphere \citep{fernandes_generalised_2019}}. \added{This is expressed as the product of two integrals.}\newline \newline
+Where the integral represents the area of $r$, and $p$ is a random value between the original point $x_0$ and $r$. The $p$ is generated according to the earlier description we gave for 2D-Laplace (See Algorithm \ref{alg:2d-laplace}).
 
-\added{
-Therefore, we should assume that $r_{max} \leq v_n \forall \ v_n \in G_h$. Given the grid-unit sizes of $G_h$ are the same, it is sufficient to say $r_{max} \leq v$.
-The limitation on $r_{max}$ is crucial, as it determines the region where $\epsilon$-geo-indistinguishability can be guaranteed \citep{9646489}. Therefore, the proof shows there is a suitable $\epsilon'$ based on $\epsilon$ and $v$ that satisfies privacy for the area $r_{max}$. 
-Let $R_h(x) = S_h$ be a region, which is a grid unit $v$ around $x_0$ of $G_h$. We first recap the proof provided by Andres et al. for 2-dimensional data, where the probability $x$ is $S_2$ and $r = d(x_0, x)$ \citep{DBLP:journals/corr/abs-1212-1984}: 
+The proof of 2D-Laplace for \gls{gi} was provided by Andres et al., and was extended to 3D-Laplace and nD-Laplace by Min et al. and Fernandes et al., respectively. 
+The latter, extended the proof for nD-Laplace by showing that nD-Laplace can be represented by selecting multiple spherical coordinates $(r, \theta)$ independently. Hence, the proof they provided is an extension of that of 2D-Laplace. In addition to considering the area of $r$ for a planar, they also consider the area for the angular coordinates over the hyper sphere \citep{fernandes_generalised_2019}. This is expressed as the product of two integrals.\newline
+
+In light of this, we can demonstrate that the privacy assurance holds for $(r, \theta_v)$ across all sides (areas) $v \in G_h$. 
+To establish this, we make the assumption that $r_{max} \leq v_n$ for every $v_n \in G_h$. 
+Given the uniform grid-unit sizes of $G_h$, it suffices to state that $r_{max} \leq v$. 
+The significance of the upper bound on $r_{max}$ is essential as it determines the region where $\epsilon$-geo-indistinguishability can be ensured \citep{DBLP:journals/corr/abs-1212-1984}. Consequently, the proof illustrates the existence of a suitable $\epsilon'$ based on $\epsilon$ and the step-unit $v$ that guarantees privacy for the region $r_{max}$.
+
+Let us begin by revisiting the proof offered by Andres et al. for two-dimensional data, 
+where the probability $S = R(z)$ in a two-dimensional space, and $r = d(x_0, z)$ \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{equation}
-     \int_{S_2} D_\epsilon(x_0)(x)ds_2 \leq e^{\epsilon \cdot d(x_0, x_0')} \leq \int_{S_2} D_\epsilon(x_0')(x)ds_2
+     \int_{S} D_\epsilon(x_0)(z)ds \leq e^{\epsilon \cdot d(x_0, x_0')} \leq \int_{S} D_\epsilon(x_0')(z)ds
 \end{equation}
+The integral is employed to demonstrate that the condition holds within the plane or region $S$.
 
-Because the nD-Laplace is an extension of 2D-Laplace in the way we select separate $(r, \theta_n)$ for all dimensions $n$, the proof can be extended to:
+For $G_h$, we define the available locations as $A_h = R_n(z)$ within the n-dimensional space. As nD-Laplace extends the concepts of 2D-Laplace by allowing separate $(r, \theta_n)$ selections for each $n$ plane (area/side), the same principle can be extended to encompass every side of the region $A_h$:
 \begin{equation}
-    \int ... \int_{S_h} D_{\epsilon}(x_0)(x)d_{euc}s_h \leq e^{\epsilon \cdot d(x_0, x_0')} \ \leq \int ... \int_{S_h} D_{\epsilon}(x_0')(x)d_{euc}s_h
+    \int ... \int_{A_h} D_{\epsilon}(x)(z)d_{euc}A_h \leq e^{\epsilon \cdot d(x, x')} \leq \int ... \int_{A_h} D_{\epsilon}(x')(z)d_{euc}A_h
 \end{equation}
-}
-Where we define the product of multiple integrals for each side of $S_h$. 
-For the above, we need to provide two things: $r' = d(x_0', x)$ and $ r \leq r_{max}$ to make sure $r'$ is always $ \leq v$ and contained by $G_h$. 
-Second, we want to make sure the point $x$ is remapped to the closest point in $A \cap G_h$. Therefore, the $\epsilon$ is modified based on the grid unit $v$. For this we apply theorem 3.2 by Andres et al., where the combined mechanism $K$ also satisfies $\epsilon$-geo-indistinguishability for $\epsilon = \sum_i{\epsilon_i}$. 
-Thus, the new epsilon value $\epsilon'$ for all $v \in G_h$  is defined as $\epsilon' = \frac{\epsilon}{|G_h|}$. 
-Because we are not considering the finite precision, we are be-able to preserve $\epsilon$-geo-indistinguishability for the truncated variant $K = K^T$ using $\epsilon'$ with $d(x_0', x) \leq r_{max}$ for every $x \in S_h$. \newline
-
+Where we define the product of multiple integrals for each side of $A_h$.
+To uphold the aforementioned conditions, three crucial steps are required:
+\begin{enumerate}
+\item \textbf{Selecting $r_{max}$:} We select $r_{max}$ as the diameter of $A_h$.
+\item \textbf{Determining a new $r'$ for $z$:} We choose $r'$ such that $r' = d(x', z) \leq r_{max}$ to ensure that the coordinates fall within the region.
+\item \textbf{Adapting $\epsilon$ for Closest Point Mapping: }To guarantee that the point $z$ is remapped to the closest point within $A_h$, we modify the value of $\epsilon$ to be the maximum value within the grid unit $v$. To achieve this, we apply theorem 3.2 by Andres et al., where they establish that multiple sampling also satisfies $\epsilon$-geo-indistinguishability when $\epsilon$ is the sum of individual $\epsilon_i$ values \citep{DBLP:journals/corr/abs-1212-1984}. As a result, the new epsilon value $\epsilon'$ based on the grid unit and original $\epsilon$, such that $\epsilon' = \frac{\epsilon}{|G_h|}$.
+\end{enumerate}
+Finally, based on this, we are be-able to preserve $\epsilon$-$d_{euc}$-privacy for the truncated variant $K = K^T$ using the modified privacy budget $\epsilon'$ within region $A_h$ \citep{9646489, DBLP:journals/corr/abs-1212-1984}.
+Here $K = K^T$, where $K^T$ is the truncated variant of the probability $K$:
+\begin{theorem}
+    If $r_{max} \geq diam(A_h)$, \\
+    then $K^T$ provides $\epsilon'-d_x$-privacy, namely \\
+    $K^T(x)(Z) \leq e^{\epsilon' \cdot d_{euc} (x, x')} \cdot K^T(x')(Z)$  for all $x, x' \in A_h$. 
+\end{theorem}
 %\added{Let $R_h(x) = S_h$ be a region, which is a grid unit $v$ around $x_0$ of $G_h$ \citep{DBLP:journals/corr/abs-1212-1984}. The probability density of $S_h$ is differs at most by a factor $e^{\epsilon' \cdot v}$ \citep{9646489}.  Due to the way we select the spherical coordinates for each side separately, we define the probability density as a cumulative of each side: $n \cdot e^{\epsilon^ \cdot v}$, where $n$ is the amount of dimensions/sides of $G_h$.}
 %\added{Given that $K$ is the probability of reporting the point $x$ when the actual point is $x_0$, it is defined on the region $R(x) = S$ as \citep{DBLP:journals/corr/abs-1212-1984}:
 %\begin{equation}
@@ -178,23 +175,27 @@ Because we are not considering the finite precision, we are be-able to preserve 
 %\end{equation}
 %Where $r = d_{euc}(x_0, x)$ and the probability  $P(r) = n \cdot e^{\epsilon' \cdot v}$.  For the rest of the proof, we inherent the papers from 2D-Laplace and 3D-Laplace \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
 %We do not consider the case where $x$ can be projected outside $G_h$ due to the finite precision. Therefore, the %proof for truncation is inherent by the proof provided above. }
-Based on the above, we are also be-able to provide the theorem for truncated $K$:
-\added{$K = K^T$, where $K^T$ is the truncated variant of the probability $K$:
-\begin{theorem}
-    If $r_{max} \geq diam(A)$, then $K^T$ provides $\epsilon'-d_x$-privacy, namely
-    $K^T(x_0)(x) \leq e^{\epsilon' \cdot d_{euc} (x_0, x_0')} \cdot K^T(x')(Z)$  for all $x_0, x_0' \in A$. 
-\end{theorem}
+
 %\added{Also, $r_{max}$ and $\epsilon'$ are selected based on theorem \ref{theorem:nd-laplace-truncation}.}
 %Where $A$ are acceptable locations from the region $R(x)$, and where $(r, \theta)$ is remapped to the closest point $x$ on $A \cap G_h$}. 
 %The truncated variant of $K$ is then defined as $K^T_{\epsilon'} \rightarrow A \cap G_h $ for the $n$-dimensional variant
-Finally, we omit the proof for clustering since it is considered a post-processing step. Data generated using the mechanism proven to provide $d_x$-privacy also provides it for post-processing \citep{feyisetan_leveraging_2019}. \newline
-
-\todo[inline]{Needs to be updated (probably move.}
-The utility of this method depends on the number of grid cells in $G_n$ since a smaller distance will result in more frequent mapping to the surface of the grid.
-When $\epsilon$ is very low (resulting in $z$ being much farther away from $x_0$), data points have a higher likelihood of mapping to map to the grid surface 
-(as seen in \ref{fig:3d-laplace-noise}, \ref{fig:3d-laplace-example}). 
+Finally, we omit the proof for clustering since it is considered a post-processing step. Data generated using the mechanism proven to provide $d_x$-privacy also provides it for post-processing \citep{feyisetan_leveraging_2019}. 
 %While increasing the number of grid cells might enhance utility, it also leads to a notable rise in space complexity. 
 %Moreover, as the number of dimensions grows, the count of grid cells increases quadratically.
+\newpage
+\subsubsection{Putting it together: nD-Laplace}
+Now that we have defined everything, we can write the algorithm in a step-by-step manner:
+\input{TheorethicalFramework/ND-Laplace/algorithms/nd-laplace.tex}
+This algorithm is utilized in this research in two ways:
+\begin{enumerate}
+    \item We use nD-Laplace without truncation, as part of research question 1.
+    \item We use the truncation with nD-Laplace, which we call grid-nD-Laplace for research question 2.
+\end{enumerate}
+
+The utility of grid-nD-Laplace depends on the number of grid cells in $G_n$ since a smaller distance will result in more frequent mapping to the surface of the grid.
+When $\epsilon$ is very low (resulting in $z$ being much farther away from $x_0$), data points have a higher likelihood of mapping to map to the grid surface 
+(as seen in \ref{fig:3d-laplace-noise}, \ref{fig:3d-laplace-example}). 
+An alternative approach is therefore density remapping, which will be explained in the next section.
 \newpage
 \subsection{Density remapping} \label{theory:optimal-remapping}
 As discussed, the remapping will be performance intensive to provide good utility, so we adopt the optimal remapping \citep{chatzikokolakis_efficient_2017}.
@@ -328,8 +329,9 @@ A dataset with little dispersion in the data is remapped to the grid regardless 
 Generating a grid with sufficiently small grid units to account for this would still result in too much complexity. 
 Therefore, in the next chapter, we will look at a variant that addresses this issue.
 
+\todo[inline]{Clarify the algorithms (see others)}
 \input{TheorethicalFramework/ND-Laplace/algorithms/outside-domain.tex}
-\input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex
+\input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}
 %\todo[inline]{Also refactor this}
 
 %\subsection{Extending to $d_x$-privacy}

@@ -47,7 +47,7 @@ The algorithm attempts different $\Pi$ values to achieve the best result \citep{
 The algorithm uses \gls{dbscan}, so we explain this algorithm first in detail.
 It calculates the "density-reachable" property of each data point first \citep{ankerst_optics_nodate}:
 \begin{equation}
-  N_Pi(x_i) = \{x_i \in X \ | \ d(x_i, x_j) \leq \Pi \}
+  N_Pi(x_i) = \{ \ x_i \in X \ | \ d(x_i, x_j) \leq \Pi \ \}
 \end{equation}
 If $N_Pi(x_i) \geq minPts$ then $x_i$ is a "core-object" \citep{ankerst_optics_nodate}.
 These core objects are used for identifying dense regions to grow clusters.

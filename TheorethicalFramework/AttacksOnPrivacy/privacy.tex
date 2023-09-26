@@ -3,10 +3,10 @@ This chapter is devoted to investigating and evaluating attacks on machine learn
 Differential privacy protects the centrally stored dataset from leaking sensitive information.
 Therefore, assessing the mechanism's privacy is best measurable using common attacks \citep{jayaraman_evaluating_nodate}.
 In this context, we evaluate attacks that explicitly uncover training data from a privately trained model.
-\added{
+
 One such attack type is the reconstruction attack, which targets training data. This term is frequently employed as a collection for attacks such as model inversion and attribute inference. However, they are all primarily concerned with deducing information from training data \citep{rigaki_survey_2021}.
 The membership inference attack is another form of attack that concentrates on collecting training data from a model.
-These two attack types directly relate to recovering training data, so we employ them both in our research:}
+These two attack types directly relate to recovering training data, so we employ them both in our research:
 \begin{enumerate}
   \item \textbf{Reconstruction attack}:  An adversary could reconstruct training data from a given (classifier) model using a reconstruction attack. The goal of the adversary is to reconstruct a secret bit $b$ from a row, by producing random data that agrees on this secret bit $b$. \citep{dwork_exposed_2017}.
   \item \textbf{Membership inference attack}: An adversary attempts to infer whether a data point was used for training. With this attack, an adversary attempts to infer the training data $x \in X$ (member) from a given data point $z \in Z$ (non-member).
@@ -14,7 +14,7 @@ These two attack types directly relate to recovering training data, so we employ
 
 \end{enumerate}
 The knowledge of the attacker (adversarial knowledge) is an important factor to consider.
-This knowledge can be divided into white-box and black-box approaches \citep{hu_membership_2022}.
+This can be divided into white-box and black-box approaches \citep{hu_membership_2022}.
 \begin{enumerate}
   \item \textbf{White-box}: The attacker has all the needed data. Including target model parameters or the architecture \citep{hu_membership_2022}.
   \item \textbf{Black-box}: The attacker has limited information, like training data distribution and the trained model \citep{hu_membership_2022}.
@@ -48,7 +48,7 @@ This idea is based on the confidentiality percentages of classification model ou
 
 Let $y = f_{target(x)}$ be the prediction confidence of a classification model, then the membership probability is calculated as \citep{shokri_membership_2017}:
 \begin{equation}
-  Pr(x, y) \in D^{train}_{target}
+  Pr\{(x, y) \in D^{train}_{target}\}
 \end{equation}
 Which is the probability of that input $x$ belongs to the target dataset that was used to generate the target dataset $f_{target}$ \citep{shokri_membership_2017}.
 To execute the attack, the attacker trains so-called shadow models $f^i_{shadow}()$, and each of them are trained on dataset that is comparable to the training dataset and combined to infer training information:
@@ -60,7 +60,7 @@ To execute the attack, the attacker trains so-called shadow models $f^i_{shadow}
 Another approach to a black-box attack was introduced by Peng et al. and only considers that the attacker has access to the already trained model.
 They first rescale the probabilities using temperature scaling to compensate for overconfident models \citep{peng_unsupervised_nodate}:
 \begin{equation}
-  R_i(h_k(x);T) = \frac{exp(log(h^i_k(x))/T)}{\sum_j{exp(log(h^j_k(x))/T)}}
+  R_i(h_k(x);T) = \frac{e^{(log(h^i_k(x))/T)}}{\sum_j{e^{(log(h^j_k(x))/T)}}}
 \end{equation}
 Here, the $h(x)$ denotes the probability distribution of $x$, which tells the chance of $x$ being a certain classification/label. Peng et al. then calculate the top-$k$ features $h_k$ and eliminate the smaller values.
 The formula $R_i$ is the re-scaled probabilities, to be more suitable for clustering using temperature scaling, where $T$ is the scaling parameter.
