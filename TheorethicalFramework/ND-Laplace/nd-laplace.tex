@@ -55,13 +55,13 @@ Only now, we select points from an $n$-dimensional hypersphere  \footnote{https:
 In the next step, the spherical coordinate representation is converted to Cartesian coordinates \citep{fernandes_generalised_2019}:
 It is comparable to the way it was done in the previous chapters; however, as there are an $n$-amount of angles, the equation is repeated and slightly different.
 The formula is provided by Fernandes et al. to convert $r$ to spherical coordinates \citep{fernandes_generalised_2019}:
-\begin{align*}
-  x_1 = r \cdot cos (\theta_1)                                          \\
-  x_2 = r \cdot sin (\theta_1) \cdot cos (\theta_2)                         \\
-  ... \\
+\begin{align}
+  x_1 = r \cdot cos (\theta_1) \notag                                      \\
+  x_2 = r \cdot sin (\theta_1) \cdot cos (\theta_2)                        \notag \\
+  ... \notag \\
   x_n = r \cdot sin(\theta_{n-1}) \cdot sin(\theta_{n-2}) \ ..., sin(\theta_{n-2} \cdot sin(\theta_{n-1})
   \label{eq:nd-laplace-cartesian}
-\end{align*}
+\end{align}
 This formula is the same for the first two dimensions in comparison to 2D-Laplace and 3D-Laplace. After that, the conversion happens using the $sin$ for all $\theta$.
 
 \subsubsection{Impact of dimensions} \label{theory:privacy-utility-nd}
@@ -95,17 +95,17 @@ We build upon Min et al.'s rationale for the expansion from 2D-Laplace to 3D-Lap
 Additionally, we reference the concept of the n-cube, an extension of the 3D cuboid, which is discussed further in detail in this source \footnote{https://mathworld.wolfram.com/Hypercube.html}.
 This expansion allows us to define the n-cube as $G_n$, characterized by an $n$ number of sides. In contrast to the cuboid $G_c$, we maintain equal side lengths for the sake of simplicity.
 
-The probability associated with a point $z$ belonging to $G_h$ can be expressed as follows, similar to how we previously did for 2D-Laplace and 3D-Laplace, as demonstrated in Equations \ref{eq:grid-probability} and \ref{eq:3d-grid-probability}:
+The set probabilities associated with a point $z$ belonging to $G_n$ can be expressed as follows, similar to how we previously did for 2D-Laplace and 3D-Laplace, as demonstrated in Equations \ref{eq:grid-probability} and \ref{eq:3d-grid-probability}:
 \begin{equation}
-R_h(x) = { y \in \mathbb{R}^+ \ | \ \forall x' \in G_h \cdot d_{euc}(y, x') \leq d_{euc}(y, x') }
+R_n(x) = \{ \ y \in \mathbb{R}^+ \ | \ \forall x' \in G_n \cdot d_{euc}(y, x') \leq d_{euc}(y, x') \ \}
 \end{equation}
-This can be interpreted as a region, denoted as $R_h$ around $x \in X$, in which we aim to preserve $\epsilon$-geo-indistinguishability \citep{9646489}.
-Using this variant of nD-Laplace, the region $R_h$ can be expressed as a collection of acceptable report points $A$, where nD-Laplace uses $A_h$ \citep{DBLP:journals/corr/abs-1212-1984}.
-The truncated nD-Laplace mechanism remaps points outside the diameter $diam(A)$ to the closest point $A_h \cap G_h$. 
-Where the $diam(A_h) = r_{max}$ as the maximum allowed radial distance from $x_0$. \newline
+This can be interpreted as a region, denoted as $R_n$ around $x \in X$, in which we aim to preserve $\epsilon$-geo-indistinguishability \citep{9646489}.
+Using this variant of nD-Laplace, the region $R_n$ can be expressed as a collection of acceptable report points $A$, where nD-Laplace uses $A_n$ \citep{DBLP:journals/corr/abs-1212-1984}.
+The truncated nD-Laplace mechanism remaps points outside the diameter $diam(A_n)$ to the closest point $A_n \cap G_n$. 
+Where the $diam(A_n) = r_{max}$ as the maximum allowed radial distance from $x_0$. \newline
 Based on this, we define the theorem:
 \begin{theorem}
-Assume  $r_{max} = v$, where $v \in G_h$. Let $\epsilon \in R^+$ and $\epsilon' = \frac{\epsilon}{|G_h|}$ such that: \\
+Assume  $r_{max} = v$, where $v \in G_n$ and $n$ the number of dimensions. Let $\epsilon \in R^+$ and $\epsilon' = \frac{\epsilon}{|G_n|}$ such that: \\
   $\epsilon' \leq \epsilon$ and $\epsilon = \sum_i{\epsilon'_i}$ \\
   Then $K_{\epsilon'}$ satisfies $\epsilon'-d_{euc}$-privacy in any area of diameter $r_{max}$, namely: \\ 
   $K_{\epsilon'}(x)(Z) \leq e^{\epsilon \cdot d_{euc} (x, x')} \cdot K_{\epsilon'}(x')(Z) \ for \ all \ x, x' \in X, Z \subseteq X$.  \\
@@ -116,27 +116,27 @@ Given the above theorem, the privacy of a perturbed point $z$ outside an area $A
 \begin{equation}
 z' = 
 \begin{cases}
-        z & \text{if} \ z \in A_h \cap G_h \\ 
-        min (z, A_h \cap G_h)  & \text{if} \ z \notin A_h \cap G_h
+        z & \text{if} \ z \in A_n \cap G_n \\ 
+        z \in closest \{ A_n \cap G_n \}  & \text{if} \ z \notin A_n \cap G_n
     \end{cases}    
 \end{equation}
-The $min(z, A_h \cap G_h)$ indicates that we remap to the closest point in $A_h$ from the perturbed point $z$. Such that $d(x_0, z) \leq r_{max}$.  \newline
+Where $z$ is remapped to $closest \{ A_n \cap G_n \}$ which means that we remap to the closest point in $A_n$ from the perturbed point $z$. Such that $d(x_0, z) \leq r_{max}$.  \newline
 %\added{The truncated variant reduces the privacy of the mechanism, so we recalculate the $\epsilon$ based on the length of the grid unit, where $\epsilon' = \frac{1}{v}$ \citep{DBLP:journals/corr/abs-1212-1984}. } \newline
 Now, let's present the proof, starting with a redefinition of the fundamentals of \gls{gi}, followed by a detailed explanation of the theorem. \newline
 
 In the fundamentals of \gls{gi}, it is essential to ensure that the likelihood of reporting a point within a specific region around $z$ when the true locations are $x_0$ and $x_0'$ should only differ at most $e^{\epsilon \cdot d(x_0, x_0')}$ \citep{DBLP:journals/corr/abs-1212-1984}. This behaviour occurs when the noise function causes the probability of generating a point near $z$ to drop significantly as you move further from the true location $x_0$.
 The area around $x_0$ is defined as the radius $r$, so according to \gls{gi} any point that is generated within this area preserves $\epsilon$-geo-indistinguishability. The probability of this, was expressed using an integral to represent the area between $\theta$ and $r$ \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{equation}
-    C_\epsilon(r) = \int^r_0 D_{\epsilon, R(p)dp}
+    C_\epsilon(r) = \int^{r}_0 D_{\epsilon, R}(p)dp
 \end{equation}
 Where the integral represents the area of $r$, and $p$ is a random value between the original point $x_0$ and $r$. The $p$ is generated according to the earlier description we gave for 2D-Laplace (See Algorithm \ref{alg:2d-laplace}).
 
 The proof of 2D-Laplace for \gls{gi} was provided by Andres et al., and was extended to 3D-Laplace and nD-Laplace by Min et al. and Fernandes et al., respectively. 
 The latter, extended the proof for nD-Laplace by showing that nD-Laplace can be represented by selecting multiple spherical coordinates $(r, \theta)$ independently. Hence, the proof they provided is an extension of that of 2D-Laplace. In addition to considering the area of $r$ for a planar, they also consider the area for the angular coordinates over the hyper sphere \citep{fernandes_generalised_2019}. This is expressed as the product of two integrals.\newline
 
-In light of this, we can demonstrate that the privacy assurance holds for $(r, \theta_v)$ across all sides (areas) $v \in G_h$. 
-To establish this, we make the assumption that $r_{max} \leq v_n$ for every $v_n \in G_h$. 
-Given the uniform grid-unit sizes of $G_h$, it suffices to state that $r_{max} \leq v$. 
+In light of this, we can demonstrate that the privacy assurance holds for $(r, \theta_v)$ across all sides (areas) $v \in G_n$. 
+To establish this, we make the assumption that $r_{max} \leq v_n$ for every $v_n \in G_n$. 
+Given the uniform grid-unit sizes of $G_n$, it suffices to state that $r_{max} \leq v$. 
 The significance of the upper bound on $r_{max}$ is essential as it determines the region where $\epsilon$-geo-indistinguishability can be ensured \citep{DBLP:journals/corr/abs-1212-1984}. Consequently, the proof illustrates the existence of a suitable $\epsilon'$ based on $\epsilon$ and the step-unit $v$ that guarantees privacy for the region $r_{max}$.
 
 Let us begin by revisiting the proof offered by Andres et al. for two-dimensional data, 
@@ -146,23 +146,23 @@ where the probability $S = R(z)$ in a two-dimensional space, and $r = d(x_0, z)$
 \end{equation}
 The integral is employed to demonstrate that the condition holds within the plane or region $S$.
 
-For $G_h$, we define the available locations as $A_h = R_n(z)$ within the n-dimensional space. As nD-Laplace extends the concepts of 2D-Laplace by allowing separate $(r, \theta_n)$ selections for each $n$ plane (area/side), the same principle can be extended to encompass every side of the region $A_h$:
+For $G_n$, we define the available locations as $A_n = R_n(z)$ within the n-dimensional space. As nD-Laplace extends the concepts of 2D-Laplace by allowing separate $(r, \theta_n)$ selections for each $n$ plane (area/side), the same principle can be extended to encompass every side of the region $A_n$:
 \begin{equation}
-    \int ... \int_{A_h} D_{\epsilon}(x)(z)d_{euc}A_h \leq e^{\epsilon \cdot d(x, x')} \leq \int ... \int_{A_h} D_{\epsilon}(x')(z)d_{euc}A_h
+    \int ... \int_{A_n} D_{\epsilon}(x)(z)d_{euc}A_n \leq e^{\epsilon \cdot d(x, x')} \leq \int ... \int_{A_n} D_{\epsilon}(x')(z)d_{euc}A_n
 \end{equation}
-Where we define the product of multiple integrals for each side of $A_h$.
+Where we define the product of multiple integrals for each side of $A_n$.
 To uphold the aforementioned conditions, three crucial steps are required:
 \begin{enumerate}
-\item \textbf{Selecting $r_{max}$:} We select $r_{max}$ as the diameter of $A_h$.
+\item \textbf{Selecting $r_{max}$:} We select $r_{max}$ as the diameter of $A_n$.
 \item \textbf{Determining a new $r'$ for $z$:} We choose $r'$ such that $r' = d(x', z) \leq r_{max}$ to ensure that the coordinates fall within the region.
-\item \textbf{Adapting $\epsilon$ for Closest Point Mapping: }To guarantee that the point $z$ is remapped to the closest point within $A_h$, we modify the value of $\epsilon$ to be the maximum value within the grid unit $v$. To achieve this, we apply theorem 3.2 by Andres et al., where they establish that multiple sampling also satisfies $\epsilon$-geo-indistinguishability when $\epsilon$ is the sum of individual $\epsilon_i$ values \citep{DBLP:journals/corr/abs-1212-1984}. As a result, the new epsilon value $\epsilon'$ based on the grid unit and original $\epsilon$, such that $\epsilon' = \frac{\epsilon}{|G_h|}$.
+\item \textbf{Adapting $\epsilon$ for Closest Point Mapping: }To guarantee that the point $z$ is remapped to the closest point within $A_n$, we modify the value of $\epsilon$ to be the maximum value within the grid unit $v$. To achieve this, we apply theorem 3.2 by Andres et al., where they establish that multiple sampling also satisfies $\epsilon$-geo-indistinguishability when $\epsilon$ is the sum of individual $\epsilon_i$ values \citep{DBLP:journals/corr/abs-1212-1984}. As a result, the new epsilon value $\epsilon'$ based on the grid unit and original $\epsilon$, such that $\epsilon' = \frac{\epsilon}{|G_n|}$.
 \end{enumerate}
-Finally, based on this, we are be-able to preserve $\epsilon$-$d_{euc}$-privacy for the truncated variant $K = K^T$ using the modified privacy budget $\epsilon'$ within region $A_h$ \citep{9646489, DBLP:journals/corr/abs-1212-1984}.
+Finally, based on this, we are be-able to preserve $\epsilon$-$d_{euc}$-privacy for the truncated variant $K = K^T$ using the modified privacy budget $\epsilon'$ within region $A_n$ \citep{9646489, DBLP:journals/corr/abs-1212-1984}.
 Here $K = K^T$, where $K^T$ is the truncated variant of the probability $K$:
 \begin{theorem}
-    If $r_{max} \geq diam(A_h)$, \\
+    If $r_{max} \geq diam(A_n)$, \\
     then $K^T$ provides $\epsilon'-d_x$-privacy, namely \\
-    $K^T(x)(Z) \leq e^{\epsilon' \cdot d_{euc} (x, x')} \cdot K^T(x')(Z)$  for all $x, x' \in A_h$. 
+    $K^T(x)(Z) \leq e^{\epsilon' \cdot d_{euc} (x, x')} \cdot K^T(x')(Z)$  for all $x, x' \in A_n$. 
 \end{theorem}
 %\added{Let $R_h(x) = S_h$ be a region, which is a grid unit $v$ around $x_0$ of $G_h$ \citep{DBLP:journals/corr/abs-1212-1984}. The probability density of $S_h$ is differs at most by a factor $e^{\epsilon' \cdot v}$ \citep{9646489}.  Due to the way we select the spherical coordinates for each side separately, we define the probability density as a cumulative of each side: $n \cdot e^{\epsilon^ \cdot v}$, where $n$ is the amount of dimensions/sides of $G_h$.}
 %\added{Given that $K$ is the probability of reporting the point $x$ when the actual point is $x_0$, it is defined on the region $R(x) = S$ as \citep{DBLP:journals/corr/abs-1212-1984}:
@@ -255,24 +255,28 @@ Much like the 2D and 3D Laplace methods, which use the likelihood of a point $z$
 \input{TheorethicalFramework/ND-Laplace/algorithms/optimal-remapping.tex}
 
 It is important to note that with the introduction of this algorithm, it is no longer a non-interactive method, as the data points now interact with each other.
-Due to the extra interaction rounds, we expect the introduction of density grid remapping with kd-tree will bring more utility \citep{wang_comprehensive_2020, xiongComprehensiveSurveyLocal2020}.
+Due to the extra interaction rounds, we expect the introduction of density remapping with kd-tree will bring more utility \citep{wang_comprehensive_2020, xiongComprehensiveSurveyLocal2020}.
 If this proofs to be true, it might out-weights the privacy implications for clustering.  \newline
 
 While density remapping can improve utility, the task of searching for points within spatial data is inherently complex. Density remapping requires numerous queries to find nearby points, which can lead to significant computational costs. In the next section, we introduce an optimization method to address this challenge.
 
 \subsubsection{Optimization}
-To make optimal-remapping practically possible with n-dimensions, the data structure has to be more efficient to search spatial data. For this purpose, we adopt the idea proposed by Chatzikokolakis et al. of using a kd-tree to search the grid efficiently \citep{chatzikokolakis_efficient_2017}.
-Their research describes the theoretical utilization of a kd-tree for searching nearby points for a given point.
-For this reason:
+In order to facilitate density-remapping in an n-dimensional space, it is necessary to enhance the efficiency of spatial data search within the data structure. 
+For implementing searching it is necessary to calculate the Euclidean distance between every point, each time when we want to estimate density of a point.
+We need to do this for $n \cdot m$ points, where $n$ are the dimensions and $m$ the number of data-points for all $q \in Q_r$.
+To optimize this process, we embrace the idea of Chatzikokakis et al. to employing a kd-tree for the efficient calculation of $Q_r$ \citep{chatzikokolakis_efficient_2017}.
+In contrast to manual searching, the kd-tree costs $O(kn)$ to construct, but, searching for the nearest neighbor is a logarithmic function with time complexity of $O(\log n)$ \citep{washington_k-d_2002}.
+For this purpose, we construct two algorithms:
 \begin{enumerate}
-    \item     We use the kd-tree to find nearby points $x$ to remap within $X \cap G_h$.
-    \item We aim to apply this practically by using a kd-tree for finding nearby points for $x \in X$ and $z \in Z$ (Section: \ref{theory:optimal-remapping}). 
-\end{enumerate}
-The usage of kd-tree does not impact any privacy guarantee provided in the previous section. It is just a more efficient way of searching in n-dimensional spatial structures. Also, for visualization purposes, this section will primarily focus on 2D data. \newline
-The next section explains the concept and underlying idea of kd-trees.
-Then, we delve into its application for grid remapping.
-Finally, we expand this to a practical application with nD-Laplace.
+    \item We harness the power of the kd-tree to locate $Q_r$.
+    \item We leverage the kd-tree algorithm to identify all data points situated outside the boundaries of $X$. This algorithm can also be employed for truncation and optimal remapping.
+\end{enumerate} 
+It's worth noting that the integration of the kd-tree does not compromise any of the privacy guarantees outlined in earlier sections. 
+Rather, it serves as a more efficient means of navigating $n$-dimensional spatial structures. 
+Furthermore, for the purposes of visualization, this section will primarly focus on 2D data.
 
+The next section will introduce the concept and fundamental principles of kd-trees. 
+\newpage
 \subsubsection*{Kd-trees} \label{theory:kd-trees}
 A kd-tree algorithm can search a grid for nearby points \citep{bentley_multidimensional_1975}.
 It can do so by recursively splitting the grid into a binary tree to search for grid coordinates \citep{washington_k-d_2002}.
@@ -294,43 +298,12 @@ An example of this is provided in the following image (Figure \ref{fig:kd-tree-s
   \label{fig:kd-tree-searching-theory}
 \end{figure}
 In the example, we are searching for all points that fall within the radius of a random query point.
-The most significant advantage is that this dramatically reduces the complexity of searching.
-Constructing the kd-tree costs equal to grid-remapping $O(kn)$, where $k$ is the number of dimensions and $n$ is the dataset size.
-But, searching for the nearest neighbor is a logarithmic function with time complexity of $O(\log n)$ \citep{washington_k-d_2002}.
-This approach is a significant improvement over searching manually, which would have the same complexity as constructing the tree.
-
-\todo[inline]{What to do with this section?}
-\subsubsection{Grid-remapping with kd-tree} \label{theory:grid-remapping}
-The kd-tree search method is beneficial for the optimizations we are striving for.
-This optimization extends grid-remapping for 2D \citep{DBLP:journals/corr/abs-1212-1984} and 3D data \citep{9646489} to n-dimensions. \newline
-We have illustrated the three steps required for this below:
-\begin{figure}[H]
-  \includegraphics[width=1\textwidth]{TheorethicalFramework/ND-Laplace/Images/KD-tree.png}
-  \caption{Representation utilizing a kd-tree for applying grid-remapping \citep{DBLP:journals/corr/abs-1212-1984}}
-  \label{fig:kd-tree}
-\end{figure}
-%When using a kd-tree to search for a data point $z_i$, the algorithm begins with an unbalanced binary tree.
-%The root is split by the x-axis, and since 4.5 is greater than 3.5, we go to the right.
-%This means that we no longer need to consider the left (greyed out) part of the grid.
-%We continue traversing the tree until we find the nearest point based on Euclidean distance.
-For easy visualization, the process shown above is with 2-dimensional data.
-However, this can be extended to n-dimensional using the kd-tree optimization.
-The goal is to remap a perturbed point $z \in Z$, outside the original domain $X$, to the closest point in $X$ or $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
-
-Firstly, a grid is generated, where each (blue) point represents the center of a grid cell.
-Together, these centroids form the grid dataset, denoted as $G$.
-The yellow points and $x_i$ are part of the original collection, denoted as $X$.
-Here, $r$ represents the radius used to generate a private version of the data point $x_i$, named $z_i$, based on 2D-Laplace.
-In the illustration, you can observe that $z_i$ falls outside the original domain of $X$, so it needs to be remapped.
-We accomplish this by utilizing the nearest-neighbor search from the kd-tree algorithm, allowing us to search in $X \cup G$.
-Using this algorithm, we can effectively remap point $z \in Z$ to either $X$ or $G$ based on the closest Euclidean distance (Algorithm \ref{alg:grid-remapping-laplace} and Algorithm \ref{alg:find-outside-domain-laplace}).
-
-A dataset with little dispersion in the data is remapped to the grid regardless of the data shape. 
-Generating a grid with sufficiently small grid units to account for this would still result in too much complexity. 
-Therefore, in the next chapter, we will look at a variant that addresses this issue.
+In the next two sections, we provide two algorithms to find points outside the boundary of $X$ and implement density remapping with kd-tree and .
 
 \todo[inline]{Clarify the algorithms (see others)}
+\subsubsection{Detect data-points outside the data boundary}
 \input{TheorethicalFramework/ND-Laplace/algorithms/outside-domain.tex}
+\subsubsection{Density-remapping}
 \input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}
 %\todo[inline]{Also refactor this}
 
@@ -338,5 +311,5 @@ Therefore, in the next chapter, we will look at a variant that addresses this is
 %\todo[inline]{Find if this is possible}
 
 %Constructing elastic distinguishability metrics for location privacy
-
+\newpage
 \input{TheorethicalFramework/ND-Laplace/mechanism-design.tex}

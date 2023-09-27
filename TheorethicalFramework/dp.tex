@@ -64,7 +64,7 @@ It is also mathematically defined by Dwork et al.:
 The formal notion of differential privacy has only the privacy budget $\epsilon$ as a parameter.
 This formulation is strict, but most methods relax this a little, with $(\epsilon, \delta)$:
 \begin{equation}
-  {\mathrm{Pr}}[K(D_{1})\in S]\leq\exp(\epsilon) \cdot {\mathrm{Pr}}[K(D_{2})\in S] + \delta
+  {\mathrm{Pr}}[K(D_{1})\in S]\leq e^{\epsilon} \cdot {\mathrm{Pr}}[K(D_{2})\in S] + \delta
   \label{approxiate-dp}
 \end{equation}
 This equation means the sensitivity ($\delta$) loosens the formal definition of differential privacy.

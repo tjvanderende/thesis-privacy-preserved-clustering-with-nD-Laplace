@@ -38,8 +38,8 @@ The $r$ is randomly selected based on a distribution $R$ \citep{DBLP:journals/co
     D_{\epsilon, R}(r) = \int^{2\cdot \pi}_0 \ D_\epsilon(r, \theta) \ d\theta = \epsilon^2 \ r \epsilon^{-\epsilon \cdot r}
     \label{2d:generate-r}
 \end{equation}
-Where the $r$ is selected randomly on the area of the radius. 
-Next, the can be randomly drawn by inverting the \gls{cdf} for the Laplace distribution \citep{DBLP:journals/corr/abs-1212-1984}:
+Where the $r$ is selected randomly on the area of the circle. 
+Next, it can be randomly drawn by inverting the \gls{cdf} for the Laplace distribution \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{equation}
   C{_\epsilon}{^{-1}}(p) = - \frac{1}{\epsilon}(W_-1 (\frac{p - 1}{e}) + 1)
   \label{eq:lambert_w_1}
@@ -82,7 +82,7 @@ Here, $G$ is a grid with sides $u$ and $v$, such that $u \leq v$.
 %Although this approach remaps data within the original domain of $X$, it is not guaranteed it preserves \gls{gi} anymore.
 Let the below equation be the collection of probabilities for a point being remapped to a closest point in $G$:
 \begin{equation}
-  R(z) = { y \in R^2 | \forall z' \in G \cdot d(y, z') \leq d(y, z')}
+  R(z) = \{ \ y \in R^2 | \forall z' \in G \cdot d(y, z') \leq d(y, z') \ \}
   \label{eq:grid-probability}
 \end{equation}
 The original \gls{gi} definition contains $K$, which is the probability of $z$ being reported as $x_0$ (See Equation: \ref{theory:geo-indistinguishability}).

@@ -15,10 +15,11 @@ The K-Means algorithm scores the highest utility, followed by \gls{ag}. This is 
 For lower privacy budgets, remapping to a grid has been found to minimize the potential leakage of data information to attackers.
 In addition, grid-nD-Laplace performs comparably to nD-Laplace, and the extension provides a more stable result. \newline
 \textbf{RQ3: How do dataset characteristics impact the nD-Laplace mechanism for utility and privacy?} \newline
-This research question is addressed through three hypotheses: \newline
+This research question is addressed through three hypotheses:
 \begin{itemize}
 	\item \textbf{H1: The shape of the data negatively impacts the nd-Laplace mechanism in terms of privacy and utility:}
-	The shape of the data significantly affects the performance of the nD-Laplace mechanism. Specifically, the mechanism demonstrates better utility on datasets with a uniform distribution, such as the heart, skewed, and seed datasets, as opposed to datasets that follow a specific shape, such as the Circle and Line datasets. This observation holds true when comparing the performance of clustering algorithms between nD-Laplace and the Piecewise mechanism. \newline  \textbf{H1 Status:} Supported - The utility of the nD-Laplace mechanism is indeed impacted by the shape of the data.
+	The shape of the data significantly affects the performance of the nD-Laplace mechanism. Specifically, the mechanism demonstrates better utility on datasets with a uniform distribution, such as the heart, skewed, and seed datasets, as opposed to datasets that follow a specific shape, such as the Circle and Line datasets. \newline  
+    \textbf{H1 Status:} Supported - The utility of the nD-Laplace mechanism is indeed impacted by the shape of the data.
 	\item \textbf{H2: The privacy leakage (adversary advantage) and utility increases for datasets with more than 7 dimensions:}
 	      In the case of the seeds and heart datasets, we observe higher utility when the dataset has more than 7 dimensions. Interestingly, this increase in utility does not correspond to an increase in the adversary advantage, which is contrary to what might be expected. However, we do see an increase in the \gls{tpr} and privacy distance. \newline \textbf{H2 Status:} Supported - While higher dimensions do result in increased utility, the expected increase in adversary advantage is not observed, but there is still privacy leakage due to an increasing \gls{tpr}.
 	\item \textbf{H3: Adding remapping based on density improves utility without sacrificing privacy:}

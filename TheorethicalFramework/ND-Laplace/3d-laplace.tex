@@ -30,9 +30,9 @@ Because these can be sampled independently, Min et al. formulate three marginal 
 %\textbf{Calculating $\theta$ and $\psi$}: The tuple $U = (\theta, \psi)$ is randomly drawn from the unit sphere using the following equations \citep{9646489}:
 \begin{subequations}
   \begin{align}
-     & D_\epsilon, R(r) = \frac{1}{2} \epsilon^3 \cdot r^2 \cdot e^{-\epsilon \cdot r} \label{eq:3d-laplace-1} \\
-     & D_\epsilon, \Theta(\theta) = \frac{1}{\pi}                                      \label{eq:3d-laplace-2} \\
-     & D_\epsilon, \Psi(\psi) = \frac{1}{2 \cdot \pi} \label{eq:3d-laplace-3}
+     & D_{\epsilon, R}(r) = \frac{1}{2} \epsilon^3 \cdot r^2 \cdot e^{-\epsilon \cdot r} \label{eq:3d-laplace-1} \\
+     & D_{\epsilon, \Theta}(\theta) = \frac{1}{\pi}                                      \label{eq:3d-laplace-2} \\
+     & D_{\epsilon, \Psi}(\psi) = \frac{1}{2 \cdot \pi} \label{eq:3d-laplace-3}
   \end{align}
 \end{subequations}
 \begin{itemize}
@@ -41,12 +41,12 @@ Because these can be sampled independently, Min et al. formulate three marginal 
 \end{itemize}
 Finally, the noise is added to the original location $x$ to obtain the perturbed location $z = x + U \cdot r$ (See Figure \ref{fig:3d-laplace-noise}).
 The spherical coordinates $(r, \theta, \psi)$ are converted to the Cartesian coordinates $(x, y, z)$ to obtain the perturbed location $z$:
-\begin{align*}
-  z_x = r \cdot \sin(\theta) \cdot \sin(\psi) \\
-  z_y = r \cdot \sin(\theta) \cdot \cos(\psi) \\
-  z_z = r \cdot \cos(\theta)
+\begin{align}
+  z_x = r \cdot \sin(\theta) \cdot \sin(\psi) \notag \\
+  z_y = r \cdot \sin(\theta) \cdot \cos(\psi) \notag \\
+  z_z = r \cdot \cos(\theta) 
   \label{eq:3d-cartesian}
-\end{align*}
+\end{align}
 The complete overview is visualized in figure \ref{fig:3d-laplace}.
 \begin{figure}[H]
   \includesvg[width=1\textwidth]{TheorethicalFramework/ND-Laplace/Images/3d_laplace.svg}
