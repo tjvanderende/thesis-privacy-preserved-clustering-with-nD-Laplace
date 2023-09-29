@@ -2,14 +2,14 @@
 In this chapter, we delve deeper into geo-indistinguishability and the various mechanisms that work with it, and aim to provide the theoretical foundation for research questions 1, 2 and 3.
 We also explain the theory behind the nD-Laplace mechanism and how we modify it and apply it for clustering.
 %This explanation is build-up out of several sections, each dedicated to 2, 3, and n-dimensional data.
-Because we frequently discuss 2, 3, and dimensional data in our thesis, we decided to prefix the respective Laplace method with this information.
+Because we frequently discuss 2, 3, and $n$ dimensional data in our thesis, we decided to prefix the respective Laplace method with this information.
 Therefore, for the rest of the thesis, we use the following names:
 \begin{enumerate}
   \item 2D-Laplace: This refers to the planar Laplace mechanism \citep{DBLP:journals/corr/abs-1212-1984}.
   \item 3D-Laplace: This refers to the spherical Laplace mechanism \citep{9646489}.
   \item nD-Laplace: Also named like this, in the original paper \citep{fernandes_generalised_2019}.
-  \item grid-nD-Laplace: This is a grid-remapping approach that is generalised for nD-Laplace.
-  \item density-nD-Laplace: This is a density-remapping approach to provide an alternative to grid-nD-Laplace.
+  \item grid-nD-Laplace: This is a truncation that is extended for nD-Laplace from 2D-Laplace and 3D-Laplace.
+  \item density-nD-Laplace: This is a remapping approach based on density, to provide an alternative to grid-nD-Laplace.
 \end{enumerate}
 The first three points are focused on the theory for our first research question. Here, we delve into the implementation of 2D-Laplace, 3D-Laplace and nD-Laplace. Subsequently, point 4 is centered on the theory for the second research question, which focuses on grid-nD-Laplace. Finally, we address the theory related to research question 3 for the density-nD-Laplace variant. Once all the theory has been covered, a summary will be provided along with an overview of the privacy framework.
 
@@ -30,7 +30,7 @@ The theorems for \gls{gi} are extended by Fernandes et al. to support n-dimensio
   \label{theorem:nd-laplace}
 \end{theorem}
 Where $Z$ is a set of perturbed points generated from the original dataset $X$. 
-For any two original datapoints $x$ and $x'$ the distance between them is limited at most $e^{-\epsilon \cdot d(x_0, x_0')}$. 
+For any two original datapoints $x$ and $x'$ the distance between them is limited at most $e^{-\epsilon \cdot d(x, x')}$. 
 This theorem extends $\epsilon$-geo-indistinguishability to $\epsilon-d_x$-privacy as a more general notion of distinguishability \citep{fernandes_generalised_2019}:
 Here, $d_x$ is a pseudo metric which was provided by Chatzikokalakis et al. as elastic privacy definition for location privacy \citep{chatzikokolakis_constructing_2015}. For the use with the Euclidean distance, the privacy definition is defined as $d_{euc}$. Due to the flexibility of $d_x$ the theorem \ref{theorem:nd-laplace} also holds for $d_{euc}$.  Furthermore, $\epsilon-d_{euc}$ provides the same privacy definition as geo-indistinguishability \citep{chatzikokolakis_constructing_2015}.
 Therefore, $d_{euc}$ is adopted by this thesis from now on, to be used for applying it for non-geographical data to establish a more general notion of privacy. \newline
@@ -50,10 +50,9 @@ Then, $\theta$ is drawn from an uniform distribution of a unit hypersphere $S$ \
 \end{equation}
 Where $\gamma(a) = \int^\infty_0 x^{a-1} \cdot e^{-x} \ dx$ is the gamma function \citep{fernandes_generalised_2019}.
 This approach is similar to the other variants of the Laplace mechanism.
-Only now, we select points from an $n$-dimensional hypersphere  \footnote{https://mathworld.wolfram.com/SpherePointPicking.html} instead of a unit sphere \ref{eq:3d-laplace-2}. \newline
 
 In the next step, the spherical coordinate representation is converted to Cartesian coordinates \citep{fernandes_generalised_2019}:
-It is comparable to the way it was done in the previous chapters; however, as there are an $n$-amount of angles, the equation is repeated and slightly different.
+It is comparable to the way it was done in the previous chapters; however, as there are a $n$-amount of angles, the equation is repeated and slightly different.
 The formula is provided by Fernandes et al. to convert $r$ to spherical coordinates \citep{fernandes_generalised_2019}:
 \begin{align}
   x_1 = r \cdot cos (\theta_1) \notag                                      \\
@@ -75,14 +74,14 @@ This behaviour is illustrated in the following figure:
   \label{fig:curse-of-dimensionality}
 \end{figure}
 As can be seen in the image, the amount of volume starts to decrease after the 7 dimensions . From this, it can be inferred that the value of  $\theta$ will also decrease. 
-The consequence of this behavior is that the final noise decreases for higher dimensions. This will result in the possibility that utility increases in higher dimensions, but privacy decreases.
+The consequence of this behavior is that the final noise decreases for higher dimensions. This will result in the possibility that utility increases in higher dimensions, but privacy decreases. In the experiments we provide various examples of this behaviour. 
 \newpage
 \subsection{nD-Laplace truncation \label{section-grid-remapping}}
 In the previous sections, we introduced the 2D-Laplace, 3D-Laplace, and nD-Laplace mechanisms and introduced truncation for 2D-Laplace and 3D-Laplace.
 The current section will be used to formalize nD-Laplace with truncation, and also provide the theoretical groundwork for research question 2 (grid-remapping).
 
 \subsubsection{Discretization and truncation} \label{theory:nd-laplace-truncation}
-As mentioned from the previous sections. The discretized 2D version operates on a plane and approximates on a grid $G$, while the 3D version works in a sphere and approximates the data using a cuboid grid  $G_C$.
+As mentioned from the previous sections. The discretized 2D version operates on a plane and approximates on a grid $G$, while the 3D version works in a sphere and approximates the data using a cuboid grid  $G_c$.
 
 Given a set of non-private points $X$ and perturbed points $Z$ we can truncate the points that are outside the domain by remapping them to points such that $Z = X \cap G$ \citep{DBLP:journals/corr/abs-1212-1984}.
 The following part aims at extending the theorems for 2D-Laplace and 3D-Laplace for truncation to n-dimensions.
@@ -125,19 +124,19 @@ Where $z$ is remapped to $closest \{ A_n \cap G_n \}$ which means that we remap 
 Now, let's present the proof, starting with a redefinition of the fundamentals of \gls{gi}, followed by a detailed explanation of the theorem. \newline
 
 In the fundamentals of \gls{gi}, it is essential to ensure that the likelihood of reporting a point within a specific region around $z$ when the true locations are $x_0$ and $x_0'$ should only differ at most $e^{\epsilon \cdot d(x_0, x_0')}$ \citep{DBLP:journals/corr/abs-1212-1984}. This behaviour occurs when the noise function causes the probability of generating a point near $z$ to drop significantly as you move further from the true location $x_0$.
-The area around $x_0$ is defined as the radius $r$, so according to \gls{gi} any point that is generated within this area preserves $\epsilon$-geo-indistinguishability. The probability of this, was expressed using an integral to represent the area between $\theta$ and $r$ \citep{DBLP:journals/corr/abs-1212-1984}:
+The area around $x_0$ is defined as the radius $r$, so according to \gls{gi} any point that is generated within this area preserves $\epsilon$-geo-indistinguishability. The probability of this, was expressed using an integral to represent the area between 0 and $r$ \citep{DBLP:journals/corr/abs-1212-1984}:
 \begin{equation}
     C_\epsilon(r) = \int^{r}_0 D_{\epsilon, R}(p)dp
 \end{equation}
 Where the integral represents the area of $r$, and $p$ is a random value between the original point $x_0$ and $r$. The $p$ is generated according to the earlier description we gave for 2D-Laplace (See Algorithm \ref{alg:2d-laplace}).
 
 The proof of 2D-Laplace for \gls{gi} was provided by Andres et al., and was extended to 3D-Laplace and nD-Laplace by Min et al. and Fernandes et al., respectively. 
-The latter, extended the proof for nD-Laplace by showing that nD-Laplace can be represented by selecting multiple spherical coordinates $(r, \theta)$ independently. Hence, the proof they provided is an extension of that of 2D-Laplace. In addition to considering the area of $r$ for a planar, they also consider the area for the angular coordinates over the hyper sphere \citep{fernandes_generalised_2019}. This is expressed as the product of two integrals.\newline
+The latter, extended the proof for nD-Laplace by showing that nD-Laplace can be represented by selecting multiple spherical coordinates $(r, \theta)$ independently \citep{fernandes_generalised_2019}. Hence, the proof they provided is an extension of that of 2D-Laplace. In addition to considering the area of $r$ for a planar, they also consider the area for the angular coordinates over the hyper sphere \citep{fernandes_generalised_2019}. This is expressed as the product of two integrals.\newline
 
 In light of this, we can demonstrate that the privacy assurance holds for $(r, \theta_v)$ across all sides (areas) $v \in G_n$. 
 To establish this, we make the assumption that $r_{max} \leq v_n$ for every $v_n \in G_n$. 
 Given the uniform grid-unit sizes of $G_n$, it suffices to state that $r_{max} \leq v$. 
-The significance of the upper bound on $r_{max}$ is essential as it determines the region where $\epsilon$-geo-indistinguishability can be ensured \citep{DBLP:journals/corr/abs-1212-1984}. Consequently, the proof illustrates the existence of a suitable $\epsilon'$ based on $\epsilon$ and the step-unit $v$ that guarantees privacy for the region $r_{max}$.
+The significance of the upper bound on $r_{max}$ is essential as it determines the region where $\epsilon$-geo-indistinguishability can be ensured \citep{DBLP:journals/corr/abs-1212-1984}. Consequently, the proof illustrates the existence of a suitable $\epsilon'$ based on $\epsilon$ and the step-unit $v$ that guarantees privacy for the region $r_{max}$ \citep{DBLP:journals/corr/abs-1212-1984}.
 
 Let us begin by revisiting the proof offered by Andres et al. for two-dimensional data, 
 where the probability $S = R(z)$ in a two-dimensional space, and $r = d(x_0, z)$ \citep{DBLP:journals/corr/abs-1212-1984}:
@@ -193,17 +192,17 @@ This algorithm is utilized in this research in two ways:
 \end{enumerate}
 
 The utility of grid-nD-Laplace depends on the number of grid cells in $G_n$ since a smaller distance will result in more frequent mapping to the surface of the grid.
-When $\epsilon$ is very low (resulting in $z$ being much farther away from $x_0$), data points have a higher likelihood of mapping to map to the grid surface 
+When $\epsilon$ is very low (resulting in $z$ being much farther away from $x_0$), data points have a higher likelihood of remapping to the grid surface far away.
 (as seen in \ref{fig:3d-laplace-noise}, \ref{fig:3d-laplace-example}). 
 An alternative approach is therefore density remapping, which will be explained in the next section.
 \newpage
 \subsection{Density remapping} \label{theory:optimal-remapping}
-As discussed, the remapping will be performance intensive to provide good utility, so we adopt the optimal remapping \citep{chatzikokolakis_efficient_2017}.
+As discussed, the utility of the remapping will not always be sufficient, so we adopt optimal remapping \citep{chatzikokolakis_efficient_2017}.
 This thesis will refer to this as density remapping because this better explains the application for clustering.
 
-According to the grid-remapping methodology, a private point $z$ is mapped to the center of the grid cell.
+According to the grid-remapping methodology, a private point $z$ is mapped to acceptable points in $A \cap G$ around $x$.
 The utility is improved by reducing the distance between $z$ and $x$, as this is closer to the original data point.
-But, to consider the privacy of the data, this can only be done if there is enough indistinguishability between $z$ and $x$.
+However, this depends  grid unit size, which can be very large.
 To this end, we adopt the remapping approach of Chatzikokolakis et al. to remap based on the data density \citep{chatzikokolakis_efficient_2017}.
 The remapping algorithm works on the idea of crowded places, with the intuition that a crowded place leverages indistinguishability by crowdedness (density) \citep{chatzikokolakis_efficient_2017}.  \newline
 
@@ -263,7 +262,7 @@ To optimize this process, we embrace the idea of Chatzikokakis et al. to employi
 In contrast to manual searching, the kd-tree costs $O(kn)$ to construct, but, searching for the nearest neighbor is a logarithmic function with time complexity of $O(\log n)$ \citep{washington_k-d_2002}.
 For this purpose, we construct the density remapping algorithm using kd-tree. \newline
 
-It's worth noting that the integration of the kd-tree does not compromise any of the privacy guarantees outlined in earlier sections. 
+It is worth noting that the integration of the kd-tree does not compromise any of the privacy guarantees outlined in earlier sections. 
 Rather, it serves as a more efficient means of navigating $n$-dimensional spatial structures. 
 Furthermore, for the purposes of visualization, this section will primarily focus on 2D data.
 
@@ -299,7 +298,7 @@ In the next section we provide the algorithm for density-remapping using kd-tree
 \subsubsection{Density-remapping}
 \input{TheorethicalFramework/ND-Laplace/algorithms/optimal-remapping.tex}
 
-It's worth noting that with the introduction of this algorithm, it has shifted from a non-interactive method to one where data points now actively interact with each other.
+Consider that with the introduction of this algorithm, it has shifted from a non-interactive method to one where data points now actively interact with each other.
 Due to the extra interaction rounds, we expect the introduction of density remapping with kd-tree will bring more utility \citep{wang_comprehensive_2020, xiongComprehensiveSurveyLocal2020}.
 If this proofs to be true, it might out-weights the privacy implications for clustering. 
 %\input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}

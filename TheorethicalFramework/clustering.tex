@@ -4,13 +4,13 @@ Subsequently, we will explain and indicate how the hyperparameters are handled i
 \subsection{Types of clustering algorithms}
 Multiple clustering types can be utilized for clustering data \citep{xu_comprehensive_2015}.
 For this study, we selected the types that use some form of distance for clustering.
-We explain each cluster type with corresponding clustering algorithms.
+We explain each clustering type with corresponding clustering algorithms.
 \subsubsection{Partition based clustering}
 With this type, the data is partitioned and allocated into a fixed amount of clusters.
 A well-known and popular clustering algorithm is K-means.
 Based on Loyd et al.'s original method, this algorithm randomly selects $k$ points as cluster centroids \citep{1056489}.
 The first step of the algorithm is to assign each datapoint $x_i$ to the nearest centroid.
-Then the mean is calculated by calculating the mean of all points in the cluster \citep{yuan_research_2019}:
+Then the mean is calculated by considering all points in the cluster \citep{yuan_research_2019}:
 \begin{equation}
   c_i = \frac{1}{|C_i|} \sum_{x_i \in C_i} x_i
 \end{equation}
@@ -59,7 +59,7 @@ A cluster $C$ is build up using the following rules \citep{ankerst_optics_nodate
   \item If a core-object in $C$ is density-reachable from $x_i$, $\Pi$ and $minPts$. Then $x_i$ is added to $C$.
   \item If a core-object is density-connected to $x_i$, $\Pi$ and $minPts$. Then $x_i$ is added to $C$.
 \end{enumerate}
-Finally, \gls{optics} comes into play, which makes the radius $\Pi$ obsolete.
+Finally, \gls{optics} comes into play, which makes the radius $\Pi$ as a hyper parameter obsolete.
 Instead of constructing clusters, the \gls{optics} algorithm produces an ordered list.
 In the next step, they create a reachability plot that shows valleys (clusters) and peaks (cluster transitions).
 The algorithm then uses an automatic approach to determining the characteristics of the reachability plot to determine clusters.
@@ -72,7 +72,7 @@ This approach means the clustering occurs from the bottom-up or top-down, respec
 Of the two approaches, agglomerative is the most common one \citep{meng_private_2021}.
 For  agglomerative definition, we consider the following definition:
 \begin{equation}
-  L(C_i, C_j) = min_{x \in C_i, y \in C_j} d(x, y)
+  L(C_i, C_j) = \min_{x \in C_i, y \in C_j} d(x, y)
 \end{equation}
 \begin{enumerate}
   \item Initially, each data-point $x \in X$ is treated as its own cluster \citep{nielsen_hierarchical_2016}.
@@ -211,7 +211,7 @@ Our research will focus on \gls{ami} for external validation. Because it holds t
 The second metric we use is for external validation. We use \gls{sc} because this metric returns a bounded value between -1 and 1.
 
 %Since certain clustering algorithms may score higher or lower on specific metrics, it is essential to choose two metrics for each type of validation.
-Based on existing studies and the literature, we have selected metrics adjusted to compensate for the data distribution characteristics.
+Based on existing studies and the literature, the selected metrics are adjusted version to compensate for the data distribution characteristics.
 Hence, we will focus on these metrics' "adjusted" variants:
 \begin{enumerate}
   \item \textbf{Silhouette coefficient (Internal validation): \label{eq:silhouette_coefficient}}

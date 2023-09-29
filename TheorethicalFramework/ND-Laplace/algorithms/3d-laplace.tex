@@ -7,7 +7,7 @@
     \State Generate $\epsilon'$ \Comment Theorem \ref{theorem:3d-discretization}
     \State $Z \gets \varnothing$ 
     \State Generate $G_c$ from given sides $u, w, h$.
-    \State Generate $A_c$ from grid unit $h$ \Comment Accepted region to remap into.
+    \State Generate $A_c$ from grid unit $h$ and radius $r$. \Comment Accepted region to remap into.
     \For{$x_i \in X$}
     \State Generate $\theta$      \Comment  Equation: \ref{eq:3d-laplace-1}.
     \State Generate  $\psi$     \Comment Equation: \ref{eq:3d-laplace-2}.

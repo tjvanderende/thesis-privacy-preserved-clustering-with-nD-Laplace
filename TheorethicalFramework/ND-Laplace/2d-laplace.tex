@@ -13,7 +13,7 @@ This section starts with an introduction to mathematics, and for each of the dif
 \subsection{Planar and polar Laplace}
 In Section \ref{theory:geo-indistinguishability}, we provided an explanation of the concept of \gls{gi}. 
 Additionally, we introduced the notion that when a point $x_0 \in X$ serves as the center of a range $r$, a point $z \in Z$ is generated using a noise function \citep{DBLP:journals/corr/abs-1212-1984}. The objective here is to ensure that when the actual locations are $x_0$ and $x_0'$, their divergence is limited to at most $e^{-\epsilon \cdot d(x_0, x_0')}$. This characteristic aligns with the Laplace distribution, which the "planar Laplace" mechanism leverages.
-Furthermore, it's worth noting that the "planar Laplace" mechanism is an adaptation of the Laplace distribution designed to accommodate distances in a 2-dimensional space \citep{DBLP:journals/corr/abs-1212-1984}. For clarity, we will refer to this method as "2D-Laplace" from this point forward.
+Furthermore, it is worth noting that the "planar Laplace" mechanism is an adaptation of the Laplace distribution designed to accommodate distances in a 2-dimensional space \citep{DBLP:journals/corr/abs-1212-1984}. For clarity, we will refer to this method as "2D-Laplace" from this point forward.
 
 The distance method $d(\cdot, \cdot)$ is a method to calculate the Euclidean distance between two points.
 Recalling the definition of Laplace, this method $|x-x'|$ is replaced by the distance metric.
@@ -67,7 +67,7 @@ This conversion is described as step 4 of the planar Laplace algorithm \citep{DB
 \subsection{Truncation} \label{theory:truncation}
 After adding the noise to the data, it cannot be ensured the data is within the original domain (figure \ref{figure:truncation-2d}).
 If this is not the case, the data is easily distinguished by an unwanted adversary \citep{DBLP:journals/corr/abs-1212-1984,9646489}.
-The truncation is an essential part of the mechanism to ensure the data is contained within the domain of the original data $X$. The following example shows two different point original points $x_0$ and $x_0'$, where $z$ and $z'$ are being remapped to be within the domain:
+The truncation is an essential part of the mechanism to ensure the data is contained within the domain of the original data $X$. The following example shows two different original points $x_0$ and $x_0'$, where $z$ and $z'$ are being remapped to be within the domain:
 %We assume a user has a set of data points with a range of [-1, 1].
 \begin{figure}[H]
 \centering
@@ -80,15 +80,15 @@ The truncation is an essential part of the mechanism to ensure the data is conta
 This approach was introduced by Andres et al. to remap a perturbed point $z$ to the closest point in $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
 Here, $G$ is a grid with sides $u$ and $v$, such that $u \leq v$.
 %Although this approach remaps data within the original domain of $X$, it is not guaranteed it preserves \gls{gi} anymore.
-Let the below equation be the collection of probabilities for a point being remapped to a closest point in $G$:
+Let the below equation be the collection of probabilities for a point $z$ being remapped to a closest point in $G$:
 \begin{equation}
-  R(z) = \{ \ y \in R^2 | \forall z' \in G \cdot d(y, z') \leq d(y, z') \ \}
+  R(z) = \{ \ y \in R^2 \ | \ \forall z' \in G \cdot d(y, z') \leq d(y, z') \ \}
   \label{eq:grid-probability}
 \end{equation}
 The original \gls{gi} definition contains $K$, which is the probability of $z$ being reported as $x_0$ (See Equation: \ref{theory:geo-indistinguishability}).
 However, this probability is no longer guaranteed because $z$ can also be part of $G$ \citep{DBLP:journals/corr/abs-1212-1984}.
 Hence the probability is now $R(z) = G \cap A$. Where $A$ is a set of acceptable datapoints.\newline
-So, $R(z)$ has a different shape depending on the distance $x_0$ and $z$ (ergo, it depends on the grid cell width). This is due the step units of $G$ stay the same, while the distance $r$ grows \citep{DBLP:journals/corr/abs-1212-1984}.
+So, $R(z)$ has a different shape depending on the distance $x_0$ and $z$ (ergo, it depends on the grid unit $v$ or $u$). This is due the step units of $G$ stay the same, while the distance $r$ grows \citep{DBLP:journals/corr/abs-1212-1984}.
 
 To overcome this issue, Andres et al. propose a way of calculating $\epsilon'$, depending on the step-unit $u$. \citep{DBLP:journals/corr/abs-1212-1984}.
 They proved this and provided theorem 4.1 \citep{DBLP:journals/corr/abs-1212-1984}:

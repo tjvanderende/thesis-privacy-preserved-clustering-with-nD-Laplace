@@ -1,5 +1,5 @@
 \section{Literature review} \label{theory:literature-review}
-In the search for related literature, we focused mainly on (L)DP mechanisms that can be used for general purposes (e.g. not only mean estimation), which is the most comparable to our mechanism.
+In the search for related literature, the focus is mainly on (L)DP mechanisms that can be used for general purposes (e.g. not only mean estimation), and thus can be used for input perturbation.
 The related literature is divided into three parts:
 \begin{enumerate}
   \item Differential privacy and clustering: We explain how differential privacy is used for clustering.
@@ -25,7 +25,8 @@ There are different ways how to combine differential privacy with clustering \ci
 Existing literature on \gls{ldp} and clustering primarily focuses on input and output perturbation. 
 In practice, it looks like this:
 \begin{figure}[H]
-  \includegraphics[width=0.75\linewidth]{TheorethicalFramework//ND-Laplace//Images/Thesis-nd - Page 7.png}
+\centering
+  \includegraphics[width=1\linewidth]{TheorethicalFramework//ND-Laplace//Images/Thesis-nd - Page 7.png}
  \caption{Example on how our approach (1) of private training works for clustering and the \gls{ldp} setup from Section \ref{section:dp}}
   \label{fig:overview-clustering-and-dp}
 \end{figure}
@@ -37,7 +38,7 @@ Many studies that use \gls{ldp} mechanisms for clustering utilize output perturb
 This often involves modifying the initial clustering algorithm to work with their privacy mechanism. 
 Therefore, this thesis uses input perturbation to train diverse clustering algorithms.
 
-The next section will concentrate on differential privacy algorithms that can be compared to our mechanism utilizing input perturbation.
+The next section will concentrate on \gls{dp} algorithms that can be compared to our mechanism utilizing input perturbation.
 \newpage
 \subsection{Differential privacy methods}
 As discussed earlier, the Laplace method was the first to establish \gls{dp} \citep{dwork_differential_2006}.
@@ -51,13 +52,13 @@ The mechanism aims to improve utility by adding the same level of privacy while 
 It represents a staircase-shaped \gls{pdf}, hence the name Staircase Mechanism (SM).
 This mechanism accepts three configurable parameters comparable to those of the Laplace mechanism.
 The authors' work can handle multidimensional numerical data and preserve the  $(\epsilon$)-differential privacy.
-In the previous two paragraphs, we have mainly focused on the interesting literature regarding differential privacy.
-Next, the succeeding paragraphs will mainly center on related literature concerning local differential privacy.\newline
+In the previous two paragraphs, we have mainly focused on the interesting literature regarding \gls{dp}. \newline
+Next, the succeeding paragraphs will mainly center on related literature concerning \gls{ldp}. \newline
 %One disadvantage of the staircase mechanism is that it can produce an unbounded output, as noted by Wang et al. 
 %This means that the perturbed data can exceed the original bounds of the data. 
 %Additionally, the authors do not compare their results to comparable work in an experimental setting.
 
-Nguyen et al. introduced a new \gls{ldp} mechanism for working with numerical data \citep{nguyen_collecting_2016}
+Nguyen et al. introduced a new \gls{ldp} mechanism for working with numerical data \citep{nguyen_collecting_2016}.
 Their primary focus is estimating means and frequencies on data and applying machine learning techniques such as Support Vector Machines (SVM) and linear regression using Empirical Risk Minimization.
 Initially, the authors analyze Duchi et al.'s method \citep{duchi_privacy_2013} and highlight several shortcomings.
 To address these issues, they introduce Harmony as a mechanism for \gls{ldp} perturbation.
@@ -81,10 +82,10 @@ Optimized Unary Encoding (OUE) \citep{wang_locally_nodate} is also used for comp
 %\subsection{Geo-indistinguishability methods}
 %\todo[inline]{Currently still work in progress}
 \subsection{Cluster methods with (L)DP}
-This chapter examines the various studies conducted on clustering in combination with differential privacy.
-Initially, we looked at the most fundamental papers in this field. Subsequently, the focus shifted toward researching well-known papers published since 2020.
+This chapter examines the various studies conducted on clustering in combination with \gls{dp}.
+Initially, we looked at the most fundamental papers in this field. Subsequently, the focus shifted toward researching well-known papers published since 2020. \newline
 
-The first work we highlight was proposed by Nissim et al. and aimed at improving differential privacy methods, such as Laplace, which uses sensitivity to compensate the noise for a function \citep{nissim_smooth_2007}.
+The first work we highlight was proposed by Nissim et al. and aimed at improving \gls{dp} methods, such as Laplace, which uses sensitivity to compensate the noise for a function \citep{nissim_smooth_2007}.
 In addition to compensating the function, they also consider the dataset itself.
 The algorithm is called "smooth sensitivity" and is used for instance-specific noise.
 To apply it, the authors introduce a method/framework to calculate it effectively.
@@ -92,7 +93,7 @@ They use K-means, among other clustering algorithms, to demonstrate the method's
 Their method requires the calculation of cluster distances using Wasserstein distance instead of Euclidean distance.
 %Although, it preserves $(\epsilon, \delta)$-LDP it does not provide any experiments with real world datasets.
 
-Another study focuses on interactive and non-interactive approaches for differential privacy in K-Means \citep{su_differentially_2015}.
+Another study focuses on interactive and non-interactive approaches for \gls{dp} in K-Means \citep{su_differentially_2015}.
 The study builds upon the work done for DPLloyd, an interactive privacy extension of K-Means described by Blum et al. \citep{blum_practical_2005}.
 The DPLLoyd mechanism partitions an n-dimensional dataset into a grid and releases the count for each grid by adding Laplacian noise to each count.
 Another part of their research focuses on determining the width of the data cells.
@@ -101,15 +102,15 @@ The experiment evaluates it against the DPLloyd mechanism, which performs better
 Therefore, they combine their algorithm for combining both aspects into a hybrid approach (EUGkM + DPLloyd approach) and show a better final performance.
 
 The study of Nissim et al. researches finding the smallest possible radius in the Euclidean space  $R^d$ for a set of $n$ points \citep{nissim_clustering_2018}.
-They propose a new solution that uses locality-sensitive hashing (LSH) for differential privacy to find 1-cluster in the $d$-dimensional Euclidean space.
-This method works for differential privacy (LSH-GoodCenter), but they also extend this to the local model (LDP-GoodCenter).
-The algorithm to find this radius is used to count the points enclosed by the radius, and Laplace noise is added to the count to preserve differential privacy.
+They propose a new solution that uses locality-sensitive hashing (LSH) for \gls{dp} to find 1-cluster in the $d$-dimensional Euclidean space.
+This method works for \gls{dp} (LSH-GoodCenter), but they also extend this to the local model (LDP-GoodCenter).
+The algorithm to find this radius is used to count the points enclosed by the radius, and Laplace noise is added to the count to preserve \gls{dp}.
 The mechanism is combined and applied to work with the K-Means algorithm (LDP-K-Mean).
 This mechanism was extended in a paper proposed by Kaplan et al. and introduced a similar LDP method \citep{kaplan_differentially_2018}.
 They aim to reduce the number of interactions needed between the server and users to one, instead of the $O(k\log n)$ required for Nissam et al.’s solution \citep{nissim_clustering_2018}.
 To increase the success probability, they use the same idea but extend it to have multiple centers instead of a single large one.
 They call it the LSH-Procedure, and the algorithm Private-Centers is applied to generate centers to use with K-Means.
-Then, they apply the same method to the LDP method initially proposed by Nissam et al. (LDP-GoodCenter).
+Then, they apply the same method to the \gls{ldp} method initially proposed by Nissam et al. (LDP-GoodCenter).
 The most recent work by Stemmer et al. focuses on improving the work done by Kaplan et al. \citep{kaplan_differentially_2018,stemmer_locally_2021}.
 Because the original mechanism has a higher additive error, the noise added introduces a lot of error.
 To solve this, the authors aim to reduce this error by improving the original GoodCenter algorithm \citep{nissim_clustering_2018}.
@@ -117,8 +118,8 @@ Their extended method is called WeightedCenters and also adds weights to candida
 %So, in addition to calculating the centroids for each iteration, it also calculates the weights for each.
 In the final iteration, the weights are used to create the K-Means or K-Median clusters.
 
-Sun et al. proposed a mechanism for distributed clustering using local differential privacy (LDP) to preserve distance-based information.
-They claim to have the first non-interactive LDP algorithm for clustering \citep{su_differentially_2015}.
+Sun et al. proposed a mechanism for distributed clustering using \gls{ldp} to preserve distance-based information.
+They claim to have the first non-interactive \gls{ldp} algorithm for clustering \citep{su_differentially_2015}.
 This means they can perturb the data locally at once and send it to the server to cluster with both K-Means and \gls{dbscan} without interaction between data points.
 They encode the client-side data into an anonymous hamming space using Bit Vector (BV) and modify the encoding to preserve Euclidean distance.
 Their mechanism only shares distance information, so they could not use K-Means directly.
@@ -150,7 +151,7 @@ For this purpose, they perturb the clusters with the GRR (Generalized Random Res
 They show that the clustering quality increases if the data points increase. \newline
 
 Most existing work focuses on (L)DP in combination with K-Means.
-Finally, two interesting studies focus on differential privacy for \gls{ap} or \gls{dbscan}.
+Finally, two interesting studies focus on \gls{dp} for \gls{ap} or \gls{dbscan}.
 A study conducted by Cai et al. focuses on \gls{ap} \citep{cai_dp-ap_2020}.
 Their method involves adding Laplace noise to the responsibility matrix.
 For each sample data, a neighborhood is specified using a radius around the data point.
@@ -159,7 +160,7 @@ Higher density yields a higher chance of belonging to a cluster center and being
 The perturbed responsibility matrix and densities are combined and used to run AP.
 They evaluated their method using the  \gls{ari}, Fowlkes-Mallows Index (FMI), and \gls{ami}.
 
-Another study focuses on differential privacy for \gls{dbscan} \citep{bozdemir_privacy-preserving_nodate}.
+Another study focuses on \gls{dp} for \gls{dbscan} \citep{bozdemir_privacy-preserving_nodate}.
 The proposed solution involves clustering data between two or more parties using two servers.
 Secure two-party computation (S2PC) is used to achieve this.
 Using S2PC, both servers receive a random-looking secret share.
