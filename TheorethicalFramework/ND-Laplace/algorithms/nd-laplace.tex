@@ -4,14 +4,14 @@
       \Require $X$,  $\epsilon$, $v$ 
       \Ensure $Z$ 
       \State Generate unit hypersphere to select $\theta$. \Comment Equation: \ref{eq:generate_theta_for_nd_laplace}
-      \State Generate $G_h$ from given sides $v$ and amount of dimensions $n$.
-        \State Generate $A_h$ from grid unit $v$ \Comment Accepted region to remap into. 
+      \State Generate $G_n$ from given sides $v$ and amount of dimensions $n$.
+        \State Generate $A_n$ from grid unit $v$ \Comment Accepted region to remap into. 
       \For{$x_i \in X$}
       \State Generate $r$ around center $x_i$ \Comment Equation \ref{eq:generate_r_for_nd_laplace}.
       \State Draw angle $\theta$ from unit sphere in $n$-dimensional space \Comment Equation \ref{eq:generate_theta_for_nd_laplace}.
       \State Convert spherical coordinates $(r, \theta)$ for \\ each dimension to Cartesian coordinates $z = (z, ...z_n$). \Comment Equation: \ref{eq:nd-laplace-cartesian}.
-       \If {$z \notin A_h$}
-            \State Remap $z$ to closest point in $A_h \cap G_h$.
+       \If {$z \notin A_n$}
+            \State Remap $z$ to closest point in $A_n \cap G_n$.
        \EndIf
       \State Add $z$ to Z
       \EndFor
