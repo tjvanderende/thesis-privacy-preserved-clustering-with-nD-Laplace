@@ -1,38 +1,32 @@
 \begin{algorithm}[H]
-  \caption{Algorithm to implement the density remapping of $z \in Z$ to be in the domain of $x \in X$}
+  \caption{Algorithm to implement the density remapping of $Z$ to be in the domain of $X$}
   \begin{algorithmic}[1]
-    \Require $x \in X$
-    \Require $z \in Z$
-    \Require $epsilon$
-    \Ensure $z' \in Z$
-    \State $Z' = FindRemappedPoints(Z)$ \Comment Algorithm: \ref{alg:find-outside-domain-laplace}
-    \State $tree \gets KDTree(X)$
-    \For{$z' \in Z'$}
-    \State $r = \Call{FindRadius}{(z')}$
-    \State $X_r \gets \Call{KDTree::query}{x}$
-    \State $B_r \gets \Call{KDTree::query}{z'} $
+    \Require $X, Z, \epsilon$                                \Comment{Requires a truncated nD-Laplace output $Z$}
+    \Ensure $Z'$
+    \State Filter $Z$ with the data points that were remapped by grid.
+    \State Construct a kd-tree from $X$
+    \For{$z \in Z$, $x, r \in X$}
+    \State Find all points $X_r$ inside radius $r$  around $x$ 
+    \State Find all points $B_r$ inside radius $r$ around $z$
     \State $\sigma(x) = []$
-    \State $Q_r = \gets X_r \cap B_r$
-    \State $w_x = \Call{Length}{X_r, B_r}$
+    \State $Q_r = X_r \cap B_r$
+    \State Count number of points $w_r$ within $Q_r$
     \For{$q \in Q_r$}
-    \State $q \gets \Call{KDTree::query}{q}$
-    \State $w_q = \Call{Length}{Q_r}$
-    \State $\sigma(w_x) \gets \Call{Remap}{w_x, \epsilon}$ \Comment Equation \ref{eq:optimal-remapping-formula-1}.
-    \State $\sigma(x) \gets \Call{Append}{\sigma}$
+    \State Find all points $q$ inside radius $r$ around $q$.
+    \State Count number of points $w_q$ within $q$.
+    \State Calculate $\sigma(x)$ \Comment Equation \ref{eq:optimal-remapping-formula-1}.
+    \State Add $\sigma(x)$ to list
     \EndFor
-    \State $z' \gets \Call{Average}{\sigma(x)}$ \Comment Equation: \ref{eq:optimal-remapping-formula-2}.
+    \State Calculate $z'$ using $Q_r$ and $\sigma(x)$ \Comment Equation: \ref{eq:optimal-remapping-formula-2}.
     \EndFor
   \end{algorithmic}
   \label{alg:optimal-remapping-laplace}
 \end{algorithm}
 
 \begin{itemize}
-  \item 1: Receives all the points $z \in Z$ that are outside the domain of $X$.
+  \item 1: Receives all the points $z \in Z$ that were originally outside the boundary of $X$ (before remapping).
   \item 2: Constructs a KDTree from the original data $X$, so it can be queried.
-  \item 3: Receives the original privacy radius $r$ that was used to generate $z$ from $x$.
-  \item 5: $X_r$ is the set of points $x \in X$ that are within the radius $r$ of $x$.
-  \item 6: $B_r$ is the set of points $z \in Z$ that are within the radius $r$ of $z$.
-  \item 9: $w_x$ is the "popularity" of $x$ and $z$, for the number of points is counted within the radius $r$.
-  \item 12: $w_q$ is the weight of each point $q \in Q_r$, so $q$ is re-assigned to be the number of points within the radius $r$ of $q$.
+  \item 6: Denotes the list of densities for point $x$.
+  \item 7: Holds the data-points within the radius $r$ of both $x$ and $z$.
 \end{itemize}
 

@@ -112,7 +112,7 @@ Assume  $r_{max} = v$, where $v \in G_n$ and $n$ the number of dimensions. Let $
   Whenever $d_{euc}(x, z)$ and $d_{euc}(x', z) \leq r_{max}$.
   \label{theorem:nd-laplace-truncation}
 \end{theorem}
-Given the above theorem, the privacy of a perturbed point $z$ outside an area $A \cap G_h$, can be remapped as:
+Given the above theorem, the privacy of a perturbed point $z$ outside an area $A_n \cap G_h$, can be remapped as:
 \begin{equation}
 z' = 
 \begin{cases}
@@ -199,7 +199,7 @@ An alternative approach is therefore density remapping, which will be explained 
 \newpage
 \subsection{Density remapping} \label{theory:optimal-remapping}
 As discussed, the remapping will be performance intensive to provide good utility, so we adopt the optimal remapping \citep{chatzikokolakis_efficient_2017}.
-This thesis will refer to this as density remapping because this better explains the application \added{for clustering}.
+This thesis will refer to this as density remapping because this better explains the application for clustering.
 
 According to the grid-remapping methodology, a private point $z$ is mapped to the center of the grid cell.
 The utility is improved by reducing the distance between $z$ and $x$, as this is closer to the original data point.
@@ -235,7 +235,9 @@ The new value $z'$ is calculated by taking the mean of the $\sigma(x)$ \citep{ch
   \label{eq:optimal-remapping-formula-2}
 \end{equation}
 By applying this formula, the new $z'$ is closer to $x$ to minimize the expected loss of utility \citep{chatzikokolakis_efficient_2017}.
-Much like the 2D and 3D Laplace methods, which use the likelihood of a point $z$ being close to $x$ \citep{DBLP:journals/corr/abs-1212-1984, 9646489}.
+Much like the 2D and 3D Laplace methods, which use the likelihood of a point $z$ being close to $x$ \citep{DBLP:journals/corr/abs-1212-1984, 9646489}. \newline
+
+While the aim of introducing density remapping is to improve utility, the task of searching for points within spatial data is inherently complex. Density remapping requires numerous queries to find nearby points, which can lead to significant computational costs. In the next section, we introduce an optimization method to address this challenge.
 
 %The first step is to calculate the coefficients for each point $x \in X$ by multiplying the density $\sigma(x)$ with the original point $x$.
 
@@ -252,28 +254,18 @@ Much like the 2D and 3D Laplace methods, which use the likelihood of a point $z$
 %The last step is to take the mean value of $\sigma(x)$.
 %Unfortunately, optimal remapping is not possible for users that do not have sufficient data (e.g. new users).
 %The remapping is not applied for these users and is also not applied for $z$ if it is within the domain of $X$.
-\input{TheorethicalFramework/ND-Laplace/algorithms/optimal-remapping.tex}
-
-It is important to note that with the introduction of this algorithm, it is no longer a non-interactive method, as the data points now interact with each other.
-Due to the extra interaction rounds, we expect the introduction of density remapping with kd-tree will bring more utility \citep{wang_comprehensive_2020, xiongComprehensiveSurveyLocal2020}.
-If this proofs to be true, it might out-weights the privacy implications for clustering.  \newline
-
-While density remapping can improve utility, the task of searching for points within spatial data is inherently complex. Density remapping requires numerous queries to find nearby points, which can lead to significant computational costs. In the next section, we introduce an optimization method to address this challenge.
 
 \subsubsection{Optimization}
-In order to facilitate density-remapping in an n-dimensional space, it is necessary to enhance the efficiency of spatial data search within the data structure. 
+In order to facilitate density-remapping in an $n$-dimensional space, it is necessary to enhance the efficiency of spatial data search within the data structure. 
 For implementing searching it is necessary to calculate the Euclidean distance between every point, each time when we want to estimate density of a point.
-We need to do this for $n \cdot m$ points, where $n$ are the dimensions and $m$ the number of data-points for all $q \in Q_r$.
+This is needed for $n \cdot m$ points, where $n$ are the dimensions and $m$ the number of data-points for all $q \in Q_r$.
 To optimize this process, we embrace the idea of Chatzikokakis et al. to employing a kd-tree for the efficient calculation of $Q_r$ \citep{chatzikokolakis_efficient_2017}.
 In contrast to manual searching, the kd-tree costs $O(kn)$ to construct, but, searching for the nearest neighbor is a logarithmic function with time complexity of $O(\log n)$ \citep{washington_k-d_2002}.
-For this purpose, we construct two algorithms:
-\begin{enumerate}
-    \item We harness the power of the kd-tree to locate $Q_r$.
-    \item We leverage the kd-tree algorithm to identify all data points situated outside the boundaries of $X$. This algorithm can also be employed for truncation and optimal remapping.
-\end{enumerate} 
+For this purpose, we construct the density remapping algorithm using kd-tree. \newline
+
 It's worth noting that the integration of the kd-tree does not compromise any of the privacy guarantees outlined in earlier sections. 
 Rather, it serves as a more efficient means of navigating $n$-dimensional spatial structures. 
-Furthermore, for the purposes of visualization, this section will primarly focus on 2D data.
+Furthermore, for the purposes of visualization, this section will primarily focus on 2D data.
 
 The next section will introduce the concept and fundamental principles of kd-trees. 
 \newpage
@@ -298,13 +290,19 @@ An example of this is provided in the following image (Figure \ref{fig:kd-tree-s
   \label{fig:kd-tree-searching-theory}
 \end{figure}
 In the example, we are searching for all points that fall within the radius of a random query point.
-In the next two sections, we provide two algorithms to find points outside the boundary of $X$ and implement density remapping with kd-tree and .
+In the next section we provide the algorithm for density-remapping using kd-tree.
 
-\todo[inline]{Clarify the algorithms (see others)}
-\subsubsection{Detect data-points outside the data boundary}
-\input{TheorethicalFramework/ND-Laplace/algorithms/outside-domain.tex}
+%\todo[inline]{Clarify the algorithms (see others)}
+%\subsubsection{Detect data-points outside the data boundary}
+%\input{TheorethicalFramework/ND-Laplace/algorithms/outside-domain.tex}
+
 \subsubsection{Density-remapping}
-\input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}
+\input{TheorethicalFramework/ND-Laplace/algorithms/optimal-remapping.tex}
+
+It's worth noting that with the introduction of this algorithm, it has shifted from a non-interactive method to one where data points now actively interact with each other.
+Due to the extra interaction rounds, we expect the introduction of density remapping with kd-tree will bring more utility \citep{wang_comprehensive_2020, xiongComprehensiveSurveyLocal2020}.
+If this proofs to be true, it might out-weights the privacy implications for clustering. 
+%\input{TheorethicalFramework/ND-Laplace/algorithms/generating-meshgrid-and-remap.tex}
 %\todo[inline]{Also refactor this}
 
 %\subsection{Extending to $d_x$-privacy}
