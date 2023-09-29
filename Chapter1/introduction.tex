@@ -48,20 +48,21 @@ By addressing the shortcomings of previous studies and considering the challenge
 Another take on \gls{dp} is called \gls{gi} and is specifically used for geographical data  \citep{DBLP:journals/corr/abs-1212-1984}.
 The 2D-Laplace mechanism adds noise to 2 data points (latitude/longitude) by generating random locations based on the amount of distance.
 The mechanism is configurable by a privacy budget and holds within a radius of the original location.
-An extension of this mechanism, 3D-Laplace, added support for including the altitude to support indoor navigation \citep{9646489}.
+An extension of this mechanism, 3D-Laplace, added support for indoor navigation by including the altitude \citep{9646489}.
 The mechanism has also been extended to nD-Laplace to support n-dimensional data; however, its application focuses entirely on text vectors \citep{fernandes_generalised_2019}. \newline
 Because the proposed method relies on distance-based considerations, it is plausible that the shape and structure of the data will be preserved during the clustering process.
 Consequently, we expect this algorithm to perform well for data clustering tasks.
-To our knowledge, \gls{gi} has never been previously applied for data clustering.
-Therefore, the primary research objective of this study is to extend the use of \gls{gi} to optimize specifically the clustering of data. \newline
+To our knowledge, \gls{gi} has never been applied for data clustering.
+Therefore, the primary research objective of this study is to extend the use of \gls{gi} to apply it for the clustering of data. \newline
 
-This thesis aims at developing a new privacy framework for training clustering algorithms on distributed n-dimensional data.
+This thesis aims to developing a new privacy framework for training clustering algorithms on distributed n-dimensional data.
 It does so by extending and optimizing the three variants of nD-Laplace to support clustering algorithms.
 Our contribution to the current literature is as follows:
 \begin{enumerate}
-  \item We aim to create a new privacy framework named nD-Laplace using the three variants of Laplace to train privacy-preserving clustering algorithms on distributed n-dimensional data.
-  \item In addition to K-means, we also demonstrate the working of our method on multiple other clustering algorithms.
-  \item We introduce different optimization techniques to improve the utility of nD-Laplace using kd-tree.
+  \item We aim to create a new privacy framework named nD-Laplace using the three variants of nD-Laplace to train privacy-preserving clustering algorithms on distributed n-dimensional data.
+  \item In addition to K-means, we demonstrate the working of our method on multiple other clustering algorithms.
+  \item We extend the proof and implement truncation for 2D-Laplace and 3D-Laplace  to nD-Laplace. 
+  \item We introduce an utility optimization technique for truncation with 2D-Laplace, 3D-Laplace and nD-Laplace.
   \item We demonstrate the effectiveness and privacy of nD-Laplace using real-world datasets and attacks.
 \end{enumerate}
 
@@ -70,7 +71,7 @@ To reach our goals and objectives, we have formulated the following main questio
 \textit{"How can the nD-Laplace mechanism be applied in training privacy-preserving clustering algorithms on distributed n-dimensional data?"} \newline
 
 We review a significant amount of existing literature to address our research question and gather qualitative data for analysis. 
-To acquire this qualitative data, we conduct a series of experiments that include both cluster utility and mechanism utility/privacy. These experiments are conducted using real-world datasets and synthetic datasets.
+To acquire this qualitative data, we conduct a series of experiments that include both cluster utility and mechanism utility/privacy experiments. These experiments are conducted using real-world datasets and synthetic datasets.
 In order to ensure a comprehensive evaluation of utility, we utilize a combination of external and internal validation methods. For evaluating privacy we focus on real-world attacks to acquire quantitative information about the privacy for our mechanism.
 By carefully analyzing the qualitative data from these experiments, we conduct a detailed comparison of various privacy mechanisms for both clustering and mechanism performance.
 

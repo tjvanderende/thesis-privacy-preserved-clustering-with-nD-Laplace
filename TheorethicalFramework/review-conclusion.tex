@@ -76,9 +76,9 @@ This results in the mechanism effectively shifting the value of $t_i$ between th
 For multidimensional data, the authors use the one-dimensional version multiple times.
 However, they compensate for the number of dimensions by generating a $k$ based on the following formula \citep{wang_collecting_2019}:
 \begin{equation}
-  k = max (1, min (d, \lfloor \frac{\epsilon}{2.5} \rfloor))
+  k = \max \ \{ \ 1, \min \ \{ \ d, \lfloor \frac{\epsilon}{2.5} \rfloor \ \} \ \}
 \end{equation}
 Here, $d$ is the number of dimensions, and $k$ is used to sample a $d$ number of random samples.
-Finally, the Piecewise mechanism (see Equation \ref{eq:piecewise-domain}) is executed for each sample.
+The main difference between the Piecewise mechanism and the nD-Laplace mechanism is that the Piecewise mechanism operates on the entire tuple instead of individual data points. This means that the privacy cost for this is compensated with $\epsilon / d$. Ultimately, an individual point from a vector requires a lower privacy budget.
 
-\todo[inline]{Check}
+Finally, the Piecewise mechanism also supports categorical attributes. For this, the authors check each point to see if it is numeric. If it is not numeric (i.e., a category), an optimized version of the unary encoding mechanism is used \citep{wang_collecting_2019}. The latter is a solution for categorical perturbation under \gls{ldp}.

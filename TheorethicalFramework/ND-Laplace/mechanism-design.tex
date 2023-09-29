@@ -5,7 +5,7 @@ Furthermore, it is worth noting that the use of kd-trees simplifies the complexi
 The following sections will provide a comprehensive framework overview and offer practical insights for its application.
 
 \subsubsection{Flowchart}
-All formulas and theories are established for 2D, 3D, and nD-Laplace, so the mechanism design applies to all three variants:
+All formulas and theories are established for 2D-Laplace, 3D-Laplace, and nD-Laplace, so the mechanism design applies to all three variants:
 \begin{figure}[h]
   \includegraphics[width=1.1\textwidth]{TheorethicalFramework//ND-Laplace//Images/overview.png}
   \caption{Non-interactive mechanism design for nD-Laplace.}
@@ -40,7 +40,7 @@ Grid remapping and density remapping are used to achieve this goal.
   \item Dataset: the blue dots represent the original dataset without any modifications.
   \item Adding noise: the green crosses represent the dataset after adding noise; for this particular example, this is 3D-Laplace (Algorithm \ref{alg:3d-laplace}):
         As can be observed, the data is generated from the center, causing many data points to fall outside the original domain of the dataset.
-  \item Grid-remapping: the red dots represent the dataset after grid-remapping (Algorithm \ref{alg:grid-remapping-laplace})
+  \item Grid-remapping: the red dots represent the dataset after grid-remapping (Section \ref{section-grid-remapping}).
         After performing the grid remapping algorithm, all points outside the data domain are remapped to be within the domain. The data-shape is also partly restored. 
-  \item Optimal-remapping: the green dots represent the dataset after optimal-remapping (Algorithm \ref{alg:optimal-remapping-laplace}). As can be observed, this process is primarily on achieving a better utility by reproducing the original shape.
+  \item Optimal-remapping: the green dots represent the dataset after optimal-remapping (Algorithm \ref{alg:optimal-remapping-laplace}). As can be observed, this process is primarily focused on achieving a better utility by reproducing the original shape.
 \end{enumerate}

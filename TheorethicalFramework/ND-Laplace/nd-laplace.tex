@@ -59,7 +59,7 @@ The formula is provided by Fernandes et al. to convert $r$ to spherical coordina
   x_1 = r \cdot cos (\theta_1) \notag                                      \\
   x_2 = r \cdot sin (\theta_1) \cdot cos (\theta_2)                        \notag \\
   ... \notag \\
-  x_n = r \cdot sin(\theta_{n-1}) \cdot sin(\theta_{n-2}) \ ..., sin(\theta_{n-2} \cdot sin(\theta_{n-1})
+  x_n = r \cdot sin(\theta_{1}) \cdot sin(\theta_{2}) \ ..., sin(\theta_{n-2} \cdot sin(\theta_{n-1})
   \label{eq:nd-laplace-cartesian}
 \end{align}
 This formula is the same for the first two dimensions in comparison to 2D-Laplace and 3D-Laplace. After that, the conversion happens using the $sin$ for all $\theta$.
@@ -112,7 +112,7 @@ Assume  $r_{max} = v$, where $v \in G_n$ and $n$ the number of dimensions. Let $
   Whenever $d_{euc}(x, z)$ and $d_{euc}(x', z) \leq r_{max}$.
   \label{theorem:nd-laplace-truncation}
 \end{theorem}
-Given the above theorem, the privacy of a perturbed point $z$ outside an area $A_n \cap G_h$, can be remapped as:
+Given the above theorem, the privacy of a perturbed point $z$ outside an area $A_n \cap G_n$, can be remapped as:
 \begin{equation}
 z' = 
 \begin{cases}
